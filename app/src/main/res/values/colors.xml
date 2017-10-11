@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="loan_bg">#f4f4f4</color>
+    <color name="line_bg">#F1F1F1</color>
 
     <!--首页字体-->
     <color name="tv_navigate">#FF929292</color>

@@ -1,11 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
+
+    android:layout_height="match_parent">
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="home"/>
-</LinearLayout>
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:background="@color/loan_bg">
+
+
+        <com.bigkoo.convenientbanner.ConvenientBanner
+            android:id="@+id/banner"
+            android:layout_width="0dp"
+            android:layout_height="220dp"
+            android:background="#FFA200"
+            app:canLoop="true"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/QR_code"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="36dp"
+            android:src="@drawable/ic_launcher"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/banner" />
+
+        <ImageView
+            android:id="@+id/message_center"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="36dp"
+            android:src="@drawable/ic_launcher"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/banner" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/con_notice"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="203dp"
+            android:background="@drawable/bg_home_notice"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/notice_img"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:src="@drawable/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.zyjr.emergencylending.custom.AutoVerticalScrollTextView
+                android:id="@+id/notice_auto_roll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/notice_img"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/con_pro1"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_home_notice"
+            app:layout_constraintLeft_toLeftOf="@+id/con_notice"
+            app:layout_constraintRight_toRightOf="@+id/con_notice"
+            app:layout_constraintTop_toBottomOf="@+id/con_notice">
+
+            <TextView
+                android:id="@+id/title_pro1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="14dp"
+                android:text="急速借款"
+                android:textColor="#474747"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description_pro1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="18dp"
+                android:text="（网上签约，急速到账）"
+                android:textColor="#999999"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toRightOf="@+id/title_pro1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/line_pro1"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/line_bg"
+                app:layout_constraintLeft_toLeftOf="@+id/title_pro1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_pro1" />
+
+            <TextView
+                android:id="@+id/pro1_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="500～3500元"
+                android:textColor="#525252"
+                android:textSize="15sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pro1_date"
+                app:layout_constraintTop_toBottomOf="@+id/line_pro1" />
+
+            <TextView
+                android:id="@+id/pro1_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="14天～15周"
+                android:textColor="#525252"
+                android:textSize="15sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/pro1_money"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/pro1_money" />
+
+            <TextView
+                android:id="@+id/pro1_money_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="金额"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pro1_date_text"
+                app:layout_constraintTop_toBottomOf="@+id/pro1_money" />
+
+            <TextView
+                android:id="@+id/pro1_date_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="周期"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/pro1_money_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/pro1_money_text" />
+
+            <Button
+                android:id="@+id/pro1_btn"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_gradient"
+                android:text="立即申请"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/con_pro2"
+            android:layout_width="0dp"
+            android:layout_height="175dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_home_notice"
+            app:layout_constraintLeft_toLeftOf="@+id/con_notice"
+            app:layout_constraintRight_toRightOf="@+id/con_notice"
+            app:layout_constraintTop_toBottomOf="@+id/con_pro1">
+
+            <TextView
+                android:id="@+id/title_pro2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="14dp"
+                android:text="传统借款"
+                android:textColor="#474747"
+                android:textSize="18sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description_pro2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="18dp"
+                android:text="（现场签约，当天到账）"
+                android:textColor="#999999"
+                android:textSize="13sp"
+                app:layout_constraintLeft_toRightOf="@+id/title_pro2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/line_pro2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="12dp"
+                android:background="@color/line_bg"
+                app:layout_constraintLeft_toLeftOf="@+id/title_pro2"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_pro2" />
+
+            <TextView
+                android:id="@+id/pro2_money"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:text="5000～30000元"
+                android:textColor="#525252"
+                android:textSize="15sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pro2_date"
+                app:layout_constraintTop_toBottomOf="@+id/line_pro2" />
+
+            <TextView
+                android:id="@+id/pro2_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="15～52周"
+                android:textColor="#525252"
+                android:textSize="15sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/pro2_money"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/pro2_money" />
+
+            <TextView
+                android:id="@+id/pro2_money_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="金额"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/pro2_date_text"
+                app:layout_constraintTop_toBottomOf="@+id/pro2_money" />
+
+            <TextView
+                android:id="@+id/pro2_date_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="周期"
+                android:textColor="#999999"
+                android:textSize="12sp"
+                app:layout_constraintHorizontal_weight="1"
+                app:layout_constraintLeft_toRightOf="@+id/pro2_money_text"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/pro2_money_text" />
+
+            <Button
+                android:id="@+id/pro2_btn"
+                android:layout_width="200dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="15dp"
+                android:background="@drawable/shape_gradient"
+                android:text="立即申请"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

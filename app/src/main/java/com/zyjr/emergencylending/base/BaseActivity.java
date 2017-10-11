@@ -58,20 +58,20 @@ public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCom
         ActivityCollector.addActivity(this);
         mSavedInstanceState = savedInstanceState;
         mPresenter = createPresenter();
-        mPresenter.attach((V) this);
-
-        mPresenter.setLifeSubscription(new LifeSubscription() {
-            @Override
-            public void bindSubscription(Subscription subscription) {
-                if (mCompositeSubscription == null) {
-                    mCompositeSubscription = new CompositeSubscription();
+        if (mPresenter != null) {
+            mPresenter.attach((V) this);
+            mPresenter.setLifeSubscription(new LifeSubscription() {
+                @Override
+                public void bindSubscription(Subscription subscription) {
+                    if (mCompositeSubscription == null) {
+                        mCompositeSubscription = new CompositeSubscription();
+                    }
+                    mCompositeSubscription.add(subscription);
                 }
-                mCompositeSubscription.add(subscription);
-            }
-        });
-    }
+            });
+        }
 
-    protected abstract void handleMessage(Integer s);
+    }
 
 
     @Override
@@ -106,7 +106,9 @@ public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCom
     protected void onDestroy() {
         isInBackground = false;
         ActivityCollector.removeActivity(this);
-        mPresenter.detach();
+        if (mPresenter != null) {
+            mPresenter.detach();
+        }
         super.onDestroy();
         if (this.mCompositeSubscription != null && mCompositeSubscription.hasSubscriptions()) {
             this.mCompositeSubscription.clear();
