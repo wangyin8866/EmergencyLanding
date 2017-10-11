@@ -1,10 +1,10 @@
 package com.zyjr.emergencylending.model;
 
 
-import com.wyman.wangyin.mylibrary.LogInterceptor;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.LifeSubscription;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.utils.LogInterceptor;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 

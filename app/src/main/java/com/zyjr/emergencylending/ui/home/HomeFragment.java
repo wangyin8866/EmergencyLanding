@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,7 +54,7 @@ public class HomeFragment extends BaseFragment {
         return view;
     }
 
-    private void init() {
+    protected void init() {
         auto_roll_data = new ArrayList<>();
         auto_roll_data.add("wangyin");
         auto_roll_data.add("wangyin2");
@@ -91,8 +92,10 @@ public class HomeFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.QR_code:
+                startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 break;
             case R.id.message_center:
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
         }
     }
