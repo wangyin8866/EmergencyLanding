@@ -34,9 +34,6 @@ public abstract class BaseFragment<T extends BasePresenter<V>, V> extends Fragme
             });
         }
         tag = getClass().getSimpleName();
-
-
-
     }
 
     @Override
