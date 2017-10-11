@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_warm_notice"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:layout_alignParentBottom="true"
+    android:layout_marginBottom="5dp"
+    android:layout_marginLeft="74dp"
+    android:layout_marginRight="73dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/warm_notice"
+        android:textColor="@color/front_text_color"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:text="@string/register_notice_content"
+        android:textColor="@color/front_text_color_hint"
+        android:textSize="12sp" />
+
+</LinearLayout>

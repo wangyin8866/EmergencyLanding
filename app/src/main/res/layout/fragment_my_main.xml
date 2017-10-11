@@ -1,11 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zyjr.emergencylending.widget.ReboundScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <TextView
+    android:scrollbars="none">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="my"/>
-</LinearLayout>
+        android:orientation="vertical">
+
+        <include layout="@layout/layout_person_info" />
+
+        <com.zyjr.emergencylending.widget.SettingItemView
+            android:id="@+id/layout_11"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            app:setting_left_content="投资记录"
+            app:setting_left_icon="@mipmap/ic_launcher" />
+
+        <View style="@style/horizontal_line_style" />
+
+        <com.zyjr.emergencylending.widget.SettingItemView
+            android:id="@+id/layout_12"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            app:setting_left_content="投资记录"
+            app:setting_left_icon="@mipmap/ic_launcher" />
+
+        <View style="@style/horizontal_line_style" />
+
+        <com.zyjr.emergencylending.widget.SettingItemView
+            android:id="@+id/layout_13"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            app:setting_left_content="投资记录"
+            app:setting_left_icon="@mipmap/ic_launcher" />
+
+        <View style="@style/horizontal_line_style" />
+
+        <com.zyjr.emergencylending.widget.SettingItemView
+            android:id="@+id/layout_14"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            app:setting_left_content="投资记录"
+            app:setting_left_icon="@mipmap/ic_launcher" />
+
+        <View style="@style/horizontal_line_style" />
+
+
+    </LinearLayout>
+
+
+</com.zyjr.emergencylending.widget.ReboundScrollView>

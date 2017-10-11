@@ -14,4 +14,31 @@
     <string name="footer_hint_load_normal">上拉查看更多</string>
     <string name="footer_hint_load_ready">松开载入更多</string>
     <string name="title_activity_check_bank">CheckBankActivity</string>
+
+
+    <!-- 登录 -->
+    <string name="forget_password">忘记密码</string>
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="sure">确认</string>
+    <string name="login_account_hint">请输入您的手机号</string>
+    <string name="login_password_hint">请输入您的登录密码</string>
+    <string name="register_invite_hint">请输入邀请码(选填)</string>
+    <string name="send_sms_code">获取验证码</string>
+    <string name="sms_code_hint">输入验证码</string>
+    <string name="warm_notice">温馨提示</string>
+    <string name="register_notice_content">工作人员不会以任何方式向您索要其他费用请到APP确认官方联系方式,谨防上当受骗</string>
+    <string name="register_agreement1">《用户使用及安全隐私协议》</string>
+    <string name="register_agreement2">《用户信息授权服务协议》</string>
+    <string name="update_login_pwd_hint">请设置6-16位数字或字母的新密码</string>
+    <string name="update_login_pwd_hint_again">再次输入新密码</string>
+
+    <!-- 借款信息中心 -->
+    <string name="traditional_borrow">传统借款</string>
+    <string name="borrow_recommend">根据您的情况,可以申请以下产品</string>
+    <string name="traditional_borrow_money">5000-30000</string>
+    <string name="traditional_borrow_cycle">15～52周</string>
+    <string name="traditional_borrow_desc">(现场签约,当天到账)</string>
+
+
 </resources>

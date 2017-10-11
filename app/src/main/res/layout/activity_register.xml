@@ -1,0 +1,218 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layout_title_bar"
+        layout="@layout/layout_common_title_bar" />
+
+    <ScrollView
+        android:id="@+id/layout_input_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:layout_below="@+id/layout_title_bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <LinearLayout
+                android:id="@+id/layout_app_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="23dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_app_logo"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_below="@+id/layout_title_bar"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="23dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_home" />
+
+            </LinearLayout>
+
+            <!-- 基本信息 -->
+            <LinearLayout
+                android:id="@+id/layout_user_input"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/layout_app_logo"
+                android:layout_marginLeft="37dp"
+                android:layout_marginRight="37dp"
+                android:layout_marginTop="45dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@drawable/et_login_input_shape"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_phone_number"
+                        style="@style/et_input_style"
+                        android:drawableLeft="@drawable/ic_launcher"
+                        android:hint="@string/login_account_hint"
+                        android:inputType="phone"
+                        android:maxLength="11"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/et_login_input_shape"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_password"
+                        style="@style/et_input_style"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_launcher"
+                        android:hint="@string/login_password_hint"
+                        android:inputType="text"
+                        android:maxLength="16"
+                        android:password="true"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/iv_show_pwd"
+                        android:layout_width="18dp"
+                        android:layout_height="14.5dp"
+                        android:layout_gravity="center"
+                        android:layout_marginRight="24dp"
+                        android:background="@mipmap/ic_home" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/et_login_input_shape"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_sms_code"
+                        style="@style/et_input_style"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_launcher"
+                        android:hint="@string/sms_code_hint"
+                        android:inputType="number"
+                        android:maxLength="8"
+                        android:textSize="13sp" />
+
+                    <Button
+                        android:id="@+id/btn_login_code"
+                        android:layout_width="80dp"
+                        android:layout_height="26dp"
+                        android:layout_marginRight="11dp"
+                        android:background="@drawable/btn_login_shape"
+                        android:layout_gravity="center"
+                        android:text="@string/send_sms_code"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <!-- 邀请码 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/et_login_input_shape"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_invite_code"
+                        style="@style/et_input_style"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_launcher"
+                        android:hint="@string/register_invite_hint"
+                        android:maxLength="8"
+                        android:textSize="13sp" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center">
+
+                    <CheckBox
+                        android:id="@+id/cb_check"
+                        style="@style/register_cbx"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:checked="true"
+                        android:padding="5dp" />
+
+                    <TextView
+                        android:id="@+id/tv_agreed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/cb_check"
+                        android:text="我已阅读并同意"
+                        android:textColor="@color/front_text_color_hint"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tv_agreement_register"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/tv_agreed"
+                        android:padding="5dp"
+                        android:text="@string/register_agreement1"
+                        android:textColor="@color/front_text_color_agreement"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_agreement_infomation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:padding="5dp"
+                        android:text="@string/register_agreement2"
+                        android:textColor="@color/front_text_color_agreement"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/btn_register"
+                    style="@style/button_orange"
+                    android:layout_marginTop="13dp"
+                    android:text="@string/register"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/layout_warm_notice" />
+
+
+</RelativeLayout>

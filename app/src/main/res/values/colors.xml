@@ -9,4 +9,19 @@
     <!--首页字体-->
     <color name="tv_navigate">#FF929292</color>
     <color name="tv_navigate_checked">#FFF5A623</color>
+
+    <!-- 输入文字颜色 -->
+    <color name="input_text_color">#333333</color>
+    <!-- 基本字体颜色 -->
+    <color name="front_text_color">#666666</color>
+    <!-- hint -->
+    <color name="front_text_color_hint">#999999</color>
+    <!-- 协议字体颜色(蓝)-->
+    <color name="front_text_color_agreement">#6F95FF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="line_color">#F5F5F5</color>
+    <color name="mine_center_bg">#FFA200</color>
+
+
 </resources>
