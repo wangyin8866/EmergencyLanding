@@ -13,49 +13,57 @@
         <include layout="@layout/layout_person_info" />
 
         <com.zyjr.emergencylending.widget.SettingItemView
-            android:id="@+id/layout_11"
+            android:id="@+id/layout_personal_info"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            app:setting_left_content="投资记录"
+            app:setting_left_content="个人资料"
             app:setting_left_icon="@mipmap/ic_launcher" />
 
         <View style="@style/horizontal_line_style" />
 
         <com.zyjr.emergencylending.widget.SettingItemView
-            android:id="@+id/layout_12"
+            android:id="@+id/layout_my_loan"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            app:setting_left_content="投资记录"
+            app:setting_left_content="我的借款"
             app:setting_left_icon="@mipmap/ic_launcher" />
 
         <View style="@style/horizontal_line_style" />
 
         <com.zyjr.emergencylending.widget.SettingItemView
-            android:id="@+id/layout_13"
+            android:id="@+id/layout_payback"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            app:setting_left_content="投资记录"
+            app:setting_left_content="我要还款"
             app:setting_left_icon="@mipmap/ic_launcher" />
 
         <View style="@style/horizontal_line_style" />
 
         <com.zyjr.emergencylending.widget.SettingItemView
-            android:id="@+id/layout_14"
+            android:id="@+id/layout_help"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
-            app:setting_left_content="投资记录"
+            app:setting_left_content="帮助说明"
             app:setting_left_icon="@mipmap/ic_launcher" />
 
         <View style="@style/horizontal_line_style" />
 
+        <com.zyjr.emergencylending.widget.SettingItemView
+            android:id="@+id/layout_setting"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            app:setting_left_content="设置"
+            app:setting_left_icon="@mipmap/ic_launcher" />
 
     </LinearLayout>
 
