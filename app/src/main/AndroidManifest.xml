@@ -10,8 +10,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <!--二维码-->
+        <activity
+            android:name=".ui.home.QrCodeActivity"
+            android:screenOrientation="portrait" />
+        <!--消息中心-->
+        <activity
+            android:name=".ui.home.MessageActivity"
+            android:screenOrientation="portrait" />
+        <!--登录-->
+        <activity
+            android:name=".ui.account.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,8 +34,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.home.QrCodeActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.MessageActivity" android:screenOrientation="portrait"/>
+        <!--注册-->
+        <activity
+            android:name=".ui.account.RegisterActivity"
+            android:screenOrientation="portrait" />
+        <!--忘记密码-->
+        <activity
+            android:name=".ui.account.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+        <!--消息详情-->
+        <activity
+            android:name=".ui.home.MessageDetail"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

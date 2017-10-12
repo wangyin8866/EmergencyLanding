@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.SwipeAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.custom.dialog.DialogMessage;
 import com.zyjr.emergencylending.entity.MessageBean;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by wangyin on 2017/10/11.
@@ -71,19 +74,20 @@ public class MessageActivity extends BaseActivity {
 
         rvMain.setLayoutManager(new LinearLayoutManager(this));
         rvMain.setAdapter(myAdapter);
-        myAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(MessageActivity.this, position + "a", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        myAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                Toast.makeText(MessageActivity.this, position + "a", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         myAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                Toast.makeText(MessageActivity.this, position + "b", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(mContext, MessageDetail.class));
             }
         });
-        myAdapter.addHeaderView(View.inflate(this, R.layout.header, null));
+//        myAdapter.addHeaderView(View.inflate(this, R.layout.header, null));
         myAdapter.setOnDelListener(new SwipeAdapter.onSwipeListener() {
             @Override
             public void onDel(int pos) {
@@ -146,5 +150,21 @@ public class MessageActivity extends BaseActivity {
         });
 
 
+    }
+
+    @OnClick(R.id.tv_mark)
+    public void onViewClicked() {
+        DialogMessage dialogMessage = new DialogMessage(this);
+        dialogMessage.setOnDoubleClickListener(new DialogMessage.OnDoubleClickListener() {
+            @Override
+            public void excuteLeft() {
+
+            }
+
+            @Override
+            public void excuteRight() {
+
+            }
+        }).show();
     }
 }

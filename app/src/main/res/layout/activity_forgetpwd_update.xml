@@ -1,17 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <include
-        android:id="@+id/layout_title_bar"
-        layout="@layout/layout_common_title_bar" />
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="找回密码"
+        app:titleTextColor="#333333"
+        app:titleTextSize="16sp" />
 
     <LinearLayout
         android:id="@+id/layout_user_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_title_bar"
+        android:layout_below="@+id/top_bar"
         android:layout_marginLeft="37dp"
         android:layout_marginRight="37dp"
         android:layout_marginTop="70dp"
@@ -23,16 +31,17 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/et_login_input_shape"
-            android:orientation="horizontal">
-
-            <EditText
+            android:orientation="vertical">
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_mobile_number"
                 style="@style/et_input_style"
                 android:drawableLeft="@drawable/ic_launcher"
+                android:drawableRight="@mipmap/login_delete"
                 android:hint="@string/login_account_hint"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:textSize="13sp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -41,24 +50,25 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
-
-            <EditText
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_sms_code"
                 style="@style/et_input_style"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_launcher"
+                android:drawableRight="@mipmap/login_delete"
                 android:hint="@string/sms_code_hint"
-                android:inputType="number"
+                android:inputType="phone"
                 android:maxLength="8"
                 android:textSize="13sp" />
+
 
             <Button
                 android:id="@+id/btn_login_code"
                 android:layout_width="80dp"
                 android:layout_height="26dp"
+                android:layout_gravity="center"
                 android:layout_marginRight="11dp"
                 android:background="@drawable/btn_login_shape"
-                android:layout_gravity="center"
                 android:text="@string/send_sms_code"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -70,17 +80,17 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
-
-            <EditText
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_new_pwd"
                 style="@style/et_input_style"
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_launcher"
+                android:drawableRight="@mipmap/login_delete"
                 android:hint="@string/update_login_pwd_hint"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:maxLength="16"
-                android:password="true"
                 android:textSize="13sp" />
+
 
         </LinearLayout>
 
@@ -91,23 +101,26 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
-
-            <EditText
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_new_pwd_again"
                 style="@style/et_input_style"
+                android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_launcher"
+                android:drawableRight="@mipmap/login_delete"
                 android:hint="@string/update_login_pwd_hint_again"
-                android:inputType="text"
+                android:inputType="textPassword"
                 android:lines="1"
                 android:maxLength="16"
-                android:password="true"
                 android:textSize="13sp" />
+
 
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_sure"
             style="@style/button_orange"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
             android:layout_marginTop="45dp"
             android:text="@string/sure"
             android:textSize="17sp" />

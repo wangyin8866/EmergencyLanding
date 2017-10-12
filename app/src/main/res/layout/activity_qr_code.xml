@@ -8,7 +8,7 @@
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/top_height"
         android:paddingLeft="20dp"
         app:drawableLeft="@mipmap/nav_back"
         app:drawableLeftVisibility="true"
