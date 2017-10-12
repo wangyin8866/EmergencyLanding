@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="联系人资料"
+        app:titleTextColor="@color/input_text_color"
+        app:titleTextSize="16sp" />
+
+    <ScrollView
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/line_color"
+            android:orientation="vertical">
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="5dp" />
+
+            <!-- 联系人 -->
+            <LinearLayout
+                android:id="@+id/ll_contact1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="姓名"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_contact_name1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="请输入姓名"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 手机号 -->
+            <LinearLayout
+                android:id="@+id/ll_contact_phone1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="手机号"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_contact_phone1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="请输入手机号"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_contact_phone1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 关系 -->
+            <LinearLayout
+                android:id="@+id/ll_contact_relation1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="关系"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_relation1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="请选择关系"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_relation1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="5dp" />
+
+            <!-- 联系人2 -->
+            <LinearLayout
+                android:id="@+id/ll_contact2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="姓名"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_contact_name2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="请输入姓名"
+                    android:background="@color/transparent"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 手机号 -->
+            <LinearLayout
+                android:id="@+id/ll_contact_phone2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="手机号"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_contact_phone2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="请输入手机号"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_contact_phone2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 关系 -->
+            <LinearLayout
+                android:id="@+id/ll_contact_relation2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="关系"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_relation2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="请选择关系"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_relation2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@mipmap/ic_home"
+                android:drawablePadding="5dp"
+                android:gravity="center_vertical"
+                android:text="关系选项中，仅支持下拉列表中的关系"
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="12dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="15dp"
+            android:background="@color/mine_center_bg"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="急速借款"
+        app:titleTextColor="@color/input_text_color"
+        app:titleTextSize="16sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:background="@color/mine_center_bg">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="-147dp"
+                android:background="@color/colorPrimary">
+
+            </LinearLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <!-- 产品介绍 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_product_introduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="产品介绍"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <View
+                    style="@style/horizontal_line_style"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="14dp" />
+
+                <ListView
+                    android:id="@+id/lv_product_introduce"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+
+            <!-- 申请流程 -->
+            <LinearLayout
+                android:id="@+id/layout_apply_step"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_apply_step"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="申请步骤"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <View
+                    style="@style/horizontal_line_style"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="14dp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="18dp"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/iv_ring1"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="44dp"
+                        android:src="@drawable/ring_product_step" />
+
+                    <TextView
+                        android:id="@+id/tv_firststep_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_ring1"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="7dp"
+                        android:text="填写资料"
+                        android:textColor="@color/front_text_color"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:id="@+id/line_1"
+                        android:layout_width="119dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/iv_ring1"
+                        android:background="@color/mine_center_bg" />
+
+                    <ImageView
+                        android:id="@+id/iv_ring2"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_toRightOf="@+id/line_1"
+                        android:src="@drawable/ring_product_step" />
+
+                    <TextView
+                        android:id="@+id/tv_secondstep_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_ring1"
+                        android:layout_marginLeft="81dp"
+                        android:layout_marginTop="7dp"
+                        android:text="提交审核"
+                        android:layout_toRightOf="@+id/tv_firststep_desc"
+                        android:textColor="@color/front_text_color"
+                        android:textSize="12sp" />
+
+                    <View
+                        android:id="@+id/line_2"
+                        android:layout_width="119dp"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_toRightOf="@+id/iv_ring2"
+                        android:background="@color/mine_center_bg" />
+
+                    <ImageView
+                        android:id="@+id/iv_ring3"
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:layout_toRightOf="@+id/line_2"
+                        android:src="@drawable/ring_product_step" />
+
+                    <TextView
+                        android:id="@+id/tv_thirdstep_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iv_ring1"
+                        android:layout_marginLeft="81dp"
+                        android:layout_marginTop="7dp"
+                        android:text="网上签约领款"
+                        android:layout_toRightOf="@+id/tv_secondstep_desc"
+                        android:textColor="@color/front_text_color"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
+
+            <!-- 急速借款支持城市 -->
+            <LinearLayout
+                android:id="@+id/layout_support_cities"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_support_cities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="申请步骤"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <View
+                    style="@style/horizontal_line_style"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_support_cities_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:text="覆盖全国各个省市(暂不支持港澳台地区)"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_traditional_support_cities"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:visibility="gone"
+                android:layout_marginRight="10dp"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_traditional_support_cities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:text="申请步骤"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <View
+                    style="@style/horizontal_line_style"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="14dp" />
+
+                <TextView
+                    android:id="@+id/tv_traditional_support_cities_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="15dp"
+                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawablePadding="3dp"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:text="南京、苏州、杭州、常州、沈阳、海口、厦门."
+                    android:textColor="@color/input_text_color"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_get_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_vertical|right"
+                    android:text="查看更多>"
+                    android:textColor="#6F95FF"
+                    android:layout_marginRight="15dp"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_apply_quickly"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:background="@color/mine_center_bg"
+                android:text="立即申请"
+                android:textColor="@color/white"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

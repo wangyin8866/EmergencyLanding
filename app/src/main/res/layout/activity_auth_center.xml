@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/line_color"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="认证中心"
+        app:titleTextColor="@color/input_text_color"
+        app:titleTextSize="16sp" />
+
+
+    <ScrollView
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_zhimaxinyong_auth"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/top_bar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_zhimaxinyong_auth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="37dp"
+                    android:layout_marginTop="54dp"
+                    android:layout_toRightOf="@+id/iv_bankcard_icon"
+                    android:text="芝麻信用"
+                    android:textColor="@color/input_text_color" />
+
+                <TextView
+                    android:id="@+id/tv_zhimaxinyong_auth_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_zhimaxinyong_auth"
+                    android:layout_below="@+id/tv_zhimaxinyong_auth"
+                    android:layout_marginTop="4dp"
+                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawablePadding="5dp"
+                    android:textColor="@color/auth_success"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:text="认证成功" />
+
+                <ImageView
+                    android:id="@+id/tv_bankcard_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="28dp"
+                    android:src="@mipmap/ic_launcher" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="10dp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_mobile_auth"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/top_bar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_mobile_auth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="37dp"
+                    android:layout_marginTop="54dp"
+                    android:layout_toRightOf="@+id/iv_bankcard_icon"
+                    android:text="手机认证"
+                    android:textColor="@color/input_text_color" />
+
+                <TextView
+                    android:id="@+id/tv_mobile_auth_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_mobile_auth"
+                    android:layout_below="@+id/tv_mobile_auth"
+                    android:layout_marginTop="4dp"
+                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textColor="@color/auth_processing"
+                    android:text="认证中" />
+
+                <ImageView
+                    android:id="@+id/iv_mobile_auth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="28dp"
+                    android:src="@mipmap/ic_launcher" />
+
+            </RelativeLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="10dp" />
+
+            <RelativeLayout
+                android:id="@+id/rl_face_auth"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_below="@+id/top_bar"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_face_auth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="37dp"
+                    android:layout_marginTop="54dp"
+                    android:layout_toRightOf="@+id/iv_bankcard_icon"
+                    android:text="人脸识别"
+                    android:textColor="@color/input_text_color" />
+
+                <TextView
+                    android:id="@+id/tv_face_auth_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_face_auth"
+                    android:layout_below="@+id/tv_face_auth"
+                    android:layout_marginTop="4dp"
+                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/auth_fail"
+                    android:textSize="12sp"
+                    android:text="认证失败" />
+
+                <ImageView
+                    android:id="@+id/iv_face_auth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="28dp"
+                    android:src="@mipmap/ic_launcher" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/mine_center_bg"
+            android:text="提交"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+</LinearLayout>
