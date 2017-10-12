@@ -15,6 +15,8 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
+import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +90,7 @@ public class HomeFragment extends BaseFragment {
         handler.removeCallbacksAndMessages(null);
     }
 
-    @OnClick({R.id.QR_code, R.id.message_center})
+    @OnClick({R.id.QR_code, R.id.message_center, R.id.pro1_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.QR_code:
@@ -96,6 +98,9 @@ public class HomeFragment extends BaseFragment {
                 break;
             case R.id.message_center:
                 startActivity(new Intent(getActivity(), MessageActivity.class));
+                break;
+            case R.id.pro1_btn:
+                startActivity(new Intent(getActivity(), LoanMainActivity.class));
                 break;
         }
     }

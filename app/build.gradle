@@ -48,4 +48,7 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile project(':retrofitlibrary')
+
+    // 图片选择及拍照
+    compile 'com.jph.takephoto:takephoto_library:4.0.3'
 }
