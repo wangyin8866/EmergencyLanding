@@ -152,8 +152,6 @@ public class MessageActivity extends BaseActivity {
 
 
     }
-
-
     @OnClick({R.id.iv_back, R.id.tv_mark})
     public void onViewClicked(View view) {
         switch (view.getId()) {
