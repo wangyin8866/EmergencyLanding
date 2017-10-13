@@ -3,7 +3,7 @@ package com.zyjr.emergencylending.utils;
 import android.annotation.SuppressLint;
 import android.widget.TextView;
 
-import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -31,8 +31,8 @@ public class DateUtil {
      * @param tv
      */
     public static Subscription countDown(final TextView tv, final String reset) {
-        final long[] currentTime = {Config.seconds-1000};
-        tv.setText((Config.seconds-1000)/1000+"s");
+        final long[] currentTime = {Constants.seconds-1000};
+        tv.setText((Constants.seconds-1000)/1000+"s");
         Subscription subscribe = Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

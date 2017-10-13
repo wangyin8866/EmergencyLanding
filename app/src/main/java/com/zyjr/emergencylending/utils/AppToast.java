@@ -48,17 +48,7 @@ public class AppToast {
 		toast.show();
 	}
 	
-	public static void showLongText(Context context, int resId) {
-		try {
-			if(context==null)return;
-			if(toast != null)
-				toast.cancel();
-			toast = Toast.makeText(context, resId, Toast.LENGTH_LONG);
-			toast.show();
-			
-		} catch (Exception e) {
-		}
-	}
+
 
 
 }

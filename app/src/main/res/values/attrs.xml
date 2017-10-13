@@ -121,7 +121,7 @@
         <attr name="description_mission" format="string" />
         <attr name="btn" format="string" />
         <attr name="btn_bg" format="reference" />
-        <attr name="mission_bg" format="reference"/>
+        <attr name="mission_bg" format="reference" />
     </declare-styleable>
 
     <!-- 我的设置 item -->
@@ -131,5 +131,14 @@
         <attr name="setting_right_icon" format="reference" />
         <attr name="setting_right_content" format="string" />
     </declare-styleable>
-
+    <!--圆形图片-->
+        <attr name="borderRadius" format="dimension" />
+        <attr name="type">
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
+        </attr>
+        <declare-styleable name="RoundImageViewByXfermode">
+            <attr name="borderRadius" />
+            <attr name="type" />
+        </declare-styleable>
 </resources>

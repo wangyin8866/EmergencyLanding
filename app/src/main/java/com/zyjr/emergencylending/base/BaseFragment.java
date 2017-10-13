@@ -18,7 +18,7 @@ public abstract class BaseFragment<T extends BasePresenter<V>, V> extends Fragme
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = getContext();
+        mContext = getActivity();
         mPresenter = createPresenter();
         if (mPresenter != null) {
 

@@ -31,7 +31,6 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.base.ActivityCollector;
@@ -162,28 +161,7 @@ public class WYUtils {
         return metric;
     }
 
-    /**
-     * 投资期限
-     */
-    public static String getInvestDeadline(int num) {
-        String result = "";
-        switch (num) {
-            case 1:
-                result = "天";
-                break;
-            case 2:
-                result = "周";
-                break;
-            case 3:
-                result = "个月";
-                break;
-            case 4:
-                result = "年";
-                break;
-        }
-        return result;
 
-    }
 
 
     /**
@@ -209,6 +187,13 @@ public class WYUtils {
             e.printStackTrace();
             return "1.0";
         }
+    }
+    /**
+     * 版本更新
+     */
+    public static void upDateVersion(Context context,String url) {
+        UpdateVersionService service = new UpdateVersionService(url,context);
+        service.checkUpdate();
     }
 
     /**
@@ -292,19 +277,6 @@ public class WYUtils {
     }
 
 
-    /**
-     * 设置利率的隐藏和显示
-     *
-     * @param textView1
-     * @param textView2
-     * @param textView3
-     * @param str
-     */
-    public static void setVisibility(TextView textView1, TextView textView2, TextView textView3, String str) {
-        textView1.setVisibility(Double.valueOf(str) == 0 ? View.GONE : View.VISIBLE);
-        textView2.setVisibility(Double.valueOf(str) == 0 ? View.GONE : View.VISIBLE);
-        textView3.setVisibility(Double.valueOf(str) == 0 ? View.GONE : View.VISIBLE);
-    }
 
     /**
      * 拨打客服电话
@@ -339,31 +311,6 @@ public class WYUtils {
         } else {
             serviceTel(context);
         }
-    }
-
-    /**
-     * 回款方式
-     *
-     * @param profitPlan
-     * @return
-     */
-    public static String getProfitPlan(int profitPlan) {
-        String result = "";
-        switch (profitPlan) {
-            case 1:
-                result = "一次还本付息";
-                break;
-            case 2:
-                result = "等额本金";
-                break;
-            case 3:
-                result = "等额本息";
-                break;
-            case 4:
-                result = "按期付息到期还本";
-                break;
-        }
-        return result;
     }
 
     /**

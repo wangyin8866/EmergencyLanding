@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
+import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
+import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class HomeFragment extends BaseFragment {
     private View view;
     private int autoRollIndex;
     private List<String> auto_roll_data;
-
+    private ArrayList<String> images;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,6 +63,18 @@ public class HomeFragment extends BaseFragment {
         auto_roll_data.add("wangyin3");
         auto_roll_data.add("wangyin4");
         showAutoRollStrings();
+
+        //本地图片
+        ArrayList<Integer> imgs = new ArrayList<>();
+        imgs.add(R.mipmap.ic_launcher);
+        imgs.add(R.mipmap.ic_launcher_round);
+        imgs.add(R.mipmap.ic_launcher);
+        this.banner.setPages(new CBViewHolderCreator() {
+            @Override
+            public Object createHolder() {
+                return new LocalImageHolderViewNative();
+            }
+        }, imgs).startTurning(2000);
     }
 
     private void showAutoRollStrings() {

@@ -16,7 +16,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.SwipeAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.custom.dialog.DialogMessage;
+import com.zyjr.emergencylending.custom.dialog.DialogCustom;
 import com.zyjr.emergencylending.entity.MessageBean;
 
 import java.util.ArrayList;
@@ -62,6 +62,7 @@ public class MessageActivity extends BaseActivity {
     }
 
     private void init() {
+
         messageBeanList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             MessageBean messageBean = new MessageBean("test" + i, new Date().toString(), "wangyin" + i);
@@ -152,19 +153,30 @@ public class MessageActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.tv_mark)
-    public void onViewClicked() {
-        DialogMessage dialogMessage = new DialogMessage(this);
-        dialogMessage.setOnDoubleClickListener(new DialogMessage.OnDoubleClickListener() {
-            @Override
-            public void excuteLeft() {
 
-            }
+    @OnClick({R.id.iv_back, R.id.tv_mark})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_back:
+                finish();
+                break;
+            case R.id.tv_mark:
+                final DialogCustom dialog = new DialogCustom(mContext);
+                dialog.deleteMessage(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.message_left:
+                                dialog.dismiss();
+                                break;
+                            case R.id.message_right:
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
 
-            @Override
-            public void excuteRight() {
-
-            }
-        }).show();
+                break;
+        }
     }
 }
