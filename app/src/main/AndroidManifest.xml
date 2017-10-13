@@ -58,15 +58,34 @@
             android:name=".ui.home.MessageDetail"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.home.loan.WriteInfoMainActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.loan.LoanMainActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.loan.basicInfo.BankInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.loan.basicInfo.ContactInfoActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.loan.basicInfo.PersonalDataActivity" android:screenOrientation="portrait"/>
-        <activity android:name=".ui.home.loan.basicInfo.WorkInfoActivity" android:screenOrientation="portrait"/>
-
+        <!-- 填写资料主页面 -->
+        <activity
+            android:name=".ui.home.loan.WriteInfoMainActivity"
+            android:screenOrientation="portrait" />
+        <!-- 借款 -->
+        <activity
+            android:name=".ui.home.loan.LoanMainActivity"
+            android:screenOrientation="portrait" />
+        <!-- 联系人资料 -->
+        <activity
+            android:name=".ui.home.loan.basicInfo.ContactInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 个人信息 -->
+        <activity
+            android:name=".ui.home.loan.basicInfo.PersonalDataActivity"
+            android:screenOrientation="portrait" />
+        <!-- 工作信息 -->
+        <activity
+            android:name=".ui.home.loan.basicInfo.WorkInfoActivity"
+            android:screenOrientation="portrait" />
+        <!-- 银行信息 -->
+        <activity
+            android:name=".ui.home.loan.basicInfo.BankInfoActivity"
+            android:screenOrientation="portrait" />
         <!-- 支持银行选择 -->
-        <activity android:name=".ui.home.loan.SupportBankActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.home.loan.SupportBankActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
