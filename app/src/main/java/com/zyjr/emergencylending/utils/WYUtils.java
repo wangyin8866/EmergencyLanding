@@ -285,7 +285,7 @@ public class WYUtils {
      */
     public static void serviceTel(Context context) {
         Uri uri;
-        uri = Uri.parse("tel:4009996780");
+        uri = Uri.parse("tel:400077667");
         Intent intent = new Intent(Intent.ACTION_CALL, uri);
         //此处不判断就会报错
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {

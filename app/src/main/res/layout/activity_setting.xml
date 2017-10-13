@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/loan_bg"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="设置"
+        app:titleTextColor="#333333"
+        app:titleTextSize="16sp"
+        app:top_background="#FFFFFF" />
+
+    <include layout="@layout/bg_line_1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/modify_password"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableRight="@mipmap/arrow_right"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="修改登录密码"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <include layout="@layout/bg_line_margin" />
+
+        <TextView
+            android:id="@+id/about_us"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableRight="@mipmap/arrow_right"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="关于我们"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <include layout="@layout/bg_line_margin" />
+
+        <TextView
+            android:id="@+id/advice_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:drawableRight="@mipmap/arrow_right"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="意见反馈"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+
+        <include layout="@layout/bg_line_margin" />
+
+        <RelativeLayout
+            android:id="@+id/service_call"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="客服电话"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_launcher"
+                android:drawablePadding="6dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center"
+                android:text="4000776667"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+
+        <include layout="@layout/bg_line_margin" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:text="版本号"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="6dp"
+                android:gravity="center"
+                android:text="V1.30"
+                android:textColor="#999999"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/exit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:text="安全退出"
+        android:textColor="#333333"
+        android:textSize="14sp" />
+</LinearLayout>

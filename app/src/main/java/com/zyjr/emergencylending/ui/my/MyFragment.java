@@ -3,7 +3,6 @@ package com.zyjr.emergencylending.ui.my;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -57,11 +56,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
     @BindView(R.id.setting)
     TextView setting;
     Unbinder unbinder;
-    private View view;
-    private Uri imageUri;
     private TakePhoto takePhoto;
-    private String imgPath = "";
-    Bitmap bitmap, mBitmap;
     private InvokeParam invokeParam;
 
     @Override
@@ -109,7 +104,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_my_main, container, false);
+        View view = inflater.inflate(R.layout.fragment_my_main, container, false);
         unbinder = ButterKnife.bind(this, view);
         init();
         return view;
@@ -144,6 +139,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
             case R.id.help:
                 break;
             case R.id.setting:
+                startActivity(new Intent(mContext,SettingActivity.class));
                 break;
         }
     }
@@ -180,9 +176,9 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
     @Override
     public void takeSuccess(TResult result) {
         LogUtils.e("takeSuccess", "takeSuccess：" + result.getImage().getCompressPath());
-        imgPath = result.getImage().getOriginalPath();
-        bitmap = BitmapFactory.decodeFile(imgPath);
-        mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+        String imgPath = result.getImage().getOriginalPath();
+        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+        Bitmap mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
         userPic.setImageBitmap(mBitmap);
     }
 

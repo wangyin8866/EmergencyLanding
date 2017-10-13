@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="关于我们"
+        app:titleTextColor="#333333"
+        app:titleTextSize="16sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="33dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:lineSpacingExtra="5dp"
+        android:text="上海奇赢商务咨询有限公司旗下品牌“急借通”专注于小额借款咨询服务，快速解决借款难问题，业务启动与2015年，总部位于中国上海，涵盖小微信商户，小企业及个人资金需求，微额网贷等多累借款咨询服务；围绕“布局全国、深耕地方“的战略规划，至今为止已成功为十万小企业主机个人客户提供解决方，帮助各类人群解决资金需求问题，主力地方经济发展。"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="微信公众号"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="jijietong888"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="急掌门QQ"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2445048592"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客服电话"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4000776667"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:paddingBottom="20dp"
+        android:text="copyright © 2017 急借通 All Right Reserved"
+        android:textColor="#999999" />
+</LinearLayout>

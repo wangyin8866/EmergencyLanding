@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="意见反馈"
+        app:titleTextColor="#333333"
+        app:titleTextSize="16sp" />
+
+    <EditText
+        android:id="@+id/edit_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/textarea"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:drawablePadding="7dp"
+        android:hint="我们的进步离不开您的建议和创意"
+        android:paddingLeft="20dp"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/submit"
+        style="@style/button_orange"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginTop="50dp"
+        android:text="提交" />
+</LinearLayout>
