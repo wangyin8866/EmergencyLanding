@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="添加银行卡"
+        app:titleTextColor="@color/input_text_color"
+        app:titleTextSize="16sp" />
+
+    <ScrollView
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/line_color"
+            android:orientation="vertical">
+
+            <!-- 姓名 -->
+            <LinearLayout
+                android:id="@+id/ll_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="姓名"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:text="张三"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 身份证 -->
+            <LinearLayout
+                android:id="@+id/ll_idcard_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="身份证"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_idcard_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:editable="false"
+                    android:gravity="center_vertical"
+                    android:text="425454541456465456"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/horizontal_line_style"
+                android:layout_height="5dp" />
+
+            <!-- 银行卡号 -->
+            <LinearLayout
+                android:id="@+id/ll_bankcard_number"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="银行卡号"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_bankcard_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="请输入银行卡号"
+                    android:background="@null"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 开户银行 -->
+            <LinearLayout
+                android:id="@+id/ll_job_unit_industry"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="开户银行"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_industry"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:hint="请选择单位行业"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/iv_industry"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="10dp"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_launcher" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 预留手机号 -->
+            <LinearLayout
+                android:id="@+id/ll_reserved_phone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="预留手机号"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_reserved_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:hint="请输入预留手机号"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
+
+            <!-- 验证码 -->
+            <LinearLayout
+                android:id="@+id/ll_sms_code"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="验证码"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_sms_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入验证码"
+                    android:inputType="number"
+                    android:maxLength="8"
+                    android:textColor="@color/input_text_color"
+                    android:textColorHint="@color/front_text_color_hint"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_get_code"
+                    android:layout_width="80dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_login_shape"
+                    android:text="@string/send_sms_code"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/button_orange"
+                android:layout_marginLeft="38dp"
+                android:layout_marginRight="38dp"
+                android:layout_marginTop="50dp"
+                android:text="添加"
+                android:textSize="17sp" />
+
+            <!-- 支持银行卡 -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="7dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:id="@+id/tv_support_bank_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="支持银行列表"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_support_bank_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/tv_support_bank_title"
+                    android:text="*仅支持借记卡(不支持信用卡)"
+                    android:textSize="12sp" />
+
+                <!-- 银行列表 -->
+
+
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

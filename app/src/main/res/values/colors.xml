@@ -22,6 +22,12 @@
     <color name="transparent">#00000000</color>
     <color name="line_color">#F5F5F5</color>
     <color name="mine_center_bg">#FFA200</color>
+    <!-- 认证失败 -->
+    <color name="auth_fail">#FB5D5C</color>
+    <!-- 认证中 -->
+    <color name="auth_processing">#6F95FF</color>
+    <!-- 认证中 -->
+    <color name="auth_success">#FFA200</color>
 
 
 </resources>
