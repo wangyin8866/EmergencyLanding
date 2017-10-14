@@ -26,8 +26,13 @@
     <color name="auth_fail">#FB5D5C</color>
     <!-- 认证中 -->
     <color name="auth_processing">#6F95FF</color>
-    <!-- 认证中 -->
+    <!-- 认证成功 -->
     <color name="auth_success">#FFA200</color>
-
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="single_pop_bg">#f4f4f4</color>
+    <color name="single_pop_blue">#0079ff</color>
+    <color name="front_black">#000000</color>
+    <color name="progressbar_bg">#F2F2F2</color>
+    <color name="seekbar">#ff9079</color>
 
 </resources>

@@ -11,8 +11,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jph.takephoto.app.TakePhoto;
@@ -23,11 +28,17 @@ import com.jph.takephoto.model.TakePhotoOptions;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.CodeBean;
+import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.utils.AppToast;
+import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToolImage;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
+import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
+import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
 import java.io.File;
 
@@ -45,6 +56,14 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
     TopBar topBar;
     @BindView(R.id.iv_idcard_hold)
     ImageView ivHoldIdcard;
+    @BindView(R.id.tv_marriage_status)
+    TextView tvMarriageStatus;
+    @BindView(R.id.tv_live_status)
+    TextView tvLiveStatus;
+    @BindView(R.id.tv_huji_address)
+    TextView tvHujiAddress;
+    @BindView(R.id.tv_live_address)
+    TextView tvLiveAddress;
 
     private TakePhoto takePhoto;
     private String holdIdcardPath;
@@ -85,13 +104,63 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
 
             }
         });
+
+        CommonUtils.addressDatas(this);
     }
 
-    @OnClick({R.id.ll_idcard_hold})
+    @OnClick({R.id.ll_idcard_hold, R.id.ll_marriage_status, R.id.ll_live_status, R.id.ll_huji_address, R.id.ll_live_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_idcard_hold:
+            case R.id.ll_idcard_hold: // 手持证件照
                 jumpToTakePhoto(101);
+                break;
+            case R.id.ll_marriage_status: // 婚姻状况选择
+                SingleSelectPop popMarriageStatusSelect = new SingleSelectPop(this, AppConfig.marriageStatus());
+                popMarriageStatusSelect.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
+                    @Override
+                    public void onSelectClick(int index, CodeBean select) {
+                        tvMarriageStatus.setText(select.getName());
+                        LogUtils.d("婚姻状况选择:" + select.toString());
+                    }
+                });
+                popMarriageStatusSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.ll_live_status: // 居住状况选择
+                SingleSelectPop popLiveStatusSelect = new SingleSelectPop(this, AppConfig.liveStatus());
+                popLiveStatusSelect.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
+                    @Override
+                    public void onSelectClick(int index, CodeBean select) {
+                        tvLiveStatus.setText(select.getName());
+                        LogUtils.d("居住状况选择:" + select.toString());
+                    }
+                });
+                popLiveStatusSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.ll_huji_address: // 户籍地址选择
+                AreaSelectPop popHujiAddressSelect = new AreaSelectPop(this, CommonUtils.mProvinceDatas, CommonUtils.mCitisDatasMap, CommonUtils.mDistrictDatasMap);
+                popHujiAddressSelect.setOnCityPopupWindow(new AreaSelectPop.OnCityPopupWindow() {
+                    @Override
+                    public void onCityClick(String province, int privinceItem, String city, int cityItem, String district, int districtItem) {
+                        tvHujiAddress.setText(province + "," + city + "," + district);
+                    }
+                });
+                if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
+                    popHujiAddressSelect.setWheel();
+                }
+                popHujiAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.ll_live_address: // 居住地址选择
+                AreaSelectPop poLiveAddressSelect = new AreaSelectPop(this, CommonUtils.mProvinceDatas, CommonUtils.mCitisDatasMap, CommonUtils.mDistrictDatasMap);
+                poLiveAddressSelect.setOnCityPopupWindow(new AreaSelectPop.OnCityPopupWindow() {
+                    @Override
+                    public void onCityClick(String province, int privinceItem, String city, int cityItem, String district, int districtItem) {
+                        tvLiveAddress.setText(province + "," + city + "," + district);
+                    }
+                });
+                if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
+                    poLiveAddressSelect.setWheel();
+                }
+                poLiveAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
                 break;
         }
     }
@@ -162,7 +231,6 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
             decode.recycle();
         }
         LogUtils.d("图片位置信息filePath:" + filePath);
-//        uploadController.upload(filePath, 5);
         String data = ToolImage.fileBase64(filePath);
         final String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf(".")); // 文件名后缀名
         String fileExtName = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
@@ -179,5 +247,9 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
     @Override
     public void takeCancel() {
 
+    }
+
+    private View getRootView() {
+        return this.getWindow().getDecorView();
     }
 }

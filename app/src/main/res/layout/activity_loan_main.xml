@@ -12,17 +12,18 @@
         android:paddingLeft="20dp"
         app:drawableLeft="@mipmap/nav_back"
         app:drawableLeftVisibility="true"
-        app:title="急速借款"
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/line_color"
             android:orientation="vertical">
 
             <LinearLayout
@@ -38,7 +39,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="-147dp"
-                android:background="@color/colorPrimary">
+                android:background="@drawable/bg_home_notice">
+
+                <include layout="@layout/layout_loan_type" />
 
             </LinearLayout>
 
@@ -54,7 +57,7 @@
                 android:layout_height="170dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/white"
+                android:background="@drawable/bg_home_notice"
                 android:orientation="vertical">
 
                 <TextView
@@ -95,7 +98,7 @@
                 android:layout_height="120dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/white"
+                android:background="@drawable/bg_home_notice"
                 android:orientation="vertical">
 
                 <TextView
@@ -117,9 +120,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="18dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_height="wrap_content">
+                    android:layout_marginTop="18dp">
 
                     <ImageView
                         android:id="@+id/iv_ring1"
@@ -161,8 +164,8 @@
                         android:layout_below="@+id/iv_ring1"
                         android:layout_marginLeft="81dp"
                         android:layout_marginTop="7dp"
-                        android:text="提交审核"
                         android:layout_toRightOf="@+id/tv_firststep_desc"
+                        android:text="提交审核"
                         android:textColor="@color/front_text_color"
                         android:textSize="12sp" />
 
@@ -186,10 +189,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/iv_ring1"
-                        android:layout_marginLeft="81dp"
+                        android:layout_marginLeft="50dp"
                         android:layout_marginTop="7dp"
-                        android:text="网上签约领款"
                         android:layout_toRightOf="@+id/tv_secondstep_desc"
+                        android:text="网上签约领款"
                         android:textColor="@color/front_text_color"
                         android:textSize="12sp" />
 
@@ -205,12 +208,12 @@
 
             <!-- 急速借款支持城市 -->
             <LinearLayout
-                android:id="@+id/layout_support_cities"
+                android:id="@+id/layout_fastloan_support_cities"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@color/white"
+                android:background="@drawable/bg_home_notice"
                 android:orientation="vertical">
 
                 <TextView
@@ -250,10 +253,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_marginLeft="10dp"
-                android:visibility="gone"
                 android:layout_marginRight="10dp"
-                android:background="@color/white"
-                android:orientation="vertical">
+                android:background="@drawable/bg_home_notice"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_traditional_support_cities"
@@ -290,11 +293,11 @@
                     android:id="@+id/tv_get_all"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="5dp"
                     android:text="查看更多>"
                     android:textColor="#6F95FF"
-                    android:layout_marginRight="15dp"
                     android:textSize="13sp" />
 
             </LinearLayout>
@@ -311,4 +314,6 @@
 
         </LinearLayout>
     </ScrollView>
+
+
 </LinearLayout>

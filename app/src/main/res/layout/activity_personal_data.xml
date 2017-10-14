@@ -49,9 +49,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:background="@mipmap/ic_launcher"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:background="@mipmap/ic_launcher"
                         android:src="@mipmap/ic_launcher" />
 
                     <TextView
@@ -75,9 +75,9 @@
                         android:id="@+id/iv_idcard_back"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_launcher"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:background="@mipmap/ic_launcher"
                         android:src="@mipmap/ic_launcher" />
 
                     <TextView
@@ -101,9 +101,9 @@
                         android:id="@+id/iv_idcard_hold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@mipmap/ic_launcher"
                         android:paddingLeft="5dp"
                         android:paddingRight="5dp"
-                        android:background="@mipmap/ic_launcher"
                         android:src="@mipmap/ic_launcher" />
 
                     <TextView
@@ -144,7 +144,6 @@
                     android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:hint="请拍摄身份证进行识别"
-                    android:inputType="text"
                     android:maxLength="10"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
@@ -176,7 +175,6 @@
                     android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:hint="请拍摄身份证进行识别"
-                    android:inputType="text"
                     android:maxLength="18"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
@@ -189,7 +187,7 @@
 
             <!-- 婚姻状况 -->
             <LinearLayout
-                android:id="@+id/ll_marriage"
+                android:id="@+id/ll_marriage_status"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -206,7 +204,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_marriage"
+                    android:id="@+id/tv_marriage_status"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -217,7 +215,7 @@
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:id="@+id/iv_marriage"
+                    android:id="@+id/iv_marriage_status"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -231,7 +229,7 @@
             <View style="@style/horizontal_line_style" />
 
             <LinearLayout
-                android:id="@+id/ll_livestatu"
+                android:id="@+id/ll_live_status"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -248,7 +246,7 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_livestatu"
+                    android:id="@+id/tv_live_status"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -259,7 +257,7 @@
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:id="@+id/iv_livestatu"
+                    android:id="@+id/iv_live_status"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -281,6 +279,9 @@
                 android:layout_height="50dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
+                android:focusable="true"
+                android:gravity="center"
+                android:focusableInTouchMode="true"
                 android:paddingLeft="15dp">
 
                 <TextView
@@ -294,14 +295,13 @@
                 <TextView
                     android:id="@+id/tv_huji_address"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="请选择户籍地址"
-                    android:inputType="text"
                     android:textColor="@color/input_text_color"
-                    android:textColorHint="#b3b3b3"
+                    android:textColorHint="@color/front_text_color_hint"
                     android:textSize="15sp" />
 
                 <ImageView
@@ -334,15 +334,13 @@
                     android:textSize="14sp"
                     android:visibility="invisible" />
 
-                <EditText
+                <TextView
                     android:id="@+id/et_detail_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
-                    android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:hint="户籍详细地址"
-                    android:inputType="text"
                     android:maxLength="20"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
@@ -355,7 +353,7 @@
 
             <!-- 居住地 -->
             <LinearLayout
-                android:id="@+id/ll_residence_address_type"
+                android:id="@+id/ll_live_address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -371,20 +369,19 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_residence_address"
+                    android:id="@+id/tv_live_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="请选择居住地址"
-                    android:inputType="text"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
                     android:textSize="15sp" />
 
                 <ImageView
-                    android:id="@+id/iv_residence_address"
+                    android:id="@+id/iv_live_address"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -400,6 +397,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp">
 
@@ -412,12 +411,14 @@
                     android:textSize="14sp"
                     android:visibility="invisible" />
 
-                <EditText
-                    android:id="@+id/ed_residence_detail_address"
+                <com.zyjr.emergencylending.custom.ClearEditText
+                    android:id="@+id/ed_live_detail_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="13dp"
                     android:background="@color/transparent"
+                    android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="详细地址"
                     android:inputType="text"

@@ -47,7 +47,7 @@ public class WriteInfoMainActivity extends BaseActivity {
         initData();
     }
 
-    @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info})
+    @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info,R.id.btn_borrow_money})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_personal_info:
@@ -62,6 +62,11 @@ public class WriteInfoMainActivity extends BaseActivity {
             case R.id.layout_bank_info:
 //                startActivity(new Intent(WriteInfoMainActivity.this, BankInfoActivity.class));
                 startActivity(new Intent(WriteInfoMainActivity.this, SupportBankActivity.class));
+                break;
+            case R.id.btn_borrow_money:
+                Intent intent = new Intent(WriteInfoMainActivity.this, LoanMainActivity.class);
+                intent.putExtra("flag","offline");
+                startActivity(intent);
                 break;
         }
     }

@@ -51,8 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
-                    android:orientation="vertical"
-                    android:paddingBottom="10dp">
+                    android:orientation="vertical">
 
                     <com.zyjr.emergencylending.widget.SettingItemView
                         android:id="@+id/layout_personal_info"
@@ -102,18 +101,18 @@
                         app:setting_left_content="银行卡"
                         app:setting_left_icon="@mipmap/ic_launcher" />
 
-                    <Button
-                        android:id="@+id/btn_submit"
-                        style="@style/button_orange"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginLeft="38dp"
-                        android:layout_marginRight="38dp"
-                        android:layout_marginTop="50dp"
-                        android:text="提交"
-                        android:textSize="17sp" />
-
                 </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    style="@style/button_orange"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginLeft="38dp"
+                    android:layout_marginRight="38dp"
+                    android:layout_marginTop="50dp"
+                    android:text="提交"
+                    android:textSize="17sp" />
 
                 <!-- 传统借款 -->
                 <RelativeLayout

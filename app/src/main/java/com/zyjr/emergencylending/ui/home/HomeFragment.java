@@ -18,7 +18,10 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.loan.TestAc;
+import com.zyjr.emergencylending.ui.home.loan.TestAc1;
 import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
+import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalDataActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -104,7 +107,7 @@ public class HomeFragment extends BaseFragment {
         handler.removeCallbacksAndMessages(null);
     }
 
-    @OnClick({R.id.QR_code, R.id.message_center, R.id.pro1_btn})
+    @OnClick({R.id.QR_code, R.id.message_center, R.id.pro1_btn, R.id.pro2_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.QR_code:
@@ -114,7 +117,14 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.pro1_btn:
-                startActivity(new Intent(getActivity(), LoanMainActivity.class));
+                Intent intent = new Intent(getActivity(), LoanMainActivity.class);
+                intent.putExtra("flag", "online");
+                startActivity(intent);
+                break;
+            case R.id.pro2_btn:
+                Intent intent1 = new Intent(getActivity(), LoanMainActivity.class);
+                intent1.putExtra("flag", "offline");
+                startActivity(intent1);
                 break;
         }
     }

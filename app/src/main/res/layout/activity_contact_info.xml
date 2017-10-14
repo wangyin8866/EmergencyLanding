@@ -37,6 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp">
 
@@ -49,12 +51,14 @@
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 
-                <EditText
+                <com.zyjr.emergencylending.custom.ClearEditText
                     android:id="@+id/tv_contact_name1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="13dp"
                     android:layout_weight="1"
                     android:background="@color/transparent"
+                    android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="请输入姓名"
                     android:textColor="@color/input_text_color"
@@ -160,6 +164,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp">
 
@@ -172,14 +178,16 @@
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 
-                <EditText
+                <com.zyjr.emergencylending.custom.ClearEditText
                     android:id="@+id/tv_contact_name2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginRight="13dp"
                     android:layout_weight="1"
+                    android:background="@color/transparent"
+                    android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="请输入姓名"
-                    android:background="@color/transparent"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
                     android:textSize="15sp" />
