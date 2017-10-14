@@ -98,7 +98,14 @@
         <activity
             android:name=".ui.my.AdviceFeedbackActivity"
             android:screenOrientation="portrait" />
-        <!--认证中心-->
+        <!--线上转线下借款申请-->
+        <activity
+            android:name=".ui.home.loan.online.ApplyToOfflineConfirmActivity"
+            android:screenOrientation="portrait" />
+        <!--线下无门店借款申请确认-->
+        <activity
+            android:name=".ui.home.loan.offline.NoStoreApplyConfirmActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 

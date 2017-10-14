@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--<rv_item_store_info android:="@mipmap/icon_tickselected" android:state_enabled="true" android:state_pressed="true" />-->
+    <!--<rv_item_store_info android:drawable="@mipmap/icon_tickselected" android:state_enabled="false" android:state_focused="false" android:state_pressed="false" />-->
+    <!--<rv_item_store_info android:drawable="@mipmap/icon_tickselected" android:state_focused="true" />-->
+    <!--<rv_item_store_info android:drawable="@mipmap/icon_ticknormal" android:state_focused="false" />-->
+
+    <!-- 勾选的样式图放到res目录下的drawable中，然后在这里使用 -->
+    <!--<rv_item_store_info android:drawable="@mipmap/ic_find_checked" android:state_pressed="true" />-->
+    <!--&lt;!&ndash; 未勾选的样式图放到res目录下的drawable中，然后在这里使用 &ndash;&gt;-->
+    <!--<rv_item_store_info android:drawable="@mipmap/ic_find" android:state_pressed="false" />-->
+
+
+        <item android:drawable="@mipmap/ic_find_checked" android:state_selected="true"/>
+        <item android:drawable="@mipmap/ic_find"/>
+
+</selector>

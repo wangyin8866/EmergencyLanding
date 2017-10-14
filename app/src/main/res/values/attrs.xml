@@ -124,7 +124,7 @@
         <attr name="mission_bg" format="reference" />
     </declare-styleable>
 
-    <!-- 我的设置 item -->
+    <!-- 我的设置 rv_item_store_info -->
     <declare-styleable name="SettingItemView">
         <attr name="setting_left_icon" format="reference" />
         <attr name="setting_left_content" format="string" />
@@ -141,4 +141,11 @@
             <attr name="borderRadius" />
             <attr name="type" />
         </declare-styleable>
+
+    <!-- imageview背景切换选择 -->
+    <declare-styleable name="SelectorImageView">
+        <attr name="selector_src" format="reference"/>
+        <attr name="checked" format="boolean"/>
+    </declare-styleable>
+
 </resources>

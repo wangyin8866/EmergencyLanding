@@ -2,6 +2,8 @@ package com.zyjr.emergencylending.ui.home.loan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -9,12 +11,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.BubbleSeekBar;
+import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,6 +48,8 @@ public class LoanMainActivity extends BaseActivity {
     TextView tvMinLoadWeek;
     @BindView(R.id.tv_loan_week_max)
     TextView tvMaxLoadWeek;
+    @BindView(R.id.rv_product_introduce)
+    RecyclerView rvProductIntroduce;
 
     @BindView(R.id.btn_apply_quickly)
     Button btnApplyQuicky;
@@ -58,6 +68,7 @@ public class LoanMainActivity extends BaseActivity {
     private int MAX_WEEK = 0;
     private int MIN_MONEY = 0;
     private int MAX_MONEY = 0;
+    private List<ProIntroduceBean> proIntroduceList = null;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -69,10 +80,24 @@ public class LoanMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_main);
         ButterKnife.bind(this);
+        initData();
         initGetData();
         initListener();
         LogUtils.e("weekProgress:" + weekProgress + ",moneyProgress:" + moneyProgress);
     }
+
+    private void initData() {
+        proIntroduceList = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            ProIntroduceBean item = new ProIntroduceBean("新产品" + i, "快来体验" + i);
+            proIntroduceList.add(item);
+        }
+        ProIntroduceAdapter adapter = new ProIntroduceAdapter(R.layout.rv_item_pro_introduce, proIntroduceList);
+        rvProductIntroduce.setLayoutManager(new LinearLayoutManager(this));
+        rvProductIntroduce.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, 12, getResources().getColor(R.color.white)));
+        rvProductIntroduce.setAdapter(adapter);
+    }
+
 
     private void initGetData() {
         Intent intent = getIntent();

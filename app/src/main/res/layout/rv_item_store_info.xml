@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/head_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:paddingBottom="5dp">
+
+            <TextView
+                android:id="@+id/tv_item_store_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/input_text_color"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_item_store_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_item_store_name"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="6dp"
+                android:maxLines="2" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:gravity="center">
+
+            <com.zyjr.emergencylending.widget.SelectorImageView
+                android:id="@+id/iv_item_store_selected"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/ic_find"
+                app:selector_src="@mipmap/ic_find_checked" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <View
+        style="@style/horizontal_line_style"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom" />
+
+</LinearLayout>

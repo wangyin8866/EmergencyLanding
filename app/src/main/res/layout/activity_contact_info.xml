@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -19,7 +19,9 @@
     <ScrollView
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_bottom"
+        android:layout_below="@+id/top_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -297,14 +299,16 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:layout_marginTop="15dp"
             android:background="@color/mine_center_bg"
             android:text="提交"
@@ -312,4 +316,4 @@
             android:textSize="17sp" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

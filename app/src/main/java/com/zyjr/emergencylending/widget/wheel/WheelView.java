@@ -107,7 +107,7 @@ public class WheelView extends View {
     // Items layout
     private LinearLayout itemsLayout;
 
-    // The number of first item in layout
+    // The number of first rv_item_store_info in layout
     private int firstItem;
 
     // View adapter
@@ -367,9 +367,9 @@ public class WheelView extends View {
     }
 
     /**
-     * Sets the current item. Does nothing when index is wrong.
+     * Sets the current rv_item_store_info. Does nothing when index is wrong.
      *
-     * @param index    the item index
+     * @param index    the rv_item_store_info index
      * @param animated the animation flag
      */
     public void setCurrentItem(int index, boolean animated) {
@@ -412,16 +412,16 @@ public class WheelView extends View {
     }
 
     /**
-     * Sets the current item w/o animation. Does nothing when index is wrong.
+     * Sets the current rv_item_store_info w/o animation. Does nothing when index is wrong.
      *
-     * @param index the item index
+     * @param index the rv_item_store_info index
      */
     public void setCurrentItem(int index) {
         setCurrentItem(index, false);
     }
 
     /**
-     * Tests if wheel is cyclic. That means before the 1st item there is shown the last one
+     * Tests if wheel is cyclic. That means before the 1st rv_item_store_info there is shown the last one
      *
      * @return true if wheel is cyclic
      */
@@ -544,9 +544,9 @@ public class WheelView extends View {
     }
 
     /**
-     * Returns height of wheel item
+     * Returns height of wheel rv_item_store_info
      *
-     * @return the item height
+     * @return the rv_item_store_info height
      */
     private int getItemHeight() {
         if (itemHeight != 0) {
@@ -901,7 +901,7 @@ public class WheelView extends View {
     }
 
     /**
-     * Creates item layouts if necessary
+     * Creates rv_item_store_info layouts if necessary
      */
     private void createItemsLayout() {
         if (itemsLayout == null) {
@@ -931,11 +931,11 @@ public class WheelView extends View {
     }
 
     /**
-     * Adds view for item to items layout
+     * Adds view for rv_item_store_info to items layout
      *
-     * @param index the item index
+     * @param index the rv_item_store_info index
      * @param first the flag indicates if view should be first
-     * @return true if corresponding item exists and is added
+     * @return true if corresponding rv_item_store_info exists and is added
      */
     private boolean addViewItem(int index, boolean first) {
         View view = getItemView(index);
@@ -955,8 +955,8 @@ public class WheelView extends View {
     /**
      * Checks whether intem index is valid
      *
-     * @param index the item index
-     * @return true if item index is not out of bounds or the wheel is cyclic
+     * @param index the rv_item_store_info index
+     * @return true if rv_item_store_info index is not out of bounds or the wheel is cyclic
      */
     private boolean isValidItemIndex(int index) {
         return viewAdapter != null && viewAdapter.getItemsCount() > 0 &&
@@ -964,10 +964,10 @@ public class WheelView extends View {
     }
 
     /**
-     * Returns view for specified item
+     * Returns view for specified rv_item_store_info
      *
-     * @param index the item index
-     * @return item view or empty view if index is out of bounds
+     * @param index the rv_item_store_info index
+     * @return rv_item_store_info view or empty view if index is out of bounds
      */
     private View getItemView(int index) {
         if (viewAdapter == null || viewAdapter.getItemsCount() == 0) {

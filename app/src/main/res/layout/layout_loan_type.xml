@@ -24,17 +24,18 @@
                 android:id="@+id/icon_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/icon_money"
-                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp"
                 android:text="借款金额"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <View
@@ -58,7 +59,8 @@
                     style="@style/SeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="50" />
+                    android:max="50"
+                    android:progressDrawable="@drawable/seekbar_money_process" />
             </LinearLayout>
 
             <!-- 金额区间 -->
@@ -117,16 +119,18 @@
                 android:id="@+id/icon_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/icon_week"
-                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp"
                 android:text="借款期限"
-                android:textSize="14dp" />
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <View
@@ -152,7 +156,8 @@
                     style="@style/SeekBar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:max="50" />
+                    android:max="50"
+                    android:progressDrawable="@drawable/seekbar_week_process" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
