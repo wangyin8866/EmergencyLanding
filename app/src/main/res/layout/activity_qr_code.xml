@@ -188,7 +188,7 @@
                 android:id="@+id/qr_save"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_savepic" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -212,7 +212,7 @@
                 android:id="@+id/qr_we_chat"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_wechat" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -236,7 +236,7 @@
                 android:id="@+id/circle_of_friends"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_friends" />
 
             <TextView
                 android:layout_width="wrap_content"

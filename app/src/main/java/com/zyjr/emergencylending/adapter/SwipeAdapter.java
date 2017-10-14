@@ -36,7 +36,7 @@ public class SwipeAdapter extends BaseQuickAdapter<MessageBean,BaseViewHolder> {
     @Override
     protected void convert(final BaseViewHolder viewHolder, MessageBean item) {
         viewHolder.setText(R.id.username, item.getTitle())
-                .addOnClickListener(R.id.username);
+                .addOnClickListener(R.id.content);
         ((SwipeMenuView)viewHolder.getView(R.id.swipeMenuView)).setIos(false).setLeftSwipe(true);
 
         viewHolder.getView(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -153,7 +152,6 @@ public class AreaSelectPop extends PopupWindow implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         if (buttonOK == v) {
             if (country.getCurrentItem() > mProvinceDatas.length - 1) return;
             mCurrentProviceName = mProvinceDatas[country.getCurrentItem()];

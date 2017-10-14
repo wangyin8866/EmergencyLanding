@@ -1,19 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:text="注册"
-        android:textColor="#474747"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-         />
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="10dp"
+        android:text="注册"
+        android:textColor="#474747"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_close"
@@ -29,22 +28,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        android:layout_below="@+id/iv_close"
-       >
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            >
+            android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_app_logo"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
-                    android:layout_marginTop="28dp"
-                    android:scaleType="fitXY"
-                    android:layout_centerHorizontal="true"
-                    android:src="@mipmap/ic_home" />
+            <ImageView
+                android:id="@+id/iv_app_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="28dp"
+                android:scaleType="fitXY"
+                android:src="@mipmap/logo" />
 
 
             <!-- 基本信息 -->
@@ -65,12 +65,12 @@
                     android:layout_height="48dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
-                    <com.zyjr.emergencylending.custom.ClearEditText
+
+                    <EditText
                         android:id="@+id/et_phone_number"
                         style="@style/et_input_style"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_launcher"
-                        android:drawableRight="@mipmap/login_delete"
+                        android:drawableLeft="@mipmap/icon_mobile"
                         android:hint="@string/login_account_hint"
                         android:inputType="phone"
                         android:maxLength="11"
@@ -85,12 +85,12 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
-                    <com.zyjr.emergencylending.custom.ClearEditText
+
+                    <EditText
                         android:id="@+id/et_password"
                         style="@style/et_input_style"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_launcher"
-                        android:drawableRight="@mipmap/login_delete"
+                        android:drawableLeft="@mipmap/icon_lock"
                         android:hint="@string/login_password_hint"
                         android:inputType="textPassword"
                         android:maxLength="16"
@@ -99,11 +99,11 @@
 
                     <ImageView
                         android:id="@+id/iv_show_pwd"
-                        android:layout_width="18dp"
-                        android:layout_height="14.5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginRight="24dp"
-                        android:background="@mipmap/ic_home" />
+                        android:background="@mipmap/eye_off" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -112,12 +112,12 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
-                    <com.zyjr.emergencylending.custom.ClearEditText
+
+                    <EditText
                         android:id="@+id/et_sms_code"
                         style="@style/et_input_style"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_launcher"
-                        android:drawableRight="@mipmap/login_delete"
+                        android:drawableLeft="@mipmap/icon_verification"
                         android:hint="@string/sms_code_hint"
                         android:inputType="text"
                         android:maxLength="8"
@@ -128,9 +128,9 @@
                         android:id="@+id/btn_login_code"
                         android:layout_width="80dp"
                         android:layout_height="26dp"
+                        android:layout_gravity="center"
                         android:layout_marginRight="11dp"
                         android:background="@drawable/btn_login_shape"
-                        android:layout_gravity="center"
                         android:text="@string/send_sms_code"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
@@ -143,12 +143,12 @@
                     android:layout_marginTop="15dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
-                    <com.zyjr.emergencylending.custom.ClearEditText
+
+                    <EditText
                         android:id="@+id/et_invite_code"
                         style="@style/et_input_style"
                         android:layout_weight="1"
-                        android:drawableLeft="@drawable/ic_launcher"
-                        android:drawableRight="@mipmap/login_delete"
+                        android:drawableLeft="@mipmap/icon_invitation"
                         android:hint="@string/register_invite_hint"
                         android:inputType="text"
                         android:maxLength="8"
@@ -159,99 +159,75 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="39dp"
-                    >
+                    android:layout_marginTop="39dp">
 
                     <CheckBox
                         android:id="@+id/cb_check"
                         style="@style/register_cbx"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:layout_centerVertical="true"
+                        android:layout_alignParentTop="true"
                         android:layout_marginRight="5dp"
-                        android:checked="true"
+                        android:checked="false"
                         android:padding="5dp" />
 
                     <TextView
                         android:id="@+id/tv_agreed"
+                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:lineSpacingExtra="4dp"
                         android:layout_toRightOf="@+id/cb_check"
-                        android:text="我已阅读并同意急借通"
+                        android:text="我已阅读并同意急借通《用户使用及安全隐私协议》《用户信息授权服务协议》"
                         android:textColor="@color/front_text_color_hint"
                         android:textSize="12sp" />
 
-                    <TextView
-                        android:id="@+id/tv_agreement_register"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/tv_agreed"
-                        android:padding="5dp"
-                        android:text="@string/register_agreement1"
-                        android:textColor="@color/front_text_color_agreement"
-                        android:textSize="12sp" />
-
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tv_agreement_infomation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:padding="5dp"
-                        android:text="@string/register_agreement2"
-                        android:textColor="@color/front_text_color_agreement"
-                        android:textSize="12sp" />
-                </RelativeLayout>
 
                 <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
                     android:id="@+id/btn_register"
                     style="@style/button_orange"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:layout_marginTop="13dp"
+                    android:enabled="false"
                     android:text="@string/register"
                     android:textSize="17sp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_below="@+id/layout_user_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="66dp"
+                android:layout_below="@+id/layout_user_input"
                 android:layout_marginBottom="5dp"
+
                 android:layout_marginLeft="74dp"
                 android:layout_marginRight="73dp"
-                android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="66dp"
                 android:gravity="center"
-                android:text="@string/warm_notice"
-                android:textColor="@color/front_text_color"
-                android:textSize="13sp" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="@string/register_notice_content"
-                android:textColor="@color/front_text_color_hint"
-                android:textSize="12sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/warm_notice"
+                    android:textColor="@color/front_text_color"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:text="@string/register_notice_content"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="12sp" />
             </LinearLayout>
         </RelativeLayout>
 
     </ScrollView>
-
-
 
 
 </RelativeLayout>

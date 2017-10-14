@@ -1,9 +1,9 @@
 package com.zyjr.emergencylending.utils;
 
 import android.annotation.SuppressLint;
-import android.widget.TextView;
+import android.widget.Button;
 
-import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.config.Config;
 
 import java.text.ParseException;
 import java.text.ParsePosition;
@@ -30,9 +30,9 @@ public class DateUtil {
      * 验证码倒计时
      * @param tv
      */
-    public static Subscription countDown(final TextView tv, final String reset) {
-        final long[] currentTime = {Constants.seconds-1000};
-        tv.setText((Constants.seconds-1000)/1000+"s");
+    public static Subscription countDown(final Button tv, final String reset) {
+        final long[] currentTime = {Config.seconds-1000};
+        tv.setText((Config.seconds-1000)/1000+"s");
         Subscription subscribe = Observable.interval(1, TimeUnit.SECONDS, AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -652,7 +652,6 @@ public class DateUtil {
             long l = d.getTime();
             re_time = l;
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return re_time;
@@ -667,7 +666,6 @@ public class DateUtil {
         try {
             c.setTime(format.parse(pTime));
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         switch (c.get(Calendar.DAY_OF_WEEK)) {

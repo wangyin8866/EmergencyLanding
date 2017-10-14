@@ -93,7 +93,6 @@ public class SingleSelectPop extends PopupWindow implements OnClickListener {
 
     @Override
     public void onClick(View v) {
-        // TODO Auto-generated method stub
         if (buttonOK == v) {
             if (selector.getCurrentItem() > mAllDatas.size() - 1) return;
             mSelectDatasName = mAllDatas.get(selector.getCurrentItem());

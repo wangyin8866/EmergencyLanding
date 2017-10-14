@@ -28,8 +28,6 @@
     <string name="sms_code_hint">输入验证码</string>
     <string name="warm_notice">温馨提示</string>
     <string name="register_notice_content">工作人员不会以任何方式向您索要其他费用请到APP确认官方联系方式,谨防上当受骗</string>
-    <string name="register_agreement1">《用户使用及安全隐私协议》</string>
-    <string name="register_agreement2">《用户信息授权服务协议》</string>
     <string name="update_login_pwd_hint">请设置6-16位数字或字母的新密码</string>
     <string name="update_login_pwd_hint_again">再次输入新密码</string>
 

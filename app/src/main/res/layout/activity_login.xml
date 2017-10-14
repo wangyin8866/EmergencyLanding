@@ -12,7 +12,7 @@
         android:text="登录"
         android:textColor="#474747"
         android:textSize="18sp"
-        android:textStyle="bold" />
+         />
 
     <ImageView
         android:id="@+id/iv_close"
@@ -25,13 +25,13 @@
 
     <ImageView
         android:id="@+id/iv_app_logo"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/iv_close"
         android:layout_centerInParent="true"
         android:layout_marginTop="28dp"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_home" />
+        android:src="@mipmap/logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,11 +51,10 @@
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
 
-            <com.zyjr.emergencylending.custom.ClearEditText
+            <EditText
                 android:id="@+id/et_phone_number"
                 style="@style/et_input_style"
-                android:drawableLeft="@drawable/ic_launcher"
-                android:drawableRight="@mipmap/login_delete"
+                android:drawableLeft="@mipmap/icon_mobile"
                 android:hint="@string/login_account_hint"
                 android:inputType="phone"
                 android:maxLength="11"
@@ -69,11 +68,18 @@
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
 
-            <com.zyjr.emergencylending.custom.ClearEditText
+            <EditText
                 android:id="@+id/et_password"
-                style="@style/et_input_style"
-                android:drawableLeft="@drawable/ic_launcher"
-                android:drawableRight="@mipmap/login_delete"
+               android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:singleLine="true"
+                android:textColor="@color/front_text_color"
+                android:textColorHint="@color/front_text_color_hint"
+                android:layout_marginLeft="25dp"
+                android:drawablePadding="18dp"
+                android:drawableLeft="@mipmap/icon_lock"
                 android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
                 android:maxLength="16"
@@ -81,11 +87,12 @@
 
             <ImageView
                 android:id="@+id/iv_show_pwd"
-                android:layout_width="18dp"
-                android:layout_height="14.5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:src="@mipmap/eye_off"
                 android:layout_marginRight="24dp"
-                android:background="@mipmap/ic_launcher" />
+               />
         </LinearLayout>
 
         <Button
@@ -94,7 +101,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="20dp"
-            android:enabled="true"
             android:text="@string/login"
             android:textSize="17sp" />
 

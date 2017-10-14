@@ -125,17 +125,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         restView();
         switch (currentPage) {
             case 0://未登录
-                idTabIv01.setImageResource(R.mipmap.ic_home_checked);
+                idTabIv01.setImageResource(R.mipmap.bottom_loan_on);
                 idTabTv01.setTextColor(getResources().getColor(R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
             case 1:
-                idTabIv02.setImageResource(R.mipmap.ic_product_checked);
+                idTabIv02.setImageResource(R.mipmap.bottom_repayment_on);
                 idTabTv02.setTextColor(getResources().getColor(R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
             case 2:
-                idTabIv03.setImageResource(R.mipmap.ic_my_checked);
+                idTabIv03.setImageResource(R.mipmap.bottom_my_on);
                 idTabTv03.setTextColor(getResources().getColor(R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
@@ -150,9 +150,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * 重置所有状态
      */
     private void restView() {
-        idTabIv01.setImageResource(R.mipmap.ic_home);
-        idTabIv02.setImageResource(R.mipmap.ic_product);
-        idTabIv03.setImageResource(R.mipmap.ic_my);
+        idTabIv01.setImageResource(R.mipmap.bottom_loan_off);
+        idTabIv02.setImageResource(R.mipmap.bottom_repayment_off);
+        idTabIv03.setImageResource(R.mipmap.bottom_my_off);
 
         idTabTv01.setTextColor(getResources().getColor(R.color.tv_navigate));
         idTabTv02.setTextColor(getResources().getColor(R.color.tv_navigate));

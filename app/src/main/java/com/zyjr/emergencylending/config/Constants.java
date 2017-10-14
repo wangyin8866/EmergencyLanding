@@ -8,9 +8,6 @@ public class Constants {
     /**
      * 判断是否更新APK
      */
-    public static boolean update = true;
-    /**
-     * 倒计时时间
-     */
-    public static final int seconds = 60000;
+    public static  boolean update = true;
+
 }

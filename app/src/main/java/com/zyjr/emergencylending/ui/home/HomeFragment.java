@@ -18,10 +18,6 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
-import com.zyjr.emergencylending.ui.home.loan.TestAc;
-import com.zyjr.emergencylending.ui.home.loan.TestAc1;
-import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
-import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalDataActivity;
 
 import java.util.ArrayList;
 import java.util.List;
