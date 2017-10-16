@@ -100,13 +100,32 @@
             android:screenOrientation="portrait" />
         <!--线上转线下借款申请-->
         <activity
-            android:name=".ui.home.loan.online.ApplyToOfflineConfirmActivity"
+            android:name="com.zyjr.emergencylending.ui.home.loan.online.ApplyToOfflineConfirmActivity"
             android:screenOrientation="portrait" />
         <!--线下无门店借款申请确认-->
         <activity
-            android:name=".ui.home.loan.offline.NoStoreApplyConfirmActivity"
+            android:name="com.zyjr.emergencylending.ui.home.loan.offline.NoStoreApplyConfirmActivity"
             android:screenOrientation="portrait" />
-
+        <!--领取金额成功页面-->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.GetLoanMoneyActivity"
+            android:screenOrientation="portrait" />
+        <!-- 借款订单状态  -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity"
+            android:screenOrientation="portrait" />
+        <!-- 放款处理中 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.SendLoanProcessingActivity"
+            android:screenOrientation="portrait" />
+        <!-- 处理失败 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.HandleFailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 添加银行卡信息页面 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

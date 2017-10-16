@@ -35,5 +35,6 @@
     <color name="progressbar_bg">#F2F2F2</color>
     <color name="seekbar">#ff9079</color>
     <color name="seekbar_process_color">#477CEA</color>
+    <color name="order_uncomplected_color">#FFDA9B</color>
 
 </resources>

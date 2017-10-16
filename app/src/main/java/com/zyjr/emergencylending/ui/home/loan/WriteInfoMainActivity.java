@@ -61,7 +61,8 @@ public class WriteInfoMainActivity extends BaseActivity {
                 break;
             case R.id.layout_bank_info:
 //                startActivity(new Intent(WriteInfoMainActivity.this, BankInfoActivity.class));
-                startActivity(new Intent(WriteInfoMainActivity.this, SupportBankActivity.class));
+//                startActivity(new Intent(WriteInfoMainActivity.this, SupportBankActivity.class));
+                startActivity(new Intent(WriteInfoMainActivity.this, AddBankcardActivity.class));
                 break;
             case R.id.btn_borrow_money:
                 Intent intent = new Intent(WriteInfoMainActivity.this, LoanMainActivity.class);

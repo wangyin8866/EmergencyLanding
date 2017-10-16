@@ -7,9 +7,12 @@ import com.zyjr.emergencylending.entity.CityModel1;
 import com.zyjr.emergencylending.entity.DistrictModel;
 import com.zyjr.emergencylending.entity.ProvinceModel;
 import com.zyjr.emergencylending.service.XmlParserHandler;
+import com.zyjr.emergencylending.widget.step.StepBean;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,4 +114,67 @@ public class CommonUtils {
         }
     }
 
+
+    /**
+     * 设置订单状态
+     */
+    public static ArrayList<StepBean> setOrderStatus(int orderIndex) {
+        List<StepBean> stepsBeanList = new ArrayList<>();
+        StepBean stepBean0 = null;
+        StepBean stepBean1 = null;
+        StepBean stepBean2 = null;
+        StepBean stepBean3 = null;
+        StepBean stepBean4 = null;
+        StepBean stepBean5 = null;
+        if (orderIndex == 0) { // 填写资料
+            stepBean0 = new StepBean("填写资料", 0);
+            stepBean1 = new StepBean("认证中", -1);
+            stepBean2 = new StepBean("审核中", -1);
+            stepBean3 = new StepBean("领取金额", -1);
+            stepBean4 = new StepBean("放款中", -1);
+            stepBean5 = new StepBean("还款中", -1);
+        } else if (orderIndex == 1) { // 认证中
+            stepBean0 = new StepBean("填写资料", 1);
+            stepBean1 = new StepBean("认证中", 0);
+            stepBean2 = new StepBean("审核中", -1);
+            stepBean3 = new StepBean("领取金额", -1);
+            stepBean4 = new StepBean("放款中", -1);
+            stepBean5 = new StepBean("还款中", -1);
+        } else if (orderIndex == 2) {  // 审核中
+            stepBean0 = new StepBean("填写资料", 1);
+            stepBean1 = new StepBean("认证中", 1);
+            stepBean2 = new StepBean("审核中", 0);
+            stepBean3 = new StepBean("领取金额", -1);
+            stepBean4 = new StepBean("放款中", -1);
+            stepBean5 = new StepBean("还款中", -1);
+        } else if (orderIndex == 3) {  // 领取金额
+            stepBean0 = new StepBean("填写资料", 1);
+            stepBean1 = new StepBean("认证中", 1);
+            stepBean2 = new StepBean("审核中", 1);
+            stepBean3 = new StepBean("领取金额", 0);
+            stepBean4 = new StepBean("放款中", -1);
+            stepBean5 = new StepBean("还款中", -1);
+        } else if (orderIndex == 4) {  // 放款中
+            stepBean0 = new StepBean("填写资料", 1);
+            stepBean1 = new StepBean("认证中", 1);
+            stepBean2 = new StepBean("审核中", 1);
+            stepBean3 = new StepBean("领取金额", 1);
+            stepBean4 = new StepBean("放款中", 0);
+            stepBean5 = new StepBean("还款中", -1);
+        } else if (orderIndex == 5) {  // 还款中
+            stepBean0 = new StepBean("填写资料", 1);
+            stepBean1 = new StepBean("认证中", 1);
+            stepBean2 = new StepBean("审核中", 1);
+            stepBean3 = new StepBean("领取金额", 1);
+            stepBean4 = new StepBean("放款中", 1);
+            stepBean5 = new StepBean("还款中", 1);
+        }
+        stepsBeanList.add(stepBean0);
+        stepsBeanList.add(stepBean1);
+        stepsBeanList.add(stepBean2);
+        stepsBeanList.add(stepBean3);
+        stepsBeanList.add(stepBean4);
+        stepsBeanList.add(stepBean5);
+        return (ArrayList<StepBean>) stepsBeanList;
+    }
 }

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeftVisibility="true"
+        app:title="放款中"
+        app:titleTextColor="@color/input_text_color"
+        app:titleTextSize="16sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/top_bar"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/line_color"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="30dp">
+
+                <ImageView
+                    android:id="@+id/iv_order_status_icon"
+                    android:layout_width="145dp"
+                    android:layout_height="122dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="65dp"
+                    android:src="@mipmap/emptypage_success" />
+
+                <TextView
+                    android:id="@+id/tv_loan_status_desc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:text="系统正在放款中"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_warm_notice_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="温馨提示"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_warm_notice_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="23dp"
+                    android:text="1.本次借款成功后收取200元账户管理费与一期履约保证金"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_warm_notice_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:layout_marginTop="4dp"
+                    android:text="2.还款日当日正常还款不出现逾期，保证金将自动抵扣最后 一期还款，逾期将概不退还"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_warm_notice_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="23dp"
+                    android:layout_marginRight="23dp"
+                    android:layout_marginTop="4dp"
+                    android:text="3.保持良好信用，再次申请会有更多提额惊喜哦"
+                    android:textColor="@color/front_text_color_hint"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

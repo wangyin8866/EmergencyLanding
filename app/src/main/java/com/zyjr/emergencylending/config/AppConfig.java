@@ -114,7 +114,7 @@ public class AppConfig {
         return proFessionList;
     }
 
-    public static List<CodeBean> month_salary() {
+    public static List<CodeBean> monthSalary() {
         List<CodeBean> month_salary = new ArrayList();
         month_salary.add(new CodeBean(0, "0", "2000元以下"));
         month_salary.add(new CodeBean(1, "6", "2000-2999元"));

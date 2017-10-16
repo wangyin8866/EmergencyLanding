@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/selector_layout_click"
     android:orientation="vertical">
 
     <ImageView
@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:background="@mipmap/double_arrow" />
+        android:layout_marginLeft="14.5dp" />
 
     <TextView
         android:id="@+id/tv_left_content"
@@ -19,7 +19,6 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="20dp"
         android:layout_toRightOf="@+id/iv_left_icon"
-        android:text="AAA"
         android:textSize="14sp" />
 
     <TextView
@@ -40,5 +39,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:src="@mipmap/double_arrow" />
+        android:layout_marginRight="14.5dp" />
 </RelativeLayout>

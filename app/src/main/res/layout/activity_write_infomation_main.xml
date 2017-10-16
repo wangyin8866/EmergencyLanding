@@ -57,10 +57,9 @@
                         android:id="@+id/layout_personal_info"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="14.5dp"
-                        android:layout_marginRight="14.5dp"
                         app:setting_left_content="个人信息"
-                        app:setting_left_icon="@mipmap/ic_launcher" />
+                        app:setting_right_icon="@mipmap/arrow_right"
+                        app:setting_left_icon="@mipmap/data_user" />
 
                     <View
                         style="@style/horizontal_line_style"
@@ -70,10 +69,9 @@
                         android:id="@+id/layout_work_info"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="14.5dp"
-                        android:layout_marginRight="14.5dp"
                         app:setting_left_content="工作信息"
-                        app:setting_left_icon="@mipmap/ic_launcher" />
+                        app:setting_right_icon="@mipmap/arrow_right"
+                        app:setting_left_icon="@mipmap/data_job" />
 
                     <View
                         style="@style/horizontal_line_style"
@@ -83,10 +81,9 @@
                         android:id="@+id/layout_contact_info"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="14.5dp"
-                        android:layout_marginRight="14.5dp"
+                        app:setting_right_icon="@mipmap/arrow_right"
                         app:setting_left_content="联系人"
-                        app:setting_left_icon="@mipmap/ic_launcher" />
+                        app:setting_left_icon="@mipmap/data_users" />
 
                     <View
                         style="@style/horizontal_line_style"
@@ -96,10 +93,9 @@
                         android:id="@+id/layout_bank_info"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:layout_marginLeft="14.5dp"
-                        android:layout_marginRight="14.5dp"
+                        app:setting_right_icon="@mipmap/arrow_right"
                         app:setting_left_content="银行卡"
-                        app:setting_left_icon="@mipmap/ic_launcher" />
+                        app:setting_left_icon="@mipmap/data_card" />
 
                 </LinearLayout>
 

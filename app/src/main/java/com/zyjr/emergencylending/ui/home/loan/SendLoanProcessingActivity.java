@@ -9,10 +9,12 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import butterknife.ButterKnife;
 
 /**
- * Created by neil on 2017/10/14
- * 备注: 领取借款金额
+ * Created by neil on 2017/10/16
+ * 备注: 放款中
  */
-public class GetLoanMoneyActivity extends BaseActivity{
+
+public class SendLoanProcessingActivity extends BaseActivity{
+
 
     @Override
     protected BasePresenter createPresenter() {
@@ -22,7 +24,7 @@ public class GetLoanMoneyActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_get_loan_money);
+        setContentView(R.layout.activity_send_loan_processing);
         ButterKnife.bind(this);
     }
 }

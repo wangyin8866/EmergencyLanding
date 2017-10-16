@@ -19,9 +19,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_below="@+id/top_bar"
         android:scrollbars="none">
 
         <LinearLayout
@@ -70,8 +68,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="10周"
-                            android:textColor="#525252"
-                            android:textSize="16sp" />
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -80,8 +78,8 @@
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="借款周期"
-                            android:textColor="#999999"
-                            android:textSize="12sp" />
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
 
                     </RelativeLayout>
 
@@ -103,8 +101,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="300元/期"
-                            android:textColor="#525252"
-                            android:textSize="16sp" />
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -113,8 +111,8 @@
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="期还款额"
-                            android:textColor="#999999"
-                            android:textSize="12sp" />
+                            android:textColor="@color/white"
+                            android:textSize="11sp" />
 
                     </RelativeLayout>
 
@@ -127,68 +125,130 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginTop="-15dp"
                 android:background="@drawable/bg_home_notice">
 
                 <!-- 线下 -->
-
-            </LinearLayout>
-
-            <View
-                style="@style/horizontal_line_style"
-                android:layout_height="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp" />
-
-            <!-- 城市支持 -->
-            <LinearLayout
-                android:id="@+id/layout_store_supported"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:visibility="gone"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/bg_home_notice"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_support_cities"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="15dp"
-                    android:text="请选择您所在的城市"
-                    android:textColor="@color/input_text_color"
-                    android:textSize="14sp" />
+                    android:orientation="vertical">
 
-                <View
-                    style="@style/horizontal_line_style"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="14dp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_store_supported"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="14dp"
-                        android:layout_marginTop="10dp"
-                        android:visibility="gone" />
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="15dp"
+                        android:drawableLeft="@mipmap/icon_explain"
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:text="费用说明：请参阅相关协议"
+                        android:textColor="@color/input_text_color"
+                        android:textSize="14sp" />
 
-                    <ProgressBar
-                        android:id="@+id/pb_store_supported_loading"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@mipmap/protocol_bg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_loan_agreement_1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginTop="20dp"
+                            android:gravity="center_vertical"
+                            android:text="《借款协议》"
+                            android:textColor="@color/front_text_color_agreement"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_loan_agreement_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/tv_loan_agreement_1"
+                            android:layout_below="@id/tv_loan_agreement_1"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center_vertical"
+                            android:text="《信用管理服务协议》"
+                            android:textColor="@color/front_text_color_agreement"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_loan_agreement_3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/tv_loan_agreement_2"
+                            android:layout_below="@id/tv_loan_agreement_2"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center_vertical"
+                            android:text="《账户管理与数据管理协议》"
+                            android:textColor="@color/front_text_color_agreement"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tv_loan_agreement_4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignLeft="@+id/tv_loan_agreement_3"
+                            android:layout_below="@id/tv_loan_agreement_3"
+                            android:layout_marginTop="15dp"
+                            android:gravity="center_vertical"
+                            android:text="《还款明细说明》"
+                            android:textColor="@color/front_text_color_agreement"
+                            android:textSize="13sp" />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true" />
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="35dp">
 
-                </RelativeLayout>
+                        <CheckBox
+                            android:id="@+id/cb_check"
+                            style="@style/register_cbx"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginRight="5dp"
+                            android:checked="false"
+                            android:padding="5dp" />
 
+                        <TextView
+                            android:id="@+id/tv_agreed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginLeft="5dp"
+                            android:layout_toEndOf="@+id/cb_check"
+                            android:layout_toRightOf="@+id/cb_check"
+                            android:gravity="center"
+                            android:lineSpacingExtra="4dp"
+                            android:text="我已阅读并同意签约上述合同"
+                            android:textColor="@color/front_text_color_hint"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                    <Button
+                        android:id="@+id/btn_login"
+                        style="@style/button_orange"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="40dp"
+                        android:layout_marginLeft="28dp"
+                        android:layout_marginRight="27dp"
+                        android:layout_marginTop="20dp"
+                        android:text="马上领取"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
             </LinearLayout>
-
 
         </LinearLayout>
     </ScrollView>

@@ -82,7 +82,7 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_data);
         ButterKnife.bind(this);
-        Drawable d = ContextCompat.getDrawable(this, R.mipmap.ic_launcher);
+        Drawable d = ContextCompat.getDrawable(this, R.mipmap.shotcard_positive);
         mWidth = d.getMinimumWidth();
         mHeight = d.getMinimumHeight();
         LogUtils.d("idcard", mWidth + "-----" + mHeight);

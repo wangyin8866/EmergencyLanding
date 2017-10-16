@@ -26,7 +26,6 @@ import butterknife.ButterKnife;
  * Created by neil on 2017/10/12
  * 备注: 支持银行选择
  */
-
 public class SupportBankActivity extends BaseActivity {
 
     @BindView(R.id.rv_banklist)
@@ -52,6 +51,8 @@ public class SupportBankActivity extends BaseActivity {
 
     private void init() {
         bankBeanList = new ArrayList<>();
+
+
         for (int i = 0; i < 10; i++) {
             BankBean bankBean = new BankBean("test" + i, "中国工商", false);
             bankBeanList.add(bankBean);
