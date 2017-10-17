@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,7 +28,9 @@ import butterknife.ButterKnife;
 
 
 /**
- * Created by wangyin on 2017/5/16.
+ *
+ * @author wangyin
+ * @date 2017/5/16
  */
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -51,11 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView idTabIv03;
     @BindView(R.id.id_tab_tv_03)
     TextView idTabTv03;
-    private HomeFragment homeFragment;
-    private RepaymentFragment repaymentFragment;
-    private MyFragment myFragment;
     private List<Fragment> fragments;
-    public static int currentPage=0;
+    public static int currentPage = 0;
     private static final String TAG = "MainActivity";
     private ImmersionBar mImmersionBar;
 
@@ -74,9 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         fragments = new ArrayList<>();
 
-        homeFragment = new HomeFragment();
-        repaymentFragment = new RepaymentFragment();
-        myFragment = new MyFragment();
+        HomeFragment homeFragment = new HomeFragment();
+        RepaymentFragment repaymentFragment = new RepaymentFragment();
+        MyFragment myFragment = new MyFragment();
         fragments.add(homeFragment);
         fragments.add(repaymentFragment);
         fragments.add(myFragment);
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 currentPage = 2;
                 setTabSelection(currentPage);
                 break;
+            default:
         }
     }
 
@@ -126,19 +127,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (currentPage) {
             case 0://未登录
                 idTabIv01.setImageResource(R.mipmap.bottom_loan_on);
-                idTabTv01.setTextColor(getResources().getColor(R.color.tv_navigate_checked));
+                idTabTv01.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
             case 1:
                 idTabIv02.setImageResource(R.mipmap.bottom_repayment_on);
-                idTabTv02.setTextColor(getResources().getColor(R.color.tv_navigate_checked));
+                idTabTv02.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
             case 2:
                 idTabIv03.setImageResource(R.mipmap.bottom_my_on);
-                idTabTv03.setTextColor(getResources().getColor(R.color.tv_navigate_checked));
+                idTabTv03.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
+            default:
         }
     }
 
@@ -154,9 +156,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         idTabIv02.setImageResource(R.mipmap.bottom_repayment_off);
         idTabIv03.setImageResource(R.mipmap.bottom_my_off);
 
-        idTabTv01.setTextColor(getResources().getColor(R.color.tv_navigate));
-        idTabTv02.setTextColor(getResources().getColor(R.color.tv_navigate));
-        idTabTv03.setTextColor(getResources().getColor(R.color.tv_navigate));
+        idTabTv01.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate));
+        idTabTv02.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate));
+        idTabTv03.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate));
 
     }
 
