@@ -25,9 +25,6 @@
                 android:layout_marginLeft="15dp"
                 android:src="@mipmap/ic_launcher" />
 
-            <include layout="@layout/bg_line_1" />
-
-
             <ImageView
                 android:id="@+id/message_center"
                 android:layout_width="18dp"

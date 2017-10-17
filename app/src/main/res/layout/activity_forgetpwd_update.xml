@@ -65,7 +65,7 @@
                 android:layout_height="26dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="11dp"
-                android:background="@drawable/btn_login_shape"
+                android:background="@drawable/btn_shape_gradient"
                 android:text="@string/send_sms_code"
                 android:textColor="@color/white"
                 android:textSize="12sp" />

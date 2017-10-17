@@ -133,6 +133,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
             case R.id.user_info:
                 break;
             case R.id.my_borrow:
+                startActivity(new Intent(mContext,MyBorrowActivity.class));
                 break;
             case R.id.my_repayment:
                 break;

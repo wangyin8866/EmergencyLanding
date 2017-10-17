@@ -18,6 +18,7 @@ import android.widget.ViewSwitcher;
 
 /**
  * 自动垂直滚动的TextView
+ * @author wangyin
  */
 public class AutoVerticalScrollTextView extends TextSwitcher implements ViewSwitcher.ViewFactory {
 
@@ -72,6 +73,7 @@ public class AutoVerticalScrollTextView extends TextSwitcher implements ViewSwit
 
 
     //这里返回的TextView，就是我们看到的View,可以设置自己想要的效果
+    @Override
     public View makeView() {
         TextView textView = new TextView(mContext);
         textView.setGravity(Gravity.LEFT);

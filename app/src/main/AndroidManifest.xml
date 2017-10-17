@@ -126,6 +126,11 @@
         <activity
             android:name="com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity"
             android:screenOrientation="portrait" />
+        <!--我的借款-->
+        <activity
+            android:name=".ui.my.MyBorrowActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>
