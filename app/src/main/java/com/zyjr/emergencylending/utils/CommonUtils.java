@@ -2,9 +2,12 @@ package com.zyjr.emergencylending.utils;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.database.Cursor;
+import android.provider.ContactsContract;
 
 import com.zyjr.emergencylending.entity.CityModel1;
 import com.zyjr.emergencylending.entity.DistrictModel;
+import com.zyjr.emergencylending.entity.MobileContactBean;
 import com.zyjr.emergencylending.entity.ProvinceModel;
 import com.zyjr.emergencylending.service.XmlParserHandler;
 import com.zyjr.emergencylending.widget.step.StepBean;
@@ -176,5 +179,41 @@ public class CommonUtils {
         stepsBeanList.add(stepBean4);
         stepsBeanList.add(stepBean5);
         return (ArrayList<StepBean>) stepsBeanList;
+    }
+
+
+    /**
+     * 查询所有联系人
+     *
+     * @param mContext
+     * @return
+     */
+    public static List<MobileContactBean> queryContactPhoneNumber(Context mContext) {
+        List<MobileContactBean> mConnectInfos = new ArrayList<>();
+        String[] cols = {ContactsContract.PhoneLookup.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.NUMBER};
+        Cursor cursor = mContext.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                cols, null, null, null);
+        int count = 0;
+        try {
+//            count = cursor.getCount() < 100 ? cursor.getCount() : 100;
+            count = cursor.getCount();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (int i = 0; i < count; i++) {
+            cursor.moveToPosition(i);
+            MobileContactBean inof = new MobileContactBean();
+            int nameFieldColumnIndex = cursor.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME); // 取得联系人名字
+            int numberFieldColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER); // 取得联系人号码
+            String name = cursor.getString(nameFieldColumnIndex);
+            String number = StringUtil.removeSpace(cursor.getString(numberFieldColumnIndex));
+            inof.setContact_name(name);
+            inof.setContact_phone(number);
+            mConnectInfos.add(inof);
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return mConnectInfos;
     }
 }

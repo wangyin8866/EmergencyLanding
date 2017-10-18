@@ -8,6 +8,8 @@ import android.os.Binder;
 import android.os.Build;
 import android.util.Log;
 
+import com.zyjr.emergencylending.utils.LogUtils;
+
 import java.lang.reflect.Method;
 
 /**
@@ -108,11 +110,11 @@ public class AppOpsManagerUtil {
      */
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static boolean isAllowed(Context context, int op) {
-        Log.d(TAG, "api level: " + Build.VERSION.SDK_INT);
+        LogUtils.d(TAG, "api level: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT < 19) {
             return true;
         }
-        Log.d(TAG, "op is " + op);
+        LogUtils.d(TAG, "op is " + op);
         String packageName = context.getApplicationContext().getPackageName();
         AppOpsManager aom = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         Class<?>[] types = new Class[]{int.class, int.class, String.class};
@@ -121,24 +123,25 @@ public class AppOpsManagerUtil {
             Method method = aom.getClass().getDeclaredMethod("checkOpNoThrow", types);
             method.setAccessible(true);
             Object mode = method.invoke(aom, args);
-            Log.d(TAG, "invoke checkOpNoThrow: " + mode);
+            LogUtils.d(TAG, "invoke checkOpNoThrow: " + mode);
             if ((mode instanceof Integer) && ((Integer) mode == AppOpsManager.MODE_ALLOWED)) {
-                Log.d(TAG, "allowed");
+                LogUtils.d(TAG, "allowed");
                 return true;
             }
         } catch (Exception e) {
-            Log.e(TAG, "invoke error: " + e);
+            LogUtils.e(TAG, "invoke error: " + e);
             e.printStackTrace();
         }
         return false;
     }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static int isCheck(Context context, int op) {
-        Log.d(TAG, "api level: " + Build.VERSION.SDK_INT);
+        LogUtils.d(TAG, "api level: " + Build.VERSION.SDK_INT);
         if (Build.VERSION.SDK_INT < 19) {
             return AppOpsManager.MODE_ALLOWED;
         }
-        Log.d(TAG, "op is " + op);
+        LogUtils.d(TAG, "op is " + op);
         String packageName = context.getApplicationContext().getPackageName();
         AppOpsManager aom = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
         Class<?>[] types = new Class[]{int.class, int.class, String.class};
@@ -146,10 +149,10 @@ public class AppOpsManagerUtil {
         try {
             Method method = aom.getClass().getDeclaredMethod("checkOpNoThrow", types);
             Object mode = method.invoke(aom, args);
-            Log.d(TAG, "invoke checkOpNoThrow: " + mode);
+            LogUtils.d(TAG, "invoke checkOpNoThrow: " + mode);
             return (int) mode;
         } catch (Exception e) {
-            Log.e(TAG, "invoke error: " + e);
+            LogUtils.e(TAG, "invoke error: " + e);
             e.printStackTrace();
         }
         return AppOpsManager.MODE_DEFAULT;

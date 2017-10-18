@@ -217,7 +217,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/tv_contact_phone2"
+                    android:id="@+id/et_contact_phone2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -289,8 +289,10 @@
                 android:layout_marginTop="10dp"
                 android:drawableLeft="@mipmap/ic_home"
                 android:gravity="center_vertical"
+                android:drawablePadding="5dp"
                 android:text="关系选项中，仅支持下拉列表中的关系"
-                android:textSize="12dp" />
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="13dp" />
 
         </LinearLayout>
     </ScrollView>
@@ -306,7 +308,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:layout_marginTop="15dp"
             android:background="@color/mine_center_bg"
             android:text="提交"
             android:textColor="@color/white"

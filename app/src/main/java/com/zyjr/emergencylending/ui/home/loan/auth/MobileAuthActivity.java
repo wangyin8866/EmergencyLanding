@@ -43,9 +43,20 @@ public class MobileAuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_auth);
         ButterKnife.bind(this);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 
-    @OnClick({R.id.cb_check, R.id.btn_submit})
+    @OnClick({R.id.cb_check, R.id.iv_service_password,R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cb_check:
@@ -55,7 +66,7 @@ public class MobileAuthActivity extends BaseActivity {
                     ToastAlone.showLongToast(this, "未勾选");
                 }
                 break;
-            case R.id.btn_submit:
+            case R.id.iv_service_password:
                 final DialogCustom dialogCustom = new DialogCustom(this);
                 dialogCustom.mobileAuthNotice(new View.OnClickListener() {
                     @Override
@@ -67,6 +78,9 @@ public class MobileAuthActivity extends BaseActivity {
                         }
                     }
                 }).show();
+                break;
+            case R.id.btn_submit:
+
                 break;
         }
     }

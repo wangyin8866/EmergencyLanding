@@ -31,6 +31,7 @@ import butterknife.OnClick;
 /**
  * Created by neil on 2017/10/11
  * 备注: 借款(急速 和传统 )
+ * 1.网络请求：获取产品介绍--->包含额度
  */
 public class LoanMainActivity extends BaseActivity {
 
@@ -63,7 +64,6 @@ public class LoanMainActivity extends BaseActivity {
     private int week = 0;
     private int moneyProgress = 1;
     private int weekProgress = 1;
-    private int moneyCritical = 30;
     private int MIN_WEEK = 0;
     private int MAX_WEEK = 0;
     private int MIN_MONEY = 0;
@@ -80,18 +80,8 @@ public class LoanMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_main);
         ButterKnife.bind(this);
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
 
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
-
+        init();
         initData();
         initGetData();
         initListener();
@@ -190,6 +180,7 @@ public class LoanMainActivity extends BaseActivity {
             seekbarMoney.setProgress(progress);
         }
         money = Arithmetic.progressToMoney(progress, minMoney, maxMoney);
+        LogUtils.d("借款金额:---->" + money);
         tvMinLoadMoney.setText(minMoney + "元");
         tvMaxLoadMoney.setText(maxMoney + "元");
     }
@@ -216,6 +207,20 @@ public class LoanMainActivity extends BaseActivity {
         seekbarWeek.setONLINE(1);
         seekbarWeek.setWEEK_MIN(2);
         seekbarWeek.setWEEK_MAX(15);
+    }
+
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 
 }

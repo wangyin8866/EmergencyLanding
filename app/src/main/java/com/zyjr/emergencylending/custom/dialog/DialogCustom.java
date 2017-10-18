@@ -76,10 +76,9 @@ public class DialogCustom extends Dialog {
 
     /**
      * 借款 信息确认弹出框
-     *
      * @param listener 事件回调
-     * @param money    借款金额
-     * @param week     借款周期
+     * @param money 借款金额
+     * @param week  借款周期
      * @return
      */
     public DialogCustom loanProductMatchInfo(View.OnClickListener listener, String money, String week) {
@@ -97,7 +96,6 @@ public class DialogCustom extends Dialog {
 
     /**
      * 删除银行卡信息
-     *
      * @param listener
      * @return
      */
@@ -110,6 +108,33 @@ public class DialogCustom extends Dialog {
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         tvDelete.setOnClickListener(listener);
         tvCancel.setOnClickListener(listener);
+        return instance;
+    }
+
+    /**
+     * 身份证 信息
+     * @param idName  名字
+     * @param idNum  身份证号
+     * @param address  地址
+     * @return
+     */
+    public DialogCustom scanIdcardInfo(View.OnClickListener listener, String idName, String idNum, String address) {
+        setContentView(R.layout.dialog_idcard_info);
+        TextView tvIdcardName = findViewById(R.id.tv_idcard_name);
+        tvIdcardName.setText(idName);
+        TextView tvIdcardNumber = findViewById(R.id.tv_idcard_number);
+        tvIdcardNumber.setText(idNum);
+        TextView etDetailAddress = findViewById(R.id.et_detail_address);
+        etDetailAddress.setText(address);
+        TextView tvConfirm = findViewById(R.id.tv_confirm);
+        tvConfirm.setOnClickListener(listener);
+        TextView tvScanAgain = findViewById(R.id.tv_scan_again);
+        tvScanAgain.setOnClickListener(listener);
+        ImageView ivDismissPop = findViewById(R.id.iv_dismiss_pop);
+        ivDismissPop.setOnClickListener(listener);
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+//        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        DialogCustom.this.setCanceledOnTouchOutside(false);  // 设置点击外围解散
         return instance;
     }
 

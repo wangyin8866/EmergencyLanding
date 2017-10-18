@@ -27,7 +27,7 @@ public class WriteInfoMainActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.layout_personal_info)
-    SettingItemView layoutPersionalInfo; // 个人信息
+    SettingItemView layoutPersonalInfo; // 个人信息
     @BindView(R.id.layout_work_info)
     SettingItemView layoutWorkInfo; // 工作信息
     @BindView(R.id.layout_contact_info)
@@ -47,18 +47,8 @@ public class WriteInfoMainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_infomation_main);
         ButterKnife.bind(this);
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
 
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
-
+        init();
         initData();
     }
 
@@ -92,10 +82,53 @@ public class WriteInfoMainActivity extends BaseActivity {
 
 
     private void initData() {
-        layoutPersionalInfo.setRightContent("未完成", getResources().getColor(R.color.colorAccent));
-        layoutWorkInfo.setRightContent("未完成", getResources().getColor(R.color.colorAccent));
-        layoutContactInfo.setRightContent("未完成", getResources().getColor(R.color.colorAccent));
-        layoutBankInfo.setRightContent("未完成", getResources().getColor(R.color.colorAccent));
+        infoFinishStatus("0","1","1","0");
+    }
+
+
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+    }
+
+
+    /**
+     * 设置资料完成状态 0:代表未完成,1:代表完成
+     * @param personal 个人信息
+     * @param work 工作信息
+     * @param contact 联系人
+     * @param bank 银行卡
+     */
+    private void infoFinishStatus(String personal, String work, String contact, String bank) {
+        if (personal.equals("1")) {
+            layoutPersonalInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
+        } else {
+            layoutPersonalInfo.setRightContentVisible(false);
+        }
+        if (work.equals("1")) {
+            layoutWorkInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
+        } else {
+            layoutWorkInfo.setRightContentVisible(false);
+        }
+        if (contact.equals("1")) {
+            layoutContactInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
+        } else {
+            layoutContactInfo.setRightContentVisible(false);
+        }
+        if (bank.equals("1")) {
+            layoutBankInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
+        } else {
+            layoutBankInfo.setRightContentVisible(false);
+        }
     }
 
 }

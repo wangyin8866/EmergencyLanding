@@ -114,7 +114,6 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
-                    android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@mipmap/icon_question" />
 

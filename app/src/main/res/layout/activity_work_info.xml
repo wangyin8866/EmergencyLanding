@@ -69,7 +69,6 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
-                    android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@mipmap/arrow_right" />
 
@@ -201,7 +200,6 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="请选择工作地址"
-                    android:inputType="text"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
                     android:textSize="14sp" />
@@ -212,7 +210,6 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
-                    android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@mipmap/arrow_right" />
 
@@ -320,7 +317,6 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="请选择职位"
-                    android:inputType="text"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
                     android:textSize="14sp" />
@@ -331,7 +327,6 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
-                    android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@mipmap/arrow_right" />
 
@@ -364,7 +359,6 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:hint="请选择税后月收入"
-                    android:inputType="text"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
                     android:textSize="14sp" />
@@ -375,7 +369,6 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="10dp"
-                    android:padding="8dp"
                     android:scaleType="centerInside"
                     android:src="@mipmap/arrow_right" />
 
@@ -395,7 +388,6 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:layout_marginTop="15dp"
             android:background="@color/mine_center_bg"
             android:text="提交"
             android:textColor="@color/white"

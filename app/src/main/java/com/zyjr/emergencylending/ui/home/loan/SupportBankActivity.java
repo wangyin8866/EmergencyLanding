@@ -48,25 +48,13 @@ public class SupportBankActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_banklist);
         ButterKnife.bind(this);
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
-
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
 
         init();
+        initData();
     }
 
-    private void init() {
+    private void initData() {
         bankBeanList = new ArrayList<>();
-
-
         for (int i = 0; i < 10; i++) {
             BankBean bankBean = new BankBean("test" + i, "中国工商", false);
             bankBeanList.add(bankBean);
@@ -98,6 +86,19 @@ public class SupportBankActivity extends BaseActivity {
                 }, 1000);
             }
         });
+    }
 
+    private void init(){
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 }

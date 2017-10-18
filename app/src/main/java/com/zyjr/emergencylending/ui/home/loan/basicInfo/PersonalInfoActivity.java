@@ -23,18 +23,25 @@ import android.widget.Toast;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
+import com.jph.takephoto.model.InvokeParam;
+import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
+import com.jph.takephoto.permission.InvokeListener;
+import com.jph.takephoto.permission.PermissionManager;
+import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.AppConfig;
+import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.ToolImage;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
@@ -48,25 +55,40 @@ import butterknife.OnClick;
 
 /**
  * Created by neil on 2017/10/12
- * 备注: 个人资料
+ * 备注: 个人信息/资料
  */
 public class PersonalInfoActivity extends BaseActivity implements TakePhoto.TakeResultListener {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
+    @BindView(R.id.iv_idcard_front)
+    ImageView ivIdcardFront;
+    private String frontFilePath = "";  // 身份证正面照路径
+    @BindView(R.id.iv_idcard_back)
+    ImageView ivIdcardBack;
+    private String backFilePath = "";   // 身份证正面照路径
     @BindView(R.id.iv_idcard_hold)
     ImageView ivHoldIdcard;
+    private String holdIdcardPath; // 手持身份证路径
+    @BindView(R.id.tv_personal_name)
+    TextView tvPersonalName; // 姓名
+    @BindView(R.id.tv_personal_idcard)
+    TextView tvPersonalIdcard; // 身份证
     @BindView(R.id.tv_marriage_status)
-    TextView tvMarriageStatus;
+    TextView tvMarriageStatus; // 婚姻状态
     @BindView(R.id.tv_live_status)
-    TextView tvLiveStatus;
+    TextView tvLiveStatus;  // 居住状态
     @BindView(R.id.tv_huji_address)
-    TextView tvHujiAddress;
+    TextView tvHujiAddress;  // 户籍地址
+    @BindView(R.id.tv_detail_address)
+    TextView tvDetailAddress;  // 户籍详细地址
     @BindView(R.id.tv_live_address)
-    TextView tvLiveAddress;
+    TextView tvLiveAddress;  // 居住地址
+    @BindView(R.id.tv_live_detail_address)
+    ClearEditText tvLiveDetailAddress; // 居住详细地址
+
 
     private TakePhoto takePhoto;
-    private String holdIdcardPath;
     private String filePath;
     private Bitmap mBitmapHoldIdcard;
     private int mWidth;
@@ -79,38 +101,53 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getTakePhoto().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_data);
         ButterKnife.bind(this);
-        Drawable d = ContextCompat.getDrawable(this, R.mipmap.shotcard_positive);
-        mWidth = d.getMinimumWidth();
-        mHeight = d.getMinimumHeight();
-        LogUtils.d("idcard", mWidth + "-----" + mHeight);
-        try {
-            takePhoto = new TakePhotoImpl(this, this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        takePhoto.onCreate(savedInstanceState);
-
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
-
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
-
-        CommonUtils.addressDatas(this);
+        init();
     }
 
-    @OnClick({R.id.ll_idcard_hold, R.id.ll_marriage_status, R.id.ll_live_status, R.id.ll_huji_address, R.id.ll_live_address})
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        getTakePhoto().onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        getTakePhoto().onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (ToolPermission.checkPermission(permissions, grantResults)) {
+                jumpToTakePhoto(101);
+            } else {
+                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
+            }
+        }
+    }
+
+    @OnClick({R.id.ll_idcard_front, R.id.ll_idcard_back, R.id.ll_idcard_hold, R.id.ll_marriage_status, R.id.ll_live_status, R.id.ll_huji_address, R.id.ll_live_address, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ll_idcard_front: // 身份证正面
+
+                break;
+
+            case R.id.ll_idcard_back: // 身份证背面扫描
+
+                break;
+
             case R.id.ll_idcard_hold: // 手持证件照
                 jumpToTakePhoto(101);
                 break;
@@ -150,17 +187,20 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
                 popHujiAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.ll_live_address: // 居住地址选择
-                AreaSelectPop poLiveAddressSelect = new AreaSelectPop(this, CommonUtils.mProvinceDatas, CommonUtils.mCitisDatasMap, CommonUtils.mDistrictDatasMap);
-                poLiveAddressSelect.setOnCityPopupWindow(new AreaSelectPop.OnCityPopupWindow() {
+                AreaSelectPop popLiveAddressSelect = new AreaSelectPop(this, CommonUtils.mProvinceDatas, CommonUtils.mCitisDatasMap, CommonUtils.mDistrictDatasMap);
+                popLiveAddressSelect.setOnCityPopupWindow(new AreaSelectPop.OnCityPopupWindow() {
                     @Override
                     public void onCityClick(String province, int privinceItem, String city, int cityItem, String district, int districtItem) {
                         tvLiveAddress.setText(province + "," + city + "," + district);
                     }
                 });
                 if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
-                    poLiveAddressSelect.setWheel();
+                    popLiveAddressSelect.setWheel();
                 }
-                poLiveAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
+                popLiveAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.btn_submit: // 提交
+                // TODO 信息提交
                 break;
         }
     }
@@ -180,46 +220,33 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
             CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
             takePhoto.onEnableCompress(compressConfig, true);
             takePhoto.onPickFromCapture(imageUri);
-
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if (requestCode == 101) {
-            if (ToolPermission.checkPermission(permissions, grantResults)) {
-                jumpToTakePhoto(101);
-            } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
-            }
         }
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        takePhoto.onActivityResult(requestCode, resultCode, data);
+    /**
+     * 获取TakePhoto实例
+     */
+    public TakePhoto getTakePhoto() {
+        if (takePhoto == null) {
+            takePhoto = new TakePhotoImpl(this, this);
+        }
+        return takePhoto;
     }
+
 
     // 图片拍照回调
     @Override
     public void takeSuccess(TResult result) {
-        filePath = result.getImage().getOriginalPath();
+        LogUtils.d("takeSuccess【图片原始路径】" + result.getImage().getOriginalPath());
+        filePath = result.getImage().getOriginalPath();  // 原始路径
         File file = new File(holdIdcardPath);
-        if (!file.exists()) { //返回的filepath路径有问题
+        if (!file.exists()) { // 返回的filepath路径有问题
             filePath = holdIdcardPath;
         }
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         if (bitmap == null) {
-            Toast.makeText(PersonalInfoActivity.this, "图片为空", Toast.LENGTH_LONG).show();
+            ToastAlone.showLongToast(PersonalInfoActivity.this, "图片为空").show();
             return;
         }
         Bitmap decode = ToolImage.comp(bitmap);
@@ -230,26 +257,46 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
         if (decode != null && !decode.isRecycled()) {
             decode.recycle();
         }
-        LogUtils.d("图片位置信息filePath:" + filePath);
-        String data = ToolImage.fileBase64(filePath);
+        String data = ToolImage.fileBase64(filePath); // 图片具体信息
         final String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf(".")); // 文件名后缀名
         String fileExtName = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
-        LogUtils.d("具体信息:" + fileName + "," + fileExtName);
+        LogUtils.d("图片具体信息----->文件名:" + fileName + ",文件后缀:" + fileExtName);
         mBitmapHoldIdcard = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(filePath), mWidth, mHeight, true);
         ivHoldIdcard.setImageBitmap(mBitmapHoldIdcard);
     }
 
     @Override
     public void takeFail(TResult result, String msg) {
-
+        LogUtils.d("图片takeFail：" + result.getImage().getCompressPath());
     }
 
     @Override
     public void takeCancel() {
+        ToastAlone.showShortToast(this, getResources().getString(com.jph.takephoto.R.string.msg_operation_canceled));
+    }
 
+    private void init() {
+        Drawable d = ContextCompat.getDrawable(this, R.mipmap.shotcard_positive);
+        mWidth = d.getMinimumWidth();
+        mHeight = d.getMinimumHeight();
+        LogUtils.d("idcardBgSize--->" + mWidth + "-----" + mHeight);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+        CommonUtils.addressDatas(this);
     }
 
     private View getRootView() {
         return this.getWindow().getDecorView();
     }
+
+
 }

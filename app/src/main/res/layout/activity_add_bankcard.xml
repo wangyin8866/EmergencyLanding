@@ -117,7 +117,7 @@
                     android:textSize="14sp" />
 
                 <com.zyjr.emergencylending.custom.ClearEditText
-                    android:id="@+id/tv_bankcard_number"
+                    android:id="@+id/et_bankcard_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -153,12 +153,12 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_industry"
+                    android:id="@+id/tv_openbank"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:hint="请选择单位行业"
+                    android:hint=""
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
                     android:textSize="15sp" />
@@ -198,7 +198,7 @@
                     android:textSize="14sp" />
 
                 <com.zyjr.emergencylending.custom.ClearEditText
-                    android:id="@+id/tv_reserved_phone"
+                    android:id="@+id/et_reserved_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -233,7 +233,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/tv_sms_code"
+                    android:id="@+id/et_sms_code"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -259,7 +259,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_add"
                 style="@style/button_orange"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"

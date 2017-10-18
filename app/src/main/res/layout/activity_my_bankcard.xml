@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <com.zyjr.emergencylending.custom.TopBar
@@ -12,46 +13,52 @@
         android:paddingLeft="20dp"
         app:drawableLeft="@mipmap/nav_back"
         app:drawableLeftVisibility="true"
-        app:title="添加银行卡"
-        app:rightText="管理"
-        app:rightTextSize="14sp"
-        app:rightTextColor="@color/input_text_color"
         app:paddingRight="10dp"
+        app:rightText="管理"
+        app:rightTextColor="@color/input_text_color"
+        app:rightTextSize="14sp"
+        app:title="添加银行卡"
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
     <RelativeLayout
-        android:id="@+id/rl_bankcard"
+        android:id="@+id/rl_edit_bankcard"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_below="@+id/top_bar"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/layout_bankcard_shape"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/iv_bankcard_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="31dp"
             android:layout_marginTop="23dp"
-            android:background="@mipmap/ic_launcher" />
+            android:background="@mipmap/banklogo_c" />
 
         <TextView
-            android:id="@+id/tv_bankcard_type"
+            android:id="@+id/tv_bankcard_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="23dp"
             android:layout_toRightOf="@+id/iv_bankcard_icon"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             android:text="农业银行" />
 
         <TextView
-            android:id="@+id/tv_bankcard_type_desc"
+            android:id="@+id/tv_bankcard_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_bankcard_type"
-            android:layout_below="@+id/tv_bankcard_type"
+            android:layout_alignLeft="@+id/tv_bankcard_name"
+            android:layout_below="@+id/tv_bankcard_name"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
             android:text="借记卡" />
 
         <TextView
@@ -61,7 +68,7 @@
             android:layout_alignLeft="@+id/iv_bankcard_icon"
             android:layout_below="@+id/iv_bankcard_icon"
             android:layout_marginTop="27dp"
-            android:text="1564 **** **** 4564654"
+            android:textColor="@color/white"
             android:textSize="16sp" />
 
     </RelativeLayout>
@@ -71,10 +78,11 @@
         android:id="@+id/rl_add_bankcard"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_margin="10dp"
         android:layout_below="@+id/top_bar"
+        android:layout_margin="10dp"
         android:background="@color/line_color"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_add_bankcard"
@@ -82,8 +90,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="15dp"
-            android:drawableTop="@mipmap/icon_add"
             android:drawablePadding="10dp"
+            android:drawableTop="@mipmap/icon_add"
             android:text="添加银行卡" />
 
     </RelativeLayout>
@@ -93,19 +101,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tv_safe_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/icon_security"
+            android:drawablePadding="6dp"
             android:gravity="center"
             android:text="采用银行级信息安全防护"
-            android:drawablePadding="6dp"
             android:textColor="@color/input_text_color"
             android:textSize="14sp" />
 
