@@ -1,1 +1,1 @@
-include ':app', ':retrofitlibrary'
+include ':app', ':retrofitlibrary', ':livenesslib'

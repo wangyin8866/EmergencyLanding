@@ -71,9 +71,21 @@ public class Arithmetic {
         if (progress <= 0) {
             return min;
         } else if (progress > 0 && progress < 50) {
-            money = (int) Math.floor(max * progress / 50);
-            if (money <= min) {
-                return min + (int) Math.floor(max * 1 / 50);
+            if (max > 10000) {
+                money = (int) Math.floor(max * progress / 50);
+                if (money < min) {
+                    return min;
+                }
+                if (money % 1000 != 0) {
+                    int a = money / 1000; // 取7
+                    a++;
+                    money = a * 1000;
+                }
+            } else {
+                money = (int) Math.floor(max * progress / 50);
+                if (money <= min) {
+                    return min + (int) Math.floor(max * 1 / 50);
+                }
             }
             return money;
         } else if (progress >= 50) {
@@ -83,18 +95,20 @@ public class Arithmetic {
     }
 
     public static int progressToWeek(int progress, int min, int max) {
-        LogUtils.e("借款滑动进度:----------->" + progress);
+        LogUtils.e("借款周期滑动进度:----------->" + progress);
         int week = 0;
         if (progress > 0 && progress < 50) {
             week = (int) Math.floor(max * progress / 50);
+            if (week <= min && min == 2) {
+                return 3;
+            }
             if (week <= min) {
-                return min + 1;
+                return min;
             }
             return week;
         } else if (progress >= 50) {
             return max;
         }
-        LogUtils.e("借款滑动进度:----------->" + progress);
         return week;
     }
 }

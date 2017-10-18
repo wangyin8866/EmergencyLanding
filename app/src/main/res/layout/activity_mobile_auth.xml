@@ -19,29 +19,37 @@
     <ScrollView
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/line_color">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/line_color"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/iv_app_logo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="24dp"
-                android:scaleType="fitXY"
-                android:src="@mipmap/ic_launcher" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@color/white"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_app_logo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/img_mobile_a" />
+
+            </LinearLayout>
+
+            <View style="@style/horizontal_line_style" />
 
             <!-- 手机号 -->
             <LinearLayout
                 android:id="@+id/ll_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="26dp"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingLeft="15dp">
@@ -89,7 +97,7 @@
                     android:textSize="14sp" />
 
                 <EditText
-                    android:id="@+id/tv_service_password"
+                    android:id="@+id/et_service_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -108,7 +116,7 @@
                     android:layout_marginRight="10dp"
                     android:padding="8dp"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/icon_question" />
 
             </LinearLayout>
 
@@ -157,6 +165,8 @@
             <Button
                 android:id="@+id/btn_submit"
                 style="@style/button_orange"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
                 android:layout_marginLeft="38dp"
                 android:layout_marginRight="38dp"
                 android:layout_marginTop="12dp"

@@ -12,6 +12,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BankAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BankBean;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -27,7 +28,8 @@ import butterknife.ButterKnife;
  * 备注: 支持银行选择
  */
 public class SupportBankActivity extends BaseActivity {
-
+    @BindView(R.id.top_bar)
+    TopBar topBar;
     @BindView(R.id.rv_banklist)
     RecyclerView rvBankList;
     @BindView(R.id.easylayout)
@@ -46,6 +48,18 @@ public class SupportBankActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_banklist);
         ButterKnife.bind(this);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+
         init();
     }
 

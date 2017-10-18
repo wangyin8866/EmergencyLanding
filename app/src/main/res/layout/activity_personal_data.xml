@@ -425,7 +425,7 @@
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="13dp"
-                    android:background="@color/transparent"
+                    android:background="@null"
                     android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="详细地址"

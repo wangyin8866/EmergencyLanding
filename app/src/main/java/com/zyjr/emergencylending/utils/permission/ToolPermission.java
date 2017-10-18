@@ -11,7 +11,6 @@ import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalDataActivity;
 import com.zyjr.emergencylending.utils.LogUtils;
 
 

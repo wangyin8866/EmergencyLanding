@@ -5,7 +5,9 @@ import android.os.Bundle;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.custom.TopBar;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -13,6 +15,8 @@ import butterknife.ButterKnife;
  * 备注: 领取借款金额
  */
 public class GetLoanMoneyActivity extends BaseActivity{
+    @BindView(R.id.top_bar)
+    TopBar topBar;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -24,5 +28,16 @@ public class GetLoanMoneyActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_get_loan_money);
         ButterKnife.bind(this);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 }

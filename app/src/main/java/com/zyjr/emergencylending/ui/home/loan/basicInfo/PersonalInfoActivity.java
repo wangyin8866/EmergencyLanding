@@ -50,7 +50,7 @@ import butterknife.OnClick;
  * Created by neil on 2017/10/12
  * 备注: 个人资料
  */
-public class PersonalDataActivity extends BaseActivity implements TakePhoto.TakeResultListener {
+public class PersonalInfoActivity extends BaseActivity implements TakePhoto.TakeResultListener {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -197,7 +197,7 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToTakePhoto(101);
             } else {
-                AppToast.makeToast(PersonalDataActivity.this, "拍照权限被拒绝");
+                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
             }
         }
     }
@@ -219,7 +219,7 @@ public class PersonalDataActivity extends BaseActivity implements TakePhoto.Take
         }
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         if (bitmap == null) {
-            Toast.makeText(PersonalDataActivity.this, "图片为空", Toast.LENGTH_LONG).show();
+            Toast.makeText(PersonalInfoActivity.this, "图片为空", Toast.LENGTH_LONG).show();
             return;
         }
         Bitmap decode = ToolImage.comp(bitmap);

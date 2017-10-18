@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:orientation="vertical"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:background="@drawable/bg_home_notice"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,12 +16,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="26dp"
-            android:background="@color/transparent"
+            android:layout_marginTop="20dp"
             android:gravity="center"
             android:text="产品匹配"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="@color/input_text_color"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/tv_title1"

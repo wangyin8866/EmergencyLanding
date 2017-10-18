@@ -58,8 +58,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         app:setting_left_content="个人信息"
-                        app:setting_right_icon="@mipmap/arrow_right"
-                        app:setting_left_icon="@mipmap/data_user" />
+                        app:setting_left_icon="@mipmap/data_user"
+                        app:setting_right_icon="@mipmap/arrow_right" />
 
                     <View
                         style="@style/horizontal_line_style"
@@ -70,8 +70,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         app:setting_left_content="工作信息"
-                        app:setting_right_icon="@mipmap/arrow_right"
-                        app:setting_left_icon="@mipmap/data_job" />
+                        app:setting_left_icon="@mipmap/data_job"
+                        app:setting_right_icon="@mipmap/arrow_right" />
 
                     <View
                         style="@style/horizontal_line_style"
@@ -81,9 +81,9 @@
                         android:id="@+id/layout_contact_info"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        app:setting_right_icon="@mipmap/arrow_right"
                         app:setting_left_content="联系人"
-                        app:setting_left_icon="@mipmap/data_users" />
+                        app:setting_left_icon="@mipmap/data_users"
+                        app:setting_right_icon="@mipmap/arrow_right" />
 
                     <View
                         style="@style/horizontal_line_style"
@@ -93,9 +93,9 @@
                         android:id="@+id/layout_bank_info"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        app:setting_right_icon="@mipmap/arrow_right"
                         app:setting_left_content="银行卡"
-                        app:setting_left_icon="@mipmap/data_card" />
+                        app:setting_left_icon="@mipmap/data_card"
+                        app:setting_right_icon="@mipmap/arrow_right" />
 
                 </LinearLayout>
 
@@ -156,7 +156,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/tv_borrow_cycle_round"
+                            android:id="@+id/tv_borrow_week_round"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@+id/tv_borrow_money_round"

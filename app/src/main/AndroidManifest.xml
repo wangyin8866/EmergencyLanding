@@ -72,7 +72,7 @@
             android:screenOrientation="portrait" />
         <!-- 个人信息 -->
         <activity
-            android:name=".ui.home.loan.basicInfo.PersonalDataActivity"
+            android:name=".ui.home.loan.basicInfo.PersonalInfoActivity"
             android:screenOrientation="portrait" />
         <!-- 工作信息 -->
         <activity
@@ -129,6 +129,23 @@
         <!--我的借款-->
         <activity
             android:name=".ui.my.MyBorrowActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- 认证中心 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.AuthCenterActivity"
+            android:screenOrientation="portrait" />
+        <!-- 手机运营商认证 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.auth.MobileAuthActivity"
+            android:screenOrientation="portrait" />
+        <!-- 芝麻信用认证 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.auth.ZhimaAuthActivity"
+            android:screenOrientation="portrait" />
+        <!-- 人脸识别 -->
+        <activity
+            android:name="com.megvii.livenesslib.LivenessActivity"
             android:screenOrientation="portrait" />
 
     </application>

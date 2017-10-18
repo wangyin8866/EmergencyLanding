@@ -13,6 +13,10 @@
         app:drawableLeft="@mipmap/nav_back"
         app:drawableLeftVisibility="true"
         app:title="添加银行卡"
+        app:rightText="管理"
+        app:rightTextSize="14sp"
+        app:rightTextColor="@color/input_text_color"
+        app:paddingRight="10dp"
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
@@ -78,7 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="15dp"
-            android:drawableTop="@mipmap/ic_launcher"
+            android:drawableTop="@mipmap/icon_add"
+            android:drawablePadding="10dp"
             android:text="添加银行卡" />
 
     </RelativeLayout>
@@ -88,15 +93,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <TextView
             android:id="@+id/tv_safe_desc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@mipmap/ic_launcher"
+            android:drawableLeft="@mipmap/icon_security"
             android:gravity="center"
             android:text="采用银行级信息安全防护"
+            android:drawablePadding="6dp"
             android:textColor="@color/input_text_color"
             android:textSize="14sp" />
 

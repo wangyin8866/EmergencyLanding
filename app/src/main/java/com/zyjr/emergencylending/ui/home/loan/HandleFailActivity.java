@@ -43,6 +43,17 @@ public class HandleFailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_handle_fail);
         ButterKnife.bind(this);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 
     @OnClick({R.id.btn_apply_qunadai})

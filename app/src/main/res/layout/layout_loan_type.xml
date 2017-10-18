@@ -26,13 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_money" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/icon_money"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="5dp"
                 android:text="借款金额"
                 android:textSize="14sp" />
@@ -121,13 +121,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icon_cycle" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/icon_week"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="5dp"
                 android:text="借款期限"
                 android:textSize="14sp" />

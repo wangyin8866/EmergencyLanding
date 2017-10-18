@@ -5,7 +5,9 @@ import android.os.Bundle;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.custom.TopBar;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -14,7 +16,8 @@ import butterknife.ButterKnife;
  */
 
 public class SendLoanProcessingActivity extends BaseActivity{
-
+    @BindView(R.id.top_bar)
+    TopBar topBar;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -26,5 +29,16 @@ public class SendLoanProcessingActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_loan_processing);
         ButterKnife.bind(this);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 }

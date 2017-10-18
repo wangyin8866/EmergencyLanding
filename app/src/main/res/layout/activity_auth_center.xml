@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/line_color"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
@@ -17,26 +15,28 @@
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
-
     <ScrollView
         android:id="@+id/root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/white"
+            android:background="@color/line_color"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/rl_zhimaxinyong_auth"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="130dp"
                 android:layout_below="@+id/top_bar"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/selector_layout_click"
                 android:orientation="vertical">
 
                 <TextView
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="37dp"
-                    android:layout_marginTop="54dp"
+                    android:layout_marginTop="50dp"
                     android:layout_toRightOf="@+id/iv_bankcard_icon"
                     android:text="芝麻信用"
                     android:textColor="@color/input_text_color" />
@@ -56,12 +56,12 @@
                     android:layout_alignLeft="@+id/tv_zhimaxinyong_auth"
                     android:layout_below="@+id/tv_zhimaxinyong_auth"
                     android:layout_marginTop="4dp"
-                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawableLeft="@mipmap/icon_auth_success"
                     android:drawablePadding="5dp"
-                    android:textColor="@color/auth_success"
                     android:gravity="center"
-                    android:textSize="12sp"
-                    android:text="认证成功" />
+                    android:text="认证成功"
+                    android:textColor="@color/auth_success"
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/tv_bankcard_number"
@@ -70,7 +70,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="28dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/img_sesamecredit" />
 
             </RelativeLayout>
 
@@ -81,8 +81,9 @@
             <RelativeLayout
                 android:id="@+id/rl_mobile_auth"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="130dp"
                 android:layout_below="@+id/top_bar"
+                android:background="@drawable/selector_layout_click"
                 android:orientation="vertical">
 
                 <TextView
@@ -90,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="37dp"
-                    android:layout_marginTop="54dp"
+                    android:layout_marginTop="50dp"
                     android:layout_toRightOf="@+id/iv_bankcard_icon"
                     android:text="手机认证"
                     android:textColor="@color/input_text_color" />
@@ -100,23 +101,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/tv_mobile_auth"
+                    android:layout_alignStart="@+id/tv_mobile_auth"
                     android:layout_below="@+id/tv_mobile_auth"
-                    android:layout_marginTop="4dp"
-                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawableLeft="@mipmap/icon_auth_waiting"
                     android:drawablePadding="5dp"
                     android:gravity="center"
-                    android:textSize="12sp"
+                    android:text="认证中"
                     android:textColor="@color/auth_processing"
-                    android:text="认证中" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/iv_mobile_auth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginRight="28dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="27dp"
+                    android:layout_marginRight="27dp"
+                    android:src="@mipmap/img_mobile" />
 
             </RelativeLayout>
 
@@ -127,8 +130,9 @@
             <RelativeLayout
                 android:id="@+id/rl_face_auth"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="130dp"
                 android:layout_below="@+id/top_bar"
+                android:background="@drawable/selector_layout_click"
                 android:orientation="vertical">
 
                 <TextView
@@ -136,7 +140,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="37dp"
-                    android:layout_marginTop="54dp"
+                    android:layout_marginTop="50dp"
                     android:layout_toRightOf="@+id/iv_bankcard_icon"
                     android:text="人脸识别"
                     android:textColor="@color/input_text_color" />
@@ -148,12 +152,12 @@
                     android:layout_alignLeft="@+id/tv_face_auth"
                     android:layout_below="@+id/tv_face_auth"
                     android:layout_marginTop="4dp"
-                    android:drawableLeft="@mipmap/ic_launcher"
+                    android:drawableLeft="@mipmap/icon_auth_fail"
                     android:drawablePadding="5dp"
                     android:gravity="center"
+                    android:text="认证失败"
                     android:textColor="@color/auth_fail"
-                    android:textSize="12sp"
-                    android:text="认证失败" />
+                    android:textSize="12sp" />
 
                 <ImageView
                     android:id="@+id/iv_face_auth"
@@ -162,7 +166,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="28dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@mipmap/img_face" />
 
             </RelativeLayout>
 
@@ -170,18 +174,20 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
             android:background="@color/mine_center_bg"
             android:text="提交"
             android:textColor="@color/white"
             android:textSize="17sp" />
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
