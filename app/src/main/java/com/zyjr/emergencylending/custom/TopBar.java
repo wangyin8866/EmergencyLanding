@@ -53,20 +53,19 @@ public class TopBar extends RelativeLayout {
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-         void OnLeftButtonClicked();
+        void OnLeftButtonClicked();
 
-         void OnRightButtonClicked();
+        void OnRightButtonClicked();
     }
 
     public void setOnItemClickListener(OnItemClickListener mListener) {
         this.mListener = mListener;
     }
+
     @SuppressWarnings("deprecation")
     @SuppressLint({"NewApi", "RtlHardcoded"})
     public TopBar(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TopBar);
         mDrawableLeftVisibility = typedArray.getBoolean(R.styleable.TopBar_drawableLeftVisibility, false);
         mDrawableLeft = typedArray.getDrawable(R.styleable.TopBar_drawableLeft);
@@ -165,12 +164,12 @@ public class TopBar extends RelativeLayout {
         mTitle.setText(title);
     }
 
-    public void showRightButton(boolean b,CharSequence text){
-        if (b){
+    public void showRightButton(boolean b, CharSequence text) {
+        if (b) {
             mDrawableRight.setBounds(0, 0, mDrawableRight.getMinimumWidth(), mDrawableRight.getMinimumHeight());
             mRightButton.setCompoundDrawables(null, null, mDrawableRight, null);
             mRightButton.setText(text);
-        }else {
+        } else {
             mRightButton.setCompoundDrawables(null, null, null, null);
             mRightButton.setText(text);
         }
@@ -186,5 +185,9 @@ public class TopBar extends RelativeLayout {
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         super.onLayout(changed, l, t, r, b);
 
+    }
+
+    public void setmRightText(String mRightText) {
+        mRightButton.setText(mRightText);
     }
 }

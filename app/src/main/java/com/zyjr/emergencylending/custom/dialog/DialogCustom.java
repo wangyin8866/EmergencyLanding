@@ -76,9 +76,10 @@ public class DialogCustom extends Dialog {
 
     /**
      * 借款 信息确认弹出框
+     *
      * @param listener 事件回调
-     * @param money 借款金额
-     * @param week  借款周期
+     * @param money    借款金额
+     * @param week     借款周期
      * @return
      */
     public DialogCustom loanProductMatchInfo(View.OnClickListener listener, String money, String week) {
@@ -96,6 +97,7 @@ public class DialogCustom extends Dialog {
 
     /**
      * 删除银行卡信息
+     *
      * @param listener
      * @return
      */
@@ -111,4 +113,20 @@ public class DialogCustom extends Dialog {
         return instance;
     }
 
+    /**
+     * 借款失败流转
+     *
+     * @param listener
+     * @return
+     */
+    public DialogCustom borrowSkip(View.OnClickListener listener) {
+        setContentView(R.layout.dialog_borrow_error);
+        ImageView close = findViewById(R.id.iv_close);
+        Button submit = findViewById(R.id.btn_confirm_submit);
+        window.setGravity(Gravity.CENTER);
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        close.setOnClickListener(listener);
+        submit.setOnClickListener(listener);
+        return instance;
+    }
 }

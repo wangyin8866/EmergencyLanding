@@ -21,15 +21,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <!--线上-->
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:launchMode="singleTask"
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:screenOrientation="portrait">
         </activity>
         <!--二维码-->
         <activity
@@ -130,6 +127,9 @@
         <activity
             android:name=".ui.my.MyBorrowActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".test.WyTest">
+
+        </activity>
 
         <!-- 认证中心 -->
         <activity
@@ -147,7 +147,33 @@
         <activity
             android:name="com.megvii.livenesslib.LivenessActivity"
             android:screenOrientation="portrait" />
+        <!--线下入口-->
+        <activity
+            android:name=".ui.salesman.activity.LineMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!--活动页-->
+        <activity
+            android:name=".ui.salesman.activity.ActivityActivity"
+            android:screenOrientation="portrait" />
+        <!--活动详情-->
+        <activity
+            android:name=".ui.salesman.activity.ActivityDetail"
+            android:screenOrientation="portrait" />
+        <!--立即借款校验-->
+        <activity
+            android:name=".ui.salesman.activity.ImmediatelyBorrowActivity"
+            android:screenOrientation="portrait" />
+        <!--立即借款-->
+        <activity
+            android:name=".ui.salesman.activity.BorrowActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="305dp"
+    android:layout_height="330dp"
+    android:background="@drawable/bg_home_notice">
+
+    <ImageView
+        android:id="@+id/iv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/icon_close" />
+
+    <ImageView
+        android:id="@+id/iv_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="99dp"
+        android:layout_below="@+id/iv_close"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_tips"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="很遗憾！"
+        android:textColor="@color/input_text_color"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv1"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:text="尊敬的客户，您已有申请件，请完善申请！"
+        android:textColor="#666666"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv3"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv2"
+        android:layout_marginTop="23dp"
+        android:gravity="center"
+        android:text="该客户还可以流转到线下，是否流转？"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_confirm_submit"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/bg_immediately_borrow_gradient"
+        android:text="确认流转"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.zyjr.emergencylending;
+package com.zyjr.emergencylending.ui.salesman.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +12,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gyf.barlibrary.ImmersionBar;
+import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.NoScrollViewPager;
-import com.zyjr.emergencylending.ui.home.HomeFragment;
-import com.zyjr.emergencylending.ui.my.MyFragment;
-import com.zyjr.emergencylending.ui.repayment.RepaymentFragment;
+import com.zyjr.emergencylending.ui.salesman.fragment.BorrowFragment;
+import com.zyjr.emergencylending.ui.salesman.fragment.CustomerFragment;
+import com.zyjr.emergencylending.ui.salesman.fragment.MineFragment;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.ArrayList;
@@ -27,14 +28,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
- *
- * @author wangyin
- * @date 2017/5/16
+ * Created by wangyin on 2017/10/18.
  */
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class LineMainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.id_tab_ll_01)
     LinearLayout idTabLl01;
     @BindView(R.id.id_tab_ll_02)
@@ -68,7 +66,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.line_activity_main);
         ButterKnife.bind(this);
         init();
     }
@@ -80,12 +78,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         fragments = new ArrayList<>();
 
-        HomeFragment homeFragment = new HomeFragment();
-        RepaymentFragment repaymentFragment = new RepaymentFragment();
-        MyFragment myFragment = new MyFragment();
-        fragments.add(homeFragment);
-        fragments.add(repaymentFragment);
-        fragments.add(myFragment);
+        BorrowFragment borrowFragment= new BorrowFragment();
+        CustomerFragment customerFragment= new CustomerFragment();
+        MineFragment mineFragment= new MineFragment();
+        fragments.add(borrowFragment);
+        fragments.add(customerFragment);
+        fragments.add(mineFragment);
 
         idMainViewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
             @Override
@@ -182,7 +180,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        WYUtils.clickBack(keyCode, event, MainActivity.this);
+        WYUtils.clickBack(keyCode, event, LineMainActivity.this);
         return true;
     }
 
@@ -191,4 +189,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onDestroy();
         mImmersionBar.destroy();
     }
+
 }
