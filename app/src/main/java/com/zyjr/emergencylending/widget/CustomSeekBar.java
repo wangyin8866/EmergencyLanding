@@ -14,7 +14,9 @@ import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.UIUtils;
 
 /**
- * Created by wangyin on 2017/10/18.
+ *
+ * @author wangyin
+ * @date 2017/10/18
  */
 
 public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
