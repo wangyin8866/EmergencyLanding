@@ -110,8 +110,9 @@
                     android:text="提交"
                     android:textSize="17sp" />
 
-                <!-- 传统借款 -->
+                <!-- 传统借款 线下隐藏 -->
                 <RelativeLayout
+                    android:id="@+id/rl_no_salesman"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"

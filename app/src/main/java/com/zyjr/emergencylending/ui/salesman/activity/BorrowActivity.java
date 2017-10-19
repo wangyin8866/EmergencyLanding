@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by wangyin on 2017/10/18.
+ * 立即借款页面
  */
 
 public class BorrowActivity extends BaseActivity {
