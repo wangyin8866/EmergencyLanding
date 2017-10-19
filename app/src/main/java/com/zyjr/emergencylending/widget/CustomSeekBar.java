@@ -14,7 +14,6 @@ import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.UIUtils;
 
 /**
- *
  * @author wangyin
  * @date 2017/10/18
  */
@@ -35,12 +34,18 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
     public static final int MONEY = 0;
     public static final int WEEK = 1;
     public int type = -1;
-    // 设置区间范围
+    /**
+     * 设置区间范围
+     */
     public int MONEY_MIN = 0;
     public int MONEY_MAX = 0;
-    // 标识14天
+    /**
+     * 标识14天
+     */
     public int ONLINE = 0;
-    // 设置区间范围
+    /**
+     * 设置区间范围
+     */
     public int WEEK_MIN = 0;
     public int WEEK_MAX = 0;
     private Context mContext;
@@ -109,7 +114,7 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
         }
         mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
         Rect bounds = this.getProgressDrawable().getBounds();
-        float xText = bounds.width() * getProgress() / getMax()-mTextBound.width()/2+getPaddingLeft()-2;
+        float xText = bounds.width() * getProgress() / getMax() - mTextBound.width() / 2 + getPaddingLeft() - 2;
         LogUtils.e("xText", xText + "");
         canvas.drawText(mText, xText, mHeight / 2 + mTextBound.height() / 3, mTextPaint);
     }
