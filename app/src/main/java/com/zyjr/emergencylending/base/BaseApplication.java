@@ -12,7 +12,9 @@ import com.zyjr.emergencylending.utils.WYUtils;
 
 /**
  * 主工程
- * Created by ndy on 2016/05/19.
+ *
+ * @author wangyin
+ * @date 2016/05/19
  */
 public class BaseApplication extends Application {
     /**
@@ -38,12 +40,15 @@ public class BaseApplication extends Application {
 
     public static Context context;
     public static String version;//版本号
+
+    /**
+     * 是否是线下（业务员）
+     */
+    public static boolean isSalesman;
+
     @Override
     public void onCreate() {
         super.onCreate();
-        //LeakCanary.install(this);
-
-
         context = getApplicationContext();
         mMainThreadId = android.os.Process.myTid();
         mMainThread = Thread.currentThread();
@@ -51,7 +56,7 @@ public class BaseApplication extends Application {
         mMainLooper = getMainLooper();
         mInstance = this;
         //获取版本号
-        BaseApplication.version= WYUtils.getVersion(getApplicationContext());
+        BaseApplication.version = WYUtils.getVersion(getApplicationContext());
 
         //是否打印日志
         LogUtils.isDebug = true;

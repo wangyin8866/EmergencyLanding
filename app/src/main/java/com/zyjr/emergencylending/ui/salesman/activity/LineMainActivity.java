@@ -135,7 +135,7 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
                 switchPager(currentPage);
                 break;
             case 1:
-                idTabIv02.setImageResource(R.mipmap.bottom_repayment_on);
+                idTabIv02.setImageResource(R.mipmap.bottom_customer_on);
                 idTabTv02.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate_checked));
                 switchPager(currentPage);
                 break;
@@ -157,7 +157,7 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
      */
     private void restView() {
         idTabIv01.setImageResource(R.mipmap.bottom_loan_off);
-        idTabIv02.setImageResource(R.mipmap.bottom_repayment_off);
+        idTabIv02.setImageResource(R.mipmap.bottom_customer_off);
         idTabIv03.setImageResource(R.mipmap.bottom_my_off);
 
         idTabTv01.setTextColor(ContextCompat.getColor(this, R.color.tv_navigate));

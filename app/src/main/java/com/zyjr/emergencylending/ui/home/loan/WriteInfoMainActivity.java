@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankInfoActivity;
@@ -36,6 +38,8 @@ public class WriteInfoMainActivity extends BaseActivity {
     SettingItemView layoutBankInfo; // 银行卡信息
     @BindView(R.id.btn_submit)
     Button btnSubmit; // 提交信息
+    @BindView(R.id.rl_no_salesman)
+    RelativeLayout rlNoSalesman;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -50,6 +54,18 @@ public class WriteInfoMainActivity extends BaseActivity {
 
         init();
         initData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BaseApplication.isSalesman) {
+            //线下
+            rlNoSalesman.setVisibility(View.GONE);
+
+        } else {
+            rlNoSalesman.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info, R.id.btn_borrow_money, R.id.btn_submit})

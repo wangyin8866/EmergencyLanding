@@ -53,7 +53,7 @@
                 android:id="@+id/id_tab_iv_02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/bottom_repayment_off" />
+                android:src="@mipmap/bottom_customer_off" />
 
             <TextView
                 android:id="@+id/id_tab_tv_02"

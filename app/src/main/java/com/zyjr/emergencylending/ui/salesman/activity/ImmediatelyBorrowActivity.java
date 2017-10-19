@@ -17,6 +17,7 @@ import butterknife.OnClick;
 
 /**
  * Created by wangyin on 2017/10/18.
+ * 立即借款判断
  */
 
 public class ImmediatelyBorrowActivity extends BaseActivity {

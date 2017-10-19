@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 /**
  * @author wangyin
  * @date 2017/10/16
+ * 我的借款
  */
 
 public class MyBorrowActivity extends BaseActivity {

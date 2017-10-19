@@ -15,6 +15,7 @@ import butterknife.OnClick;
 
 /**
  * Created by wangyin on 2017/10/18.
+ * 活动页面
  */
 
 public class ActivityActivity extends BaseActivity {
