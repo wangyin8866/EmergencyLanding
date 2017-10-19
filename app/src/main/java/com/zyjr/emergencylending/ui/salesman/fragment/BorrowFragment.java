@@ -99,6 +99,7 @@ public class BorrowFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
         unbinder.unbind();
     }
 

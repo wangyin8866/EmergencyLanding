@@ -9,8 +9,7 @@
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/top_height"
-        android:paddingLeft="16dp"
+        android:layout_height="64dp"
         app:title="首页"
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp"
