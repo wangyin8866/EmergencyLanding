@@ -107,9 +107,9 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
         }
         mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
         Rect bounds = this.getProgressDrawable().getBounds();
-        float xText = bounds.width() * getProgress() / getMax()-mTextBound.width()/2+getPaddingLeft();
+        float xText = bounds.width() * getProgress() / getMax()-mTextBound.width()/2+getPaddingLeft()-2;
         LogUtils.e("xText", xText + "");
-        canvas.drawText(mText, xText, mHeight / 2 + mTextBound.height() / 2, mTextPaint);
+        canvas.drawText(mText, xText, mHeight / 2 + mTextBound.height() / 3, mTextPaint);
     }
 
     public int getType() {

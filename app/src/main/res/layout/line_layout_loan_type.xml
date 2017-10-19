@@ -58,10 +58,10 @@
                     android:id="@+id/seekbar_loan_money"
                     style="@style/SeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:max="50"
                     android:progressDrawable="@drawable/seekbar_money_process"
-                    android:thumb="@drawable/bg_seek_bar" />
+                    android:thumb="@mipmap/button_slide" />
             </LinearLayout>
 
             <!-- 金额区间 -->
@@ -156,10 +156,10 @@
                     android:id="@+id/seekbar_loan_week"
                     style="@style/SeekBar"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:max="50"
                     android:progressDrawable="@drawable/seekbar_week_process"
-                    android:thumb="@drawable/bg_seek_bar" />
+                    android:thumb="@mipmap/button_slide" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
