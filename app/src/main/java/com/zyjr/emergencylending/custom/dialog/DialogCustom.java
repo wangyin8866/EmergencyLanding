@@ -79,6 +79,8 @@ public class DialogCustom extends Dialog {
     /**
      * 借款 信息确认弹出框
      *
+     *
+     *
      * @param listener 事件回调
      * @param userFlag 用户标识
      * @param second   是否续贷
