@@ -18,7 +18,9 @@ import butterknife.OnClick;
 
 /**
  * Created by neil on 2017/10/16
- * 备注: 借款订单状态  线上(填写资料:1、认证中:2、审核中:3、领取金额:4、放款中:5、还款中:6)
+ * 备注: 借款订单状态
+ * 线上急速借款(填写资料:1、认证中:2、审核中:3、领取金额:4、放款中:5、还款中:6)
+ * 传统借款(填写资料:1、认证中:2、受理中:3、领取金额:4、放款中:5、还款中:6)
  */
 public class LoanOrderStatusActivity extends BaseActivity {
     @BindView(R.id.top_bar)

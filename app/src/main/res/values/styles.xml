@@ -96,4 +96,9 @@
         <item name="android:fadeScrollbars">true</item>
     </style>
 
+    <style name="dialog_transparent">
+        <item name="android:windowEnterAnimation">@anim/transparent_in</item>
+        <item name="android:windowExitAnimation">@anim/transparent_out</item>
+    </style>
+
 </resources>

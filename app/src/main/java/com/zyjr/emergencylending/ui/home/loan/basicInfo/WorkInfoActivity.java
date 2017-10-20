@@ -122,6 +122,7 @@ public class WorkInfoActivity extends BaseActivity {
                 break;
             case R.id.btn_submit:
                 // TODO 信息提交
+                scanSuccessInfo("张三","123454648755","太远录32号");
                 break;
 
         }
@@ -151,9 +152,7 @@ public class WorkInfoActivity extends BaseActivity {
                     case R.id.tv_confirm:
                         ToastAlone.showLongToast(BaseApplication.getContext(), "确认");
                         break;
-                    case R.id.iv_dismiss_pop:
-                        dialogCustom.dismiss();
-                        break;
+
                     case R.id.tv_scan_again:
                         ToastAlone.showLongToast(BaseApplication.getContext(), "重新扫描");
                         break;

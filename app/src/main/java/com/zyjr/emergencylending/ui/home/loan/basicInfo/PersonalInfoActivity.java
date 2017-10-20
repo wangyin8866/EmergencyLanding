@@ -12,42 +12,44 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.custom.dialog.DialogCustom;
 import com.zyjr.emergencylending.entity.CodeBean;
+import com.zyjr.emergencylending.entity.IDCardBackBean;
+import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
+import com.zyjr.emergencylending.ui.home.View.IDCardView;
+import com.zyjr.emergencylending.ui.home.presenter.IDCardPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.ToolImage;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
+import com.zyjr.emergencylending.utils.third.IdcardUtils;
 import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +59,7 @@ import butterknife.OnClick;
  * Created by neil on 2017/10/12
  * 备注: 个人信息/资料
  */
-public class PersonalInfoActivity extends BaseActivity implements TakePhoto.TakeResultListener {
+public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardView> implements TakePhoto.TakeResultListener, IDCardView {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -87,16 +89,18 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
     @BindView(R.id.tv_live_detail_address)
     ClearEditText tvLiveDetailAddress; // 居住详细地址
 
-
+    private File idcardFile;
     private TakePhoto takePhoto;
     private String filePath;
-    private Bitmap mBitmapHoldIdcard;
+    private Bitmap mBitmapHoldIdcard, mBitmapIDcardFront, mBitmapIDcardBack;
+    private static final int INTENT_IDCARD_FRONT = 100;
+    private static final int INTENT_IDCARD_BACK = 101;
     private int mWidth;
     private int mHeight;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected IDCardPresenter createPresenter() {
+        return new IDCardPresenter(this);
     }
 
     @Override
@@ -121,7 +125,28 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
+        getTakePhoto().onActivityResult(requestCode, resultCode, data); // 手持照片拍照
+        if ((requestCode == INTENT_IDCARD_FRONT || requestCode == INTENT_IDCARD_BACK) && resultCode == RESULT_OK) { // 身份证扫描
+            Map map = new HashMap<>();
+            map.put("side", data.getIntExtra("side", 0));
+            map.put("idcardImg", data.getByteArrayExtra("idcardImg"));
+            if (data.getIntExtra("side", 0) == 0) {
+                map.put("portraitImg", data.getByteArrayExtra("portraitImg"));
+            }
+            LogUtils.d("身份证扫描信息:" + new Gson().toJson(map));
+            Bitmap bitmap = IdcardUtils.getInstance().gitBitmap(map);
+            idcardFile = new File(Environment.getExternalStorageDirectory().getPath() + "/myIdCard/");
+            if (!idcardFile.exists() && !idcardFile.isDirectory()) {
+                idcardFile.mkdirs();
+            }
+            idcardFile = new File(idcardFile.getPath() + "/" + System.currentTimeMillis() + ".jpg");
+            ToolImage.compressBitmapToFile(bitmap, Bitmap.CompressFormat.JPEG, 100, idcardFile); // 保存文件
+            if (requestCode == INTENT_IDCARD_FRONT) {
+                mPresenter.uploadFileGetIDCardFrontInfo(idcardFile);
+            } else if (requestCode == INTENT_IDCARD_BACK) {
+                mPresenter.uploadFileGetIDCardBackInfo(idcardFile);
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -130,7 +155,7 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 101) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
-                jumpToTakePhoto(101);
+                takePhotoModelNotice();
             } else {
                 AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
             }
@@ -141,15 +166,15 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_idcard_front: // 身份证正面
-
+                jumpScanIDcard(INTENT_IDCARD_FRONT, 0, false);
                 break;
 
             case R.id.ll_idcard_back: // 身份证背面扫描
-
+                jumpScanIDcard(INTENT_IDCARD_BACK, 1, false);
                 break;
 
             case R.id.ll_idcard_hold: // 手持证件照
-                jumpToTakePhoto(101);
+                takePhotoModelNotice();
                 break;
             case R.id.ll_marriage_status: // 婚姻状况选择
                 SingleSelectPop popMarriageStatusSelect = new SingleSelectPop(this, AppConfig.marriageStatus());
@@ -201,17 +226,20 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
                 break;
             case R.id.btn_submit: // 提交
                 // TODO 信息提交
+
                 break;
         }
     }
 
 
     @TargetApi(Build.VERSION_CODES.M)
-    private void jumpToTakePhoto(final int type) {
+    private void jumpToTakePhoto(final int requestCode) {
         if (ToolPermission.checkSelfPermission(
-                this, null,
-                new String[]{Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, "请允许权限进行拍照", type)) {
+                this,
+                null,
+                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                "请允许权限进行拍照",
+                requestCode)) {
             File file = new File(Environment.getExternalStorageDirectory(), "/JJTNEW/temp/" + System.currentTimeMillis() + ".jpg");
             holdIdcardPath = file.getAbsolutePath();
             if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
@@ -220,6 +248,25 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
             CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
             takePhoto.onEnableCompress(compressConfig, true);
             takePhoto.onPickFromCapture(imageUri);
+        }
+    }
+
+    /**
+     * 身份证扫描
+     *
+     * @param requestCode
+     * @param type        扫描类型  0:正面;1:反面
+     * @param isVertical  扫描方向 true:竖屏;false:横屏
+     */
+    private void jumpScanIDcard(int requestCode, int type, boolean isVertical) {
+        if (ToolPermission.checkSelfPermission(
+                this,
+                null,
+                new String[]{Manifest.permission.READ_SMS, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                "请允许权限进行扫描",
+                requestCode)) {
+            Intent intent = IdcardUtils.getInstance().getIdCardIntent(this, type, false);
+            startActivityForResult(intent, requestCode);
         }
     }
 
@@ -275,6 +322,44 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
         ToastAlone.showShortToast(this, getResources().getString(com.jph.takephoto.R.string.msg_operation_canceled));
     }
 
+    // 扫描证件成功
+    private void scanSuccessInfo(String name, String num, String addr, final IDCardFrontBean idCardBean) {
+        final DialogCustom dialogCustom = new DialogCustom(this);
+        dialogCustom.scanIdcardInfo(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.tv_confirm:
+                        // TODO 点击确认时,1.保存bean;2.上传图片至服务器端
+                        dialogCustom.dismiss();
+                        mBitmapIDcardFront = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
+                        ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
+                        break;
+
+                    case R.id.tv_scan_again:
+                        ToastAlone.showLongToast(BaseApplication.getContext(), "重新扫描");
+                        break;
+                }
+            }
+        }, name, num, addr).show();
+    }
+
+    // 手持证件照 提示
+    private void takePhotoModelNotice() {
+        final DialogCustom dialogCustom = new DialogCustom(this);
+        dialogCustom.holdIdcardNotice(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.root_takephoto_model:
+                        dialogCustom.dismiss();
+                        jumpToTakePhoto(101);
+                        break;
+                }
+            }
+        }).show();
+    }
+
     private void init() {
         Drawable d = ContextCompat.getDrawable(this, R.mipmap.shotcard_positive);
         mWidth = d.getMinimumWidth();
@@ -292,6 +377,7 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
             }
         });
         CommonUtils.addressDatas(this);
+        IdcardUtils.getInstance().init(BaseApplication.getContext());
     }
 
     private View getRootView() {
@@ -299,4 +385,32 @@ public class PersonalInfoActivity extends BaseActivity implements TakePhoto.Take
     }
 
 
+    @Override
+    public void onSuccessFrontBean(String returnCode, IDCardFrontBean resultBean) {
+        if ("front".equals(returnCode)) {  // 身份证正面信息
+            if (!StringUtil.isIDCard(resultBean.getId_card_number())) {
+                ToastAlone.showLongToast(this, "身份证号码有误");
+                return;
+            }
+            scanSuccessInfo(resultBean.getName(), resultBean.getId_card_number(), resultBean.getAddress(), resultBean);
+        } else {
+            ToastAlone.showLongToast(this, "请使用正式身份证拍照");
+        }
+    }
+
+    @Override
+    public void onSuccessBackBean(String returnCode, IDCardBackBean resultBean) {
+        if ("back".equals(returnCode)) {  // 身份证背面
+            mBitmapIDcardBack = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
+            ivIdcardBack.setImageBitmap(mBitmapIDcardBack);
+        } else {
+            ToastAlone.showLongToast(this, "请使用正式身份证拍照");
+        }
+    }
+
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
 }

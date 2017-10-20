@@ -60,13 +60,7 @@ public class ZhimaAuthActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_authorise:
                 ToastAlone.showLongToast(this, "前往授权");
-                DialogCustom dialogCustom = new DialogCustom(this);
-                dialogCustom.loanProductMatchInfo(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
 
-                    }
-                }, 3200 + "", 5 + "").show();
                 break;
         }
     }

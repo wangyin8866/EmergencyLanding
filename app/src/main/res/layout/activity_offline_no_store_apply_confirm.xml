@@ -38,7 +38,8 @@
                     android:layout_width="140dp"
                     android:layout_height="140dp"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/ic_launcher" />
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/emptypage_city" />
 
                 <TextView
                     android:id="@+id/tv_no_store_support"
@@ -47,7 +48,7 @@
                     android:layout_below="@+id/iv_no_store_support"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="30dp"
-                    android:text="未匹配到支持城市，请选择以下产品" />
+                    android:text="未匹配到支持城市，我们为您以下产品" />
 
             </RelativeLayout>
 

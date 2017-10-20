@@ -429,4 +429,17 @@ public class StringUtil {
         LogUtils.d("校验结果:---->" + String.valueOf(tel.matches("^1[3|4|5|7|8]\\d{9}$")));
         return m.matches();
     }
+
+    //
+
+    /**
+     * 判断是否符合身份证号码的规范
+     */
+    public static boolean isIDCard(String IDCard) {
+        if (IDCard != null) {
+            String IDCardRegex = "(^\\d{15}$)|(^\\d{18}$)|(^\\d{17}(\\d|X|x|Y|y)$)";
+            return IDCard.matches(IDCardRegex);
+        }
+        return false;
+    }
 }

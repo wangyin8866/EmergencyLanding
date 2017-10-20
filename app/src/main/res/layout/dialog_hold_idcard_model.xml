@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_takephoto_model"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="260dp"
+        android:layout_height="292dp"
+        android:background="@drawable/bg_home_notice">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="手持身份证示意图"
+            android:textColor="@color/input_text_color"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_model_pic"
+            android:layout_width="206dp"
+            android:layout_height="140dp"
+            android:layout_below="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@mipmap/ic_launcher" />
+
+
+        <TextView
+            android:id="@+id/tv_model_notice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_model_pic"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="22dp"
+            android:text="提示：五官可见"
+            android:textColor="@color/auth_success"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tv_model_notice1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_model_notice"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="8dp"
+            android:gravity="left"
+            android:text="证件全部信息清晰无遮挡"
+            android:textColor="@color/auth_success"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</LinearLayout>

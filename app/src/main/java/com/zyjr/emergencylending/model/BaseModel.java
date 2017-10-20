@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 public class BaseModel {
 
     public static final int DEFAULT_TIMEOUT = 15;
-    Retrofit retrofit;
+    protected Retrofit retrofit;
     static Map<String, String> map = new HashMap<>();
     OkHttpClient.Builder httpClientBuilder;
 
@@ -51,6 +51,28 @@ public class BaseModel {
                 .build();
 
     }
+
+    /**
+     * 外网
+     * @param baseURL
+     */
+    public BaseModel(String baseURL) {
+        //手动创建一个OkHttpClient并设置超时时间
+        httpClientBuilder = new OkHttpClient.Builder();
+        if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS).readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        }else {
+            httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        }
+        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        retrofit = new Retrofit.Builder()
+                .client(httpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(baseURL)
+                .build();
+    }
+
 
     //添加线程订阅
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
