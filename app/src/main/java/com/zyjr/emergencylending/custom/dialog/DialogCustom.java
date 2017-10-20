@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
@@ -76,19 +78,28 @@ public class DialogCustom extends Dialog {
 
     /**
      * 借款 信息确认弹出框
+     *
      * @param listener 事件回调
-     * @param money 借款金额
-     * @param week  借款周期
+     * @param userFlag 用户标识
+     * @param second   是否续贷
+     * @param money    借款金额
+     * @param week     借款周期
      * @return
      */
-    public DialogCustom loanProductMatchInfo(View.OnClickListener listener, String money, String week) {
+    public DialogCustom loanProductMatchInfo(View.OnClickListener listener, String userFlag, boolean second, String money, String week) {
         setContentView(R.layout.dialog_product_match);
+        TextView tvDesc = findViewById(R.id.tv_title1);
+        if (second) {
+            tvDesc.setVisibility(View.INVISIBLE);
+        }
         Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
         TextView tvLoadMoney = findViewById(R.id.tv_loan_money);
         tvLoadMoney.setText(money);
         TextView tvLoadWeek = findViewById(R.id.tv_loan_week);
         tvLoadWeek.setText(week);
+        ImageView ivClose = findViewById(R.id.iv_close);
         window.setGravity(Gravity.CENTER);
+        ivClose.setOnClickListener(listener);
         btnSumbit.setOnClickListener(listener);
         return instance;
     }
@@ -96,6 +107,7 @@ public class DialogCustom extends Dialog {
 
     /**
      * 删除银行卡信息
+     *
      * @param listener
      * @return
      */
@@ -113,9 +125,10 @@ public class DialogCustom extends Dialog {
 
     /**
      * 身份证 信息
+     *
      * @param idName  名字
-     * @param idNum  身份证号
-     * @param address  地址
+     * @param idNum   身份证号
+     * @param address 地址
      * @return
      */
     public DialogCustom scanIdcardInfo(View.OnClickListener listener, String idName, String idNum, String address) {
@@ -130,8 +143,6 @@ public class DialogCustom extends Dialog {
         tvConfirm.setOnClickListener(listener);
         TextView tvScanAgain = findViewById(R.id.tv_scan_again);
         tvScanAgain.setOnClickListener(listener);
-        ImageView ivDismissPop = findViewById(R.id.iv_dismiss_pop);
-        ivDismissPop.setOnClickListener(listener);
         window.setWindowAnimations(R.style.main_menu_animstyle);
 //        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         DialogCustom.this.setCanceledOnTouchOutside(false);  // 设置点击外围解散
@@ -154,4 +165,21 @@ public class DialogCustom extends Dialog {
         submit.setOnClickListener(listener);
         return instance;
     }
+
+    /**
+     * 手持证件照 拍照提示
+     *
+     * @return
+     */
+    public DialogCustom holdIdcardNotice(View.OnClickListener listener) {
+        setContentView(R.layout.dialog_hold_idcard_model);
+        LinearLayout rootView = findViewById(R.id.root_takephoto_model);
+        window.setGravity(Gravity.FILL);
+        window.setWindowAnimations(R.style.dialog_transparent);
+        rootView.setOnClickListener(listener);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        setCanceledOnTouchOutside(false);
+        return instance;
+    }
+
 }
