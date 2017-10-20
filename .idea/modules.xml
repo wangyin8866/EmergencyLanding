@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EmergencyLanding.iml" filepath="$PROJECT_DIR$/EmergencyLanding.iml" />
       <module fileurl="file://$PROJECT_DIR$/EmergencyLanding_jjt.iml" filepath="$PROJECT_DIR$/EmergencyLanding_jjt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/IDCardLib/IDCardLib.iml" filepath="$PROJECT_DIR$/IDCardLib/IDCardLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/NewEmergencyLanding.iml" filepath="$PROJECT_DIR$/NewEmergencyLanding.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/livenesslib/livenesslib.iml" filepath="$PROJECT_DIR$/livenesslib/livenesslib.iml" />

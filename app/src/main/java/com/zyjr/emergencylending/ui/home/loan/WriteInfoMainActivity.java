@@ -11,10 +11,12 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.custom.dialog.DialogCustom;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.SettingItemView;
 
 import butterknife.BindView;
@@ -146,5 +148,24 @@ public class WriteInfoMainActivity extends BaseActivity {
             layoutBankInfo.setRightContentVisible(false);
         }
     }
+
+    private void judgeMatchProInfo(String userFlag, boolean second, String money, String week) {
+        final DialogCustom dialogCustom = new DialogCustom(this);
+        dialogCustom.loanProductMatchInfo(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.iv_close:
+                        dialogCustom.dismiss();
+                        break;
+
+                    case R.id.btn_comfirm_submit:
+                        ToastAlone.showLongToast(WriteInfoMainActivity.this, "确认提交");
+                        break;
+                }
+            }
+        }, userFlag, second, money, week).show();
+    }
+
 
 }
