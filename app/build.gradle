@@ -51,4 +51,5 @@ dependencies {
     //照片处理
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile project(':livenesslib')
+    compile project(':IDCardLib')
 }
