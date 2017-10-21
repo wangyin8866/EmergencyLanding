@@ -9,7 +9,6 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;

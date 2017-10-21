@@ -11,7 +11,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
@@ -150,13 +150,13 @@ public class WriteInfoMainActivity extends BaseActivity {
     }
 
     private void judgeMatchProInfo(String userFlag, boolean second, String money, String week) {
-        final DialogCustom dialogCustom = new DialogCustom(this);
-        dialogCustom.loanProductMatchInfo(new View.OnClickListener() {
+        final CustomerDialog customerDialog = new CustomerDialog(this);
+        customerDialog.loanProductMatchInfo(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.iv_close:
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
                         break;
 
                     case R.id.btn_comfirm_submit:

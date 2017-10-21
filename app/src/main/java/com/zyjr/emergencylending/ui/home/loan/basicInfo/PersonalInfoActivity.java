@@ -29,7 +29,7 @@ import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
@@ -324,14 +324,14 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
 
     // 扫描证件成功
     private void scanSuccessInfo(String name, String num, String addr, final IDCardFrontBean idCardBean) {
-        final DialogCustom dialogCustom = new DialogCustom(this);
-        dialogCustom.scanIdcardInfo(new View.OnClickListener() {
+        final CustomerDialog customerDialog = new CustomerDialog(this);
+        customerDialog.scanIdcardInfo(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_confirm:
                         // TODO 点击确认时,1.保存bean;2.上传图片至服务器端
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
                         mBitmapIDcardFront = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
                         ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
                         break;
@@ -346,13 +346,13 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
 
     // 手持证件照 提示
     private void takePhotoModelNotice() {
-        final DialogCustom dialogCustom = new DialogCustom(this);
-        dialogCustom.holdIdcardNotice(new View.OnClickListener() {
+        final CustomerDialog customerDialog = new CustomerDialog(this);
+        customerDialog.holdIdcardNotice(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.root_takephoto_model:
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
                         jumpToTakePhoto(101);
                         break;
                 }

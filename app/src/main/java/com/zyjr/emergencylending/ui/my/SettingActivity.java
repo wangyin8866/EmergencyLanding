@@ -11,6 +11,7 @@ import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -36,6 +37,7 @@ public class SettingActivity extends BaseActivity {
     TextView exit;
     @BindView(R.id.version_name)
     TextView versionName;
+    private CustomerDialog dialog;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -58,7 +60,7 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
-        versionName.setText("V"+WYUtils.getAppVersionName(this));
+        versionName.setText("V" + WYUtils.getAppVersionName(this));
     }
 
     @OnClick({R.id.modify_password, R.id.about_us, R.id.advice_feedback, R.id.service_call, R.id.exit})
@@ -71,14 +73,29 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(mContext, AboutUsActivity.class));
                 break;
             case R.id.advice_feedback:
-                startActivity(new Intent(mContext,AdviceFeedbackActivity.class));
+                startActivity(new Intent(mContext, AdviceFeedbackActivity.class));
                 break;
             case R.id.service_call:
-                WYUtils.CallPhone(mContext, 0x11);
+                phoneDialog();
                 break;
             case R.id.exit:
                 ActivityCollector.finishAll();
                 break;
         }
+    }
+    private void phoneDialog() {
+        dialog = new CustomerDialog(mContext);
+        dialog.showHotLineDialog(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getId() == R.id.cancel) {
+                    dialog.dismiss();
+                } else if (view.getId() == R.id.tv_title) {
+                    WYUtils.callPhone(mContext, "400-077-6667");
+                    dialog.dismiss();
+                }
+            }
+        });
+        dialog.show();
     }
 }

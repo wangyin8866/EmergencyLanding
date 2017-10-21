@@ -14,7 +14,7 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.utils.CommonUtils;
@@ -144,8 +144,8 @@ public class WorkInfoActivity extends BaseActivity {
     }
 
     private void scanSuccessInfo(String name, String num, String addr) {
-        final DialogCustom dialogCustom = new DialogCustom(this);
-        dialogCustom.scanIdcardInfo(new View.OnClickListener() {
+        final CustomerDialog customerDialog = new CustomerDialog(this);
+        customerDialog.scanIdcardInfo(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {

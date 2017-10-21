@@ -17,11 +17,11 @@ import static com.zyjr.emergencylending.R.id.tv_album;
 import static com.zyjr.emergencylending.R.id.tv_picture;
 
 
-public class DialogCustom extends Dialog {
+public class CustomerDialog extends Dialog {
     private Window window;
-    private DialogCustom instance;
+    private CustomerDialog instance;
 
-    public DialogCustom(Context context) {
+    public CustomerDialog(Context context) {
         super(context, R.style.transparentFrameWindowStyle);
         instance = this;
         window = getWindow();
@@ -34,7 +34,7 @@ public class DialogCustom extends Dialog {
      * @param listener
      * @return
      */
-    public DialogCustom userPicDialog(View.OnClickListener listener) {
+    public CustomerDialog userPicDialog(View.OnClickListener listener) {
         setContentView(R.layout.dialog_adavater_layout);
         TextView tvPicture = findViewById(tv_picture);
         TextView tvAlbum = findViewById(tv_album);
@@ -44,7 +44,7 @@ public class DialogCustom extends Dialog {
         window.setWindowAnimations(R.style.main_menu_animstyle);
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         // 设置点击外围解散
-        DialogCustom.this.setCanceledOnTouchOutside(false);
+        CustomerDialog.this.setCanceledOnTouchOutside(false);
         cancel.setOnClickListener(listener);
         tvPicture.setOnClickListener(listener);
         tvAlbum.setOnClickListener(listener);
@@ -54,7 +54,7 @@ public class DialogCustom extends Dialog {
     /**
      * 删除消息
      */
-    public DialogCustom deleteMessage(View.OnClickListener listener) {
+    public CustomerDialog deleteMessage(View.OnClickListener listener) {
         setContentView(R.layout.dialog_message);
         TextView tvLeft = super.findViewById(R.id.message_left);
         TextView tvRight = super.findViewById(R.id.message_right);
@@ -67,7 +67,7 @@ public class DialogCustom extends Dialog {
     /**
      * 手机认证信息提示
      */
-    public DialogCustom mobileAuthNotice(View.OnClickListener listener) {
+    public CustomerDialog mobileAuthNotice(View.OnClickListener listener) {
         setContentView(R.layout.dialog_mobile_auth_notice);
         ImageView ivClose = findViewById(R.id.iv_close_pop);
         window.setGravity(Gravity.CENTER);
@@ -85,7 +85,7 @@ public class DialogCustom extends Dialog {
      * @param week     借款周期
      * @return
      */
-    public DialogCustom loanProductMatchInfo(View.OnClickListener listener, String userFlag, boolean second, String money, String week) {
+    public CustomerDialog loanProductMatchInfo(View.OnClickListener listener, String userFlag, boolean second, String money, String week) {
         setContentView(R.layout.dialog_product_match);
         TextView tvDesc = findViewById(R.id.tv_title1);
         if (second) {
@@ -110,7 +110,7 @@ public class DialogCustom extends Dialog {
      * @param listener
      * @return
      */
-    public DialogCustom deleteBankcard(View.OnClickListener listener) {
+    public CustomerDialog deleteBankcard(View.OnClickListener listener) {
         setContentView(R.layout.dialog_delete_bankcard);
         TextView tvDelete = findViewById(R.id.tv_delete_bankcard);
         TextView tvCancel = findViewById(R.id.tv_cancel);
@@ -130,7 +130,7 @@ public class DialogCustom extends Dialog {
      * @param address 地址
      * @return
      */
-    public DialogCustom scanIdcardInfo(View.OnClickListener listener, String idName, String idNum, String address) {
+    public CustomerDialog scanIdcardInfo(View.OnClickListener listener, String idName, String idNum, String address) {
         setContentView(R.layout.dialog_idcard_info);
         TextView tvIdcardName = findViewById(R.id.tv_idcard_name);
         tvIdcardName.setText(idName);
@@ -144,7 +144,7 @@ public class DialogCustom extends Dialog {
         tvScanAgain.setOnClickListener(listener);
         window.setWindowAnimations(R.style.main_menu_animstyle);
 //        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        DialogCustom.this.setCanceledOnTouchOutside(false);  // 设置点击外围解散
+        CustomerDialog.this.setCanceledOnTouchOutside(false);  // 设置点击外围解散
         return instance;
     }
 
@@ -154,7 +154,7 @@ public class DialogCustom extends Dialog {
      * @param listener
      * @return
      */
-    public DialogCustom borrowSkip(View.OnClickListener listener) {
+    public CustomerDialog borrowSkip(View.OnClickListener listener) {
         setContentView(R.layout.dialog_borrow_error);
         ImageView close = findViewById(R.id.iv_close);
         Button submit = findViewById(R.id.btn_confirm_submit);
@@ -168,7 +168,7 @@ public class DialogCustom extends Dialog {
     /**
      * 手持证件照 拍照提示
      */
-    public DialogCustom holdIdcardNotice(View.OnClickListener listener) {
+    public CustomerDialog holdIdcardNotice(View.OnClickListener listener) {
         setContentView(R.layout.dialog_hold_idcard_model);
         LinearLayout rootView = findViewById(R.id.root_takephoto_model);
         window.setGravity(Gravity.FILL);
@@ -184,7 +184,6 @@ public class DialogCustom extends Dialog {
      * 通用弹出确认
      */
     /**
-     *
      * @param content
      * @param contentColor
      * @param leftMsg
@@ -193,8 +192,8 @@ public class DialogCustom extends Dialog {
      * @param rightFrontColor
      * @return
      */
-    public DialogCustom operateComfirm(View.OnClickListener listener,
-                                       String content, int contentColor, String leftMsg, int leftFrontColor, String rightMsg, int rightFrontColor) {
+    public CustomerDialog operateComfirm(View.OnClickListener listener,
+                                         String content, int contentColor, String leftMsg, int leftFrontColor, String rightMsg, int rightFrontColor) {
         setContentView(R.layout.dialog_operate_confrim);
         TextView tvContent = findViewById(R.id.tv_content);
         tvContent.setText(content);
@@ -218,4 +217,23 @@ public class DialogCustom extends Dialog {
         return instance;
     }
 
+    /**
+     * 拨打客户电话
+     *
+     * @param onClickListener
+     */
+    public void showHotLineDialog(View.OnClickListener onClickListener) {
+        TextView cancel, tv_title;
+        setContentView(R.layout.dialog_hot_line);
+        cancel = (TextView) findViewById(R.id.cancel);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        window.setGravity(Gravity.BOTTOM);
+        // 设置显示动画
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 设置点击外围解散
+        setCanceledOnTouchOutside(false);
+        cancel.setOnClickListener(onClickListener);
+        tv_title.setOnClickListener(onClickListener);
+    }
 }

@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.salesman.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,14 +12,16 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.CircleView;
+import com.zyjr.emergencylending.ui.salesman.activity.ActivityApplyFor;
+import com.zyjr.emergencylending.ui.salesman.activity.ActivityClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
 /**
- *
  * @author wangyin
  * @date 2017/8/9
  */
@@ -33,6 +36,8 @@ public class CustomerFragment extends BaseFragment {
     @BindView(R.id.circle_success)
     CircleView circleSuccess;
     Unbinder unbinder;
+    @BindView(R.id.bg_line_1)
+    View bgLine1;
 
     @Nullable
     @Override
@@ -60,5 +65,19 @@ public class CustomerFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
 
+    }
+
+    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.circle_client:
+                startActivity(new Intent(mContext, ActivityClient.class));
+                break;
+            case R.id.circle_apply_for:
+                startActivity(new Intent(mContext, ActivityApplyFor.class));
+                break;
+            case R.id.circle_success:
+                break;
+        }
     }
 }

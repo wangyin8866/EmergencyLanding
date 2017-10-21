@@ -10,7 +10,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
@@ -67,13 +67,13 @@ public class MobileAuthActivity extends BaseActivity {
                 }
                 break;
             case R.id.iv_service_password:
-                final DialogCustom dialogCustom = new DialogCustom(this);
-                dialogCustom.mobileAuthNotice(new View.OnClickListener() {
+                final CustomerDialog customerDialog = new CustomerDialog(this);
+                customerDialog.mobileAuthNotice(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         switch (v.getId()){
                             case R.id.iv_close_pop:
-                                dialogCustom.dismiss();
+                                customerDialog.dismiss();
                                 break;
                         }
                     }

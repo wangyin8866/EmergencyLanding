@@ -26,8 +26,7 @@
             android:name=".MainActivity"
             android:launchMode="singleTask"
 
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <!--二维码-->
         <activity
             android:name=".ui.home.QrCodeActivity"
@@ -174,6 +173,12 @@
         <activity
             android:name=".ui.salesman.activity.BorrowActivity"
             android:screenOrientation="portrait" />
+        <!--申请-->
+        <activity
+            android:name=".ui.salesman.activity.ActivityApplyFor"
+            android:screenOrientation="portrait" />
+        <!--客户-->
+        <activity android:name=".ui.salesman.activity.ActivityClient" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

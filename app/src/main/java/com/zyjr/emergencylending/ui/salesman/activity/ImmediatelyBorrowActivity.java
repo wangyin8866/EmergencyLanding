@@ -8,7 +8,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
@@ -58,13 +58,13 @@ public class ImmediatelyBorrowActivity extends BaseActivity {
             case R.id.get_verification_code:
                 break;
             case R.id.next_step:
-                final DialogCustom dialogCustom = new DialogCustom(mContext);
-                dialogCustom.borrowSkip(new View.OnClickListener() {
+                final CustomerDialog customerDialog = new CustomerDialog(mContext);
+                customerDialog.borrowSkip(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         switch (view.getId()) {
                             case R.id.iv_close:
-                                dialogCustom.dismiss();
+                                customerDialog.dismiss();
                                 break;
                             case R.id.btn_confirm_submit:
                                 ToastAlone.showShortToast(mContext, "下一步！！！！");

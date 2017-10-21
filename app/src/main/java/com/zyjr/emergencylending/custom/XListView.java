@@ -75,7 +75,7 @@ public class XListView extends ListView implements OnScrollListener {
     private boolean mEnableAutoLoad = false;
     private boolean mPullLoading = false;
 
-    // total list items, used to detect is at the bottom of ListView
+    // total mList items, used to detect is at the bottom of ListView
     private int mTotalItemCount;
 
     public XListView(Context context) {

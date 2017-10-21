@@ -11,15 +11,13 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity;
-import com.zyjr.emergencylending.ui.home.loan.SupportBankActivity;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemLongClick;
 import butterknife.OnLongClick;
 
 /**
@@ -74,18 +72,18 @@ public class BankInfoActivity extends BaseActivity {
 
 
     private void showDeleteDialog(){
-        final DialogCustom dialogCustom = new DialogCustom(BankInfoActivity.this);
-        dialogCustom.deleteBankcard(new View.OnClickListener() {
+        final CustomerDialog customerDialog = new CustomerDialog(BankInfoActivity.this);
+        customerDialog.deleteBankcard(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_delete_bankcard:
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
                         showOperateConfirm();
                         break;
                     case R.id.tv_cancel:
                         ToastAlone.showLongToast(BankInfoActivity.this, "取消");
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
                         break;
                 }
             }
@@ -93,20 +91,20 @@ public class BankInfoActivity extends BaseActivity {
     }
 
     private void showOperateConfirm(){
-        final DialogCustom dialogCustom = new DialogCustom(BankInfoActivity.this);
-        dialogCustom.operateComfirm(new View.OnClickListener() {
+        final CustomerDialog customerDialog = new CustomerDialog(BankInfoActivity.this);
+        customerDialog.operateComfirm(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.message_left:
                         ToastAlone.showLongToast(BankInfoActivity.this, "取消");
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
 
                         break;
                     case R.id.message_right:
                         ToastAlone.showLongToast(BankInfoActivity.this, "确认");
                         // TODO: 调删除银行卡信息借口
-                        dialogCustom.dismiss();
+                        customerDialog.dismiss();
                         rlEditBankcard.setVisibility(View.GONE);
                         rlAddBankcard.setVisibility(View.VISIBLE);
                         break;

@@ -626,7 +626,7 @@ public class NoPreloadViewPager extends ViewGroup {
 
         if (DEBUG) Log.v(TAG, "populating: startPos=" + startPos + " endPos=" + endPos);
 
-        // Add and remove pages in the existing list.
+        // Add and remove pages in the existing mList.
         int lastPos = -1;
         for (int i=0; i<mItems.size(); i++) {
             ItemInfo ii = mItems.get(i);
@@ -666,7 +666,7 @@ public class NoPreloadViewPager extends ViewGroup {
         }
 
         if (DEBUG) {
-            Log.i(TAG, "Current page list:");
+            Log.i(TAG, "Current page mList:");
             for (int i=0; i<mItems.size(); i++) {
                 Log.i(TAG, "#" + i + ": page " + mItems.get(i).position);
             }

@@ -29,14 +29,14 @@ public class UIUtils {
     }
 
     //尺寸转化
-    public static int dp2px(int dp, Context context) {
+    public static int dp2px(float dp, Context context) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
                 dp,
                 context.getResources().getDisplayMetrics());
     }
 
-    public static int sp2px(int sp, Context context) {
+    public static int sp2px(float sp, Context context) {
         return (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_SP,
                 sp,
@@ -46,7 +46,7 @@ public class UIUtils {
     /**
      * dip转换px
      */
-    public static int dip2px(int dip) {
+    public static int dip2px(float dip) {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         return (int) (dip * scale + 0.5f);
     }
@@ -54,7 +54,7 @@ public class UIUtils {
     /**
      * pxz转换dip
      */
-    public static int px2dip(int px) {
+    public static int px2dip(float px) {
         final float scale = getContext().getResources().getDisplayMetrics().density;
         return (int) (px / scale + 0.5f);
     }

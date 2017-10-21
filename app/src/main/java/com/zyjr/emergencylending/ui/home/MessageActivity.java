@@ -16,7 +16,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.SwipeAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.MessageBean;
 
 import java.util.ArrayList;
@@ -113,7 +113,7 @@ public class MessageActivity extends BaseActivity {
                             messageBeanList.add(messageBean);
                         }
 
-//                        myAdapter.addData(list);
+//                        myAdapter.addData(mList);
 
                         easylayout.loadMoreComplete(new EasyRefreshLayout.Event() {
                             @Override
@@ -159,7 +159,7 @@ public class MessageActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_mark:
-                final DialogCustom dialog = new DialogCustom(mContext);
+                final CustomerDialog dialog = new CustomerDialog(mContext);
                 dialog.deleteMessage(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

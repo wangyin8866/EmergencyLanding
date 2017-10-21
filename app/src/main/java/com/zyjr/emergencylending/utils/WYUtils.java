@@ -162,8 +162,6 @@ public class WYUtils {
     }
 
 
-
-
     /**
      * 保留两位小数 不进行四舍五入
      */
@@ -187,11 +185,12 @@ public class WYUtils {
             return "1.0";
         }
     }
+
     /**
      * 版本更新
      */
-    public static void upDateVersion(Context context,String url) {
-        UpdateVersionService service = new UpdateVersionService(url,context);
+    public static void upDateVersion(Context context, String url) {
+        UpdateVersionService service = new UpdateVersionService(url, context);
         service.checkUpdate();
     }
 
@@ -276,15 +275,14 @@ public class WYUtils {
     }
 
 
-
     /**
      * 拨打客服电话
      *
      * @param context
      */
-    public static void serviceTel(Context context) {
+    public static void serviceTel(Context context, String phoneNum) {
         Uri uri;
-        uri = Uri.parse("tel:400077667");
+        uri = Uri.parse("tel:" + phoneNum);
         Intent intent = new Intent(Intent.ACTION_CALL, uri);
         //此处不判断就会报错
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
@@ -296,19 +294,18 @@ public class WYUtils {
      * 6.0以上拨打客服电话判断权限
      *
      * @param context
-     * @param i
      */
-    public static void CallPhone(Context context, int i) {
+    public static void callPhone(Context context, String phoneNum) {
         if (Build.VERSION.SDK_INT >= 23) {
             //判断有没有拨打电话权限
             if (PermissionChecker.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 //请求拨打电话权限
-                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, i);
+                ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, 0x11);
             } else {
-                serviceTel(context);
+                serviceTel(context,phoneNum);
             }
         } else {
-            serviceTel(context);
+            serviceTel(context,phoneNum);
         }
     }
 
@@ -363,6 +360,7 @@ public class WYUtils {
 
     /**
      * 判断用户是否开启通知权限
+     *
      * @param context
      * @return
      */
@@ -396,12 +394,13 @@ public class WYUtils {
 
     /**
      * 获取当前应用的版本号
+     *
      * @param context
      * @return
      */
     public static String getAppVersionName(Context context) {
         String versionName = "";
-        int versioncode ;
+        int versioncode;
         try {
             // ---get the package info---
             PackageManager pm = context.getPackageManager();
@@ -427,11 +426,12 @@ public class WYUtils {
      * @return
      */
     public static long exitTime = 0;//设置当前点击返回键的退出系统时间
+
     public static boolean clickBack(int keyCode, KeyEvent event, final Context context) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             // System.currentTimeMillis()无论何时调用，肯定大于2000
             if ((System.currentTimeMillis() - exitTime) > 2000) {
-                AppToast.makeShortToast(context,"再按一次退出程序");
+                AppToast.makeShortToast(context, "再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
 //                AlertDialog.Builder builder = new AlertDialog.Builder(context);

@@ -9,6 +9,9 @@ import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
 
+/**
+ * @author wangyin
+ */
 public abstract class BaseFragment<T extends BasePresenter<V>, V> extends Fragment {
     protected T mPresenter;
     protected String tag;
@@ -21,7 +24,6 @@ public abstract class BaseFragment<T extends BasePresenter<V>, V> extends Fragme
         mContext = getActivity();
         mPresenter = createPresenter();
         if (mPresenter != null) {
-
             mPresenter.attach((V) this);
             mPresenter.setLifeSubscription(new LifeSubscription() {
                 @Override
@@ -53,7 +55,10 @@ public abstract class BaseFragment<T extends BasePresenter<V>, V> extends Fragme
         super.onDetach();
 
     }
-
+    /**
+     * @Description: 必须要实现的方法
+     * @author mio4kon
+     */
     protected abstract T createPresenter();
 
 }

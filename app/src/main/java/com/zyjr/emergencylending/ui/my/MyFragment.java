@@ -23,7 +23,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
-import com.zyjr.emergencylending.custom.dialog.DialogCustom;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -149,7 +149,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
      * 设置图像
      */
     private void showUserPicDialog() {
-        final DialogCustom dialog = new DialogCustom(getActivity());
+        final CustomerDialog dialog = new CustomerDialog(getActivity());
         dialog.userPicDialog(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

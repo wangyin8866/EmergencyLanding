@@ -50,7 +50,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     
     // Current context
     protected Context context;
-    // Layout inflater
+    // Layout mInflater
     protected LayoutInflater inflater;
     
     // Items resources

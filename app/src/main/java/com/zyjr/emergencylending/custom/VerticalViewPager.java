@@ -954,7 +954,7 @@ public class VerticalViewPager extends ViewGroup {
         }
 
         if (DEBUG) {
-            Log.i(TAG, "Current page list:");
+            Log.i(TAG, "Current page mList:");
             for (int i = 0; i < mItems.size(); i++) {
                 Log.i(TAG, "#" + i + ": page " + mItems.get(i).position);
             }
