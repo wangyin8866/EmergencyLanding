@@ -29,7 +29,7 @@ public class IdcardUtils {
 
     public static final int INTO_IDCARDSCAN_PAGE = 100;
     private Context context;
-    private String uuid;
+    private String uuid = "";
     private boolean isWarranty = false;
     private static IdcardUtils instance;
     private int side;
@@ -47,7 +47,7 @@ public class IdcardUtils {
 
     public void init(Context context) {
         this.context = context;
-        uuid = Util.getUUIDString(context);
+//        uuid = Util.getUUIDString(context);
         netWorkWarranty();
     }
 
@@ -79,9 +79,7 @@ public class IdcardUtils {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 isWarranty = true;
-//                ToastAlone.showLongToast(context, "授权成功");
             } else if (msg.what == 2) {
-//                ToastAlone.showLongToast(context, "授权失败");
                 isWarranty = false;
             } else if (msg.what == 3) {
                 ToastAlone.showLongToast(context, "idCard初始化失败");
@@ -110,34 +108,12 @@ public class IdcardUtils {
         return intent;
     }
 
-    public Map onActivityResult(int requestCode, int resultCode, Intent data) {
-        Map map = new HashMap<>();
-        if (requestCode == INTO_IDCARDSCAN_PAGE && resultCode == RESULT_OK) {
-            map.put("side", data.getIntExtra("side", 0));
-            map.put("idcardImg", data.getByteArrayExtra("idcardImg"));
-            if (data.getIntExtra("side", 0) == 0) {
-                map.put("portraitImg",
-                        data.getByteArrayExtra("portraitImg"));
-            }
-        }
-        return map;
-    }
-
     public Bitmap gitBitmap(Map map) {
         IDCardAttr.IDCardSide mIDCardSide = ((int) map.get("side")) == 0 ? IDCardAttr.IDCardSide.IDCARD_SIDE_FRONT
                 : IDCardAttr.IDCardSide.IDCARD_SIDE_BACK;
         Bitmap img = null;
-//        if (mIDCardSide == IDCardAttr.IDCardSide.IDCARD_SIDE_BACK) {
         byte[] idcardImgData = (byte[]) map.get("idcardImg");
-        img = BitmapFactory.decodeByteArray(idcardImgData, 0,
-                idcardImgData.length);
-//        }
-////        portraitImg
-//        if (mIDCardSide == IDCardAttr.IDCardSide.IDCARD_SIDE_FRONT) {
-//            byte[] portraitImgData = (byte[]) map.get("idcardImg");
-//            img = BitmapFactory.decodeByteArray(portraitImgData, 0,
-//                    portraitImgData.length);
-//        }
+        img = BitmapFactory.decodeByteArray(idcardImgData, 0, idcardImgData.length);
         LogUtils.d("Icon_hw", img.getWidth() + "_" + img.getHeight());
         return img;
     }

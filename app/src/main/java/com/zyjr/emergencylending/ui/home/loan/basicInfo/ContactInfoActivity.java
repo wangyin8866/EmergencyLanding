@@ -32,6 +32,9 @@ import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -61,7 +64,14 @@ public class ContactInfoActivity extends BaseActivity {
     @BindView(R.id.tv_relation2)
     TextView tvRelation2; // 关系2
 
+    List<CodeBean> selectList; // 初始化选择列表
+    List<CodeBean> selectList1 = new ArrayList<>(); // 联系人1可选择的
+    CodeBean codeBean1 = new CodeBean();
+    List<CodeBean> selectList2 = new ArrayList<>(); // 联系人2可选择的
+    CodeBean codeBean2 = new CodeBean();
     private int selectPhoneType = 0; // 选择号码标识
+    private static final int CODE_PERMISSION_CONTANCT_LIST = 2000; // 权限请求 获取通讯录
+    private static final int INTENT_SELECT_PHONE = 2001; // intent请求码 获取号码
 
     @Override
     protected BasePresenter createPresenter() {
@@ -80,24 +90,28 @@ public class ContactInfoActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_relation1:  // 关系1
-                SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, AppConfig.contactRelation());
+                SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, selectList1.size() > 0 ? selectList1 : selectList);
                 popRelationSelect1.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
-                    public void onSelectClick(int index, CodeBean select) {
-                        LogUtils.d("选择的关系信息1:" + select.toString());
-                        tvRelation1.setText(select.getName());
+                    public void onSelectClick(int index, CodeBean select1) {
+                        LogUtils.d("选择的关系信息1:" + select1.toString());
+                        codeBean1 = select1;
+                        tvRelation1.setText(select1.getName());
+                        selectList2 = AppConfig.removeSlectCodeBean(selectList, select1.getCode());
                     }
                 });
                 popRelationSelect1.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
 
             case R.id.ll_contact_relation2:  // 关系2
-                SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, AppConfig.contactRelation());
+                SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, selectList2.size() > 0 ? selectList2 : selectList);
                 popRelationSelect2.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
-                    public void onSelectClick(int index, CodeBean select) {
-                        LogUtils.d("选择的关系信息2:" + select.toString());
-                        tvRelation2.setText(select.getName());
+                    public void onSelectClick(int index, CodeBean select2) {
+                        LogUtils.d("选择的关系信息2:" + select2.toString());
+                        codeBean2 = select2;
+                        tvRelation2.setText(select2.getName());
+                        selectList1 = AppConfig.removeSlectCodeBean(selectList, codeBean2.getCode());
                     }
                 });
                 popRelationSelect2.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -115,27 +129,10 @@ public class ContactInfoActivity extends BaseActivity {
     }
 
 
-    private void jumpToSelectPhone(int i) {
-        selectPhoneType = i;
-        if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "从电话薄中选择联系人,请允许读取权限!", 123)) {
-            if (CommonUtils.queryContactPhoneNumber(mContext).size() > 0) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
-                startActivityForResult(intent, 1234);
-            } else {
-                ToastAlone.showLongToast(this, "请添加联系人或检查权限");
-            }
-        } else {
-            if (AppOpsManagerUtil.isCheck(this, AppOpsManagerUtil.OP_READ_CONTACTS) == AppOpsManager.MODE_IGNORED) {
-                ToastAlone.showLongToast(this, "请打开读取联系人权限!");
-            }
-        }
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (1234 == requestCode && resultCode == Activity.RESULT_OK) {
+        if (INTENT_SELECT_PHONE == requestCode && resultCode == Activity.RESULT_OK) { // 从通讯录获取号码
             String phoneNumber = "";
             if (data == null) {
                 ToastAlone.showLongToast(this, "操作失败!");
@@ -166,7 +163,7 @@ public class ContactInfoActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 123) {
+        if (CODE_PERMISSION_CONTANCT_LIST == 123) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToSelectPhone(selectPhoneType);
             }
@@ -183,6 +180,7 @@ public class ContactInfoActivity extends BaseActivity {
     }
 
     private void init() {
+        selectList = AppConfig.contactRelation();
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -194,6 +192,23 @@ public class ContactInfoActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void jumpToSelectPhone(int i) {
+        selectPhoneType = i;
+        if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "从电话薄中选择联系人,请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
+            if (CommonUtils.queryContactPhoneNumber(mContext).size() > 0) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
+                startActivityForResult(intent, INTENT_SELECT_PHONE);
+            } else {
+                ToastAlone.showLongToast(this, "请添加联系人或检查权限");
+            }
+        } else {
+            if (AppOpsManagerUtil.isCheck(this, AppOpsManagerUtil.OP_READ_CONTACTS) == AppOpsManager.MODE_IGNORED) {
+                ToastAlone.showLongToast(this, "请打开读取联系人权限!");
+            }
+        }
     }
 
 

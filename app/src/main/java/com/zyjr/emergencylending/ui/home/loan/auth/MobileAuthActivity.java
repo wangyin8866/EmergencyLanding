@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
@@ -20,6 +21,7 @@ import butterknife.OnClick;
 /**
  * Created by neil on 2017/10/17
  * 备注: 手机运营商认证
+ * 验证码 根据手机运营商 进行显示和隐藏
  */
 public class MobileAuthActivity extends BaseActivity {
     @BindView(R.id.top_bar)
@@ -28,6 +30,8 @@ public class MobileAuthActivity extends BaseActivity {
     TextView tvMobileNumber;
     @BindView(R.id.et_service_password)
     TextView etServicePassword;
+    @BindView(R.id.ll_mobile_validate_code)
+    LinearLayout llMobileValidateCode; // 手机验证码
     @BindView(R.id.cb_check)
     CheckBox cbCheck;
     @BindView(R.id.btn_submit)

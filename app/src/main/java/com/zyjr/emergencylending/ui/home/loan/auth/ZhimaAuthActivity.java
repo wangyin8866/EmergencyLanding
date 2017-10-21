@@ -1,15 +1,21 @@
 package com.zyjr.emergencylending.ui.home.loan.auth;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.xfqz.xjd.mylibrary.CustomProgressDialog;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +34,10 @@ public class ZhimaAuthActivity extends BaseActivity {
     TextView tvIdcardNumber;
     @BindView(R.id.btn_authorise)
     Button btnAuthorise;
+    @BindView(R.id.layout_zhima_content)
+    ScrollView layoutContentView;
+    @BindView(R.id.webView)
+    WebView webView;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -39,6 +49,27 @@ public class ZhimaAuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zhima_auth);
         ButterKnife.bind(this);
+        init();
+
+        tvName.setText("张三");
+        tvIdcardNumber.setText("123456789");
+
+//        Dialog loadingDialog = CustomProgressDialog.createDialog(this);
+//        loadingDialog.setCancelable(false);
+//        WYUtils.loadHtmlWithDialog("", webView, loadingDialog);
+    }
+
+    @OnClick({R.id.btn_authorise})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_authorise:
+                ToastAlone.showLongToast(this, "前往授权");
+                break;
+        }
+    }
+
+
+    private void init(){
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -50,18 +81,6 @@ public class ZhimaAuthActivity extends BaseActivity {
 
             }
         });
-        tvName.setText("张三");
-        tvIdcardNumber.setText("123456789");
-    }
-
-    @OnClick({R.id.btn_authorise})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_authorise:
-                ToastAlone.showLongToast(this, "前往授权");
-
-                break;
-        }
     }
 }
 

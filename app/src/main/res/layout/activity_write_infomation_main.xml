@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:ptr="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -16,10 +17,13 @@
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
-    <ScrollView
-        android:id="@+id/root"
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/root_refreshview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        ptr:ptrAnimationStyle="flip"
+        ptr:ptrMode="pullFromStart"
+        android:background="@color/white"
         android:scrollbars="none">
 
         <LinearLayout
@@ -193,6 +197,6 @@
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 </LinearLayout>

@@ -52,4 +52,7 @@ dependencies {
     compile 'com.jph.takephoto:takephoto_library:4.0.3'
     compile project(':livenesslib')
     compile project(':IDCardLib')
+    compile project(':PullToRefreshLib')
+    // 人脸识别 校验用到
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }

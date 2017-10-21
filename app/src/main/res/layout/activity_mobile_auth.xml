@@ -105,7 +105,7 @@
                     android:editable="false"
                     android:gravity="center_vertical"
                     android:hint="请输入运营商服务密码"
-                    android:textColor="@color/front_text_color_hint"
+                    android:textColor="@color/front_text_color"
                     android:textSize="14sp" />
 
                 <ImageView
@@ -118,6 +118,40 @@
                     android:src="@mipmap/icon_question" />
 
             </LinearLayout>
+
+            <!-- 验证密码 -->
+            <LinearLayout
+                android:id="@+id/ll_mobile_validate_code"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:minEms="6"
+                    android:text="验证码"
+                    android:textColor="@color/input_text_color"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_mobile_validate_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:editable="false"
+                    android:gravity="center_vertical"
+                    android:hint="请输入您的验证码"
+                    android:textColor="@color/front_text_color"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
 
             <RelativeLayout
                 android:layout_width="match_parent"

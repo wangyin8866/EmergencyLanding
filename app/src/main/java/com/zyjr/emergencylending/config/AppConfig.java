@@ -283,6 +283,18 @@ public class AppConfig {
         return contactRelation;
     }
 
+    /**
+     * 根据已经选择的,去重处理
+     */
+    public static List<CodeBean> removeSlectCodeBean(List<CodeBean> list, String code) {
+        List<CodeBean> empCodeBeans = new ArrayList<>();
+        for (CodeBean mCodeBean : list) {
+            if (!mCodeBean.getCode().equals(code)) {
+                empCodeBeans.add(mCodeBean);
+            }
+        }
+        return empCodeBeans;
+    }
 
     public static List<CodeBean> loanName() {
         List<CodeBean> loanName = new ArrayList();

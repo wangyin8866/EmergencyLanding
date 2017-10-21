@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -57,7 +58,7 @@ public class BaseApplication extends Application {
         mInstance = this;
         //获取版本号
         BaseApplication.version = WYUtils.getVersion(getApplicationContext());
-
+        SupportCityConfig.getInstance().initCitys(); // 加载城市数据
         //是否打印日志
         LogUtils.isDebug = true;
         initUmeng();

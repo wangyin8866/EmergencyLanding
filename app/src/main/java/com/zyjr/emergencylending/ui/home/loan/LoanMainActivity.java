@@ -90,6 +90,7 @@ public class LoanMainActivity extends BaseActivity {
     }
 
     private void initData() {
+        // TODO 获取产品介绍
         proIntroduceList = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             ProIntroduceBean item = new ProIntroduceBean("新产品" + i, "快来体验" + i);
@@ -129,11 +130,18 @@ public class LoanMainActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.btn_apply_quickly})
+    @OnClick({R.id.btn_apply_quickly, R.id.layout_traditional_support_cities})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_quickly:
-                startActivity(new Intent(LoanMainActivity.this, WriteInfoMainActivity.class));
+                // TODO 携带 借款数据到下个页面
+                Intent intent = new Intent(this, WriteInfoMainActivity.class);
+                intent.putExtra("loanMoney", money);
+                intent.putExtra("loanWeek", week);
+                startActivity(intent);
+                break;
+            case R.id.layout_traditional_support_cities:
+                startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));
                 break;
         }
     }

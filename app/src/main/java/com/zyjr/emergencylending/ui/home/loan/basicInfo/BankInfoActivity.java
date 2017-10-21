@@ -2,11 +2,15 @@ package com.zyjr.emergencylending.ui.home.loan.basicInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
@@ -29,9 +33,9 @@ public class BankInfoActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.rl_add_bankcard)
-    RelativeLayout rlAddBankcard;
+    RelativeLayout rlAddBankcard;  // 添加银行卡布局
     @BindView(R.id.rl_edit_bankcard)
-    RelativeLayout rlEditBankcard;
+    RelativeLayout rlEditBankcard;  // 银行卡
     @BindView(R.id.iv_bankcard_icon)
     ImageView ivBankcardIcon; // 银行卡logo
     @BindView(R.id.tv_bankcard_name)
@@ -40,6 +44,8 @@ public class BankInfoActivity extends BaseActivity {
     TextView tvBankcardType;  // 银行卡类型
     @BindView(R.id.tv_bankcard_number)
     TextView tvBankcardNumber; // 银行卡号码
+    @BindView(R.id.root_refreshview)
+    PullToRefreshScrollView pullToRefreshScrollView;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -123,6 +129,18 @@ public class BankInfoActivity extends BaseActivity {
             @Override
             public void OnRightButtonClicked() {
                 showDeleteDialog();
+            }
+        });
+
+        pullToRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+                pullToRefreshScrollView.onRefreshComplete();
+                pullToRefreshScrollView.getLoadingLayoutProxy().setLastUpdatedLabel(label);
+                rlEditBankcard.setVisibility(View.GONE);
+                rlAddBankcard.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -142,7 +142,7 @@ public class CustomerDialog extends Dialog {
         tvConfirm.setOnClickListener(listener);
         TextView tvScanAgain = findViewById(R.id.tv_scan_again);
         tvScanAgain.setOnClickListener(listener);
-        window.setWindowAnimations(R.style.main_menu_animstyle);
+        window.setWindowAnimations(R.style.dialog_transparent);
 //        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         CustomerDialog.this.setCanceledOnTouchOutside(false);  // 设置点击外围解散
         return instance;

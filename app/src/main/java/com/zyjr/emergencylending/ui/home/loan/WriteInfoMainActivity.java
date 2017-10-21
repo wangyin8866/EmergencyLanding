@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
@@ -16,6 +19,7 @@ import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.SettingItemView;
 
@@ -42,6 +46,12 @@ public class WriteInfoMainActivity extends BaseActivity {
     Button btnSubmit; // 提交信息
     @BindView(R.id.rl_no_salesman)
     RelativeLayout rlNoSalesman;
+    @BindView(R.id.root_refreshview)
+    PullToRefreshScrollView pullToRefreshScrollView;
+
+    private Intent intent;
+    private String loanMoney = ""; // 借款金额
+    private String loanWeek = ""; // 借款周期
 
     @Override
     protected BasePresenter createPresenter() {
@@ -100,7 +110,11 @@ public class WriteInfoMainActivity extends BaseActivity {
 
 
     private void initData() {
-        infoFinishStatus("0","1","1","0");
+        intent = getIntent();
+        loanMoney = intent.getStringExtra("loanMoney");
+        loanWeek = intent.getStringExtra("loanWeek");
+        LogUtils.d("WriteInfoMainActivity接收数据---->" + loanMoney + "," + loanWeek);
+        infoFinishStatus("0", "1", "1", "0");
     }
 
 
@@ -116,15 +130,23 @@ public class WriteInfoMainActivity extends BaseActivity {
 
             }
         });
+        pullToRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                ToastAlone.showLongToast(WriteInfoMainActivity.this, "刷新");
+            }
+        });
     }
 
 
     /**
      * 设置资料完成状态 0:代表未完成,1:代表完成
+     *
      * @param personal 个人信息
-     * @param work 工作信息
-     * @param contact 联系人
-     * @param bank 银行卡
+     * @param work     工作信息
+     * @param contact  联系人
+     * @param bank     银行卡
      */
     private void infoFinishStatus(String personal, String work, String contact, String bank) {
         if (personal.equals("1")) {

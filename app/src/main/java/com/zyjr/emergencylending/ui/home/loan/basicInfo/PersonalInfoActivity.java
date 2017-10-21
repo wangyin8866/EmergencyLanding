@@ -93,8 +93,9 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
     private TakePhoto takePhoto;
     private String filePath;
     private Bitmap mBitmapHoldIdcard, mBitmapIDcardFront, mBitmapIDcardBack;
-    private static final int INTENT_IDCARD_FRONT = 100;
-    private static final int INTENT_IDCARD_BACK = 101;
+    private static final int INTENT_IDCARD_FRONT = 1000; // 请求码 扫描身份证正面
+    private static final int INTENT_IDCARD_BACK = 1001; // 请求码 扫描身份证反面
+    private static final int INTENT_IDCARD_HOLD = 1002; // 请求码 拍照
     private int mWidth;
     private int mHeight;
 
@@ -153,11 +154,23 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 101) {
+        if (requestCode == INTENT_IDCARD_HOLD) { // 手持照
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 takePhotoModelNotice();
             } else {
                 AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
+            }
+        } else if (requestCode == INTENT_IDCARD_FRONT) { // 扫描正面
+            if (ToolPermission.checkPermission(permissions, grantResults)) {
+                jumpScanIDcard(INTENT_IDCARD_FRONT, 0, false);
+            } else {
+                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
+            }
+        } else if(requestCode == INTENT_IDCARD_BACK){
+            if (ToolPermission.checkPermission(permissions, grantResults)) {
+                jumpScanIDcard(INTENT_IDCARD_BACK, 0, false);
+            } else {
+                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
             }
         }
     }
@@ -262,7 +275,7 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
         if (ToolPermission.checkSelfPermission(
                 this,
                 null,
-                new String[]{Manifest.permission.READ_SMS, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 "请允许权限进行扫描",
                 requestCode)) {
             Intent intent = IdcardUtils.getInstance().getIdCardIntent(this, type, false);
@@ -310,6 +323,8 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
         LogUtils.d("图片具体信息----->文件名:" + fileName + ",文件后缀:" + fileExtName);
         mBitmapHoldIdcard = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(filePath), mWidth, mHeight, true);
         ivHoldIdcard.setImageBitmap(mBitmapHoldIdcard);
+        // TODO 图片上传
+
     }
 
     @Override
@@ -324,14 +339,14 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
 
     // 扫描证件成功
     private void scanSuccessInfo(String name, String num, String addr, final IDCardFrontBean idCardBean) {
-        final CustomerDialog customerDialog = new CustomerDialog(this);
-        customerDialog.scanIdcardInfo(new View.OnClickListener() {
+        final CustomerDialog dialogCustom = new CustomerDialog(this);
+        dialogCustom.scanIdcardInfo(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_confirm:
                         // TODO 点击确认时,1.保存bean;2.上传图片至服务器端
-                        customerDialog.dismiss();
+                        dialogCustom.dismiss();
                         mBitmapIDcardFront = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
                         ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
                         break;
@@ -346,14 +361,14 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
 
     // 手持证件照 提示
     private void takePhotoModelNotice() {
-        final CustomerDialog customerDialog = new CustomerDialog(this);
-        customerDialog.holdIdcardNotice(new View.OnClickListener() {
+        final CustomerDialog dialogCustom = new CustomerDialog(this);
+        dialogCustom.holdIdcardNotice(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.root_takephoto_model:
-                        customerDialog.dismiss();
-                        jumpToTakePhoto(101);
+                        dialogCustom.dismiss();
+                        jumpToTakePhoto(INTENT_IDCARD_HOLD);
                         break;
                 }
             }
@@ -377,7 +392,7 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
             }
         });
         CommonUtils.addressDatas(this);
-        IdcardUtils.getInstance().init(BaseApplication.getContext());
+        IdcardUtils.getInstance().init(this);
     }
 
     private View getRootView() {
