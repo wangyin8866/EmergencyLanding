@@ -178,7 +178,13 @@
             android:name=".ui.salesman.activity.ActivityApplyFor"
             android:screenOrientation="portrait" />
         <!--客户-->
-        <activity android:name=".ui.salesman.activity.ActivityClient" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.salesman.activity.ActivityClient"
+            android:screenOrientation="portrait" />
+        <!--成功-->
+        <activity
+            android:name=".ui.salesman.activity.ActivitySuccess"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

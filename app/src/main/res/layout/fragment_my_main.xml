@@ -71,7 +71,12 @@
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <View style="@style/horizontal_line_style" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:background="#F5F5F5"/>
 
         <TextView
             android:id="@+id/my_borrow"
@@ -87,7 +92,12 @@
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <View style="@style/horizontal_line_style" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:background="#F5F5F5"/>
 
         <TextView
             android:id="@+id/my_repayment"
@@ -103,7 +113,12 @@
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <View style="@style/horizontal_line_style" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:background="#F5F5F5"/>
 
         <TextView
             android:id="@+id/help"
@@ -119,7 +134,12 @@
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <View style="@style/horizontal_line_style" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:background="#F5F5F5"/>
 
         <TextView
             android:id="@+id/setting"
@@ -135,7 +155,12 @@
             android:textColor="#333333"
             android:textSize="14sp" />
 
-        <View style="@style/horizontal_line_style" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:background="#F5F5F5"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -26,57 +26,39 @@
             android:id="@+id/rg_title"
             android:layout_width="match_parent"
             android:layout_height="26dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             android:gravity="center"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:layout_width="0dp"
+            <RadioButton
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_marginRight="58dp"
+                android:background="@drawable/btn_shape_gradient_mine"
+                android:button="@null"
+                android:gravity="center"
+                android:text="近7天"
+                android:textColor="@color/color_tv_selector" />
 
-                <RadioButton
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/btn_shape_gradient_mine"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="center"
-                    android:text="近7天"
-                    android:textColor="#FFA200" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
+            <RadioButton
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_marginRight="58dp"
+                android:background="@drawable/btn_shape_gradient_mine"
+                android:button="@null"
+                android:gravity="center"
+                android:text="当月"
+                android:textColor="@color/color_tv_selector" />
 
-                <RadioButton
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/btn_shape_gradient_mine"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="当月"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="0dp"
+            <RadioButton
+                android:layout_width="60dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <RadioButton
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/btn_shape_gradient_mine"
-                    android:button="@null"
-                    android:gravity="center"
-                    android:text="上月"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
+                android:background="@drawable/btn_shape_gradient_mine"
+                android:button="@null"
+                android:gravity="center"
+                android:text="上月"
+                android:textColor="@color/color_tv_selector" />
         </RadioGroup>
     </LinearLayout>
 
@@ -350,8 +332,11 @@
 
         <include layout="@layout/bg_line_1" />
 
-        <android.support.v7.widget.RecyclerView
+        <com.zyjr.emergencylending.custom.XListView
+            android:id="@+id/xlv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:scrollbars="none" />
     </LinearLayout>
 </LinearLayout>

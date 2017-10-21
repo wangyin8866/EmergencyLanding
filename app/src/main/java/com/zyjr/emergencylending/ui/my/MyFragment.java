@@ -35,7 +35,9 @@ import butterknife.Unbinder;
 
 
 /**
- * Created by wangyin on 2017/8/9.
+ *
+ * @author wangyin
+ * @date 2017/8/9
  */
 
 public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements TakePhoto.TakeResultListener, InvokeListener {
