@@ -19,6 +19,7 @@ import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.BubbleSeekBar;
+import com.zyjr.emergencylending.widget.CustomSeekBar;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
 import java.util.ArrayList;
@@ -38,9 +39,9 @@ public class LoanMainActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.seekbar_loan_money)
-    BubbleSeekBar seekbarMoney;
+    CustomSeekBar seekbarMoney;
     @BindView(R.id.seekbar_loan_week)
-    BubbleSeekBar seekbarWeek;
+    CustomSeekBar seekbarWeek;
     @BindView(R.id.tv_loan_money_min)
     TextView tvMinLoadMoney;
     @BindView(R.id.tv_loan_money_max)
@@ -112,6 +113,8 @@ public class LoanMainActivity extends BaseActivity {
             MAX_MONEY = 5000;
             initSeekMoney(10, MIN_MONEY, MAX_MONEY);
             initSeekWeek(1, MIN_WEEK, MAX_WEEK, flag);
+            llFastloanSupportCities.setVisibility(View.VISIBLE);
+            llTraditionalSupportCities.setVisibility(View.GONE);
         } else if (flag.equals("offline")) {
             topBar.setTitle("传统借款");
             MIN_WEEK = 15;
@@ -200,13 +203,6 @@ public class LoanMainActivity extends BaseActivity {
         }
         week = Arithmetic.progressToWeek(progress, minWeek, maxWeek);
         tvMaxLoadWeek.setText(maxWeek + "周");
-    }
-
-    public void defaultSeekWeek() {
-        seekbarWeek.setType(1);
-        seekbarWeek.setONLINE(1);
-        seekbarWeek.setWEEK_MIN(2);
-        seekbarWeek.setWEEK_MAX(15);
     }
 
     private void init() {

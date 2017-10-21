@@ -14,4 +14,10 @@ public interface NetConstantValues {
      * 身份证扫描
      */
     String IDCARD_URL = "https://api.faceid.com/faceid/";
+
+    /**
+     * 身份证扫描
+     */
+    String FACE_AUTH_URL = "https://api.megvii.com/faceid/";
+
 }

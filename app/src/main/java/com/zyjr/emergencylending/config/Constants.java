@@ -10,4 +10,10 @@ public class Constants {
      */
     public static  boolean update = true;
 
+    /**
+     * 身份证信息扫描|活体验证
+     */
+    public static final String FACE_APPKEY = "pI75sT_t2hb3nlyPLx2xgPzEOC1joAJz";
+    public static final String FACE_APPSECRET = "6XDvhkOPeRSl5vh_bQL6RQKkAPbxOPzi";
+
 }

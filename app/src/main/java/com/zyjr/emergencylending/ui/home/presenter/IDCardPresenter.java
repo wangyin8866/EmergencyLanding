@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.model.home.loan.IDCardModel;
-import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.ui.home.View.IDCardView;
 import com.zyjr.emergencylending.utils.LogUtils;
 
@@ -15,9 +15,8 @@ import java.io.File;
 
 /**
  * Created by neil on 2017/10/19
- * 备注:
+ * 备注: 身份证信息
  */
-
 public class IDCardPresenter extends BasePresenter<IDCardView> {
 
     public IDCardPresenter(Context context) {
@@ -47,5 +46,7 @@ public class IDCardPresenter extends BasePresenter<IDCardView> {
             }
         });
     }
+
+
 
 }

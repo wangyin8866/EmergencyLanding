@@ -1,6 +1,5 @@
 package com.zyjr.emergencylending.base;
 
-import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;

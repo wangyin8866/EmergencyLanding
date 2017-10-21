@@ -80,11 +80,8 @@ public class BankInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_delete_bankcard:
-                        ToastAlone.showLongToast(BankInfoActivity.this, "删除");
                         dialogCustom.dismiss();
-                        // TODO: 调删除银行卡信息借口
-                        rlEditBankcard.setVisibility(View.GONE);
-                        rlAddBankcard.setVisibility(View.VISIBLE);
+                        showOperateConfirm();
                         break;
                     case R.id.tv_cancel:
                         ToastAlone.showLongToast(BankInfoActivity.this, "取消");
@@ -93,6 +90,29 @@ public class BankInfoActivity extends BaseActivity {
                 }
             }
         }).show();
+    }
+
+    private void showOperateConfirm(){
+        final DialogCustom dialogCustom = new DialogCustom(BankInfoActivity.this);
+        dialogCustom.operateComfirm(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.message_left:
+                        ToastAlone.showLongToast(BankInfoActivity.this, "取消");
+                        dialogCustom.dismiss();
+
+                        break;
+                    case R.id.message_right:
+                        ToastAlone.showLongToast(BankInfoActivity.this, "确认");
+                        // TODO: 调删除银行卡信息借口
+                        dialogCustom.dismiss();
+                        rlEditBankcard.setVisibility(View.GONE);
+                        rlAddBankcard.setVisibility(View.VISIBLE);
+                        break;
+                }
+            }
+        },"您确定要删除此银行卡吗",0,"取消",0,"确定",0).show();
     }
 
     private void init(){

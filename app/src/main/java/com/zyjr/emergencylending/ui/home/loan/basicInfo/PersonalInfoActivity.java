@@ -157,7 +157,7 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 takePhotoModelNotice();
             } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
+                AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
             }
         }
     }

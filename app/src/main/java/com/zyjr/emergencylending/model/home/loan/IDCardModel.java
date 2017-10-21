@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.model.home.loan;
 
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
@@ -8,6 +9,7 @@ import com.zyjr.emergencylending.service.home.loan.IDCardService;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -43,8 +45,8 @@ public class IDCardModel extends BaseModel {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM); //ParamKey.TOKEN 自定义参数key常量类，即参数名
         RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         builder.addFormDataPart("image", file.getName(), imageBody); //imgfile 后台接收图片流的参数名
-        builder.addFormDataPart("api_key", "pI75sT_t2hb3nlyPLx2xgPzEOC1joAJz");
-        builder.addFormDataPart("api_secret", "6XDvhkOPeRSl5vh_bQL6RQKkAPbxOPzi");
+        builder.addFormDataPart("api_key", Constants.FACE_APPKEY);
+        builder.addFormDataPart("api_secret", Constants.FACE_APPSECRET);
         builder.addFormDataPart("legality", "1");  //传入1可以判断身份证是否  被编辑/是真实身份证/是复印件/是屏幕翻拍/是临时身份证
         List<MultipartBody.Part> parts = builder.build().parts();
         return idcardService.getIDCardFrontInfo(parts);
@@ -57,8 +59,8 @@ public class IDCardModel extends BaseModel {
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         builder.addFormDataPart("image", file.getName(), imageBody);
-        builder.addFormDataPart("api_key", "pI75sT_t2hb3nlyPLx2xgPzEOC1joAJz");
-        builder.addFormDataPart("api_secret", "6XDvhkOPeRSl5vh_bQL6RQKkAPbxOPzi");
+        builder.addFormDataPart("api_key", Constants.FACE_APPKEY);
+        builder.addFormDataPart("api_secret", Constants.FACE_APPSECRET);
         builder.addFormDataPart("legality", "1");
         List<MultipartBody.Part> parts = builder.build().parts();
         return idcardService.getIDCardBackInfo(parts);

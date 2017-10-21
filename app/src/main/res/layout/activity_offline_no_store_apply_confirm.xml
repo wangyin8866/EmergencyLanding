@@ -78,7 +78,7 @@
 
                 <!-- 续贷 -->
                 <include
-                    layout="@layout/layout_loan_type"
+                    layout="@layout/line_layout_loan_type"
                     android:visibility="gone" />
 
                 <!-- 首贷 -->

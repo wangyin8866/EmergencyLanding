@@ -9,7 +9,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
@@ -78,8 +77,6 @@ public class DialogCustom extends Dialog {
 
     /**
      * 借款 信息确认弹出框
-     *
-     *
      *
      * @param listener 事件回调
      * @param userFlag 用户标识
@@ -170,8 +167,6 @@ public class DialogCustom extends Dialog {
 
     /**
      * 手持证件照 拍照提示
-     *
-     * @return
      */
     public DialogCustom holdIdcardNotice(View.OnClickListener listener) {
         setContentView(R.layout.dialog_hold_idcard_model);
@@ -181,6 +176,45 @@ public class DialogCustom extends Dialog {
         rootView.setOnClickListener(listener);
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         setCanceledOnTouchOutside(false);
+        return instance;
+    }
+
+
+    /**
+     * 通用弹出确认
+     */
+    /**
+     *
+     * @param content
+     * @param contentColor
+     * @param leftMsg
+     * @param leftFrontColor
+     * @param rightMsg
+     * @param rightFrontColor
+     * @return
+     */
+    public DialogCustom operateComfirm(View.OnClickListener listener,
+                                       String content, int contentColor, String leftMsg, int leftFrontColor, String rightMsg, int rightFrontColor) {
+        setContentView(R.layout.dialog_operate_confrim);
+        TextView tvContent = findViewById(R.id.tv_content);
+        tvContent.setText(content);
+        if (contentColor != 0) {
+            tvContent.setTextColor(leftFrontColor);
+        }
+        TextView tvLeftMsg = findViewById(R.id.message_left);
+        tvLeftMsg.setText(leftMsg);
+        if (leftFrontColor != 0) {
+            tvLeftMsg.setTextColor(leftFrontColor);
+        }
+        TextView tvRightMsg = findViewById(R.id.message_right);
+        tvRightMsg.setText(rightMsg);
+        if (rightFrontColor != 0) {
+            tvRightMsg.setTextColor(leftFrontColor);
+        }
+        window.setGravity(Gravity.CENTER);
+        setCanceledOnTouchOutside(false);
+        tvLeftMsg.setOnClickListener(listener);
+        tvRightMsg.setOnClickListener(listener);
         return instance;
     }
 

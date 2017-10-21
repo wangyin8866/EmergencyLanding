@@ -79,9 +79,9 @@ public class IdcardUtils {
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
                 isWarranty = true;
-                ToastAlone.showLongToast(context, "授权成功");
+//                ToastAlone.showLongToast(context, "授权成功");
             } else if (msg.what == 2) {
-                ToastAlone.showLongToast(context, "授权失败");
+//                ToastAlone.showLongToast(context, "授权失败");
                 isWarranty = false;
             } else if (msg.what == 3) {
                 ToastAlone.showLongToast(context, "idCard初始化失败");

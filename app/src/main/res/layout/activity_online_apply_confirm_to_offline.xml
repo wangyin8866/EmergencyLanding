@@ -45,7 +45,7 @@
                 android:background="@drawable/bg_home_notice">
 
                 <!-- 线上 -->
-                <include layout="@layout/layout_loan_type" />
+                <include layout="@layout/line_layout_loan_type" />
 
             </LinearLayout>
 
