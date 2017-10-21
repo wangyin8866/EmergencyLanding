@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/IDCardLib" />
+            <option value="$PROJECT_DIR$/PullToRefreshLib" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/livenesslib" />
             <option value="$PROJECT_DIR$/retrofitlibrary" />
