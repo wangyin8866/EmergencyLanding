@@ -25,6 +25,7 @@ import retrofit2.HttpException;
  * Created by neil on 2017/10/19
  * 备注: 身份证信息
  */
+@Deprecated
 public class IDCardPresenter extends BasePresenter<IDCardView> {
 
     public IDCardPresenter(Context context) {

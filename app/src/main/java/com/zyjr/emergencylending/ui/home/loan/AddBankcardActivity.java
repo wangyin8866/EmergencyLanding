@@ -39,10 +39,6 @@ public class AddBankcardActivity extends BaseActivity {
     TextView tvOpenbank; // 开户行
     @BindView(R.id.et_reserved_phone)
     ClearEditText etReservedPhone; // 预留手机号码
-    @BindView(R.id.et_sms_code)
-    EditText etSmsCode; // 短信验证码
-    @BindView(R.id.btn_get_code)
-    Button btnGetCode; // 获取验证码
     @BindView(R.id.btn_add)
     Button btnAdd; // 添加银行卡
     @BindView(R.id.rv_supported_bank)
@@ -80,17 +76,11 @@ public class AddBankcardActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_openbank_select, R.id.btn_get_code, R.id.btn_add})
+    @OnClick({R.id.ll_openbank_select, R.id.btn_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_openbank_select:
                 startActivity(new Intent(this, SupportBankActivity.class));
-                break;
-
-            case R.id.btn_get_code:
-                // TODO: 调短信验证码的接口，下面代码写在成功后的回调中
-                btnGetCode.setEnabled(false);
-                DateUtil.countDown(btnGetCode, "重新发送");
                 break;
 
             case R.id.btn_add:  // 添加银行卡

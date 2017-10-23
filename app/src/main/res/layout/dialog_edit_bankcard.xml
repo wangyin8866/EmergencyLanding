@@ -21,13 +21,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tv_delete_bankcard"
+                android:id="@+id/tv_edit_bankcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="15dp"
-                android:text="删除银行卡"
-                android:textColor="#FB5D5C"
+                android:text="修改银行卡"
+                android:textColor="@color/front_text_color_agreement"
                 android:textSize="15sp" />
         </LinearLayout>
 

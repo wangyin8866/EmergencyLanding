@@ -26,9 +26,10 @@ import butterknife.OnLongClick;
 
 /**
  * Created by neil on 2017/10/12
- * 备注: 银行信息
+ * 备注: 银行卡信息
+ * 当没有银行卡时,管理 按钮消失;有银行卡信息时展示
  */
-public class BankInfoActivity extends BaseActivity {
+public class BankcardInfoActivity extends BaseActivity {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -72,23 +73,23 @@ public class BankInfoActivity extends BaseActivity {
 
     @OnLongClick(R.id.rl_edit_bankcard)
     boolean onLongClickBindButton(){
-        showDeleteDialog();
+        showEditDialog();
         return true;
     }
 
 
-    private void showDeleteDialog(){
-        final CustomerDialog customerDialog = new CustomerDialog(BankInfoActivity.this);
-        customerDialog.deleteBankcard(new View.OnClickListener() {
+    private void showEditDialog(){
+        final CustomerDialog customerDialog = new CustomerDialog(BankcardInfoActivity.this);
+        customerDialog.editBankcard(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.tv_delete_bankcard:
+                    case R.id.tv_edit_bankcard:
                         customerDialog.dismiss();
                         showOperateConfirm();
                         break;
                     case R.id.tv_cancel:
-                        ToastAlone.showLongToast(BankInfoActivity.this, "取消");
+                        ToastAlone.showLongToast(BankcardInfoActivity.this, "取消");
                         customerDialog.dismiss();
                         break;
                 }
@@ -97,26 +98,26 @@ public class BankInfoActivity extends BaseActivity {
     }
 
     private void showOperateConfirm(){
-        final CustomerDialog customerDialog = new CustomerDialog(BankInfoActivity.this);
+        final CustomerDialog customerDialog = new CustomerDialog(BankcardInfoActivity.this);
         customerDialog.operateComfirm(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.message_left:
-                        ToastAlone.showLongToast(BankInfoActivity.this, "取消");
+                        ToastAlone.showLongToast(BankcardInfoActivity.this, "取消");
                         customerDialog.dismiss();
 
                         break;
                     case R.id.message_right:
-                        ToastAlone.showLongToast(BankInfoActivity.this, "确认");
-                        // TODO: 调删除银行卡信息借口
+                        ToastAlone.showLongToast(BankcardInfoActivity.this, "确认");
+                        // TODO: 调编辑银行卡信息借口
                         customerDialog.dismiss();
                         rlEditBankcard.setVisibility(View.GONE);
                         rlAddBankcard.setVisibility(View.VISIBLE);
                         break;
                 }
             }
-        },"您确定要删除此银行卡吗",0,"取消",0,"确定",0).show();
+        },"您确定要保存修改信息吗",0,"取消",0,"确定",0).show();
     }
 
     private void init(){
@@ -128,7 +129,7 @@ public class BankInfoActivity extends BaseActivity {
 
             @Override
             public void OnRightButtonClicked() {
-                showDeleteDialog();
+                showEditDialog();
             }
         });
 
@@ -143,6 +144,7 @@ public class BankInfoActivity extends BaseActivity {
                 rlAddBankcard.setVisibility(View.VISIBLE);
             }
         });
+        topBar.setRightButtonVisible(View.INVISIBLE); //
     }
 
 }

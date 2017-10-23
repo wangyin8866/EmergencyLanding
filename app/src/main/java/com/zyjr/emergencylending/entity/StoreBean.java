@@ -52,4 +52,14 @@ public class StoreBean implements Serializable {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    @Override
+    public String toString() {
+        return "StoreBean{" +
+                "storeName='" + storeName + '\'' +
+                ", storeAddress='" + storeAddress + '\'' +
+                ", storeNumber='" + storeNumber + '\'' +
+                ", isSelected=" + isSelected +
+                '}';
+    }
 }

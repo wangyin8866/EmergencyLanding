@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.entity.StoreBean;
+import com.zyjr.emergencylending.widget.SelectorImageView;
 
 import java.util.List;
 
@@ -25,8 +26,26 @@ public class SupportStoreAdapter extends BaseQuickAdapter<StoreBean, BaseViewHol
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, StoreBean item) {
-        helper.setText(R.id.tv_item_store_name, item.getStoreName());
-        helper.setText(R.id.tv_item_store_address, item.getStoreAddress());
+    protected void convert(BaseViewHolder viewHolder, StoreBean item) {
+        viewHolder.setText(R.id.tv_item_store_name, item.getStoreName());
+        viewHolder.setText(R.id.tv_item_store_address, item.getStoreAddress());
+        SelectorImageView view = viewHolder.getView(R.id.iv_item_store_selected);
+        if (item.isSelected()) {
+            view.toggle(true);
+        } else {
+            view.toggle(false);
+        }
+    }
+
+    public void setSelected(int position, boolean status) {
+        for (StoreBean storeBean : mData) {
+            storeBean.setSelected(false);
+        }
+        mData.get(position).setSelected(status);
+        notifyDataSetChanged();
+    }
+
+    public StoreBean getSelected(int position) {
+        return mData.get(position) == null ? null : mData.get(position);
     }
 }

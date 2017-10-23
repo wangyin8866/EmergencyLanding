@@ -190,4 +190,8 @@ public class TopBar extends RelativeLayout {
     public void setmRightText(String mRightText) {
         mRightButton.setText(mRightText);
     }
+
+    public void setRightButtonVisible(int visibility){
+        mRightButton.setVisibility(visibility);
+    }
 }

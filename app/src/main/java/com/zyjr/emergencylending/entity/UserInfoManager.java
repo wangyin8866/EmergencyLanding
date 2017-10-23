@@ -42,7 +42,7 @@ public class UserInfoManager {
     private String junxinlin, junxinlinPhone;
     private String idCardZId, idCardFId, self_hand;
     private String qr_code_url, qr_code;
-    private JobInfoBean jobBean;
+    private WorkInfoBean jobBean;
     private ContactInfoBean contactBean;
     private PersonalInfoBean perSonalBean = new PersonalInfoBean();
     private List<CodeBean> openBanks;
@@ -334,11 +334,11 @@ public class UserInfoManager {
     }
 
 
-    public JobInfoBean getJobBean() {
+    public WorkInfoBean getJobBean() {
         return jobBean;
     }
 
-    public void setJobBean(JobInfoBean jobBean) {
+    public void setJobBean(WorkInfoBean jobBean) {
         this.jobBean = jobBean;
     }
 

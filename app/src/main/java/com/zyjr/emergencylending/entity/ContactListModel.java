@@ -2,8 +2,9 @@ package com.zyjr.emergencylending.entity;
 
 /**
  * Created by neil on 2017/10/13.
- * 联系人关系 (待优化)
+ * 联系人关系 (待处理)
  */
+@Deprecated
 public class ContactListModel {
     private String id;
     private  String contact_name;

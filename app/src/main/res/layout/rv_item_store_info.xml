@@ -50,8 +50,8 @@
                 android:id="@+id/iv_item_store_selected"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@mipmap/ic_find"
-                app:selector_src="@mipmap/ic_find_checked" />
+                android:src="@mipmap/choice_off"
+                app:selector_src="@mipmap/choice_on" />
 
         </RelativeLayout>
 

@@ -36,7 +36,7 @@
 
             <!-- 单位行业 -->
             <LinearLayout
-                android:id="@+id/ll_job_unit_industry"
+                android:id="@+id/ll_unit_industry"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -47,13 +47,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="单位行业"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_industry"
+                    android:id="@+id/tv_unit_industry"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -64,7 +64,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:id="@+id/iv_industry"
+                    android:id="@+id/iv_unit_industry"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -78,7 +78,7 @@
 
             <!-- 单位名称 -->
             <LinearLayout
-                android:id="@+id/ll_job_unit_name"
+                android:id="@+id/ll_unit_name"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="单位名称"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -105,6 +105,7 @@
                     android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="请输入单位名称"
+                    android:maxLength="50"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
                     android:textSize="14sp" />
@@ -130,7 +131,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="单位电话"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -143,7 +144,7 @@
                     android:gravity="center_vertical"
                     android:hint="区号"
                     android:inputType="number"
-                    android:maxLength="4"
+                    android:maxLength="5"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
                     android:textSize="14sp" />
@@ -177,7 +178,7 @@
 
             <!-- 工作地址 -->
             <LinearLayout
-                android:id="@+id/ll_job_address"
+                android:id="@+id/ll_work_address"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -187,13 +188,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="工作地址"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_job_address"
+                    android:id="@+id/tv_work_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="5dp"
@@ -205,7 +206,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:id="@+id/iv_job_address"
+                    android:id="@+id/iv_work_address"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -227,14 +228,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="详细地址"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp"
                     android:visibility="invisible" />
 
                 <com.zyjr.emergencylending.custom.ClearEditText
-                    android:id="@+id/et_detail_address"
+                    android:id="@+id/et_work_detail_address"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
@@ -243,8 +244,7 @@
                     android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="详细地址"
-                    android:inputType="text"
-                    android:maxLength="20"
+                    android:maxLength="50"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
                     android:textSize="14sp" />
@@ -256,7 +256,7 @@
 
             <!-- 部门 -->
             <LinearLayout
-                android:id="@+id/ll_job_department"
+                android:id="@+id/ll_work_department"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -268,13 +268,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="部门"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 
                 <com.zyjr.emergencylending.custom.ClearEditText
-                    android:id="@+id/et_department"
+                    android:id="@+id/et_work_department"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="13dp"
@@ -283,7 +283,7 @@
                     android:drawableRight="@mipmap/login_delete"
                     android:gravity="center_vertical"
                     android:hint="请输入部门"
-                    android:inputType="text"
+                    android:maxLength="50"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="#b3b3b3"
                     android:textSize="14sp" />
@@ -294,7 +294,7 @@
 
             <!-- 职位 -->
             <LinearLayout
-                android:id="@+id/ll_unit_job"
+                android:id="@+id/ll_work_position"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@color/white"
@@ -304,13 +304,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="职位"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:id="@+id/tv_job"
+                    android:id="@+id/tv_work_position"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginRight="5dp"
@@ -322,7 +322,7 @@
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:id="@+id/iv_job"
+                    android:id="@+id/iv_work_position"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_gravity="center"
@@ -346,7 +346,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="税后月收入"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />

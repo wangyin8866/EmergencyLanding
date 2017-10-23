@@ -6,25 +6,36 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 个人信息bean
+ * Created by neil on 2017/10/23
+ * 个人信息资料bean
  */
 public class PersonalInfoBean implements Serializable {
-    private String idcard_z;
+
+    private static final long serialVersionUID = -2368450930576205050L;
+
+    private String marriage; // 婚姻状况
+    private String huji_adr; // 户籍省市区
+    private String huji_province; // 户籍所在省
+    private String huji_city; // 户籍所在市
+    private String huji_county; // 户籍所在区
+    private String huji_adr_detail; // 户籍详细地址
+    private String live_adr; // 现居住地址省市区
+    private String live_province;  // 现住址省
+    private String live_city; // 现住址市
+    private String live_county; // 现住址区
+    private String live_adr_detail; // 现居住详细地址
+    private String qq_no; // QQ号
+    private String wechat_no; // 微信号
+    private String idcard_z; // 身份证正面
+    private String idcard_f; // 身份证反面
+    private String idcard_hand; // 手持身份证
+    private String live_status; // 居住状况
+    private String max_repay_amount; // 每周最大还款额
+
     private String idCardFId;
     private String bank_code;
     private String bankcard_no;
-    private String bankcard_f;
     private String education;
-    private String huji_province;
-    private String huji_city;
-    private String huji_county;
-    private String huji_adr_detail;
-    private String huji_adr;
-    private String live_province;
-    private String live_city;
-    private String live_county;
-    private String live_adr_detail;
-    private String live_adr;
     private String unit_province;
     private String unit_city;
     private String unit_county;
@@ -36,18 +47,12 @@ public class PersonalInfoBean implements Serializable {
     private String username;
     private String bankCardFId;
     private String idcard_must;
-    private String live_status;
-    private String wechat_no;
     private String customer_source;
     private String child_num;
     private String idcard;
     private String bankCardZId;
-    private String marriage;
     private String idCardZId;
-    private String idcard_f;
-    private String qq_no;
     private String bankcard_z;
-    private String idcard_hand;
     private String idCardHandId;
     private String bank_name;
     private List<OpenBankBean> offline_bank_list;
@@ -104,14 +109,6 @@ public class PersonalInfoBean implements Serializable {
 
     public void setBankcard_no(String bankcard_no) {
         this.bankcard_no = bankcard_no;
-    }
-
-    public String getBankcard_f() {
-        return bankcard_f;
-    }
-
-    public void setBankcard_f(String bankcard_f) {
-        this.bankcard_f = bankcard_f;
     }
 
     public String getEducation() {
@@ -433,7 +430,6 @@ public class PersonalInfoBean implements Serializable {
                 ", idCardFId='" + idCardFId + '\'' +
                 ", bank_code='" + bank_code + '\'' +
                 ", bankcard_no='" + bankcard_no + '\'' +
-                ", bankcard_f='" + bankcard_f + '\'' +
                 ", education='" + education + '\'' +
                 ", huji_province='" + huji_province + '\'' +
                 ", huji_city='" + huji_city + '\'' +

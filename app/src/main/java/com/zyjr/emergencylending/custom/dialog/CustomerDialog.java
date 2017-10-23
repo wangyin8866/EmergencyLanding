@@ -110,9 +110,9 @@ public class CustomerDialog extends Dialog {
      * @param listener
      * @return
      */
-    public CustomerDialog deleteBankcard(View.OnClickListener listener) {
-        setContentView(R.layout.dialog_delete_bankcard);
-        TextView tvDelete = findViewById(R.id.tv_delete_bankcard);
+    public CustomerDialog editBankcard(View.OnClickListener listener) {
+        setContentView(R.layout.dialog_edit_bankcard);
+        TextView tvDelete = findViewById(R.id.tv_edit_bankcard);
         TextView tvCancel = findViewById(R.id.tv_cancel);
         window.setGravity(Gravity.BOTTOM);
         window.setWindowAnimations(R.style.main_menu_animstyle);
@@ -179,17 +179,14 @@ public class CustomerDialog extends Dialog {
         return instance;
     }
 
-
     /**
      * 通用弹出确认
-     */
-    /**
-     * @param content
-     * @param contentColor
-     * @param leftMsg
-     * @param leftFrontColor
-     * @param rightMsg
-     * @param rightFrontColor
+     * @param content 中心内容
+     * @param contentColor 中心内容颜色
+     * @param leftMsg 左边操作
+     * @param leftFrontColor 颜色
+     * @param rightMsg 右边操作
+     * @param rightFrontColor  颜色
      * @return
      */
     public CustomerDialog operateComfirm(View.OnClickListener listener,

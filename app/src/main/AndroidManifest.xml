@@ -84,7 +84,7 @@
             android:screenOrientation="portrait" />
         <!-- 银行信息 -->
         <activity
-            android:name=".ui.home.loan.basicInfo.BankInfoActivity"
+            android:name=".ui.home.loan.basicInfo.BankcardInfoActivity"
             android:screenOrientation="portrait" />
         <!-- 支持银行选择 -->
         <activity

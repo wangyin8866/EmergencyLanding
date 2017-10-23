@@ -15,6 +15,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.StoreBean;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.BubbleSeekBar;
 import com.zyjr.emergencylending.widget.SelectorImageView;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
@@ -24,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by neil on 2017/10/14
@@ -33,18 +35,6 @@ public class ApplyConfirmActivity extends BaseActivity {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
-    @BindView(R.id.seekbar_loan_money)
-    BubbleSeekBar seekbarMoney;
-    @BindView(R.id.seekbar_loan_week)
-    BubbleSeekBar seekbarWeek;
-    @BindView(R.id.tv_loan_money_min)
-    TextView tvMinLoadMoney;
-    @BindView(R.id.tv_loan_money_max)
-    TextView tvMaxLoadMoney;
-    @BindView(R.id.tv_loan_week_min)
-    TextView tvMinLoadWeek;
-    @BindView(R.id.tv_loan_week_max)
-    TextView tvMaxLoadWeek;
     @BindView(R.id.rv_store_supported)
     RecyclerView rvStoreSupported;
     @BindView(R.id.pb_store_supported_loading)
@@ -70,8 +60,10 @@ public class ApplyConfirmActivity extends BaseActivity {
         setContentView(R.layout.activity_offline_apply_confirm);
         ButterKnife.bind(this);
 
+        init();
         initData();
     }
+
 
     private void initData() {
         storeBeanList = new ArrayList<>();
@@ -86,19 +78,49 @@ public class ApplyConfirmActivity extends BaseActivity {
         rvStoreSupported.setAdapter(adapter);
         rvStoreSupported.setVisibility(View.VISIBLE);
         adapter.bindToRecyclerView(rvStoreSupported);
+        adapter.setSelected(0,true);
+        storeBean = adapter.getSelected(0);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                for (int i = 0; i < storeBeanList.size(); i++) {
-                    SelectorImageView v = (SelectorImageView) adapter.getViewByPosition(i, R.id.iv_item_store_selected);
-                    v.toggle(false);
-                }
-                storeBean = (StoreBean) adapter.getItem(position);
-                SelectorImageView v = (SelectorImageView) adapter.getViewByPosition(position, R.id.iv_item_store_selected);
-                v.toggle(true);
+            public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
+//                for (int i = 0; i < storeBeanList.size(); i++) {
+//                    SelectorImageView v = (SelectorImageView) adapter.getViewByPosition(i, R.id.iv_item_store_selected);
+//                    v.toggle(false);
+//                }
+//                storeBean = (StoreBean) adapter.getItem(position);
+//                SelectorImageView v = (SelectorImageView) adapter.getViewByPosition(position, R.id.iv_item_store_selected);
+//                v.toggle(true);
+                adapter.setSelected(position,true);
+                storeBean = adapter.getSelected(position);
             }
         });
 
     }
+
+
+    @OnClick({R.id.btn_submit_apply})
+    public void onClick(View view){
+        switch (view.getId()){
+            case  R.id.btn_submit_apply:
+                LogUtils.d("当前选择门店:" + storeBean.toString());
+                break;
+        }
+    }
+
+
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+    }
+
 
 }

@@ -22,6 +22,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.ui.home.loan.auth.MobileAuthActivity;
 import com.zyjr.emergencylending.ui.home.loan.auth.ZhimaAuthActivity;
 import com.zyjr.emergencylending.utils.AppToast;
@@ -48,6 +49,8 @@ import butterknife.OnClick;
  */
 public class AuthCenterActivity extends BaseActivity {
 
+    @BindView(R.id.top_bar)
+    TopBar topBar;
     @BindView(R.id.rl_zhimaxinyong_auth)
     RelativeLayout rlZhimaxinyongAuth;
     @BindView(R.id.rl_mobile_auth)
@@ -73,9 +76,11 @@ public class AuthCenterActivity extends BaseActivity {
         setContentView(R.layout.activity_auth_center);
         ButterKnife.bind(this);
 
+        init();
         netWorkWarranty(); // 联网授权
 
     }
+
 
     Handler mHandler = new Handler() {
         @Override
@@ -146,6 +151,21 @@ public class AuthCenterActivity extends BaseActivity {
             }
         }
     }
+
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+    }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     private void jumpToFaceAuth(final int requestCode) {

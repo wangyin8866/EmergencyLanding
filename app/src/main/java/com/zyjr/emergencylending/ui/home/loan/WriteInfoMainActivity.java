@@ -15,7 +15,7 @@ import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankInfoActivity;
+import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
@@ -93,7 +93,7 @@ public class WriteInfoMainActivity extends BaseActivity {
                 startActivity(new Intent(WriteInfoMainActivity.this, ContactInfoActivity.class));
                 break;
             case R.id.layout_bank_info:
-                startActivity(new Intent(WriteInfoMainActivity.this, BankInfoActivity.class));
+                startActivity(new Intent(WriteInfoMainActivity.this, BankcardInfoActivity.class));
 //                startActivity(new Intent(WriteInfoMainActivity.this, SupportBankActivity.class));
 //                startActivity(new Intent(WriteInfoMainActivity.this, AddBankcardActivity.class));
                 break;

@@ -14,6 +14,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +36,9 @@ import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.ui.home.View.IDCardView;
+import com.zyjr.emergencylending.ui.home.View.LoanInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.IDCardPresenter;
+import com.zyjr.emergencylending.ui.home.presenter.LoanInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -54,24 +57,25 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.util.LangUtils;
 
 /**
  * Created by neil on 2017/10/12
  * 备注: 个人信息/资料
  */
-public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardView> implements TakePhoto.TakeResultListener, IDCardView {
+public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanInfoView> implements TakePhoto.TakeResultListener, LoanInfoView {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.iv_idcard_front)
     ImageView ivIdcardFront;
-    private String frontFilePath = "";  // 身份证正面照路径
+    private String idcardFrontPath = "";  // 身份证正面照路径
     @BindView(R.id.iv_idcard_back)
     ImageView ivIdcardBack;
-    private String backFilePath = "";   // 身份证正面照路径
+    private String idcardBackPath = "";   // 身份证正面照路径
     @BindView(R.id.iv_idcard_hold)
     ImageView ivHoldIdcard;
-    private String holdIdcardPath; // 手持身份证路径
+    private String holdIdcardPath = ""; // 手持身份证照片路径
     @BindView(R.id.tv_personal_name)
     TextView tvPersonalName; // 姓名
     @BindView(R.id.tv_personal_idcard)
@@ -93,15 +97,15 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
     private TakePhoto takePhoto;
     private String filePath;
     private Bitmap mBitmapHoldIdcard, mBitmapIDcardFront, mBitmapIDcardBack;
-    private static final int INTENT_IDCARD_FRONT = 1000; // 请求码 扫描身份证正面
-    private static final int INTENT_IDCARD_BACK = 1001; // 请求码 扫描身份证反面
-    private static final int INTENT_IDCARD_HOLD = 1002; // 请求码 拍照
+    private static final int INTENT_IDCARD_FRONT = 10000; // 请求码 扫描身份证正面
+    private static final int INTENT_IDCARD_BACK = 10001; // 请求码 扫描身份证反面
+    private static final int INTENT_IDCARD_HOLD = 10002; // 请求码 拍照
     private int mWidth;
     private int mHeight;
 
     @Override
-    protected IDCardPresenter createPresenter() {
-        return new IDCardPresenter(this);
+    protected LoanInfoPresenter createPresenter() {
+        return new LoanInfoPresenter(this);
     }
 
     @Override
@@ -156,7 +160,7 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == INTENT_IDCARD_HOLD) { // 手持照
             if (ToolPermission.checkPermission(permissions, grantResults)) {
-                takePhotoModelNotice();
+                jumpToTakePhoto(INTENT_IDCARD_HOLD);
             } else {
                 AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
             }
@@ -168,7 +172,7 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
             }
         } else if(requestCode == INTENT_IDCARD_BACK){
             if (ToolPermission.checkPermission(permissions, grantResults)) {
-                jumpScanIDcard(INTENT_IDCARD_BACK, 0, false);
+                jumpScanIDcard(INTENT_IDCARD_BACK, 1, false);
             } else {
                 AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
             }
@@ -244,6 +248,20 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
         }
     }
 
+    private void validateData(){
+        String personalName = tvPersonalName.getText().toString().trim(); // 姓名
+        String personalIdcard = tvPersonalIdcard.getText().toString().trim(); // 身份证
+        String marriageStatus = tvMarriageStatus.getText().toString().trim(); // 婚姻状态
+        String liveStatus = tvLiveStatus.getText().toString().trim(); // 居住状态
+        String hujiAddress  = tvHujiAddress.getText().toString().trim(); // 户籍地址
+        String detailAddress = tvDetailAddress.getText().toString().trim(); // 户籍详细地址
+        String liveAddress = tvLiveAddress.getText().toString().trim(); // 居住地址
+        String liveDetailAddress = tvLiveDetailAddress.getText().toString().trim(); // 居住详细地址
+
+        if(StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard)){
+
+        }
+    }
 
     @TargetApi(Build.VERSION_CODES.M)
     private void jumpToTakePhoto(final int requestCode) {
@@ -338,17 +356,26 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
     }
 
     // 扫描证件成功
-    private void scanSuccessInfo(String name, String num, String addr, final IDCardFrontBean idCardBean) {
+    private void scanSuccessInfo(final String name, final String num, final String addr, final IDCardFrontBean idCardBean) {
         final CustomerDialog dialogCustom = new CustomerDialog(this);
         dialogCustom.scanIdcardInfo(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.tv_confirm:
+                        EditText etAddress = dialogCustom.findViewById(R.id.et_detail_address);
+                        String finalAddress = etAddress.getText().toString().trim();
+                        if(StringUtil.isEmpty(finalAddress)){
+                            ToastAlone.showLongToast(BaseApplication.getContext(), "地址信息有误");
+                            return;
+                        }
                         // TODO 点击确认时,1.保存bean;2.上传图片至服务器端
                         dialogCustom.dismiss();
                         mBitmapIDcardFront = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
                         ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
+                        tvPersonalName.setText(name);
+                        tvPersonalIdcard.setText(num);
+                        tvDetailAddress.setText(finalAddress);
                         break;
 
                     case R.id.tv_scan_again:
@@ -423,9 +450,14 @@ public class PersonalInfoActivity extends BaseActivity<IDCardPresenter, IDCardVi
         }
     }
 
-
     @Override
-    public void onFail(String errorMessage) {
+    public void successResult(String code, String value) {
 
     }
+
+    @Override
+    public void errorResult(String errorCode, String errorMsg) {
+
+    }
+
 }

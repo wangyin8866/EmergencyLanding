@@ -212,52 +212,6 @@
 
             </LinearLayout>
 
-            <View style="@style/horizontal_line_style" />
-
-            <!-- 验证码 -->
-            <LinearLayout
-                android:id="@+id/ll_sms_code"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:minEms="6"
-                    android:text="验证码"
-                    android:textColor="@color/input_text_color"
-                    android:textSize="14sp" />
-
-                <EditText
-                    android:id="@+id/et_sms_code"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:gravity="center_vertical"
-                    android:hint="请输入验证码"
-                    android:inputType="number"
-                    android:maxLength="8"
-                    android:textColor="@color/input_text_color"
-                    android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="14sp" />
-
-                <Button
-                    android:id="@+id/btn_get_code"
-                    android:layout_width="80dp"
-                    android:layout_height="26dp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="15dp"
-                    android:background="@drawable/btn_shape_gradient"
-                    android:text="@string/send_sms_code"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
             <Button
                 android:id="@+id/btn_add"
                 style="@style/button_orange"

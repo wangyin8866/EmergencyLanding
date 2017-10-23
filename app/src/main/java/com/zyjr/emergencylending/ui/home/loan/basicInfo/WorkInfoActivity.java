@@ -34,22 +34,22 @@ import butterknife.OnClick;
 public class WorkInfoActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
-    @BindView(R.id.tv_industry)
-    TextView tvIndustry; // 单位行业
+    @BindView(R.id.tv_unit_industry)
+    TextView tvUintIndustry; // 单位行业
     @BindView(R.id.et_unit_name)
     ClearEditText etUnitName; // 单位名称
     @BindView(R.id.et_unit_district_num)
     EditText etUnitDistrictNum; // 单位区号
     @BindView(R.id.et_unit_tel)
     EditText etUnitTel; // 电话号码
-    @BindView(R.id.tv_job_address)
-    TextView tvJobAddress; // 工作地址
-    @BindView(R.id.et_detail_address)
-    ClearEditText etDetailAddress; // 详细地址
-    @BindView(R.id.et_department)
-    ClearEditText etDepartment; // 部门
-    @BindView(R.id.tv_job)
-    TextView tvJob; // 职位
+    @BindView(R.id.tv_work_address)
+    TextView tvWorkAddress; // 工作地址
+    @BindView(R.id.et_work_detail_address)
+    ClearEditText etWorkDetailAddress; // 工作详细地址
+    @BindView(R.id.et_work_department)
+    ClearEditText etWorkDepartment; // 工作部门
+    @BindView(R.id.tv_work_position)
+    TextView tvWorkPosition; // 职位
     @BindView(R.id.tv_income)
     TextView tvIncome; // 税后月收入
 
@@ -67,28 +67,28 @@ public class WorkInfoActivity extends BaseActivity {
         init();
     }
 
-    @OnClick({R.id.ll_job_unit_industry, R.id.ll_job_address, R.id.ll_unit_job, R.id.ll_income, R.id.btn_submit})
+    @OnClick({R.id.ll_unit_industry, R.id.ll_work_address, R.id.ll_work_position, R.id.ll_income, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_job_unit_industry:  // 单位行业
+            case R.id.ll_unit_industry:  // 单位行业
                 SingleSelectPop popUnitSelect = new SingleSelectPop(this, AppConfig.getWorkInfo());
                 popUnitSelect.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
                     public void onSelectClick(int index, CodeBean select) {
                         LogUtils.d("选择的单位行业信息:" + select.toString());
-                        tvJob.setText(select.getName());
+                        tvUintIndustry.setText(select.getName());
                     }
                 });
                 popUnitSelect.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
 
-            case R.id.ll_job_address:  // 工作地址
+            case R.id.ll_work_address:  // 工作地址
                 AreaSelectPop popJobAddressSelect = new AreaSelectPop(this, CommonUtils.mProvinceDatas, CommonUtils.mCitisDatasMap, CommonUtils.mDistrictDatasMap);
                 popJobAddressSelect.setOnCityPopupWindow(new AreaSelectPop.OnCityPopupWindow() {
                     @Override
                     public void onCityClick(String province, int privinceItem, String city, int cityItem, String district, int districtItem) {
                         LogUtils.d("选择的单位行业信息:" + province + "," + city + "," + district);
-                        tvJobAddress.setText(province + "," + city + "," + district);
+                        tvWorkAddress.setText(province + "," + city + "," + district);
                     }
                 });
                 if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
@@ -97,13 +97,13 @@ public class WorkInfoActivity extends BaseActivity {
                 popJobAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
                 break;
 
-            case R.id.ll_unit_job:  // 部门职位
+            case R.id.ll_work_position:  // 工作职位
                 SingleSelectPop popJobSelect = new SingleSelectPop(this, AppConfig.marriageStatus());
                 popJobSelect.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
                     public void onSelectClick(int index, CodeBean select) {
-                        LogUtils.d("选择的部门职位:" + select.toString());
-                        tvJob.setText(select.getName());
+                        LogUtils.d("选择的工作职位:" + select.toString());
+                        tvWorkPosition.setText(select.getName());
                     }
                 });
                 popJobSelect.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -122,10 +122,23 @@ public class WorkInfoActivity extends BaseActivity {
                 break;
             case R.id.btn_submit:
                 // TODO 信息提交
-                scanSuccessInfo("张三","123454648755","太远录32号");
                 break;
 
         }
+    }
+
+    private void validateData(){
+        String unitIndustry = tvUintIndustry.getText().toString().trim(); // 单位行业
+        String unitName = etUnitName.getText().toString().trim(); // 单位名称
+        String districtNum = etUnitDistrictNum.getText().toString().trim();// 区号
+        String unitTel = etUnitTel.getText().toString().trim(); // 单位电话
+        String workAddress = tvWorkAddress.getText().toString().trim(); // 工作地址
+        String workDetailAddress = etWorkDetailAddress.getText().toString().trim(); // 工作详细地址
+        String workDepartment = etWorkDepartment.getText().toString().trim(); // 工作部门
+        String workPosition = tvWorkPosition.getText().toString().trim(); // 工作职位
+        String income = tvIncome.getText().toString().trim(); // 税后月收入
+
+
     }
 
 
@@ -143,23 +156,6 @@ public class WorkInfoActivity extends BaseActivity {
         });
     }
 
-    private void scanSuccessInfo(String name, String num, String addr) {
-        final CustomerDialog customerDialog = new CustomerDialog(this);
-        customerDialog.scanIdcardInfo(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.tv_confirm:
-                        ToastAlone.showLongToast(BaseApplication.getContext(), "确认");
-                        break;
-
-                    case R.id.tv_scan_again:
-                        ToastAlone.showLongToast(BaseApplication.getContext(), "重新扫描");
-                        break;
-                }
-            }
-        }, name, num, addr).show();
-    }
 
     private View getRootView() {
         return this.getWindow().getDecorView();

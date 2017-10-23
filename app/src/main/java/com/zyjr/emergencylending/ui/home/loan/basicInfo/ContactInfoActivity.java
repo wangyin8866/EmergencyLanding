@@ -47,20 +47,20 @@ import butterknife.OnClick;
 public class ContactInfoActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
-    @BindView(R.id.tv_contact_name1)
-    ClearEditText tvContactName1; // 联系人姓名1
+    @BindView(R.id.et_contact_name1)
+    ClearEditText etContactName1; // 联系人姓名1
     @BindView(R.id.et_contact_phone1)
     EditText etContactPhone1; // 联系人姓名1
     @BindView(R.id.iv_contact_phone1)
-    ImageView ivContactPhone1; // 联系人号码1
+    ImageView ivContactPhone1;
     @BindView(R.id.tv_relation1)
     TextView tvRelation1; // 关系1
-    @BindView(R.id.tv_contact_name2)
-    ClearEditText tvContactName2; // 联系人姓名2
+    @BindView(R.id.et_contact_name2)
+    ClearEditText etContactName2; // 联系人姓名2
     @BindView(R.id.et_contact_phone2)
-    EditText etContactPhone2; // 联系人姓名2
+    EditText etContactPhone2; // 联系人电话2
     @BindView(R.id.iv_contact_phone2)
-    ImageView ivContactPhone2; // 联系人号码2
+    ImageView ivContactPhone2;
     @BindView(R.id.tv_relation2)
     TextView tvRelation2; // 关系2
 
@@ -70,8 +70,8 @@ public class ContactInfoActivity extends BaseActivity {
     List<CodeBean> selectList2 = new ArrayList<>(); // 联系人2可选择的
     CodeBean codeBean2 = new CodeBean();
     private int selectPhoneType = 0; // 选择号码标识
-    private static final int CODE_PERMISSION_CONTANCT_LIST = 2000; // 权限请求 获取通讯录
-    private static final int INTENT_SELECT_PHONE = 2001; // intent请求码 获取号码
+    private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
+    private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
 
     @Override
     protected BasePresenter createPresenter() {
@@ -163,7 +163,7 @@ public class ContactInfoActivity extends BaseActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (CODE_PERMISSION_CONTANCT_LIST == 123) {
+        if (CODE_PERMISSION_CONTANCT_LIST == requestCode) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToSelectPhone(selectPhoneType);
             }
@@ -178,6 +178,12 @@ public class ContactInfoActivity extends BaseActivity {
 
         }
     }
+
+    private void validateData(){
+        String contactName1 = etContactName1.getText().toString().trim(); // 联系人姓名1
+
+    }
+
 
     private void init() {
         selectList = AppConfig.contactRelation();
