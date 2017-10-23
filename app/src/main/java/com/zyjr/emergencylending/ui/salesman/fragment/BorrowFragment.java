@@ -16,8 +16,9 @@ import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivityActivity;
-import com.zyjr.emergencylending.ui.salesman.activity.BorrowActivity;
+import com.zyjr.emergencylending.ui.salesman.activity.ImmediatelyBorrowActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +110,7 @@ public class BorrowFragment extends BaseFragment {
             case R.id.notice_close:
                 break;
             case R.id.QR_code:
+                startActivity(new Intent(mContext, QrCodeActivity.class));
                 break;
             case R.id.visiting_card:
                 break;
@@ -118,7 +120,8 @@ public class BorrowFragment extends BaseFragment {
             case R.id.invest:
                 break;
             case R.id.handle:
-                startActivity(new Intent(mContext, BorrowActivity.class));
+                startActivity(new Intent(mContext, ImmediatelyBorrowActivity.class));
+
                 break;
             case R.id.buy:
                 break;

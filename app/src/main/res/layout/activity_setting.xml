@@ -87,11 +87,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/ic_launcher"
+                android:drawableLeft="@mipmap/icon_tell"
                 android:drawablePadding="6dp"
                 android:drawableRight="@mipmap/arrow_right"
                 android:gravity="center"
-                android:text="4000776667"
+                android:text="4000-776-667"
                 android:textColor="#999999"
                 android:textSize="14sp" />
         </RelativeLayout>

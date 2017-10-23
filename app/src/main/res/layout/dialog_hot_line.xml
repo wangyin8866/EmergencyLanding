@@ -1,61 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dp"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center_horizontal"
-    android:orientation="vertical"
-    android:paddingBottom="10dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:background="#00000000">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="190dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_dialog"
         android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shaper_corner_white"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tv_message"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="20dp"
-                android:text="热线服务时间：9:00-17:30（工作日）"
-                android:textColor="#333333"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#dddddd" />
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:padding="15dp"
-                android:text="400-077-6667"
-                android:textColor="#333333"
-                android:textSize="16sp" />
-        </LinearLayout>
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:text="拨打热线"
+            android:textColor="#333333"
+            android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/cancel"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/shaper_corner_white"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="取消"
-            android:textColor="#333333"
-            android:textSize="16sp" />
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:text="400-077-6667"
+            android:textColor="#FFA200"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="服务时间：09:00-18:00 (工作日)"
+            android:textColor="#999999"
+            android:layout_marginBottom="8dp"
+            android:textSize="12sp" />
+
+
+        <include layout="@layout/bg_line_1" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/input_text_color"
+                android:textSize="15sp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/right"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="拨打"
+                android:textColor="#6F95FF"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:src="@mipmap/icon_dial" />
+</FrameLayout>

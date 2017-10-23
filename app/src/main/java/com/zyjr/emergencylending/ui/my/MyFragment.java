@@ -23,9 +23,9 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
-import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.PhotoUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
@@ -130,7 +130,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
             case R.id.message_center:
                 break;
             case R.id.user_pic:
-                showUserPicDialog();
+                PhotoUtils.showUserPicDialog(mContext,takePhoto);
                 break;
             case R.id.user_info:
                 break;
@@ -147,33 +147,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
         }
     }
 
-    /**
-     * 设置图像
-     */
-    private void showUserPicDialog() {
-        final CustomerDialog dialog = new CustomerDialog(getActivity());
-        dialog.userPicDialog(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.cancel:
-                        dialog.dismiss();
-                        break;
-                    case R.id.tv_picture:
-                        dialog.dismiss();
 
-                        mPresenter.toPhone(new MyFragment(), takePhoto);
-
-
-                        break;
-                    case R.id.tv_album:
-                        dialog.dismiss();
-                        mPresenter.toGallery(takePhoto);
-                        break;
-                }
-            }
-        }).show();
-    }
 
 
     @Override

@@ -24,7 +24,9 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
+import com.zyjr.emergencylending.ui.my.SettingActivity;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.PhotoUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.UIUtils;
 
@@ -58,6 +60,7 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
     Unbinder unbinder;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         getTakePhoto().onCreate(savedInstanceState);
@@ -94,6 +97,7 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
         }
         return takePhoto;
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -114,7 +118,7 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
             ImageView imageView = new ImageView(mContext);
             //设置图片宽高
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(UIUtils.dip2px(5),0,0,0);
+            layoutParams.setMargins(UIUtils.dip2px(5), 0, 0, 0);
             imageView.setLayoutParams(layoutParams);
             //图片资源
             imageView.setImageResource(R.mipmap.icon_star);
@@ -138,6 +142,7 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.user_pic:
+                PhotoUtils.showUserPicDialog(mContext,takePhoto);
                 break;
             case R.id.message_center:
                 break;
@@ -146,9 +151,11 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
             case R.id.help:
                 break;
             case R.id.setting:
+                startActivity(new Intent(mContext,SettingActivity.class));
                 break;
         }
     }
+
     @Override
     public void takeSuccess(TResult result) {
         LogUtils.e("takeSuccess", "takeSuccess：" + result.getImage().getCompressPath());
@@ -176,4 +183,6 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
         }
         return type;
     }
+
+
 }

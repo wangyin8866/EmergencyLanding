@@ -223,17 +223,13 @@ public class CustomerDialog extends Dialog {
      * @param onClickListener
      */
     public void showHotLineDialog(View.OnClickListener onClickListener) {
-        TextView cancel, tv_title;
+        TextView left, right;
         setContentView(R.layout.dialog_hot_line);
-        cancel = (TextView) findViewById(R.id.cancel);
-        tv_title = (TextView) findViewById(R.id.tv_title);
-        window.setGravity(Gravity.BOTTOM);
-        // 设置显示动画
-        window.setWindowAnimations(R.style.main_menu_animstyle);
-        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        // 设置点击外围解散
-        setCanceledOnTouchOutside(false);
-        cancel.setOnClickListener(onClickListener);
-        tv_title.setOnClickListener(onClickListener);
+        left =  findViewById(R.id.left);
+        right =  findViewById(R.id.right);
+        window.setGravity(Gravity.CENTER);
+
+        left.setOnClickListener(onClickListener);
+        right.setOnClickListener(onClickListener);
     }
 }

@@ -12,6 +12,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.ui.account.ForgetPasswordActivity;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -67,7 +68,7 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.modify_password:
-
+                startActivity(new Intent(mContext, ForgetPasswordActivity.class));
                 break;
             case R.id.about_us:
                 startActivity(new Intent(mContext, AboutUsActivity.class));
@@ -88,10 +89,10 @@ public class SettingActivity extends BaseActivity {
         dialog.showHotLineDialog(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (view.getId() == R.id.cancel) {
+                if (view.getId() == R.id.left) {
                     dialog.dismiss();
-                } else if (view.getId() == R.id.tv_title) {
-                    WYUtils.callPhone(mContext, "400-077-6667");
+                } else if (view.getId() == R.id.right) {
+                    WYUtils.callPhone(mContext,"400-077-6667");
                     dialog.dismiss();
                 }
             }

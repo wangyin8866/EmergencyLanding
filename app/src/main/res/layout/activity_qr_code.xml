@@ -153,6 +153,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/iv_qr"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:src="@drawable/ic_launcher" />
@@ -172,7 +173,6 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginTop="30dp"
-        android:background="#FFFFFF"
         android:baselineAligned="false"
         android:orientation="horizontal">
 

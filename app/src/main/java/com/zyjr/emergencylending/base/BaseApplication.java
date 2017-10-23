@@ -6,6 +6,9 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.umeng.socialize.Config;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
@@ -61,8 +64,8 @@ public class BaseApplication extends Application {
         SupportCityConfig.getInstance().initCitys(); // 加载城市数据
         //是否打印日志
         LogUtils.isDebug = true;
-        initUmeng();
-
+        Config.DEBUG = true;
+        UMShareAPI.get(this);
 
     }
 
@@ -70,9 +73,6 @@ public class BaseApplication extends Application {
         return context;
     }
 
-    private void initUmeng() {
-        //推送
-    }
 
     public static BaseApplication getApplication() {
         return mInstance;
@@ -99,4 +99,10 @@ public class BaseApplication extends Application {
         return mMainThreadHandler;
     }
 
+    {
+
+        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
+        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
+        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+    }
 }

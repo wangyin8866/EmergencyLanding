@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.salesman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,6 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,7 +67,7 @@ public class ImmediatelyBorrowActivity extends BaseActivity {
                                 customerDialog.dismiss();
                                 break;
                             case R.id.btn_confirm_submit:
-                                ToastAlone.showShortToast(mContext, "下一步！！！！");
+                                startActivity(new Intent(mContext, BorrowActivity.class));
                                 break;
                         }
                     }
