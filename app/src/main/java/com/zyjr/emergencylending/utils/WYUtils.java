@@ -35,15 +35,11 @@ import android.widget.ProgressBar;
 
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.base.ActivityCollector;
-import com.zyjr.emergencylending.custom.XListView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by wangyin on 2017/5/23.
@@ -89,11 +85,7 @@ public class WYUtils {
         return fm.matches(fma);
     }
 
-    public static void onLoad(XListView xListView) {
-        xListView.stopRefresh();
-        xListView.stopLoadMore();
-        xListView.setRefreshTime(new SimpleDateFormat("HH:mm:ss", Locale.CHINA).format(new Date()));
-    }
+
 
     /**
      * 把金额字符串转化为数字
@@ -163,8 +155,6 @@ public class WYUtils {
     }
 
 
-
-
     /**
      * 保留两位小数 不进行四舍五入
      */
@@ -188,11 +178,12 @@ public class WYUtils {
             return "1.0";
         }
     }
+
     /**
      * 版本更新
      */
-    public static void upDateVersion(Context context,String url) {
-        UpdateVersionService service = new UpdateVersionService(url,context);
+    public static void upDateVersion(Context context, String url) {
+        UpdateVersionService service = new UpdateVersionService(url, context);
         service.checkUpdate();
     }
 
@@ -345,7 +336,6 @@ public class WYUtils {
     }
 
 
-
     /**
      * 拨打客服电话
      *
@@ -373,10 +363,10 @@ public class WYUtils {
                 //请求拨打电话权限
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, 0x11);
             } else {
-                serviceTel(context,phoneNum);
+                serviceTel(context, phoneNum);
             }
         } else {
-            serviceTel(context,phoneNum);
+            serviceTel(context, phoneNum);
         }
     }
 
@@ -524,5 +514,25 @@ public class WYUtils {
             return true;
         }
         return false;
+    }
+
+    /***
+     * 获取url 指定name的value;
+     * @param url
+     * @param name
+     * @return
+     */
+    public static String getValueByName(String url, String name) {
+        String result = "";
+        int index = url.indexOf("?");
+        String temp = url.substring(index + 1);
+        String[] keyValue = temp.split("&");
+        for (String str : keyValue) {
+            if (str.contains(name)) {
+                result = str.replace(name + "=", "");
+                break;
+            }
+        }
+        return result;
     }
 }

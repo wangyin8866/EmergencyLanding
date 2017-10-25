@@ -16,6 +16,7 @@ import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivityActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ImmediatelyBorrowActivity;
@@ -113,6 +114,7 @@ public class BorrowFragment extends BaseFragment {
                 startActivity(new Intent(mContext, QrCodeActivity.class));
                 break;
             case R.id.visiting_card:
+                H5WebView.skipH5WebView(mContext,"我的名片");
                 break;
             case R.id.activity:
                 startActivity(new Intent(mContext, ActivityActivity.class));

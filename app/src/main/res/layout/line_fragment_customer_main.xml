@@ -195,6 +195,7 @@
             android:textSize="15sp" />
 
         <LinearLayout
+            android:id="@+id/ll_rank_list"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="15dp"
