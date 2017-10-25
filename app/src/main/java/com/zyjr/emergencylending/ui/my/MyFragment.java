@@ -23,6 +23,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
@@ -133,6 +134,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
                 PhotoUtils.showUserPicDialog(mContext,takePhoto);
                 break;
             case R.id.user_info:
+                startActivity(new Intent(mContext,PersonalDataActivity.class));
                 break;
             case R.id.my_borrow:
                 startActivity(new Intent(mContext,MyBorrowActivity.class));
@@ -140,6 +142,7 @@ public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements T
             case R.id.my_repayment:
                 break;
             case R.id.help:
+                H5WebView.skipH5WebView(mContext, "帮助说明");
                 break;
             case R.id.setting:
                 startActivity(new Intent(mContext,SettingActivity.class));

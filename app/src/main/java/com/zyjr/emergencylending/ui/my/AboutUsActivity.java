@@ -5,6 +5,10 @@ import android.os.Bundle;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.custom.TopBar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * author wangyin
@@ -12,6 +16,9 @@ import com.zyjr.emergencylending.base.BasePresenter;
  */
 
 public class AboutUsActivity extends BaseActivity {
+    @BindView(R.id.top_bar)
+    TopBar topBar;
+
     @Override
     protected BasePresenter createPresenter() {
         return null;
@@ -21,5 +28,18 @@ public class AboutUsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_use);
+        ButterKnife.bind(this);
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 }

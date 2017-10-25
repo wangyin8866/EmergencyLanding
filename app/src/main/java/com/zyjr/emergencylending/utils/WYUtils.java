@@ -535,4 +535,18 @@ public class WYUtils {
         }
         return result;
     }
+
+    /**
+     * 遮盖页面不可编辑
+     * @param flag
+     * @param llCover
+     */
+    public static void coverPage(boolean flag, LinearLayout llCover) {
+        if (flag) {
+            llCover.setVisibility(View.GONE);
+        } else {
+            llCover.setVisibility(View.VISIBLE);
+            llCover.setOnClickListener(null);
+        }
+    }
 }

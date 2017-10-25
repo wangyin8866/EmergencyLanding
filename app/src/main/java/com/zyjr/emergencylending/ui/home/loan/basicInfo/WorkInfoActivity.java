@@ -5,21 +5,21 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
 import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
@@ -52,6 +52,11 @@ public class WorkInfoActivity extends BaseActivity {
     TextView tvWorkPosition; // 职位
     @BindView(R.id.tv_income)
     TextView tvIncome; // 税后月收入
+    @BindView(R.id.root)
+    ScrollView root;
+    @BindView(R.id.ll_cover)
+    LinearLayout llCover;
+    private boolean isJobEdit;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -63,7 +68,6 @@ public class WorkInfoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_info);
         ButterKnife.bind(this);
-
         init();
     }
 
@@ -127,7 +131,7 @@ public class WorkInfoActivity extends BaseActivity {
         }
     }
 
-    private void validateData(){
+    private void validateData() {
         String unitIndustry = tvUintIndustry.getText().toString().trim(); // 单位行业
         String unitName = etUnitName.getText().toString().trim(); // 单位名称
         String districtNum = etUnitDistrictNum.getText().toString().trim();// 区号
@@ -143,6 +147,11 @@ public class WorkInfoActivity extends BaseActivity {
 
 
     private void init() {
+        //是否可编辑
+        isJobEdit = getIntent().getBooleanExtra("isJobEdit", true);
+        WYUtils.coverPage(isJobEdit,llCover);
+
+
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {

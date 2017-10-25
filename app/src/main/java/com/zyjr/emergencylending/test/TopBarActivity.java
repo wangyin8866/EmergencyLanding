@@ -8,6 +8,7 @@ import com.zyjr.emergencylending.custom.TopBar;
 /**
  * @author wangyin
  * @date 2017/10/17
+ *  topBar 注入到布局中。集成次类的activity都自动持有topBar
  */
 
 public abstract class TopBarActivity extends BaseActivity {

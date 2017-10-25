@@ -11,8 +11,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.custom.TopBar;
 
 /**
- * Created by tromo on 2017/6/28.
- * Copyright is owned by tromo anytime!
+ * topBar注入到activity中
  */
 
 public class TopBarHelper {

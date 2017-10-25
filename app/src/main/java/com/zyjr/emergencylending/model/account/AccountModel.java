@@ -46,7 +46,7 @@ public class AccountModel extends BaseModel {
     }
 
     /**
-     * 注册
+     * 登录
      */
     public Observable<LoginBean> login(String router, String phone, String password,
                                        String clientid, String login_ip, String login_platform) {

@@ -393,5 +393,5 @@
             android:textColor="@color/white"
             android:textSize="17sp" />
     </RelativeLayout>
-
+    <include layout="@layout/common_cover" />
 </RelativeLayout>
