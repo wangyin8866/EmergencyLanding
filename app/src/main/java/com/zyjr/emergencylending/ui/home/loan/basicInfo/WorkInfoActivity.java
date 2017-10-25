@@ -16,7 +16,10 @@ import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.CodeBean;
+import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
+import com.zyjr.emergencylending.ui.home.View.WorkInfoView;
+import com.zyjr.emergencylending.ui.home.presenter.WorkInfoPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -31,7 +34,7 @@ import butterknife.OnClick;
  * Created by neil on 2017/10/12
  * 备注: 工作资料
  */
-public class WorkInfoActivity extends BaseActivity {
+public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter,WorkInfoView> implements WorkInfoView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.tv_unit_industry)
@@ -54,8 +57,8 @@ public class WorkInfoActivity extends BaseActivity {
     TextView tvIncome; // 税后月收入
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected WorkInfoPresenter createPresenter() {
+        return new WorkInfoPresenter(this);
     }
 
     @Override
@@ -156,8 +159,27 @@ public class WorkInfoActivity extends BaseActivity {
         });
     }
 
-
     private View getRootView() {
         return this.getWindow().getDecorView();
+    }
+
+    @Override
+    public void onSuccessGet(String returnCode, IDCardFrontBean model) {
+
+    }
+
+    @Override
+    public void onSuccessAdd(String returnCode, IDCardFrontBean model) {
+
+    }
+
+    @Override
+    public void onSuccessEdit(String returnCode, IDCardFrontBean model) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
     }
 }

@@ -13,9 +13,11 @@ import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,14 +33,18 @@ import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.CityModel;
 import com.zyjr.emergencylending.entity.CodeBean;
+import com.zyjr.emergencylending.entity.DistrictModel;
+import com.zyjr.emergencylending.entity.HujiAddressBean;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
+import com.zyjr.emergencylending.entity.LiveAddressBean;
+import com.zyjr.emergencylending.entity.PersonalInfoBean;
+import com.zyjr.emergencylending.entity.ProvinceModel;
 import com.zyjr.emergencylending.entity.UserInfoManager;
-import com.zyjr.emergencylending.ui.home.View.IDCardView;
-import com.zyjr.emergencylending.ui.home.View.LoanInfoView;
-import com.zyjr.emergencylending.ui.home.presenter.IDCardPresenter;
-import com.zyjr.emergencylending.ui.home.presenter.LoanInfoPresenter;
+import com.zyjr.emergencylending.ui.home.View.PersonalInfoView;
+import com.zyjr.emergencylending.ui.home.presenter.PersonalInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -57,16 +63,20 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cz.msebera.android.httpclient.util.LangUtils;
+
+import static com.zyjr.emergencylending.utils.CommonUtils.provinceList;
 
 /**
  * Created by neil on 2017/10/12
  * 备注: 个人信息/资料
+ * 根据状态判断 是否可编辑修改
  */
-public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanInfoView> implements TakePhoto.TakeResultListener, LoanInfoView {
+public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, PersonalInfoView> implements TakePhoto.TakeResultListener, PersonalInfoView {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
+    @BindView(R.id.layout_root)
+    RelativeLayout layoutRoot;
     @BindView(R.id.iv_idcard_front)
     ImageView ivIdcardFront;
     private String idcardFrontPath = "";  // 身份证正面照路径
@@ -90,10 +100,11 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
     TextView tvDetailAddress;  // 户籍详细地址
     @BindView(R.id.tv_live_address)
     TextView tvLiveAddress;  // 居住地址
-    @BindView(R.id.tv_live_detail_address)
-    ClearEditText tvLiveDetailAddress; // 居住详细地址
+    @BindView(R.id.et_live_detail_address)
+    ClearEditText etLiveDetailAddress; // 居住详细地址
 
     private File idcardFile;
+    private File holdCardFile;
     private TakePhoto takePhoto;
     private String filePath;
     private Bitmap mBitmapHoldIdcard, mBitmapIDcardFront, mBitmapIDcardBack;
@@ -102,10 +113,17 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
     private static final int INTENT_IDCARD_HOLD = 10002; // 请求码 拍照
     private int mWidth;
     private int mHeight;
+    private int isEdit = 1;
+    private CodeBean marriageCodeBean = null; // 婚姻状态bean
+    private CodeBean liveCodeBean = null; // 居住状态bean
+    private LiveAddressBean liveAddressBean = null; // 居住地址bean
+    private HujiAddressBean hujiAddressBean = null; // 户籍地址bean
+    private IDCardFrontBean idCardFrontBean = null; // 身份证正面bean
+
 
     @Override
-    protected LoanInfoPresenter createPresenter() {
-        return new LoanInfoPresenter(this);
+    protected PersonalInfoPresenter createPresenter() {
+        return new PersonalInfoPresenter(this);
     }
 
     @Override
@@ -115,6 +133,7 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
         setContentView(R.layout.activity_personal_data);
         ButterKnife.bind(this);
         init();
+        layoutRoot.setOnClickListener(null);
     }
 
     @Override
@@ -170,7 +189,7 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
             } else {
                 AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
             }
-        } else if(requestCode == INTENT_IDCARD_BACK){
+        } else if (requestCode == INTENT_IDCARD_BACK) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_BACK, 1, false);
             } else {
@@ -199,7 +218,8 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                     @Override
                     public void onSelectClick(int index, CodeBean select) {
                         tvMarriageStatus.setText(select.getName());
-                        LogUtils.d("婚姻状况选择:" + select.toString());
+                        marriageCodeBean = select;
+                        LogUtils.d("婚姻状况选择:" + marriageCodeBean.toString());
                     }
                 });
                 popMarriageStatusSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
@@ -210,7 +230,8 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                     @Override
                     public void onSelectClick(int index, CodeBean select) {
                         tvLiveStatus.setText(select.getName());
-                        LogUtils.d("居住状况选择:" + select.toString());
+                        liveCodeBean = select;
+                        LogUtils.d("居住状况选择:" + liveCodeBean.toString());
                     }
                 });
                 popLiveStatusSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
@@ -221,6 +242,20 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                     @Override
                     public void onCityClick(String province, int privinceItem, String city, int cityItem, String district, int districtItem) {
                         tvHujiAddress.setText(province + "," + city + "," + district);
+                        hujiAddressBean = new HujiAddressBean(); //  实例化bean
+                        ProvinceModel pCode = null;
+                        CityModel cityode = null;
+                        DistrictModel dCode = null;
+                        pCode = provinceList.get(privinceItem);
+                        cityode = pCode.getCityList().get(cityItem);
+                        dCode = cityode.getDistrictList().get(districtItem);
+                        hujiAddressBean.setHuji_province(pCode.getProvinceCode());
+                        hujiAddressBean.setHuji_province_name(pCode.getName());
+                        hujiAddressBean.setHuji_city(cityode.getCityCode());
+                        hujiAddressBean.setHuji_city_name(cityode.getName());
+                        hujiAddressBean.setHuji_county(dCode.getZipcode());
+                        hujiAddressBean.setHuji_county_name(dCode.getName());
+                        LogUtils.d("户籍地址选择--->" + hujiAddressBean.toString());
                     }
                 });
                 if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
@@ -234,6 +269,21 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                     @Override
                     public void onCityClick(String province, int privinceItem, String city, int cityItem, String district, int districtItem) {
                         tvLiveAddress.setText(province + "," + city + "," + district);
+                        liveAddressBean = new LiveAddressBean(); //  实例化bean
+                        ProvinceModel pCode = null;
+                        CityModel cityode = null;
+                        DistrictModel dCode = null;
+                        pCode = provinceList.get(privinceItem);
+                        cityode = pCode.getCityList().get(cityItem);
+                        dCode = cityode.getDistrictList().get(districtItem);
+                        liveAddressBean.setLive_province(pCode.getProvinceCode());
+                        liveAddressBean.setLive_province_name(pCode.getName());
+                        liveAddressBean.setLive_city(cityode.getCityCode());
+                        liveAddressBean.setLive_city_name(cityode.getName());
+                        liveAddressBean.setLive_county(dCode.getZipcode());
+                        liveAddressBean.setLive_county_name(dCode.getName());
+                        LogUtils.d("居住地址选择--->" + liveAddressBean.toString());
+
                     }
                 });
                 if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
@@ -243,23 +293,57 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                 break;
             case R.id.btn_submit: // 提交
                 // TODO 信息提交
-
+                validateData();
                 break;
         }
     }
 
-    private void validateData(){
+    private void validateData() {
         String personalName = tvPersonalName.getText().toString().trim(); // 姓名
         String personalIdcard = tvPersonalIdcard.getText().toString().trim(); // 身份证
         String marriageStatus = tvMarriageStatus.getText().toString().trim(); // 婚姻状态
         String liveStatus = tvLiveStatus.getText().toString().trim(); // 居住状态
-        String hujiAddress  = tvHujiAddress.getText().toString().trim(); // 户籍地址
-        String detailAddress = tvDetailAddress.getText().toString().trim(); // 户籍详细地址
+        String hujiAddress = tvHujiAddress.getText().toString().trim(); // 户籍地址
+        String detailAddress = tvDetailAddress.getText().toString().trim(); // 户籍详细地址(根据证件上地址来的,不可更改)
         String liveAddress = tvLiveAddress.getText().toString().trim(); // 居住地址
-        String liveDetailAddress = tvLiveDetailAddress.getText().toString().trim(); // 居住详细地址
-
-        if(StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard)){
-
+        String liveDetailAddress = etLiveDetailAddress.getText().toString().trim(); // 居住详细地址
+        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(detailAddress)) {
+            ToastAlone.showLongToast(this, "请扫描身份证件!");
+            return;
+        }
+        if (StringUtil.isEmpty(marriageStatus) && marriageCodeBean == null) {
+            ToastAlone.showLongToast(this, "请选择婚姻关系!");
+            return;
+        }
+        if (StringUtil.isEmpty(liveStatus) && liveCodeBean == null) {
+            ToastAlone.showLongToast(this, "请选择居住状态!");
+            return;
+        }
+        if (StringUtil.isEmpty(hujiAddress) && hujiAddressBean == null) {
+            ToastAlone.showLongToast(this, "请选择户籍地址!");
+            return;
+        } else {
+            if (hujiAddressBean != null && (StringUtil.containChinese(hujiAddressBean.getHuji_province())
+                    || StringUtil.containChinese(hujiAddressBean.getHuji_city()))
+                    || StringUtil.containChinese(hujiAddressBean.getHuji_county())) {
+                ToastAlone.showLongToast(this, "请重新选择户籍地址!");
+                return;
+            }
+        }
+        if (StringUtil.isEmpty(liveAddress) && liveAddressBean == null) {
+            ToastAlone.showLongToast(this, "请选择居住地址!");
+            return;
+        } else {
+            if (liveAddressBean != null && (StringUtil.containChinese(liveAddressBean.getLive_province())
+                    || StringUtil.containChinese(liveAddressBean.getLive_city()))
+                    || StringUtil.containChinese(liveAddressBean.getLive_county())) {
+                ToastAlone.showLongToast(this, "请重新选择居住地址!");
+                return;
+            }
+        }
+        if (StringUtil.isEmpty(liveDetailAddress)) {
+            ToastAlone.showLongToast(this, "请填写现居住详细地址!");
+            return;
         }
     }
 
@@ -271,10 +355,10 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                 new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 "请允许权限进行拍照",
                 requestCode)) {
-            File file = new File(Environment.getExternalStorageDirectory(), "/JJTNEW/temp/" + System.currentTimeMillis() + ".jpg");
-            holdIdcardPath = file.getAbsolutePath();
-            if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
-            Uri imageUri = Uri.fromFile(file);
+            holdCardFile = new File(Environment.getExternalStorageDirectory(), "/JJTNEW/temp/" + System.currentTimeMillis() + ".jpg");
+            holdIdcardPath = holdCardFile.getAbsolutePath();
+            if (!holdCardFile.getParentFile().exists()) holdCardFile.getParentFile().mkdirs();
+            Uri imageUri = Uri.fromFile(holdCardFile);
             takePhoto.setTakePhotoOptions(new TakePhotoOptions.Builder().setWithOwnGallery(true).create());
             CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
             takePhoto.onEnableCompress(compressConfig, true);
@@ -318,10 +402,6 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
     public void takeSuccess(TResult result) {
         LogUtils.d("takeSuccess【图片原始路径】" + result.getImage().getOriginalPath());
         filePath = result.getImage().getOriginalPath();  // 原始路径
-        File file = new File(holdIdcardPath);
-        if (!file.exists()) { // 返回的filepath路径有问题
-            filePath = holdIdcardPath;
-        }
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         if (bitmap == null) {
             ToastAlone.showLongToast(PersonalInfoActivity.this, "图片为空").show();
@@ -335,14 +415,9 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
         if (decode != null && !decode.isRecycled()) {
             decode.recycle();
         }
-        String data = ToolImage.fileBase64(filePath); // 图片具体信息
-        final String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf(".")); // 文件名后缀名
-        String fileExtName = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());
-        LogUtils.d("图片具体信息----->文件名:" + fileName + ",文件后缀:" + fileExtName);
         mBitmapHoldIdcard = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(filePath), mWidth, mHeight, true);
-        ivHoldIdcard.setImageBitmap(mBitmapHoldIdcard);
         // TODO 图片上传
-
+        uploadFile(holdCardFile, "4");
     }
 
     @Override
@@ -356,7 +431,7 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
     }
 
     // 扫描证件成功
-    private void scanSuccessInfo(final String name, final String num, final String addr, final IDCardFrontBean idCardBean) {
+    private void scanSuccessInfo(final String name, final String num, final String addr) {
         final CustomerDialog dialogCustom = new CustomerDialog(this);
         dialogCustom.scanIdcardInfo(new View.OnClickListener() {
             @Override
@@ -365,17 +440,15 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                     case R.id.tv_confirm:
                         EditText etAddress = dialogCustom.findViewById(R.id.et_detail_address);
                         String finalAddress = etAddress.getText().toString().trim();
-                        if(StringUtil.isEmpty(finalAddress)){
+                        if (StringUtil.isEmpty(finalAddress)) {
                             ToastAlone.showLongToast(BaseApplication.getContext(), "地址信息有误");
                             return;
                         }
+                        idCardFrontBean.setAddress(etAddress.getText().toString().trim());
                         // TODO 点击确认时,1.保存bean;2.上传图片至服务器端
                         dialogCustom.dismiss();
                         mBitmapIDcardFront = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
-                        ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
-                        tvPersonalName.setText(name);
-                        tvPersonalIdcard.setText(num);
-                        tvDetailAddress.setText(finalAddress);
+                        uploadFile(idcardFile, "2");
                         break;
 
                     case R.id.tv_scan_again:
@@ -403,6 +476,7 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
     }
 
     private void init() {
+
         Drawable d = ContextCompat.getDrawable(this, R.mipmap.shotcard_positive);
         mWidth = d.getMinimumWidth();
         mHeight = d.getMinimumHeight();
@@ -420,12 +494,28 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
         });
         CommonUtils.addressDatas(this);
         IdcardUtils.getInstance().init(this);
+
     }
 
     private View getRootView() {
         return this.getWindow().getDecorView();
     }
 
+    private void uploadFile(File file, String fileType) {
+        String filePath = file.getPath();
+        String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf(".")); // 文件名
+        String fileSuffixName = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());  // 后缀名(文件类型)
+        String data = ToolImage.fileBase64(filePath);
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("juid", "");
+        params.put("cust_juid", "");
+        params.put("login_token", "");
+        params.put("fileName", fileName);
+        params.put("fileExtName", fileSuffixName);
+        params.put("fileContext", data);
+        params.put("fileContext", fileType);
+        mPresenter.uploadFile(params);
+    }
 
     @Override
     public void onSuccessFrontBean(String returnCode, IDCardFrontBean resultBean) {
@@ -434,7 +524,8 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
                 ToastAlone.showLongToast(this, "身份证号码有误");
                 return;
             }
-            scanSuccessInfo(resultBean.getName(), resultBean.getId_card_number(), resultBean.getAddress(), resultBean);
+            idCardFrontBean = resultBean;
+            scanSuccessInfo(resultBean.getName(), resultBean.getId_card_number(), resultBean.getAddress());
         } else {
             ToastAlone.showLongToast(this, "请使用正式身份证拍照");
         }
@@ -444,20 +535,56 @@ public class PersonalInfoActivity extends BaseActivity<LoanInfoPresenter, LoanIn
     public void onSuccessBackBean(String returnCode, IDCardBackBean resultBean) {
         if ("back".equals(returnCode)) {  // 身份证背面
             mBitmapIDcardBack = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
-            ivIdcardBack.setImageBitmap(mBitmapIDcardBack);
+            uploadFile(idcardFile, "3");
         } else {
             ToastAlone.showLongToast(this, "请使用正式身份证拍照");
         }
     }
 
     @Override
-    public void successResult(String code, String value) {
+    public void onSuccessUploadPic(String returnCode) {
+        // 区分 正面和反面
+        if (returnCode.equals("2")) {
+            ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
+            tvPersonalName.setText(idCardFrontBean.getName().trim());
+            tvPersonalIdcard.setText(idCardFrontBean.getId_card_number().trim());
+            tvDetailAddress.setText(idCardFrontBean.getAddress());
+        } else if (returnCode.equals("3")) {
+            ivIdcardBack.setImageBitmap(mBitmapIDcardBack);
+        } else if (returnCode.equals("4")) {
+            ivHoldIdcard.setImageBitmap(mBitmapHoldIdcard);
+        }
+    }
+
+
+    @Override
+    public void onSuccessGet(String returnCode, PersonalInfoBean model) {
 
     }
 
     @Override
-    public void errorResult(String errorCode, String errorMsg) {
+    public void onSuccessAdd(String returnCode, PersonalInfoBean model) {
 
     }
 
+    @Override
+    public void onSuccessEdit(String returnCode, PersonalInfoBean model) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
+
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+//        if (isEdit == 1) {
+//            LogUtils.d("拦击所有点击事件");
+//            isEdit = 0;
+//            return true;
+//        }
+        return super.dispatchTouchEvent(ev);
+    }
 }

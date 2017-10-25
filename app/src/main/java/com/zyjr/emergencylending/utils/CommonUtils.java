@@ -5,7 +5,7 @@ import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-import com.zyjr.emergencylending.entity.CityModel1;
+import com.zyjr.emergencylending.entity.CityModel;
 import com.zyjr.emergencylending.entity.DistrictModel;
 import com.zyjr.emergencylending.entity.MobileContactBean;
 import com.zyjr.emergencylending.entity.ProvinceModel;
@@ -14,7 +14,6 @@ import com.zyjr.emergencylending.widget.step.StepBean;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,7 +82,7 @@ public class CommonUtils {
             for (int i = 0; i < provinceList.size(); i++) {
                 // 遍历所有省的数据
                 mProvinceDatas[i] = provinceList.get(i).getName();
-                List<CityModel1> cityList = provinceList.get(i).getCityList();
+                List<CityModel> cityList = provinceList.get(i).getCityList();
                 String[] cityNames = new String[cityList.size()];
                 for (int j = 0; j < cityList.size(); j++) {
                     // 遍历省下面的所有市的数据

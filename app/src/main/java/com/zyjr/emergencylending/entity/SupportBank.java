@@ -1,10 +1,14 @@
 package com.zyjr.emergencylending.entity;
 
-/**
- * Created by User on 2017/1/18.
- */
+import java.io.Serializable;
 
-public class OpenBankBean {
+/**
+ * Created by neil on 2017/10/23
+ * 支持银行
+ */
+public class SupportBank implements Serializable {
+
+    private static final long serialVersionUID = -2368450754576205050L;
 
     /**
      * id_ : 24821464997822544
@@ -16,10 +20,10 @@ public class OpenBankBean {
      * group_ : 2
      * sort_no_ : 8
      */
-
     private String id_;
-    private String name_;
-    private String key_;
+    private String name_;   // 名称
+    private String key_;  // 对照吗
+    private String remark_;  // 备注
     private String code_;
     private String desc_;
     private String is_enable_;
@@ -88,5 +92,28 @@ public class OpenBankBean {
 
     public void setSort_no_(int sort_no_) {
         this.sort_no_ = sort_no_;
+    }
+
+    public String getRemark_() {
+        return remark_;
+    }
+
+    public void setRemark_(String remark_) {
+        this.remark_ = remark_;
+    }
+
+    @Override
+    public String toString() {
+        return "SupportBank{" +
+                "id_='" + id_ + '\'' +
+                ", name_='" + name_ + '\'' +
+                ", key_='" + key_ + '\'' +
+                ", remark_='" + remark_ + '\'' +
+                ", code_='" + code_ + '\'' +
+                ", desc_='" + desc_ + '\'' +
+                ", is_enable_='" + is_enable_ + '\'' +
+                ", group_='" + group_ + '\'' +
+                ", sort_no_=" + sort_no_ +
+                '}';
     }
 }

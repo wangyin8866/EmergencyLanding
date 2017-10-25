@@ -16,8 +16,14 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.BankcardInfo;
+import com.zyjr.emergencylending.entity.SupportBank;
+import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
 import com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity;
+import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +35,7 @@ import butterknife.OnLongClick;
  * 备注: 银行卡信息
  * 当没有银行卡时,管理 按钮消失;有银行卡信息时展示
  */
-public class BankcardInfoActivity extends BaseActivity {
+public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter,BankcardInfoView> implements BankcardInfoView {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -49,8 +55,8 @@ public class BankcardInfoActivity extends BaseActivity {
     PullToRefreshScrollView pullToRefreshScrollView;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected BankcardInfoPresenter createPresenter() {
+        return new BankcardInfoPresenter(this);
     }
 
     @Override
@@ -75,6 +81,11 @@ public class BankcardInfoActivity extends BaseActivity {
     boolean onLongClickBindButton(){
         showEditDialog();
         return true;
+    }
+
+
+    private void validateData(){
+
     }
 
 
@@ -147,4 +158,28 @@ public class BankcardInfoActivity extends BaseActivity {
         topBar.setRightButtonVisible(View.INVISIBLE); //
     }
 
+    @Override
+    public void onSuccessGet(String returnCode, BankcardInfo model) {
+
+    }
+
+    @Override
+    public void onSuccessAdd(String returnCode, BankcardInfo model) {
+
+    }
+
+    @Override
+    public void onSuccessEdit(String returnCode, BankcardInfo model) {
+
+    }
+
+    @Override
+    public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
 }

@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="姓名"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -66,7 +66,7 @@
                     android:hint="请输入姓名"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="手机号"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -98,9 +98,10 @@
                     android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:hint="请输入手机号"
+                    android:inputType="phone"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/iv_contact_phone1"
@@ -128,7 +129,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="关系"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -142,7 +143,7 @@
                     android:hint="请选择关系"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/iv_relation1"
@@ -175,7 +176,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="姓名"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -192,7 +193,7 @@
                     android:hint="请输入姓名"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
             </LinearLayout>
 
@@ -211,7 +212,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="手机号"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -224,9 +225,10 @@
                     android:background="@color/transparent"
                     android:gravity="center_vertical"
                     android:hint="请输入手机号"
+                    android:inputType="phone"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/iv_contact_phone2"
@@ -254,7 +256,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:minEms="6"
+                    android:minEms="5"
                     android:text="关系"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
@@ -268,7 +270,7 @@
                     android:hint="请选择关系"
                     android:textColor="@color/input_text_color"
                     android:textColorHint="@color/front_text_color_hint"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/iv_relation2"

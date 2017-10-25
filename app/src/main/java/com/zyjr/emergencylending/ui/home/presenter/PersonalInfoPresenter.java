@@ -8,15 +8,12 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.entity.BankcardInfo;
-import com.zyjr.emergencylending.entity.ContactInfoBean;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
-import com.zyjr.emergencylending.entity.WorkInfoBean;
 import com.zyjr.emergencylending.model.home.loan.IDCardModel;
-import com.zyjr.emergencylending.model.home.loan.LoanInfoModel;
-import com.zyjr.emergencylending.ui.home.View.LoanInfoView;
+import com.zyjr.emergencylending.model.home.loan.PersonalInfoModel;
+import com.zyjr.emergencylending.ui.home.View.PersonalInfoView;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -28,16 +25,15 @@ import java.util.Map;
 import retrofit2.HttpException;
 
 /**
- * Created by neil on 2017/10/23
- * 备注:
+ * Created by neil on 2017/10/19
+ * 备注: 个人信息
  */
-public class LoanInfoPresenter extends BasePresenter<LoanInfoView> {
+public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
 
-    public LoanInfoPresenter(Context context) {
+    public PersonalInfoPresenter(Context context) {
         super(context);
     }
 
-    // 获取身份证正面信息
     public void uploadFileGetIDCardFrontInfo(File file) {
         invoke(IDCardModel.getInstance().getIDCardFrontInfo(file), new ProgressSubscriber<IDCardFrontBean>(new SubscriberOnNextListener<IDCardFrontBean>() {
             @Override
@@ -97,7 +93,7 @@ public class LoanInfoPresenter extends BasePresenter<LoanInfoView> {
     }
 
     public void getPersonalInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().getPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
+        invoke(PersonalInfoModel.getInstance().getPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 LogUtils.d("获取个人信息成功---->" + result.getResult().toString());
@@ -110,11 +106,11 @@ public class LoanInfoPresenter extends BasePresenter<LoanInfoView> {
         }, mContext));
     }
 
-    public void savePerosonalInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().savePersonInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+    public void addPersonalInfo(Map<String, String> params) {
+        invoke(PersonalInfoModel.getInstance().addPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
-            public void onNext(ApiResult<String> stringApiResult) {
-                LogUtils.d("保存个人信息成功---->" + stringApiResult.getResult());
+            public void onNext(ApiResult<PersonalInfoBean> result) {
+                LogUtils.d("添加个人信息成功---->" + result.getResult().toString());
             }
 
             @Override
@@ -124,11 +120,12 @@ public class LoanInfoPresenter extends BasePresenter<LoanInfoView> {
         }, mContext));
     }
 
-    public void getWorkInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().getWorkInfo(params), new ProgressSubscriber<ApiResult<WorkInfoBean>>(new SubscriberOnNextListener<ApiResult<WorkInfoBean>>() {
+
+    public void editPersonalInfo(Map<String, String> params) {
+        invoke(PersonalInfoModel.getInstance().editPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
-            public void onNext(ApiResult<WorkInfoBean> result) {
-                LogUtils.d("获取工作信息成功---->" + result.getResult().toString());
+            public void onNext(ApiResult<PersonalInfoBean> result) {
+                LogUtils.d("更新个人信息成功---->" + result.getResult().toString());
             }
 
             @Override
@@ -138,75 +135,18 @@ public class LoanInfoPresenter extends BasePresenter<LoanInfoView> {
         }, mContext));
     }
 
-    public void saveWorkInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().saveWorkInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+    public void uploadFile(Map<String, String> params){
+        invoke(PersonalInfoModel.getInstance().uploadFile(params),new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                LogUtils.d("保存工作信息成功---->" + result.getResult());
+
             }
 
             @Override
             public void onError(Throwable e) {
 
             }
-        }, mContext));
-    }
-
-
-    public void getContantInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().getContactInfo(params), new ProgressSubscriber<ApiResult<ContactInfoBean>>(new SubscriberOnNextListener<ApiResult<ContactInfoBean>>() {
-            @Override
-            public void onNext(ApiResult<ContactInfoBean> result) {
-                LogUtils.d("获取联系人信息成功---->" + result.getResult().toString());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        }, mContext));
-    }
-
-    public void saveContactInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().saveWorkInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
-            @Override
-            public void onNext(ApiResult<String> result) {
-                LogUtils.d("保存联系人信息成功---->" + result.getResult());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        }, mContext));
-    }
-
-    public void getBankcardInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().getBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
-            @Override
-            public void onNext(ApiResult<BankcardInfo> result) {
-                LogUtils.d("获取银行卡信息成功---->" + result.getResult().toString());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        }, mContext));
-    }
-
-    public void saveBankcardInfo(Map<String, String> params) {
-        invoke(LoanInfoModel.getInstance().saveBankcardInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
-            @Override
-            public void onNext(ApiResult<String> result) {
-                LogUtils.d("保存银行卡信息成功---->" + result.getResult());
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        }, mContext));
+        },mContext));
     }
 
 }

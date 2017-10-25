@@ -9,7 +9,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.entity.CityModel;
+import com.zyjr.emergencylending.entity.SupportCityBean;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import java.util.List;
  * 城市列表的适配器
  */
 public class SortAdapter extends BaseAdapter implements SectionIndexer {
-	private List<CityModel> list = null;
+	private List<SupportCityBean> list = null;
 	private Context mContext;
 	
-	public SortAdapter(Context mContext, List<CityModel> list) {
+	public SortAdapter(Context mContext, List<SupportCityBean> list) {
 		this.mContext = mContext;
 		this.list = list;
 	}
@@ -28,7 +28,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 	/**
 	 * 当ListView数据发生变化时,调用此方法来更新ListView，动态刷新listview的数据源
 	 */
-	public void updateListView(List<CityModel> list){
+	public void updateListView(List<SupportCityBean> list){
 		this.list = list;
 		notifyDataSetChanged();
 	}
@@ -47,7 +47,7 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 
 	public View getView(final int position, View view, ViewGroup arg2) {
 		ViewHolder viewHolder = null;
-		final CityModel mContent = list.get(position);
+		final SupportCityBean mContent = list.get(position);
 		if (view == null) {
 			viewHolder = new ViewHolder();
 			view = LayoutInflater.from(mContext).inflate(R.layout.lv_item_support_city, null);

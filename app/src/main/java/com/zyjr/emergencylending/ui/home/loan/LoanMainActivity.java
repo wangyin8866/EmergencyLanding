@@ -13,12 +13,13 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.ProIntroduceBean;
+import com.zyjr.emergencylending.entity.SupportCityBean;
+import com.zyjr.emergencylending.ui.home.View.ProductInfoView;
+import com.zyjr.emergencylending.ui.home.presenter.ProductInfoPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.widget.BubbleSeekBar;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
@@ -34,7 +35,7 @@ import butterknife.OnClick;
  * 备注: 借款(急速 和传统 )
  * 1.网络请求：获取产品介绍--->包含额度
  */
-public class LoanMainActivity extends BaseActivity {
+public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductInfoView> implements ProductInfoView{
 
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -72,8 +73,8 @@ public class LoanMainActivity extends BaseActivity {
     private List<ProIntroduceBean> proIntroduceList = null;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected ProductInfoPresenter createPresenter() {
+        return new ProductInfoPresenter(this);
     }
 
     @Override
@@ -87,6 +88,24 @@ public class LoanMainActivity extends BaseActivity {
         initGetData();
         initListener();
         LogUtils.e("weekProgress:" + weekProgress + ",moneyProgress:" + moneyProgress);
+    }
+
+
+
+    @OnClick({R.id.btn_apply_quickly, R.id.layout_traditional_support_cities})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_apply_quickly:
+                // TODO 携带 借款数据到下个页面
+                Intent intent = new Intent(this, WriteInfoMainActivity.class);
+                intent.putExtra("loanMoney", money +"");
+                intent.putExtra("loanWeek", week +"");
+                startActivity(intent);
+                break;
+            case R.id.layout_traditional_support_cities:
+                startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));
+                break;
+        }
     }
 
     private void initData() {
@@ -127,24 +146,8 @@ public class LoanMainActivity extends BaseActivity {
             llFastloanSupportCities.setVisibility(View.GONE);
             llTraditionalSupportCities.setVisibility(View.VISIBLE);
         }
-
     }
 
-    @OnClick({R.id.btn_apply_quickly, R.id.layout_traditional_support_cities})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_apply_quickly:
-                // TODO 携带 借款数据到下个页面
-                Intent intent = new Intent(this, WriteInfoMainActivity.class);
-                intent.putExtra("loanMoney", money);
-                intent.putExtra("loanWeek", week);
-                startActivity(intent);
-                break;
-            case R.id.layout_traditional_support_cities:
-                startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));
-                break;
-        }
-    }
 
     private void initListener() {
         seekbarMoney.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -182,7 +185,6 @@ public class LoanMainActivity extends BaseActivity {
         });
     }
 
-
     public void initSeekMoney(int progress, int minMoney, int maxMoney) {
         seekbarMoney.setType(0);
         seekbarMoney.setMONEY_MIN(minMoney);
@@ -210,6 +212,7 @@ public class LoanMainActivity extends BaseActivity {
             tvMinLoadWeek.setText(minWeek + "周");
         }
         week = Arithmetic.progressToWeek(progress, minWeek, maxWeek);
+        LogUtils.d("借款周期:---->" + week);
         tvMaxLoadWeek.setText(maxWeek + "周");
     }
 
@@ -225,6 +228,21 @@ public class LoanMainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onSuccessGetSupportCity(String returnCode, List<SupportCityBean> cityList) {
+
+    }
+
+    @Override
+    public void onSuccessGetIntro(String returnCode, List<String> introList) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
     }
 
 }

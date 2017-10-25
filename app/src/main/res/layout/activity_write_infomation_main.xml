@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         ptr:ptrAnimationStyle="flip"
-        ptr:ptrMode="pullFromStart"
+        ptr:ptrMode="both"
         android:background="@color/white"
         android:scrollbars="none">
 
@@ -181,7 +181,7 @@
                             android:textSize="13sp" />
 
                         <Button
-                            android:id="@+id/btn_borrow_money"
+                            android:id="@+id/btn_apply_quickly"
                             android:layout_width="80dp"
                             android:layout_height="26dp"
                             android:layout_alignParentRight="true"

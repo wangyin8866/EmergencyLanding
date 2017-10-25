@@ -12,6 +12,9 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.ui.home.View.AuthHelperView;
+import com.zyjr.emergencylending.ui.home.presenter.AuthHelperPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
@@ -23,7 +26,7 @@ import butterknife.OnClick;
  * 备注: 手机运营商认证
  * 验证码 根据手机运营商 进行显示和隐藏
  */
-public class MobileAuthActivity extends BaseActivity {
+public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter,AuthHelperView> implements AuthHelperView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.tv_mobile_number)
@@ -38,8 +41,8 @@ public class MobileAuthActivity extends BaseActivity {
     Button btnSubmit;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected AuthHelperPresenter createPresenter() {
+        return new AuthHelperPresenter(this);
     }
 
     @Override
@@ -47,17 +50,7 @@ public class MobileAuthActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mobile_auth);
         ButterKnife.bind(this);
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
-
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
+        init();
     }
 
     @OnClick({R.id.cb_check, R.id.iv_service_password,R.id.btn_submit})
@@ -89,4 +82,27 @@ public class MobileAuthActivity extends BaseActivity {
         }
     }
 
+    private void init(){
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+    }
+
+    @Override
+    public void onSuccessSubmit(String returnCode, AuthInfoBean bean) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
 }

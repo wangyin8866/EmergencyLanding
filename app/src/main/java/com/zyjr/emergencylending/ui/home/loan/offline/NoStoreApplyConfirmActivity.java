@@ -1,16 +1,24 @@
 package com.zyjr.emergencylending.ui.home.loan.offline;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+
+import butterknife.BindView;
 
 /**
  * Created by neil on 2017/10/14
  * 备注: 资料提交--无门店时页面,校验是否是首贷或续贷,申请确认
  */
 public class NoStoreApplyConfirmActivity extends BaseActivity{
+
+    @BindView(R.id.tv_loan_money)
+    TextView tvLoanMoney; // 借款金额
+    @BindView(R.id.tv_loan_period)
+    TextView tvLoanPeriod; // 借款周期
 
     @Override
     protected BasePresenter createPresenter() {

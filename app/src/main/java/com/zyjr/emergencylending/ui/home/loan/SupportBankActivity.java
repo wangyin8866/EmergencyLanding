@@ -14,6 +14,10 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BankBean;
+import com.zyjr.emergencylending.entity.BankcardInfo;
+import com.zyjr.emergencylending.entity.SupportBank;
+import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
+import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
 
@@ -27,7 +31,7 @@ import butterknife.ButterKnife;
  * Created by neil on 2017/10/12
  * 备注: 支持银行选择
  */
-public class SupportBankActivity extends BaseActivity {
+public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, BankcardInfoView> implements BankcardInfoView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.rv_banklist)
@@ -39,8 +43,8 @@ public class SupportBankActivity extends BaseActivity {
     private BankAdapter bankAdapter;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected BankcardInfoPresenter createPresenter() {
+        return new BankcardInfoPresenter(this);
     }
 
     @Override
@@ -88,7 +92,7 @@ public class SupportBankActivity extends BaseActivity {
         });
     }
 
-    private void init(){
+    private void init() {
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -100,5 +104,32 @@ public class SupportBankActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
+
+    }
+
+
+    @Override
+    public void onSuccessGet(String returnCode, BankcardInfo bean) {
+
+    }
+
+    @Override
+    public void onSuccessAdd(String returnCode, BankcardInfo bean) {
+
+    }
+
+    @Override
+    public void onSuccessEdit(String returnCode, BankcardInfo bean) {
+
+    }
+
+
+    @Override
+    public void onFail(String errorMessage) {
+
     }
 }

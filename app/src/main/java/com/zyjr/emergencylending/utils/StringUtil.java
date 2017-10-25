@@ -415,7 +415,6 @@ public class StringUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return strLines;
     }
 
@@ -430,7 +429,6 @@ public class StringUtil {
         return m.matches();
     }
 
-    //
 
     /**
      * 判断是否符合身份证号码的规范
@@ -441,5 +439,35 @@ public class StringUtil {
             return IDCard.matches(IDCardRegex);
         }
         return false;
+    }
+
+    //是纯数字
+    public static boolean isOnlyNumbers(String value) {
+        String regEx = "^\\d*$";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(value);
+        return m.matches();
+    }
+
+
+    //是纯字母
+    public static boolean isOnlyLetters(String value) {
+        String regEx = "^[a-zA-Z]*$";
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(value);
+        return m.matches();
+    }
+
+
+    //是中文
+    public static boolean isChinese(String value) {
+        String regex = "[\u4e00-\u9fa5]+";//表示+表示一个或多个中文，
+        return value.matches(regex);
+    }
+
+    //包含中文
+    public static boolean containChinese(String value) {
+        String regex = "[\u4e00-\u9fa5]";
+        return Pattern.compile(regex).matcher(value).find();
     }
 }

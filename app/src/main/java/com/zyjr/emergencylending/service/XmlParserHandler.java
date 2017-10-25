@@ -1,7 +1,7 @@
 package com.zyjr.emergencylending.service;
 
 
-import com.zyjr.emergencylending.entity.CityModel1;
+import com.zyjr.emergencylending.entity.CityModel;
 import com.zyjr.emergencylending.entity.DistrictModel;
 import com.zyjr.emergencylending.entity.ProvinceModel;
 
@@ -33,7 +33,7 @@ public class XmlParserHandler extends DefaultHandler {
     }
 
     ProvinceModel provinceModel = new ProvinceModel();
-    CityModel1 cityModel = new CityModel1();
+    CityModel cityModel = new CityModel();
     DistrictModel districtModel = new DistrictModel();
 
     /*
@@ -47,9 +47,9 @@ public class XmlParserHandler extends DefaultHandler {
             provinceModel = new ProvinceModel();
             provinceModel.setProvinceCode(attributes.getValue(0));
             provinceModel.setName(attributes.getValue(1));//获取属性节点值  
-            provinceModel.setCityList(new ArrayList<CityModel1>());
+            provinceModel.setCityList(new ArrayList<CityModel>());
         } else if (qName.equals("city")) {
-            cityModel = new CityModel1();
+            cityModel = new CityModel();
             cityModel.setCityCode(attributes.getValue(0));
             cityModel.setName(attributes.getValue(1));
             cityModel.setDistrictList(new ArrayList<DistrictModel>());

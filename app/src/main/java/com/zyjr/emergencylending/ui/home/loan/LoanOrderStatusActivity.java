@@ -11,6 +11,10 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.LoanOrderBean;
+import com.zyjr.emergencylending.entity.WriteInfoBean;
+import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
+import com.zyjr.emergencylending.ui.home.presenter.LoanOrderPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +26,7 @@ import butterknife.OnClick;
  * 线上急速借款(填写资料:1、认证中:2、审核中:3、领取金额:4、放款中:5、还款中:6)
  * 传统借款(填写资料:1、认证中:2、受理中:3、领取金额:4、放款中:5、还款中:6)
  */
-public class LoanOrderStatusActivity extends BaseActivity {
+public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter,LoanOrderView> implements LoanOrderView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.iv_order_status)
@@ -48,10 +52,11 @@ public class LoanOrderStatusActivity extends BaseActivity {
     ImageView ivOrderStatusIcon;
     @BindView(R.id.btn_status_operate)
     Button btnOrderOperate;
+    private LoanOrderBean loanOrderBean = null;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected LoanOrderPresenter createPresenter() {
+        return new LoanOrderPresenter(this);
     }
 
     @Override
@@ -59,17 +64,8 @@ public class LoanOrderStatusActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loan_order_status);
         ButterKnife.bind(this);
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
 
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
+        init();
         initData();
     }
 
@@ -167,4 +163,28 @@ public class LoanOrderStatusActivity extends BaseActivity {
         tv.setTextColor(color);
     }
 
+    @Override
+    public void onSuccessGet(String returnCode, LoanOrderBean model) {
+        loanOrderBean = model;
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
+
+    private void init(){
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+    }
 }

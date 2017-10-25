@@ -35,8 +35,8 @@ public class UserInfoManager {
     private String phone_pwd;
     private int loan_type;
     List<ContactListModel> contactListModels = new ArrayList<ContactListModel>();
-    UserStatusModel userStatuModels = new UserStatusModel();
-    private BorrowInfoBean borrowInfo = new BorrowInfoBean();
+    WriteInfoBean userStatuModels = new WriteInfoBean();
+    private ReceiveMoneyBean borrowInfo = new ReceiveMoneyBean();
     private RepayBorrowInfoBean RepayBorrowInfo;
     private int isUrgency;
     private String junxinlin, junxinlinPhone;
@@ -172,11 +172,11 @@ public class UserInfoManager {
         this.IDcardF = IDcardF;
     }
 
-    public BorrowInfoBean getBorrowInfo() {
+    public ReceiveMoneyBean getBorrowInfo() {
         return borrowInfo;
     }
 
-    public void setBorrowInfo(BorrowInfoBean borrowInfo) {
+    public void setBorrowInfo(ReceiveMoneyBean borrowInfo) {
         this.borrowInfo = borrowInfo;
     }
 
@@ -188,11 +188,11 @@ public class UserInfoManager {
         this.contactListModels = contactListModels;
     }
 
-    public UserStatusModel getUserStatuModels() {
+    public WriteInfoBean getUserStatuModels() {
         return userStatuModels;
     }
 
-    public void setUserStatuModels(UserStatusModel userStatuModels) {
+    public void setUserStatuModels(WriteInfoBean userStatuModels) {
         this.userStatuModels = userStatuModels;
     }
 

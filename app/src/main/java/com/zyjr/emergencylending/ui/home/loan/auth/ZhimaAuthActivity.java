@@ -1,21 +1,20 @@
 package com.zyjr.emergencylending.ui.home.loan.auth;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.xfqz.xjd.mylibrary.CustomProgressDialog;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.ui.home.View.AuthHelperView;
+import com.zyjr.emergencylending.ui.home.presenter.AuthHelperPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,7 +24,7 @@ import butterknife.OnClick;
  * Created by neil on 2017/10/17
  * 备注: 芝麻信用认证
  */
-public class ZhimaAuthActivity extends BaseActivity {
+public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHelperView> implements AuthHelperView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.tv_name)
@@ -40,8 +39,8 @@ public class ZhimaAuthActivity extends BaseActivity {
     WebView webView;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected AuthHelperPresenter createPresenter() {
+        return new AuthHelperPresenter(this);
     }
 
     @Override
@@ -69,7 +68,7 @@ public class ZhimaAuthActivity extends BaseActivity {
     }
 
 
-    private void init(){
+    private void init() {
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -81,6 +80,16 @@ public class ZhimaAuthActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onSuccessSubmit(String returnCode, AuthInfoBean bean) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
     }
 }
 

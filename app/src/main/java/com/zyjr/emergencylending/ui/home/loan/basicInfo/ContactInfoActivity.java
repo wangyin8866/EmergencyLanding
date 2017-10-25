@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
@@ -22,7 +23,10 @@ import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CodeBean;
+import com.zyjr.emergencylending.entity.ContactInfoBean;
 import com.zyjr.emergencylending.entity.UserInfoManager;
+import com.zyjr.emergencylending.ui.home.View.ContactInfoView;
+import com.zyjr.emergencylending.ui.home.presenter.ContactInfoPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
@@ -33,7 +37,9 @@ import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +50,7 @@ import butterknife.OnClick;
  * 备注: 联系人信息
  */
 
-public class ContactInfoActivity extends BaseActivity {
+public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, ContactInfoView> implements ContactInfoView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.et_contact_name1)
@@ -74,8 +80,8 @@ public class ContactInfoActivity extends BaseActivity {
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected ContactInfoPresenter createPresenter() {
+        return new ContactInfoPresenter(this);
     }
 
     @Override
@@ -168,20 +174,23 @@ public class ContactInfoActivity extends BaseActivity {
                 jumpToSelectPhone(selectPhoneType);
             }
         }
-        if (requestCode == 124) {
-//            if (ToolPermission.checkPermission(permissions, grantResults)) {
-//                if (CommonUtils.queryContactPhoneNumber(mContext).size() > 0) {
-//                    if (contactList != null)
-//                        contactList.contactList();
-//                }
-//            }
-
-        }
     }
 
-    private void validateData(){
+    private void validateData() {
         String contactName1 = etContactName1.getText().toString().trim(); // 联系人姓名1
+        String contactPhone1 = etContactPhone1.getText().toString().trim(); // 联系电话1
+        String relation1 = tvRelation1.getText().toString().trim(); // 关系1
+        String contactName2 = etContactName2.getText().toString().trim(); // 联系人姓名2
+        String contactPhone2 = etContactPhone2.getText().toString().trim(); // 联系电话2
+        String relation2 = tvRelation2.getText().toString().trim(); // 关系2
+        // TODO 上传通讯录信息
 
+    }
+
+    public void submitContacts() {
+        Map<String, String> params = new HashMap<>();
+        params.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this)));
+        mPresenter.submitContacts(params);
     }
 
 
@@ -243,4 +252,23 @@ public class ContactInfoActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public void onSuccessGet(String returnCode, ContactInfoBean model) {
+
+    }
+
+    @Override
+    public void onSuccessAdd(String returnCode, ContactInfoBean model) {
+
+    }
+
+    @Override
+    public void onSuccessEdit(String returnCode, ContactInfoBean model) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
 }

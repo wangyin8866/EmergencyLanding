@@ -55,8 +55,6 @@ public class PersonalInfoBean implements Serializable {
     private String bankcard_z;
     private String idCardHandId;
     private String bank_name;
-    private List<OpenBankBean> offline_bank_list;
-    private List<OpenBankBean> online_bank_list;
     private String last_product_id;
     private String product_id;
     private String result;
@@ -343,21 +341,6 @@ public class PersonalInfoBean implements Serializable {
         this.bank_name = bank_name;
     }
 
-    public List<OpenBankBean> getOffline_bank_list() {
-        return offline_bank_list;
-    }
-
-    public void setOffline_bank_list(List<OpenBankBean> offline_bank_list) {
-        this.offline_bank_list = offline_bank_list;
-    }
-
-    public List<OpenBankBean> getOnline_bank_list() {
-        return online_bank_list;
-    }
-
-    public void setOnline_bank_list(List<OpenBankBean> online_bank_list) {
-        this.online_bank_list = online_bank_list;
-    }
 
     public String getLast_product_id() {
         return last_product_id;
@@ -466,8 +449,6 @@ public class PersonalInfoBean implements Serializable {
                 ", idcard_hand='" + idcard_hand + '\'' +
                 ", idCardHandId='" + idCardHandId + '\'' +
                 ", bank_name='" + bank_name + '\'' +
-                ", offline_bank_list=" + offline_bank_list +
-                ", online_bank_list=" + online_bank_list +
                 ", last_product_id='" + last_product_id + '\'' +
                 ", product_id='" + product_id + '\'' +
                 ", result='" + result + '\'' +

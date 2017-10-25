@@ -1,13 +1,26 @@
 package com.zyjr.emergencylending.entity;
 
-/**
- * 城市列表model  拼音
- */
-public class CityModel {
+import java.util.List;
 
-    private String name;   //显示的数据
-    private String firstName;  //显示数据拼音的首字母
-    private String pingyin;
+public class CityModel {
+    private String name;
+    private String cityCode;
+    private List<DistrictModel> districtList;
+
+    public CityModel() {
+        super();
+    }
+
+    public CityModel(String cityCode) {
+        this.cityCode = cityCode;
+    }
+
+    public CityModel(String name, List<DistrictModel> districtList) {
+        super();
+        this.name = name;
+        this.districtList = districtList;
+    }
+
     public String getName() {
         return name;
     }
@@ -16,20 +29,34 @@ public class CityModel {
         this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getCityCode() {
+        return cityCode;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setCityCode(String cityCode) {
+        this.cityCode = cityCode;
     }
 
-    public String getPingyin() {
-        return pingyin;
+    public List<DistrictModel> getDistrictList() {
+        return districtList;
     }
 
-    public void setPingyin(String pingyin) {
-        this.pingyin = pingyin;
+    public void setDistrictList(List<DistrictModel> districtList) {
+        this.districtList = districtList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return cityCode.equals(((CityModel) o).cityCode);
+    }
+
+    @Override
+    public String toString() {
+        return "CityModel{" +
+                "name='" + name + '\'' +
+                ", districtList=" + districtList +
+                ", cityCode='" + cityCode + '\'' +
+                '}';
     }
 
 }

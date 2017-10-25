@@ -23,8 +23,11 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.ui.home.View.AuthInfoView;
 import com.zyjr.emergencylending.ui.home.loan.auth.MobileAuthActivity;
 import com.zyjr.emergencylending.ui.home.loan.auth.ZhimaAuthActivity;
+import com.zyjr.emergencylending.ui.home.presenter.AuthInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -36,6 +39,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -47,7 +51,7 @@ import butterknife.OnClick;
  * 备注: 认证中心
  * 人脸识别 需要联网授权
  */
-public class AuthCenterActivity extends BaseActivity {
+public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfoView> implements AuthInfoView {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -66,8 +70,8 @@ public class AuthCenterActivity extends BaseActivity {
     private MediaPlayer mMediaPlayer = null;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected AuthInfoPresenter createPresenter() {
+        return new AuthInfoPresenter(this);
     }
 
     @Override
@@ -211,7 +215,6 @@ public class AuthCenterActivity extends BaseActivity {
         try {
             requestParams.put("image_ref1", new FileInputStream(new File("image_idcard"))); // 传入身份证头像照片路径
         } catch (Exception e) {
-
         }
         requestParams.put("delta", delta);
         requestParams.put("api_key", Constants.FACE_APPKEY);
@@ -244,6 +247,7 @@ public class AuthCenterActivity extends BaseActivity {
                             if (confidence > tenThreshold) {
                                 ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别通过");
                                 // TODO 识别通过后,做一些业务操作
+                                // 提交请求到服务端
                             } else {
                                 ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别未通过,请本人再次尝试");
                             }
@@ -291,4 +295,24 @@ public class AuthCenterActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onSuccessGet(String returnCode, List<AuthInfoBean> beanList) {
+
+    }
+
+    @Override
+    public void onSuccessSubmit(String returnCode, AuthInfoBean bean) {
+
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogUtils.d("执行onResume");
+    }
 }

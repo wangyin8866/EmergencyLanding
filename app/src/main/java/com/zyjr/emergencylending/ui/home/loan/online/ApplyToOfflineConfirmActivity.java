@@ -16,6 +16,7 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.StoreBean;
 import com.zyjr.emergencylending.widget.BubbleSeekBar;
+import com.zyjr.emergencylending.widget.CustomSeekBar;
 import com.zyjr.emergencylending.widget.SelectorImageView;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
@@ -34,9 +35,9 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.seekbar_loan_money)
-    BubbleSeekBar seekbarMoney;
+    CustomSeekBar seekbarMoney;
     @BindView(R.id.seekbar_loan_week)
-    BubbleSeekBar seekbarWeek;
+    CustomSeekBar seekbarWeek;
     @BindView(R.id.tv_loan_money_min)
     TextView tvMinLoadMoney;
     @BindView(R.id.tv_loan_money_max)

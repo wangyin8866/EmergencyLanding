@@ -5,7 +5,7 @@ import java.util.List;
 public class ProvinceModel {
     private String name;
     private String provinceCode;
-    private List<CityModel1> cityList;
+    private List<CityModel> cityList;
 
     public ProvinceModel() {
         super();
@@ -15,7 +15,7 @@ public class ProvinceModel {
         this.provinceCode = provinceCode;
     }
 
-    public ProvinceModel(String name, List<CityModel1> cityList) {
+    public ProvinceModel(String name, List<CityModel> cityList) {
         super();
         this.name = name;
         this.cityList = cityList;
@@ -38,11 +38,11 @@ public class ProvinceModel {
     }
 
 
-    public List<CityModel1> getCityList() {
+    public List<CityModel> getCityList() {
         return cityList;
     }
 
-    public void setCityList(List<CityModel1> cityList) {
+    public void setCityList(List<CityModel> cityList) {
         this.cityList = cityList;
     }
 

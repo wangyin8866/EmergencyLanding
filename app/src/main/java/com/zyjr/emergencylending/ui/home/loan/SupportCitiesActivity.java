@@ -11,7 +11,7 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CityBean;
-import com.zyjr.emergencylending.entity.CityModel;
+import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.utils.PinyinComparator;
 import com.zyjr.emergencylending.utils.SoftHideKeyBoardUtil;
 import com.zyjr.emergencylending.widget.SideBar;
@@ -39,7 +39,7 @@ public class SupportCitiesActivity extends BaseActivity {
     private List<CityBean> cityList;
     private ListView sortListView;
     private SortAdapter adapter;
-    private List<CityModel> sourceDateList; //用于存放排序后的二级城市，最主要的功能
+    private List<SupportCityBean> sourceDateList;
     private PinyinComparator pinyinComparator;
 
     @Override
@@ -66,16 +66,16 @@ public class SupportCitiesActivity extends BaseActivity {
         Collections.sort(sourceDateList, pinyinComparator);
     }
 
-    private List<CityModel> filledData(List<CityBean> date) {
-        List<CityModel> mSortList = new ArrayList<>();
+    private List<SupportCityBean> filledData(List<CityBean> date) {
+        List<SupportCityBean> mSortList = new ArrayList<>();
         for (int i = 0; i < date.size(); i++) {
-            CityModel cityModel = new CityModel();
+            SupportCityBean cityModel = new SupportCityBean();
             String name = date.get(i).getName();
             String firstName = date.get(i).getFirstName();
             String pinyin = date.get(i).getPinyin();
             cityModel.setName(name);
             cityModel.setFirstName(firstName);
-            cityModel.setPingyin(pinyin);
+            cityModel.setPinyin(pinyin);
             mSortList.add(cityModel);
         }
         return mSortList;

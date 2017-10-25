@@ -15,11 +15,15 @@ import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.WriteInfoBean;
+import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
+import com.zyjr.emergencylending.ui.home.presenter.WriteInfoPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.SettingItemView;
 
@@ -31,7 +35,7 @@ import butterknife.OnClick;
  * Created by neil on 2017/10/12
  * 备注: 填写资料(包含个人信息.工作信息)
  */
-public class WriteInfoMainActivity extends BaseActivity {
+public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, WriteInfoView> implements WriteInfoView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.layout_personal_info)
@@ -52,10 +56,11 @@ public class WriteInfoMainActivity extends BaseActivity {
     private Intent intent;
     private String loanMoney = ""; // 借款金额
     private String loanWeek = ""; // 借款周期
+    private WriteInfoBean writeInfoBean = null;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected WriteInfoPresenter createPresenter() {
+        return new WriteInfoPresenter(this);
     }
 
     @Override
@@ -80,7 +85,7 @@ public class WriteInfoMainActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info, R.id.btn_borrow_money, R.id.btn_submit})
+    @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info, R.id.btn_apply_quickly, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.layout_personal_info:
@@ -97,7 +102,7 @@ public class WriteInfoMainActivity extends BaseActivity {
 //                startActivity(new Intent(WriteInfoMainActivity.this, SupportBankActivity.class));
 //                startActivity(new Intent(WriteInfoMainActivity.this, AddBankcardActivity.class));
                 break;
-            case R.id.btn_borrow_money:
+            case R.id.btn_apply_quickly:
                 Intent intent = new Intent(WriteInfoMainActivity.this, LoanMainActivity.class);
                 intent.putExtra("flag", "offline");
                 startActivity(intent);
@@ -114,7 +119,7 @@ public class WriteInfoMainActivity extends BaseActivity {
         loanMoney = intent.getStringExtra("loanMoney");
         loanWeek = intent.getStringExtra("loanWeek");
         LogUtils.d("WriteInfoMainActivity接收数据---->" + loanMoney + "," + loanWeek);
-        infoFinishStatus("0", "1", "1", "0");
+        infoFinishStatus("", "1", "1", "");
     }
 
 
@@ -190,4 +195,19 @@ public class WriteInfoMainActivity extends BaseActivity {
     }
 
 
+    @Override
+    public void onSuccessGet(String returnCode, WriteInfoBean model) {
+        pullToRefreshScrollView.onRefreshComplete();
+        writeInfoBean = model;
+        infoFinishStatus(
+                StringUtil.isEmpty(model.getUser_data_status()) ? "" : model.getUser_data_status(),
+                StringUtil.isEmpty(model.getUser_job_status()) ? "" : model.getUser_job_status(),
+                StringUtil.isEmpty(model.getUser_contact_status()) ? "" : model.getUser_contact_status(),
+                StringUtil.isEmpty(model.getUser_bank_status()) ? "" : model.getUser_bank_status());
+    }
+
+    @Override
+    public void onFail(String errorMessage) {
+        pullToRefreshScrollView.onRefreshComplete();
+    }
 }
