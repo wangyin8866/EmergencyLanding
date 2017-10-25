@@ -5,41 +5,66 @@
     android:layout_height="match_parent"
     android:background="@color/loan_bg"
     android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
+        android:layout_height="@dimen/top_height"
         android:background="@android:color/white"
-        android:layout_height="@dimen/top_height">
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
         <ImageView
             android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/nav_back"/>
+            android:src="@mipmap/nav_back" />
+
         <TextView
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="消息中心"
             android:textColor="#333333"
-            android:textSize="16sp"
-            />
+            android:textSize="16sp" />
+
         <TextView
             android:id="@+id/tv_mark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="全部清除"
-            android:textColor="#666666"
-            android:textSize="14sp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            />
+            android:text="全部清除"
+            android:textColor="#666666"
+            android:textSize="14sp" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/emptypage_news" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="亲爱的用户，您目前还没有任何消息哦！"
+            android:textColor="#333333"
+            android:textSize="15sp" />
+    </LinearLayout>
+
     <com.ajguan.library.EasyRefreshLayout
         android:id="@+id/easylayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_main"

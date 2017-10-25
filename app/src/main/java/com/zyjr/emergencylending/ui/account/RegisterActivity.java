@@ -20,8 +20,11 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.widget.RxCompoundButton;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.entity.account.RegisterBean;
+import com.zyjr.emergencylending.ui.account.presenter.RegisterPresenter;
+import com.zyjr.emergencylending.ui.account.view.RegisterView;
 import com.zyjr.emergencylending.utils.DateUtil;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -37,7 +40,7 @@ import rx.functions.Action1;
  * Created by wangyin on 2017/10/12.
  */
 
-public class RegisterActivity extends BaseActivity {
+public class RegisterActivity extends BaseActivity<RegisterPresenter, RegisterView> implements RegisterView {
     @BindView(R.id.iv_close)
     ImageView ivClose;
     @BindView(R.id.et_phone_number)
@@ -63,8 +66,8 @@ public class RegisterActivity extends BaseActivity {
     private String phone, inviteCode, pwd, invite_code;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected RegisterPresenter createPresenter() {
+        return new RegisterPresenter(mContext);
     }
 
     @Override
@@ -94,6 +97,7 @@ public class RegisterActivity extends BaseActivity {
         mutilclick(temp);
 
     }
+
     //三个协议点击事件监控
     private void mutilclick(String str) {
         SpannableString spannableString = new SpannableString(str);//设置需要监听的字符串位置
@@ -128,6 +132,7 @@ public class RegisterActivity extends BaseActivity {
         tvAgreed.setText(spannableString);  //将处理过的数据set到View里
         tvAgreed.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
     @OnClick({R.id.iv_close, R.id.iv_show_pwd, R.id.btn_login_code, R.id.cb_check, R.id.btn_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -150,12 +155,13 @@ public class RegisterActivity extends BaseActivity {
             case R.id.btn_login_code:
                 // TODO: 2017/10/14 调短信验证码的接口，下面代码写在成功后的回调中
                 btnLoginCode.setEnabled(false);
-                DateUtil.countDown(btnLoginCode,"重新发送");
+                DateUtil.countDown(btnLoginCode, "重新发送");
                 break;
             case R.id.cb_check:
 
                 break;
             case R.id.btn_register:
+
                 phone = etPhoneNumber.getText().toString().trim();
                 inviteCode = etInviteCode.getText().toString().trim();
                 pwd = etPassword.getText().toString().trim();
@@ -167,8 +173,16 @@ public class RegisterActivity extends BaseActivity {
                     return;
                 }
                 // TODO: 2017/10/14 调注册接口
-                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                mPresenter.fetch(NetConstantValues.REGISTER);
+
                 break;
         }
+    }
+
+
+
+    @Override
+    public void showData(RegisterBean registerBean) {
+        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
     }
 }

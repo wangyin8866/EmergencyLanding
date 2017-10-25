@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -21,6 +20,7 @@ import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -105,8 +105,6 @@ public class UpdateVersionService {
      */
     private void showUpdateVersionDialog() {
         // 构造对话框
-
-
         Builder builder = new Builder(context);
         builder.setCustomTitle(View.inflate(context, R.layout.update_title, null));
         builder.setMessage(Html.fromHtml(display));
@@ -136,13 +134,35 @@ public class UpdateVersionService {
 
         noticeDialog.setCanceledOnTouchOutside(false);
     }
+    /**
+     * 自定义弹框
+     */
+    private void showUpdateVersionDialog2() {
 
+        CustomerDialog dialog = new CustomerDialog(context);
+        dialog.versionUpdate(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.cancel:
+                        Constants.update = false;
+                        if (isMust == 1) {
+                            System.exit(1);
+                        }
+                        break;
+                    case R.id.update:
+                        // 显示下载对话框
+                        showDownloadDialog();
+                        break;
+                }
+            }
+        },"版本更新！");
+    }
     /**
      * 下载的提示框
      */
     protected void showDownloadDialog() {
         {
-            Log.e("tga", "下载更新");
             // 构造软件下载对话框
             Builder builder = new Builder(context);
             builder.setTitle("正在更新！");
@@ -174,6 +194,8 @@ public class UpdateVersionService {
         }
 
     }
+
+
 
     /**
      * 下载apk,不能占用主线程.所以另开的线程

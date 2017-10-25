@@ -7,7 +7,6 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.model.home.loan.IDCardModel;
@@ -27,6 +26,11 @@ import retrofit2.HttpException;
  */
 @Deprecated
 public class IDCardPresenter extends BasePresenter<IDCardView> {
+
+    @Override
+    public void fetch(String... strings) {
+
+    }
 
     public IDCardPresenter(Context context) {
         super(context);

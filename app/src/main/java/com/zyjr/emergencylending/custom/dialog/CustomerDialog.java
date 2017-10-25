@@ -25,7 +25,7 @@ public class CustomerDialog extends Dialog {
         super(context, R.style.transparentFrameWindowStyle);
         instance = this;
         window = getWindow();
-
+        setCanceledOnTouchOutside(false);
     }
 
     /**
@@ -181,12 +181,13 @@ public class CustomerDialog extends Dialog {
 
     /**
      * 通用弹出确认
-     * @param content 中心内容
-     * @param contentColor 中心内容颜色
-     * @param leftMsg 左边操作
-     * @param leftFrontColor 颜色
-     * @param rightMsg 右边操作
-     * @param rightFrontColor  颜色
+     *
+     * @param content         中心内容
+     * @param contentColor    中心内容颜色
+     * @param leftMsg         左边操作
+     * @param leftFrontColor  颜色
+     * @param rightMsg        右边操作
+     * @param rightFrontColor 颜色
      * @return
      */
     public CustomerDialog operateComfirm(View.OnClickListener listener,
@@ -219,14 +220,32 @@ public class CustomerDialog extends Dialog {
      *
      * @param onClickListener
      */
-    public void showHotLineDialog(View.OnClickListener onClickListener) {
+    public CustomerDialog showHotLineDialog(View.OnClickListener onClickListener) {
         TextView left, right;
         setContentView(R.layout.dialog_hot_line);
-        left =  findViewById(R.id.left);
-        right =  findViewById(R.id.right);
+        left = findViewById(R.id.left);
+        right = findViewById(R.id.right);
         window.setGravity(Gravity.CENTER);
-
         left.setOnClickListener(onClickListener);
         right.setOnClickListener(onClickListener);
+        return instance;
+    }
+
+    /**
+     * 版本更新
+     *
+     * @param onClickListener
+     */
+    public CustomerDialog versionUpdate(View.OnClickListener onClickListener, String str) {
+        TextView left, right, content;
+        setContentView(R.layout.dialog_version_update);
+        left = findViewById(R.id.cancel);
+        right = findViewById(R.id.update);
+        content = findViewById(R.id.content);
+        window.setGravity(Gravity.CENTER);
+        left.setOnClickListener(onClickListener);
+        right.setOnClickListener(onClickListener);
+        content.setText(str);
+        return instance;
     }
 }

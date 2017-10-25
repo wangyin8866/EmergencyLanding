@@ -33,6 +33,11 @@ import retrofit2.HttpException;
  */
 public class LoanInfoPresenter extends BasePresenter<LoanInfoView> {
 
+    @Override
+    public void fetch(String... strings) {
+
+    }
+
     public LoanInfoPresenter(Context context) {
         super(context);
     }

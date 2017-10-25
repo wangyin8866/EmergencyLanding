@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,8 @@ public class MessageActivity extends BaseActivity implements SwipeAdapter.onSwip
     @BindView(R.id.easylayout)
     EasyRefreshLayout easylayout;
     SwipeAdapter myAdapter;
+    @BindView(R.id.ll_empty)
+    LinearLayout llEmpty;
 
     private int pageNum = 1;
     private int pageSize;

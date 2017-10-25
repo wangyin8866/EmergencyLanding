@@ -7,7 +7,8 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 
 /**
- * Created by wangyin on 2017/10/13.
+ * author wangyin
+ * date 2017/10/13.
  */
 
 public class AboutUsActivity extends BaseActivity {

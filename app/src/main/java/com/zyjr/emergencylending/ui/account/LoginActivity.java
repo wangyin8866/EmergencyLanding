@@ -14,8 +14,10 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.entity.account.LoginBean;
+import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
+import com.zyjr.emergencylending.ui.account.view.LoginView;
 import com.zyjr.emergencylending.utils.UIUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -27,7 +29,7 @@ import butterknife.OnClick;
  * Created by wangyin on 2017/10/12.
  */
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity<LoginPresenter, LoginView> implements LoginView {
 
 
     @BindView(R.id.iv_close)
@@ -47,9 +49,10 @@ public class LoginActivity extends BaseActivity {
     private String phone;
     private String pwd;
     private boolean isShow;
+
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter(mContext);
     }
 
     @Override
@@ -71,11 +74,11 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.iv_show_pwd:
-                if (!isShow){
+                if (!isShow) {
                     //可见
                     ivShowPwd.setImageResource(R.mipmap.eye_on);
                     etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                }else {
+                } else {
                     //不可见
                     ivShowPwd.setImageResource(R.mipmap.eye_off);
                     etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
@@ -91,7 +94,7 @@ public class LoginActivity extends BaseActivity {
                     return;
                 } else {
                     // TODO: 2017/10/14  调登录接口
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 break;
             case R.id.tv_forget:
@@ -102,5 +105,10 @@ public class LoginActivity extends BaseActivity {
                 break;
 
         }
+    }
+
+    @Override
+    public void showData(LoginBean loginBean) {
+
     }
 }

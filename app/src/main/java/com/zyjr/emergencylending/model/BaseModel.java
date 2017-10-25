@@ -29,11 +29,10 @@ import rx.schedulers.Schedulers;
 
 public class BaseModel {
 
-    public static final int DEFAULT_TIMEOUT = 15;
+    private static final int DEFAULT_TIMEOUT = 15;
     protected Retrofit retrofit;
-    static Map<String, String> map = new HashMap<>();
-    OkHttpClient.Builder httpClientBuilder;
-
+    public static Map<String, String> map = new HashMap<>();
+    private OkHttpClient.Builder httpClientBuilder;
     public BaseModel() {
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
@@ -49,7 +48,6 @@ public class BaseModel {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(NetConstantValues.HOST_URL)
                 .build();
-
     }
 
     /**

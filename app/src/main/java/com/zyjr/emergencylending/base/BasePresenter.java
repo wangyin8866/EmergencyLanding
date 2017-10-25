@@ -24,6 +24,8 @@ public abstract class BasePresenter<T> {
         this.lifeSubscription = lifeSubscription;
     }
 
+    public abstract void fetch(String ...strings);
+
     protected <T> void invoke(Observable<T> observable, Subscriber<T> subscriber) {
         BaseModel.invoke(lifeSubscription, observable, subscriber);
     }
