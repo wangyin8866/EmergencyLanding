@@ -18,6 +18,11 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,14 +37,18 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.zyjr.emergencylending.MainActivity;
+import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+
+import static com.zyjr.emergencylending.utils.UIUtils.getResources;
 
 /**
  * Created by wangyin on 2017/5/23.
@@ -84,7 +93,6 @@ public class WYUtils {
     public static boolean checkFm(String fm) {
         return fm.matches(fma);
     }
-
 
 
     /**
@@ -477,6 +485,24 @@ public class WYUtils {
         return versionName;
     }
 
+    /**
+     * 获取当前版本和服务器版本.如果服务器版本高于本地安装的版本.就更新
+     *
+     * @return
+     */
+    public static int getVersionCode(Context context) {
+        int versionCode = 0;
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            versionCode = pi.versionCode;
+
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versionCode;
+
+    }
 
     /**
      * 判断按返回键是否退出本应用弹出对话框
@@ -538,6 +564,7 @@ public class WYUtils {
 
     /**
      * 遮盖页面不可编辑
+     *
      * @param flag
      * @param llCover
      */
@@ -548,5 +575,44 @@ public class WYUtils {
             llCover.setVisibility(View.VISIBLE);
             llCover.setOnClickListener(null);
         }
+    }
+
+    /**
+     * 处理注册协议
+     */
+    public static void processProtocol(final Context mContext, TextView textView) {
+        String temp = "我已阅读并同意急借通《用户使用及安全隐私协议》《用户信息授权服务协议》";
+        //设置需要监听的字符串位置
+        SpannableString spannableString = new SpannableString(temp);
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View v) {
+                ToastAlone.showShortToast(mContext, "用户使用及安全隐私协议");
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setColor(getResources().getColor(R.color.front_text_color_agreement));
+            }
+        }, temp.indexOf("用") - 1, temp.indexOf("议") + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View v) {
+                ToastAlone.showShortToast(mContext, "用户信息授权服务协议");
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setColor(getResources().getColor(R.color.front_text_color_agreement));
+            }
+        }, temp.lastIndexOf("《"), temp.lastIndexOf("》") + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //将处理过的数据set到View里
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

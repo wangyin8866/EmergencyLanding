@@ -1,9 +1,9 @@
 package com.zyjr.emergencylending.model.account;
 
+import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
-import com.zyjr.emergencylending.entity.account.RegisterBean;
-import com.zyjr.emergencylending.model.BaseModel;
-import com.zyjr.emergencylending.service.AccountApi;
+import com.zyjr.emergencylending.service.WyApi;
 
 import rx.Observable;
 
@@ -12,11 +12,11 @@ import rx.Observable;
  */
 
 public class AccountModel extends BaseModel {
-    private AccountApi mAccountApi;
+    private WyApi mWyApi;
 
     private AccountModel() {
         super();
-        mAccountApi = retrofit.create(AccountApi.class);
+        mWyApi = retrofit.create(WyApi.class);
     }
 
     public static class SingletonHolder {
@@ -30,9 +30,9 @@ public class AccountModel extends BaseModel {
     /**
      * 注册
      */
-    public Observable<RegisterBean> register(String router, String phone, String clientid,
+    public Observable<Object> register(String router, String phone, String clientid,
                                              String verify_code, String password, String recommend_code,
-                                             String register_platform, String register_ip) {
+                                             String register_platform, String register_ip,String register_device_no) {
         map.clear();
         map.put("router", router);
         map.put("phone", phone);
@@ -42,14 +42,15 @@ public class AccountModel extends BaseModel {
         map.put("recommend_code", recommend_code);
         map.put("register_platform", register_platform);
         map.put("register_ip", register_ip);
-        return mAccountApi.register(map);
+        map.put("register_device_no", register_device_no);
+        return mWyApi.register(map);
     }
 
     /**
      * 登录
      */
     public Observable<LoginBean> login(String router, String phone, String password,
-                                       String clientid, String login_ip, String login_platform) {
+                                       String clientid, String login_ip, String login_platform,String login_device_no) {
         map.clear();
         map.put("router", router);
         map.put("phone", phone);
@@ -57,6 +58,25 @@ public class AccountModel extends BaseModel {
         map.put("clientid", clientid);
         map.put("login_ip", login_ip);
         map.put("login_platform", login_platform);
-        return mAccountApi.login(map);
+        map.put("login_device_no", login_device_no);
+        return mWyApi.login(map);
+    }
+
+    /**
+     * 发送短信验证码
+     * @param router
+     * @param phone
+     * @param registerPlatform
+     * @param versionNo
+     * @return
+     */
+    public Observable<BaseBean> sendSMS(String router, String phone,
+                                        String registerPlatform, String versionNo) {
+        map.clear();
+        map.put("router", router);
+        map.put("phone", phone);
+        map.put("register_platform", registerPlatform);
+        map.put("version_no", versionNo);
+        return mWyApi.sendSMS(map);
     }
 }

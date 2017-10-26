@@ -119,8 +119,8 @@
                         android:layout_weight="1"
                         android:drawableLeft="@mipmap/icon_verification"
                         android:hint="@string/sms_code_hint"
-                        android:inputType="text"
-                        android:maxLength="8"
+                        android:inputType="number"
+                        android:maxLength="6"
                         android:textSize="13sp" />
 
 

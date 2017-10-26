@@ -5,7 +5,7 @@ import android.content.Context;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.entity.account.RegisterBean;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.model.account.AccountModel;
 import com.zyjr.emergencylending.ui.account.view.RegisterView;
 
@@ -13,17 +13,22 @@ import com.zyjr.emergencylending.ui.account.view.RegisterView;
  * author wangyin
  * date 2017/10/24.
  * description :
+ *
+ * @author wangyin
  */
 
 public class RegisterPresenter extends BasePresenter<RegisterView> {
 
+    public RegisterPresenter(Context context) {
+        super(context);
+    }
 
-    @Override
-    public void fetch(String... strings) {
-        invoke(AccountModel.getInstance().register(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5], strings[6], strings[7]), new ProgressSubscriber<RegisterBean>(new SubscriberOnNextListener<RegisterBean>() {
+    public void register(String router, String phone, String clientid,
+                         String verify_code, String password, String recommend_code,
+                         String register_platform, String register_ip, String register_device_no) {
+        invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_platform, register_ip, register_device_no), new ProgressSubscriber<Object>(new SubscriberOnNextListener<Object>() {
             @Override
-            public void onNext(RegisterBean registerBean) {
-                getView().showData(registerBean);
+            public void onNext(Object registerBean) {
             }
 
             @Override
@@ -33,10 +38,9 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         }, mContext));
     }
 
-    public RegisterPresenter(Context context) {
-        super(context);
+    @Override
+    public void overwriteSendSMS(BaseBean baseBean) {
+        super.overwriteSendSMS(baseBean);
+        getView().getSendSMS(baseBean);
     }
-
-
-
 }

@@ -13,17 +13,15 @@ import com.zyjr.emergencylending.ui.account.view.LoginView;
  * author wangyin
  * date 2017/10/24.
  * description :
+ *
+ * @author wangyin
  */
 
 public class LoginPresenter extends BasePresenter<LoginView> {
 
-    public LoginPresenter(Context context) {
-        super(context);
-    }
-
-    @Override
-    public void fetch(String... strings) {
-        invoke(AccountModel.getInstance().login(strings[0], strings[1], strings[2], strings[3], strings[4], strings[5]), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
+    public void login(String router, String phone, String password,
+                      String clientid, String login_ip, String login_platform, String login_device_no) {
+        invoke(AccountModel.getInstance().login(router,phone,password,clientid,login_ip,login_platform,login_device_no), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
             @Override
             public void onNext(LoginBean loginBean) {
                 getView().showData(loginBean);
@@ -36,7 +34,8 @@ public class LoginPresenter extends BasePresenter<LoginView> {
         }, mContext));
     }
 
-
-
+    public LoginPresenter(Context context) {
+        super(context);
+    }
 
 }

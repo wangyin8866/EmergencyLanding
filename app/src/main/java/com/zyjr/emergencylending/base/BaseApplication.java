@@ -11,7 +11,6 @@ import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.WYUtils;
 
 
 /**
@@ -43,12 +42,13 @@ public class BaseApplication extends Application {
     private static Looper mMainLooper;
 
     public static Context context;
-    public static String version;//版本号
 
     /**
      * 是否是线下（业务员）
      */
     public static boolean isSalesman;
+    public static String clientId = "";
+
 
     @Override
     public void onCreate() {
@@ -60,13 +60,11 @@ public class BaseApplication extends Application {
         mMainLooper = getMainLooper();
         mInstance = this;
         //获取版本号
-        BaseApplication.version = WYUtils.getVersion(getApplicationContext());
         SupportCityConfig.getInstance().initCitys(); // 加载城市数据
         //是否打印日志
         LogUtils.isDebug = true;
         Config.DEBUG = true;
         UMShareAPI.get(this);
-
     }
 
     public static Context getContext() {

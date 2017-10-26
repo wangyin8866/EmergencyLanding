@@ -1,7 +1,6 @@
 package com.xfqz.xjd.mylibrary;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import rx.Subscriber;
@@ -50,7 +49,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
 
     @Override
     public void onError(Throwable e) {
-        Log.e(TAG, "onError: " + e.getMessage());
+
         dismissProgressDialog();
         mSubscriberOnNextListener.onError(e);
 

@@ -5,16 +5,19 @@ package com.zyjr.emergencylending.entity.account;
  */
 
 public class RegisterBean {
-
     /**
-     * flag : 0000
-     * msg : 请求成功
-     * result : {"juid":"aaaaa"}
+     * flag : API0000
+     * msg : 操作成功
+     * ext : null
+     * result : {"juid":"a80185da3c5d46ecb1cc94bf7829e5ae"}
+     * lockerFlag : false
      */
 
     private String flag;
     private String msg;
+    private String ext;
     private ResultBean result;
+    private boolean lockerFlag;
 
     public String getFlag() {
         return flag;
@@ -32,6 +35,14 @@ public class RegisterBean {
         this.msg = msg;
     }
 
+    public String getExt() {
+        return ext;
+    }
+
+    public void setExt(String ext) {
+        this.ext = ext;
+    }
+
     public ResultBean getResult() {
         return result;
     }
@@ -40,9 +51,17 @@ public class RegisterBean {
         this.result = result;
     }
 
+    public boolean isLockerFlag() {
+        return lockerFlag;
+    }
+
+    public void setLockerFlag(boolean lockerFlag) {
+        this.lockerFlag = lockerFlag;
+    }
+
     public static class ResultBean {
         /**
-         * juid : aaaaa
+         * juid : a80185da3c5d46ecb1cc94bf7829e5ae
          */
 
         private String juid;

@@ -11,13 +11,16 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
 import com.zyjr.emergencylending.ui.account.view.LoginView;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.UIUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -94,7 +97,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter, LoginView> imple
                     return;
                 } else {
                     // TODO: 2017/10/14  调登录接口
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    LogUtils.e("");
+
+                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd, BaseApplication.clientId, Constants.getNetIp(mContext), Constants.getAppType(1), Constants.getDeviceCode()
+                    );
+//                    mPresenter.login2("zyUserService.login","18702757104","qwe123","","","","");
+//                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }
                 break;
             case R.id.tv_forget:

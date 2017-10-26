@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.account.view;
 
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 
 /**
@@ -8,4 +9,6 @@ import com.zyjr.emergencylending.entity.account.RegisterBean;
 
 public interface RegisterView {
     void showData(RegisterBean registerBean);
+
+    void getSendSMS(BaseBean baseBean);
 }

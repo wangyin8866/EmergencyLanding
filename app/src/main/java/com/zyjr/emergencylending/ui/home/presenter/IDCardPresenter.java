@@ -27,10 +27,6 @@ import retrofit2.HttpException;
 @Deprecated
 public class IDCardPresenter extends BasePresenter<IDCardView> {
 
-    @Override
-    public void fetch(String... strings) {
-
-    }
 
     public IDCardPresenter(Context context) {
         super(context);

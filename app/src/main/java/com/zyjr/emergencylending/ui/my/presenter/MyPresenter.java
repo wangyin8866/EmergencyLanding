@@ -10,10 +10,6 @@ import com.zyjr.emergencylending.base.BaseView;
  */
 
 public class MyPresenter extends BasePresenter<BaseView> {
-    @Override
-    public void fetch(String... strings) {
-
-    }
 
     public MyPresenter(Context context) {
         super(context);

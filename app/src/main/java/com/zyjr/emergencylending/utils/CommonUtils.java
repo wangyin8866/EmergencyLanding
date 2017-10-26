@@ -14,7 +14,6 @@ import com.zyjr.emergencylending.widget.step.StepBean;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -216,4 +215,5 @@ public class CommonUtils {
         }
         return mConnectInfos;
     }
+
 }
