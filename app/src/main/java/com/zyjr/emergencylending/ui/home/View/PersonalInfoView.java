@@ -17,6 +17,4 @@ public interface PersonalInfoView extends BeanBaseView<PersonalInfoBean> {
 
     void onSuccessUploadPic(String returnCode);
 
-    void onFail(String errorMessage);
-
 }

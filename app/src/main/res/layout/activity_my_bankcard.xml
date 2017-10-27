@@ -43,6 +43,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="8dp"
+                android:visibility="gone"
                 android:background="@drawable/layout_bankcard_shape"
                 android:orientation="vertical">
 
@@ -51,8 +52,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="31dp"
-                    android:layout_marginTop="23dp"
-                    android:background="@mipmap/banklogo_c" />
+                    android:layout_marginTop="23dp" />
 
                 <TextView
                     android:id="@+id/tv_bankcard_name"
@@ -61,7 +61,6 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="23dp"
                     android:layout_toRightOf="@+id/iv_bankcard_icon"
-                    android:text="农业银行"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -72,7 +71,6 @@
                     android:layout_alignLeft="@+id/tv_bankcard_name"
                     android:layout_below="@+id/tv_bankcard_name"
                     android:layout_marginTop="5dp"
-                    android:text="借记卡"
                     android:textColor="@color/white" />
 
                 <TextView
@@ -113,11 +111,11 @@
                 android:id="@+id/tv_safe_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="120dp"
                 android:drawableLeft="@mipmap/icon_security"
                 android:drawablePadding="6dp"
-                android:layout_marginTop="120dp"
                 android:gravity="center"
-                android:layout_gravity="center"
                 android:text="采用银行级信息安全防护"
                 android:textColor="@color/input_text_color"
                 android:textSize="14sp" />

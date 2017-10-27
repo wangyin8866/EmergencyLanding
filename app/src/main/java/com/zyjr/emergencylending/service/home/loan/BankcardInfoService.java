@@ -1,6 +1,8 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 
@@ -22,29 +24,36 @@ public interface BankcardInfoService {
      * 获取支持银行列表
      */
     @FormUrlEncoded
-    @POST("/144")
+    @POST(NetConstantValues.ROUTER_GET_SUPPORT_BANK_LIST)
     Observable<ApiResult<List<SupportBank>>> getSupportBankList(@FieldMap Map<String, String> params);
 
     /**
      * 获取银行卡信息
      */
     @FormUrlEncoded
-    @POST("/117")
+    @POST(NetConstantValues.ROUTER_GET_BIND_BANK_CARD)
     Observable<ApiResult<BankcardInfo>> getBankcardInfo(@FieldMap Map<String, String> params);
 
     /**
      * 保存银行卡信息
      */
     @FormUrlEncoded
-    @POST("/118")
+    @POST(NetConstantValues.ROUTER_ADD_BIND_BANK_CARD)
     Observable<ApiResult<BankcardInfo>> addBankcardInfo(@FieldMap Map<String, String> params);
 
 
     /**
-     * 编辑银行卡信息
+     * 修改银行卡信息
      */
     @FormUrlEncoded
-    @POST("/118")
+    @POST(NetConstantValues.ROUTER_EDIT_BIND_BANK_CARD)
     Observable<ApiResult<BankcardInfo>> editBankcardInfo(@FieldMap Map<String, String> params);
 
+
+    /**
+     * 删除银行卡信息
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.ROUTER_DELETE_BIND_BANK_CARD)
+    Observable<ApiResult<BankcardInfo>> deteteBankcardInfo(@FieldMap Map<String, String> params);
 }

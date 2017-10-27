@@ -12,4 +12,8 @@ public interface BeanBaseView<T> {
 
     void onSuccessEdit(String returnCode, T bean);
 
+    void onFail(String returnCode, String flag, String errorMsg);
+
+    void onError(String returnCode, String errorMsg);
+
 }

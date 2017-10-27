@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +53,8 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     ClearEditText etBankcardNumber; // 银行卡号
     @BindView(R.id.tv_openbank)
     TextView tvOpenbank; // 开户行
+    @BindView(R.id.iv_choose_bank)
+    ImageView ivChooseBank; // 选择银行
     @BindView(R.id.et_reserved_phone)
     ClearEditText etReservedPhone; // 预留手机号码
     @BindView(R.id.btn_add)
@@ -61,11 +64,12 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     @BindView(R.id.ll_openbank_select)
     LinearLayout llOpenbankSelect;
 
-    private List<BankBean> bankBeanList = null;
+    private List<SupportBank> supportBankList = null;
     BankFrontshowAdapter bankAdapter;
     private CharSequence temp;
     private BankcardInfo bankcardInfo = null;
     private SQLiteDatabase db = null;
+    private SupportBank supportBank = null;
 
     @Override
     protected BankcardInfoPresenter createPresenter() {
@@ -79,15 +83,19 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         ButterKnife.bind(this);
 
         init();
-        initData();
     }
 
 
-    @OnClick({R.id.ll_openbank_select, R.id.btn_add})
+    @OnClick({R.id.ll_openbank_select, R.id.btn_add, R.id.iv_choose_bank})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_openbank_select:
                 startActivity(new Intent(this, SupportBankActivity.class));
+                break;
+
+            case R.id.iv_choose_bank:
+                Intent intent = new Intent(this, SupportBankActivity.class);
+                startActivityForResult(intent, 1);
                 break;
 
             case R.id.btn_add:  // 添加银行卡
@@ -156,20 +164,9 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         });
     }
 
-    private void initData() {
-        bankBeanList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            BankBean bankBean = new BankBean("test" + i, "中国工商", false);
-            bankBeanList.add(bankBean);
-        }
-        bankAdapter = new BankFrontshowAdapter(R.layout.rv_item_bankcard_show, bankBeanList);
-        rvSupportedBank.setLayoutManager(new GridLayoutManager(this, 3));
-        rvSupportedBank.setAdapter(bankAdapter);
-    }
-
     @Override
     public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
-
+        showSupportBanklist(supportBanks);
     }
 
     @Override
@@ -179,7 +176,10 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
     @Override
     public void onSuccessAdd(String returnCode, BankcardInfo bean) {
-
+        LogUtils.d("添加绑定银行卡信息成功---->" + returnCode + ",BankcardInfo:" + bean.toString());
+        ToastAlone.showLongToast(this, "添加成功");
+        setResult(RESULT_OK);
+        finish();
     }
 
     @Override
@@ -188,7 +188,29 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onFail(String returnCode, String flag, String errorMsg) {
 
+    }
+
+    @Override
+    public void onError(String returnCode, String errorMsg) {
+
+    }
+
+    private void showSupportBanklist(List<SupportBank> supportBanks) {
+        supportBankList = supportBanks;
+        bankAdapter = new BankFrontshowAdapter(R.layout.rv_item_bankcard_show, supportBankList);
+        rvSupportedBank.setLayoutManager(new GridLayoutManager(this, 3));
+        rvSupportedBank.setAdapter(bankAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == 11) {
+            data = getIntent();
+            supportBank = (SupportBank) data.getSerializableExtra("bank");
+            tvOpenbank.setText(supportBank.getName_());
+        }
     }
 }

@@ -1,8 +1,8 @@
 package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
-import com.zyjr.emergencylending.model.BaseModel;
 import com.zyjr.emergencylending.service.home.loan.PersonalInfoService;
 
 import java.util.Map;

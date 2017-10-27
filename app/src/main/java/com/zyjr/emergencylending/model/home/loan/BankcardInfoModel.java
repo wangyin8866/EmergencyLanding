@@ -1,12 +1,10 @@
 package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.BankcardInfo;
-import com.zyjr.emergencylending.entity.ContactInfoBean;
 import com.zyjr.emergencylending.entity.SupportBank;
-import com.zyjr.emergencylending.model.BaseModel;
 import com.zyjr.emergencylending.service.home.loan.BankcardInfoService;
-import com.zyjr.emergencylending.service.home.loan.ContactInfoService;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +21,7 @@ public class BankcardInfoModel extends BaseModel {
 
     private BankcardInfoModel() {
         super();
-        this.bankcardInfoService = retrofit.create(BankcardInfoService.class);
+        bankcardInfoService = retrofit.create(BankcardInfoService.class);
     }
 
     private static class SingletonHolder {

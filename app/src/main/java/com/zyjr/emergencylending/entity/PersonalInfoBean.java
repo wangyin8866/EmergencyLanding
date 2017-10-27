@@ -1,9 +1,6 @@
 package com.zyjr.emergencylending.entity;
 
-import com.zyjr.emergencylending.utils.StringUtil;
-
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by neil on 2017/10/23
@@ -13,16 +10,24 @@ public class PersonalInfoBean implements Serializable {
 
     private static final long serialVersionUID = -2368450930576205050L;
 
+    private String username; // 用户姓名
+    private String idCard; // 用户身份证
     private String marriage; // 婚姻状况
     private String huji_adr; // 户籍省市区
     private String huji_province; // 户籍所在省
+    private String huji_province_name; // 户籍所在省名称
     private String huji_city; // 户籍所在市
+    private String huji_city_name; // 户籍所在市名称
     private String huji_county; // 户籍所在区
+    private String huji_county_name; // 户籍所在区名称
     private String huji_adr_detail; // 户籍详细地址
     private String live_adr; // 现居住地址省市区
     private String live_province;  // 现住址省
+    private String live_province_name;  // 现住址省名称
     private String live_city; // 现住址市
+    private String live_city_name; // 现住址市名称
     private String live_county; // 现住址区
+    private String live_county_name; // 现住址区名称
     private String live_adr_detail; // 现居住详细地址
     private String qq_no; // QQ号
     private String wechat_no; // 微信号
@@ -31,123 +36,7 @@ public class PersonalInfoBean implements Serializable {
     private String idcard_hand; // 手持身份证
     private String live_status; // 居住状况
     private String max_repay_amount; // 每周最大还款额
-
-    private String idCardFId;
-    private String bank_code;
-    private String bankcard_no;
-    private String education;
-    private String unit_province;
-    private String unit_city;
-    private String unit_county;
-    private String unit_adr_detail;
-    private String unit_adr;
-    private String bankcard_must;
-    private String week_max_repment;
-    private String bank_phone;
-    private String username;
-    private String bankCardFId;
-    private String idcard_must;
-    private String customer_source;
-    private String child_num;
-    private String idcard;
-    private String bankCardZId;
-    private String idCardZId;
-    private String bankcard_z;
-    private String idCardHandId;
-    private String bank_name;
-    private String last_product_id;
-    private String product_id;
-    private String result;
-
-    public String getIdcard_z() {
-        return idcard_z;
-    }
-
-    public void setIdcard_z(String idcard_z) {
-        this.idcard_z = idcard_z;
-    }
-
-    public String getLive_adr_detail() {
-        return live_adr_detail;
-    }
-
-    public void setLive_adr_detail(String live_adr_detail) {
-        this.live_adr_detail = live_adr_detail;
-    }
-
-    public String getIdCardFId() {
-        return idCardFId;
-    }
-
-    public void setIdCardFId(String idCardFId) {
-        this.idCardFId = idCardFId;
-    }
-
-    public String getLive_province() {
-        return live_province;
-    }
-
-    public void setLive_province(String live_province) {
-        this.live_province = live_province;
-    }
-
-
-    public String getBank_code() {
-        return bank_code;
-    }
-
-    public void setBank_code(String bank_code) {
-        this.bank_code = bank_code;
-    }
-
-
-    public String getBankcard_no() {
-        return bankcard_no;
-    }
-
-    public void setBankcard_no(String bankcard_no) {
-        this.bankcard_no = bankcard_no;
-    }
-
-    public String getEducation() {
-        return education;
-    }
-
-    public void setEducation(String education) {
-        this.education = education;
-    }
-
-    public String getHuji_city() {
-        return huji_city;
-    }
-
-    public void setHuji_city(String huji_city) {
-        this.huji_city = huji_city;
-    }
-
-    public String getHuji_province() {
-        return huji_province;
-    }
-
-    public void setHuji_province(String huji_province) {
-        this.huji_province = huji_province;
-    }
-
-    public String getBankcard_must() {
-        return bankcard_must;
-    }
-
-    public void setBankcard_must(String bankcard_must) {
-        this.bankcard_must = bankcard_must;
-    }
-
-    public String getBank_phone() {
-        return bank_phone;
-    }
-
-    public void setBank_phone(String bank_phone) {
-        this.bank_phone = bank_phone;
-    }
+    private String six_monbill;  // 六个月话费详单(1有,0无)
 
     public String getUsername() {
         return username;
@@ -157,108 +46,12 @@ public class PersonalInfoBean implements Serializable {
         this.username = username;
     }
 
-    public String getHuji_adr_detail() {
-        return huji_adr_detail;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setHuji_adr_detail(String huji_adr_detail) {
-        this.huji_adr_detail = huji_adr_detail;
-    }
-
-    public String getBankCardFId() {
-        return bankCardFId;
-    }
-
-    public void setBankCardFId(String bankCardFId) {
-        this.bankCardFId = bankCardFId;
-    }
-
-    public String getIdcard_must() {
-        return idcard_must;
-    }
-
-    public void setIdcard_must(String idcard_must) {
-        this.idcard_must = idcard_must;
-    }
-
-    public String getLive_status() {
-        return live_status;
-    }
-
-    public void setLive_status(String live_status) {
-        this.live_status = live_status;
-    }
-
-    public String getLive_city() {
-        return live_city;
-    }
-
-    public void setLive_city(String live_city) {
-        this.live_city = live_city;
-    }
-
-    public String getWechat_no() {
-        return wechat_no;
-    }
-
-    public void setWechat_no(String wechat_no) {
-        this.wechat_no = wechat_no;
-    }
-
-    public String getCustomer_source() {
-        return customer_source;
-    }
-
-    public void setCustomer_source(String customer_source) {
-        this.customer_source = customer_source;
-    }
-
-    public String getLive_county() {
-        return live_county;
-    }
-
-    public void setLive_county(String live_county) {
-        this.live_county = live_county;
-    }
-
-    public String getChild_num() {
-        return child_num;
-    }
-
-    public void setChild_num(String child_num) {
-        this.child_num = child_num;
-    }
-
-    public String getHuji_adr() {
-        return huji_adr;
-    }
-
-    public void setHuji_adr(String huji_adr) {
-        this.huji_adr = huji_adr;
-    }
-
-    public String getLive_adr() {
-        return live_adr;
-    }
-
-    public void setLive_adr(String live_adr) {
-        this.live_adr = live_adr;
-    }
-
-    public String getIdcard() {
-        return idcard;
-    }
-
-    public void setIdcard(String idcard) {
-        this.idcard = idcard;
-    }
-
-    public String getBankCardZId() {
-        return bankCardZId;
-    }
-
-    public void setBankCardZId(String bankCardZId) {
-        this.bankCardZId = bankCardZId;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getMarriage() {
@@ -269,36 +62,44 @@ public class PersonalInfoBean implements Serializable {
         this.marriage = marriage;
     }
 
-    public String getIdCardZId() {
-        return idCardZId;
+    public String getHuji_adr() {
+        return huji_adr;
     }
 
-    public void setIdCardZId(String idCardZId) {
-        this.idCardZId = idCardZId;
+    public void setHuji_adr(String huji_adr) {
+        this.huji_adr = huji_adr;
     }
 
-    public String getIdcard_f() {
-        return idcard_f;
+    public String getHuji_province() {
+        return huji_province;
     }
 
-    public void setIdcard_f(String idcard_f) {
-        this.idcard_f = idcard_f;
+    public void setHuji_province(String huji_province) {
+        this.huji_province = huji_province;
     }
 
-    public String getQq_no() {
-        return qq_no;
+    public String getHuji_province_name() {
+        return huji_province_name;
     }
 
-    public void setQq_no(String qq_no) {
-        this.qq_no = qq_no;
+    public void setHuji_province_name(String huji_province_name) {
+        this.huji_province_name = huji_province_name;
     }
 
-    public String getBankcard_z() {
-        return bankcard_z;
+    public String getHuji_city() {
+        return huji_city;
     }
 
-    public void setBankcard_z(String bankcard_z) {
-        this.bankcard_z = bankcard_z;
+    public void setHuji_city(String huji_city) {
+        this.huji_city = huji_city;
+    }
+
+    public String getHuji_city_name() {
+        return huji_city_name;
+    }
+
+    public void setHuji_city_name(String huji_city_name) {
+        this.huji_city_name = huji_city_name;
     }
 
     public String getHuji_county() {
@@ -309,12 +110,116 @@ public class PersonalInfoBean implements Serializable {
         this.huji_county = huji_county;
     }
 
-    public String getWeek_max_repment() {
-        return week_max_repment;
+    public String getHuji_county_name() {
+        return huji_county_name;
     }
 
-    public void setWeek_max_repment(String week_max_repment) {
-        this.week_max_repment = week_max_repment;
+    public void setHuji_county_name(String huji_county_name) {
+        this.huji_county_name = huji_county_name;
+    }
+
+    public String getHuji_adr_detail() {
+        return huji_adr_detail;
+    }
+
+    public void setHuji_adr_detail(String huji_adr_detail) {
+        this.huji_adr_detail = huji_adr_detail;
+    }
+
+    public String getLive_adr() {
+        return live_adr;
+    }
+
+    public void setLive_adr(String live_adr) {
+        this.live_adr = live_adr;
+    }
+
+    public String getLive_province() {
+        return live_province;
+    }
+
+    public void setLive_province(String live_province) {
+        this.live_province = live_province;
+    }
+
+    public String getLive_province_name() {
+        return live_province_name;
+    }
+
+    public void setLive_province_name(String live_province_name) {
+        this.live_province_name = live_province_name;
+    }
+
+    public String getLive_city() {
+        return live_city;
+    }
+
+    public void setLive_city(String live_city) {
+        this.live_city = live_city;
+    }
+
+    public String getLive_city_name() {
+        return live_city_name;
+    }
+
+    public void setLive_city_name(String live_city_name) {
+        this.live_city_name = live_city_name;
+    }
+
+    public String getLive_county() {
+        return live_county;
+    }
+
+    public void setLive_county(String live_county) {
+        this.live_county = live_county;
+    }
+
+    public String getLive_county_name() {
+        return live_county_name;
+    }
+
+    public void setLive_county_name(String live_county_name) {
+        this.live_county_name = live_county_name;
+    }
+
+    public String getLive_adr_detail() {
+        return live_adr_detail;
+    }
+
+    public void setLive_adr_detail(String live_adr_detail) {
+        this.live_adr_detail = live_adr_detail;
+    }
+
+    public String getQq_no() {
+        return qq_no;
+    }
+
+    public void setQq_no(String qq_no) {
+        this.qq_no = qq_no;
+    }
+
+    public String getWechat_no() {
+        return wechat_no;
+    }
+
+    public void setWechat_no(String wechat_no) {
+        this.wechat_no = wechat_no;
+    }
+
+    public String getIdcard_z() {
+        return idcard_z;
+    }
+
+    public void setIdcard_z(String idcard_z) {
+        this.idcard_z = idcard_z;
+    }
+
+    public String getIdcard_f() {
+        return idcard_f;
+    }
+
+    public void setIdcard_f(String idcard_f) {
+        this.idcard_f = idcard_f;
     }
 
     public String getIdcard_hand() {
@@ -325,133 +230,60 @@ public class PersonalInfoBean implements Serializable {
         this.idcard_hand = idcard_hand;
     }
 
-    public String getIdCardHandId() {
-        return idCardHandId;
+    public String getLive_status() {
+        return live_status;
     }
 
-    public void setIdCardHandId(String idCardHandId) {
-        this.idCardHandId = idCardHandId;
+    public void setLive_status(String live_status) {
+        this.live_status = live_status;
     }
 
-    public String getBank_name() {
-        return bank_name;
+    public String getMax_repay_amount() {
+        return max_repay_amount;
     }
 
-    public void setBank_name(String bank_name) {
-        this.bank_name = bank_name;
+    public void setMax_repay_amount(String max_repay_amount) {
+        this.max_repay_amount = max_repay_amount;
     }
 
-
-    public String getLast_product_id() {
-        return last_product_id;
+    public String getSix_monbill() {
+        return six_monbill;
     }
 
-    public void setLast_product_id(String last_product_id) {
-        this.last_product_id = last_product_id;
-    }
-
-    public String getUnit_adr() {
-        return unit_adr;
-    }
-
-    public void setUnit_adr(String unit_adr) {
-        this.unit_adr = unit_adr;
-    }
-
-    public String getUnit_adr_detail() {
-        return unit_adr_detail;
-    }
-
-    public void setUnit_adr_detail(String unit_adr_detail) {
-        this.unit_adr_detail = unit_adr_detail;
-    }
-
-    public String getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(String product_id) {
-        this.product_id = product_id;
-    }
-
-    public String getResult() {
-        return StringUtil.isEmpty(result) ? "" : result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public String getUnit_province() {
-        return unit_province;
-    }
-
-    public void setUnit_province(String unit_province) {
-        this.unit_province = unit_province;
-    }
-
-    public String getUnit_city() {
-        return unit_city;
-    }
-
-    public void setUnit_city(String unit_city) {
-        this.unit_city = unit_city;
-    }
-
-    public String getUnit_county() {
-        return unit_county;
-    }
-
-    public void setUnit_county(String unit_county) {
-        this.unit_county = unit_county;
+    public void setSix_monbill(String six_monbill) {
+        this.six_monbill = six_monbill;
     }
 
     @Override
     public String toString() {
-        return "PerSonalBean{" +
-                "idcard_z='" + idcard_z + '\'' +
-                ", idCardFId='" + idCardFId + '\'' +
-                ", bank_code='" + bank_code + '\'' +
-                ", bankcard_no='" + bankcard_no + '\'' +
-                ", education='" + education + '\'' +
-                ", huji_province='" + huji_province + '\'' +
-                ", huji_city='" + huji_city + '\'' +
-                ", huji_county='" + huji_county + '\'' +
-                ", huji_adr_detail='" + huji_adr_detail + '\'' +
-                ", huji_adr='" + huji_adr + '\'' +
-                ", live_province='" + live_province + '\'' +
-                ", live_city='" + live_city + '\'' +
-                ", live_county='" + live_county + '\'' +
-                ", live_adr_detail='" + live_adr_detail + '\'' +
-                ", live_adr='" + live_adr + '\'' +
-                ", unit_province='" + unit_province + '\'' +
-                ", unit_city='" + unit_city + '\'' +
-                ", unit_county='" + unit_county + '\'' +
-                ", unit_adr_detail='" + unit_adr_detail + '\'' +
-                ", unit_adr='" + unit_adr + '\'' +
-                ", bankcard_must='" + bankcard_must + '\'' +
-                ", week_max_repment='" + week_max_repment + '\'' +
-                ", bank_phone='" + bank_phone + '\'' +
-                ", username='" + username + '\'' +
-                ", bankCardFId='" + bankCardFId + '\'' +
-                ", idcard_must='" + idcard_must + '\'' +
-                ", live_status='" + live_status + '\'' +
-                ", wechat_no='" + wechat_no + '\'' +
-                ", customer_source='" + customer_source + '\'' +
-                ", child_num='" + child_num + '\'' +
-                ", idcard='" + idcard + '\'' +
-                ", bankCardZId='" + bankCardZId + '\'' +
+        return "PersonalInfoBean{" +
+                "username='" + username + '\'' +
+                ", idCard='" + idCard + '\'' +
                 ", marriage='" + marriage + '\'' +
-                ", idCardZId='" + idCardZId + '\'' +
-                ", idcard_f='" + idcard_f + '\'' +
+                ", huji_adr='" + huji_adr + '\'' +
+                ", huji_province='" + huji_province + '\'' +
+                ", huji_province_name='" + huji_province_name + '\'' +
+                ", huji_city='" + huji_city + '\'' +
+                ", huji_city_name='" + huji_city_name + '\'' +
+                ", huji_county='" + huji_county + '\'' +
+                ", huji_county_name='" + huji_county_name + '\'' +
+                ", huji_adr_detail='" + huji_adr_detail + '\'' +
+                ", live_adr='" + live_adr + '\'' +
+                ", live_province='" + live_province + '\'' +
+                ", live_province_name='" + live_province_name + '\'' +
+                ", live_city='" + live_city + '\'' +
+                ", live_city_name='" + live_city_name + '\'' +
+                ", live_county='" + live_county + '\'' +
+                ", live_county_name='" + live_county_name + '\'' +
+                ", live_adr_detail='" + live_adr_detail + '\'' +
                 ", qq_no='" + qq_no + '\'' +
-                ", bankcard_z='" + bankcard_z + '\'' +
+                ", wechat_no='" + wechat_no + '\'' +
+                ", idcard_z='" + idcard_z + '\'' +
+                ", idcard_f='" + idcard_f + '\'' +
                 ", idcard_hand='" + idcard_hand + '\'' +
-                ", idCardHandId='" + idCardHandId + '\'' +
-                ", bank_name='" + bank_name + '\'' +
-                ", last_product_id='" + last_product_id + '\'' +
-                ", product_id='" + product_id + '\'' +
-                ", result='" + result + '\'' +
+                ", live_status='" + live_status + '\'' +
+                ", max_repay_amount='" + max_repay_amount + '\'' +
+                ", six_monbill='" + six_monbill + '\'' +
                 '}';
     }
 }

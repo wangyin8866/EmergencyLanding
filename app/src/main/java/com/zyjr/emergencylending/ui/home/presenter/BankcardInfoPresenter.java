@@ -6,6 +6,7 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.model.home.loan.BankcardInfoModel;
@@ -26,58 +27,86 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
         super(context);
     }
 
-    public void getSupportBankList(Map<String, String> params){
+    public void getSupportBankList(Map<String, String> params) {
         invoke(BankcardInfoModel.getInstance().getSupportBankList(params), new ProgressSubscriber<ApiResult<List<SupportBank>>>(new SubscriberOnNextListener<ApiResult<List<SupportBank>>>() {
             @Override
             public void onNext(ApiResult<List<SupportBank>> result) {
-                LogUtils.d("获取支持银行卡信息成功---->" + result.getResult().toString());
+                if (result.getResult() != null) {
+                    LogUtils.d("获取支持银行信息成功---->" + result.getResult().toString());
+                    getView().onSuccessGetSupportBanks(Constants.GET_SUPPORT_BANK_INFO, result.getResult());
+                } else {
+                    LogUtils.d("获取支持银行信息失败---->" + result.getResult().toString());
+                    getView().onFail(Constants.GET_SUPPORT_BANK_INFO, result.getFlag(), result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("获取支持银行信息异常---->" + e.getMessage());
+                getView().onError(Constants.GET_SUPPORT_BANK_INFO, e.getMessage());
             }
         }, mContext));
     }
 
-    public void getBankcardInfo(Map<String, String> params) {
+    public void getBindBankcardInfo(Map<String, String> params) {
         invoke(BankcardInfoModel.getInstance().getBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
-                LogUtils.d("获取银行卡信息成功---->" + result.getResult().toString());
+                LogUtils.d("获取绑定银行卡信息成功---->" + result.getResult().toString());
+                if (result.getResult() != null) {
+                    getView().onSuccessGet(Constants.GET_BIND_BANKCARD_INFO, result.getResult());
+                } else {
+                    LogUtils.d("获取银行卡信息失败---->" + result.getResult().toString());
+                    getView().onFail(Constants.GET_BIND_BANKCARD_INFO, result.getFlag(), result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("获取银行卡信息异常---->" + e.getMessage());
+                getView().onError(Constants.GET_BIND_BANKCARD_INFO, e.getMessage());
             }
         }, mContext));
     }
 
-    public void addBankcardInfo(Map<String, String> params) {
+    public void addBindBankcardInfo(Map<String, String> params) {
         invoke(BankcardInfoModel.getInstance().addBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
                 LogUtils.d("添加银行卡信息成功---->" + result.getResult().toString());
+                if (result.getResult() != null) {
+                    getView().onSuccessGet(Constants.ADD_BIND_BANKCARD_INFO, result.getResult());
+                } else {
+                    LogUtils.d("添加银行卡信息失败---->" + result.getResult().toString());
+                    getView().onFail(Constants.ADD_BIND_BANKCARD_INFO, result.getFlag(), result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("添加银行卡信息异常---->" + e.getMessage());
+                getView().onError(Constants.ADD_BIND_BANKCARD_INFO, e.getMessage());
             }
         }, mContext));
     }
 
-    public void editBankcardInfo(Map<String, String> params) {
+    public void editBindBankcardInfo(Map<String, String> params) {
         invoke(BankcardInfoModel.getInstance().editBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
-                LogUtils.d("更新银行卡信息成功---->" + result.getResult().toString());
+                if (result.getResult() != null) {
+                    LogUtils.d("修改银行卡信息成功---->" + result.getResult().toString());
+                    getView().onSuccessGet(Constants.EDIT_BIND_BANKCARD_INFO, result.getResult());
+                } else {
+                    LogUtils.d("修改银行卡信息失败---->" + result.getResult().toString());
+                    getView().onFail(Constants.EDIT_BIND_BANKCARD_INFO, result.getFlag(), result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("修改银行卡信息异常---->" + e.getMessage());
+                getView().onError(Constants.EDIT_BIND_BANKCARD_INFO, e.getMessage());
             }
         }, mContext));
     }

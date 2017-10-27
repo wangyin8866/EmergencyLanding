@@ -1,13 +1,16 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BankAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -22,7 +25,9 @@ import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +44,7 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
     @BindView(R.id.easylayout)
     EasyRefreshLayout easylayout;
 
-    private List<BankBean> bankBeanList;
+    private List<SupportBank> supportBankList = new ArrayList<>();
     private BankAdapter bankAdapter;
 
     @Override
@@ -52,44 +57,14 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_support_banklist);
         ButterKnife.bind(this);
-
         init();
-        initData();
+        loadingSupportBanklist();
     }
 
-    private void initData() {
-        bankBeanList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            BankBean bankBean = new BankBean("test" + i, "中国工商", false);
-            bankBeanList.add(bankBean);
-        }
-        bankAdapter = new BankAdapter(R.layout.rv_item_bankcard, bankBeanList);
-        rvBankList.setLayoutManager(new LinearLayoutManager(this));
-        rvBankList.setAdapter(bankAdapter);
-        easylayout.setLoadMoreModel(LoadModel.NONE);
-        easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
-            @Override
-            public void onLoadMore() {
-            }
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-            @Override
-            public void onRefreshing() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        List<BankBean> list = new ArrayList<>();
-                        for (int i = 0; i < 5; i++) {
-                            BankBean bankBean = new BankBean("test--1>" + i, "中国农业", false);
-                            list.add(bankBean);
-                        }
-                        bankAdapter.setNewData(list);
-                        easylayout.refreshComplete();
-                        LogUtils.d("refreshComplete------------");
-                        AppToast.makeToast(SupportBankActivity.this, "refresh success");
-                    }
-                }, 1000);
-            }
-        });
     }
 
     private void init() {
@@ -104,11 +79,39 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
             }
         });
+        bankAdapter = new BankAdapter(R.layout.rv_item_bankcard, supportBankList);
+        rvBankList.setLayoutManager(new LinearLayoutManager(this));
+        rvBankList.setAdapter(bankAdapter);
+        easylayout.setLoadMoreModel(LoadModel.NONE);
+        easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+            @Override
+            public void onLoadMore() {
+            }
+
+            @Override
+            public void onRefreshing() {
+                loadingSupportBanklist();
+            }
+        });
+        // TODO 获取支持银行卡列表
+        bankAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                SupportBank supportBank = supportBankList.get(position);
+                LogUtils.d("选择银行--->" + supportBank.toString());
+                Intent intent = getIntent();
+                intent.putExtra("bank", supportBank);
+                setResult(RESULT_OK, intent);
+            }
+        });
     }
 
     @Override
     public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
-
+        supportBankList = supportBanks;
+        bankAdapter.setNewData(supportBankList);
+        easylayout.refreshComplete();
+        bankAdapter.notifyDataSetChanged();
     }
 
 
@@ -129,7 +132,24 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onFail(String returnCode, String flag, String errorMsg) {
 
+    }
+
+    @Override
+    public void onError(String returnCode, String errorMsg) {
+
+    }
+
+    private void loadingSupportBanklist() {
+        if (supportBankList != null && supportBankList.size() > 0) {
+            supportBankList.clear();
+            bankAdapter.notifyDataSetChanged();
+        }
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("juid", "e517fafd0d4a4034b4a88a6a1e041540");
+        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
+        paramsMap.put("login_token", "login_token");
+        mPresenter.getSupportBankList(paramsMap);
     }
 }

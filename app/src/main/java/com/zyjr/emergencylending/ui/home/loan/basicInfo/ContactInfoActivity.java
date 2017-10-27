@@ -18,13 +18,12 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
-import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.ui.home.View.ContactInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.ContactInfoPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
@@ -33,7 +32,6 @@ import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.permission.AppOpsManagerUtil;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
-import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
 import java.util.ArrayList;
@@ -48,8 +46,8 @@ import butterknife.OnClick;
 /**
  * Created by neil on 2017/10/12
  * 备注: 联系人信息
+ * 普通用户从手机通讯录中选择号码,业务员需要手输号码 【联调时注意】
  */
-
 public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, ContactInfoView> implements ContactInfoView {
     @BindView(R.id.top_bar)
     TopBar topBar;
@@ -72,12 +70,13 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     List<CodeBean> selectList; // 初始化选择列表
     List<CodeBean> selectList1 = new ArrayList<>(); // 联系人1可选择的
-    CodeBean codeBean1 = new CodeBean();
+    CodeBean relationCodeBean1 = null; // 关系1
     List<CodeBean> selectList2 = new ArrayList<>(); // 联系人2可选择的
-    CodeBean codeBean2 = new CodeBean();
+    CodeBean relationCodeBean2 = null; // 关系2
     private int selectPhoneType = 0; // 选择号码标识
     private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
+    private ContactInfoBean contactInfoBean = null;
 
     @Override
     protected ContactInfoPresenter createPresenter() {
@@ -92,7 +91,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         init();
     }
 
-    @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2})
+    @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_relation1:  // 关系1
@@ -100,10 +99,10 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                 popRelationSelect1.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
                     public void onSelectClick(int index, CodeBean select1) {
+                        relationCodeBean1 = select1;
                         LogUtils.d("选择的关系信息1:" + select1.toString());
-                        codeBean1 = select1;
                         tvRelation1.setText(select1.getName());
-                        selectList2 = AppConfig.removeSlectCodeBean(selectList, select1.getCode());
+                        selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
                     }
                 });
                 popRelationSelect1.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -114,10 +113,10 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                 popRelationSelect2.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
                     public void onSelectClick(int index, CodeBean select2) {
+                        relationCodeBean2 = select2;
                         LogUtils.d("选择的关系信息2:" + select2.toString());
-                        codeBean2 = select2;
                         tvRelation2.setText(select2.getName());
-                        selectList1 = AppConfig.removeSlectCodeBean(selectList, codeBean2.getCode());
+                        selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
                     }
                 });
                 popRelationSelect2.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -131,6 +130,27 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                 jumpToSelectPhone(2);
                 break;
 
+            case R.id.btn_submit:
+                validateData();
+                break;
+
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (BaseApplication.isSalesman) {
+            // 线下业务员
+            etContactPhone1.setEnabled(true);
+            etContactPhone1.setHint("请填写手机号");
+            ivContactPhone1.setVisibility(View.INVISIBLE);
+            etContactPhone2.setEnabled(true);
+            etContactPhone2.setHint("请填写手机号");
+            ivContactPhone2.setVisibility(View.INVISIBLE);
+        } else {
+            etContactPhone1.setEnabled(false);
+            etContactPhone2.setEnabled(false);
         }
     }
 
@@ -184,18 +204,116 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         String contactPhone2 = etContactPhone2.getText().toString().trim(); // 联系电话2
         String relation2 = tvRelation2.getText().toString().trim(); // 关系2
         // TODO 上传通讯录信息
-
+        if (StringUtil.isEmpty(contactName1)) {
+            ToastAlone.showLongToast(this, "请填写联系人信息!");
+            return;
+        }
+        if (StringUtil.isEmpty(contactPhone1)) {
+            ToastAlone.showLongToast(this, "请选择联系人电话!");
+            return;
+        }
+        if (StringUtil.isEmpty(relation1) && relationCodeBean1 == null) {
+            ToastAlone.showLongToast(this, "请选择“关系1”联系人!");
+            return;
+        }
+        if (StringUtil.isEmpty(contactName2)) {
+            ToastAlone.showLongToast(this, "请填写联系人信息!");
+            return;
+        }
+        if (StringUtil.isEmpty(contactPhone2)) {
+            ToastAlone.showLongToast(this, "请选择联系人电话!");
+            return;
+        }
+        if (StringUtil.isEmpty(relation2) && relationCodeBean2 == null) {
+            ToastAlone.showLongToast(this, "请选择“关系2”联系人!");
+            return;
+        }
+        contactInfoBean = new ContactInfoBean();
+        List<ContactInfoBean> contactsList = new ArrayList<>();
+        ContactInfoBean contactBean1 = new ContactInfoBean();
+        contactBean1.setContact_name(contactName1.trim());
+        contactBean1.setContact_phone(contactPhone1.trim());
+        contactBean1.setRelation(relationCodeBean1.getCode());
+        contactsList.add(contactBean1);
+        ContactInfoBean contactBean2 = new ContactInfoBean();
+        contactBean2.setContact_name(contactName2.trim());
+        contactBean2.setContact_phone(contactPhone2.trim());
+        contactBean2.setRelation(relationCodeBean2.getCode());
+        contactsList.add(contactBean2);
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("contactList", new Gson().toJson(contactsList));
+        LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
+        LogUtils.d("参数数量:" + paramsMap.size());
+        paramsMap.put("juid", "");
+        paramsMap.put("cust_juid", "");
+        paramsMap.put("login_token", "");
+        mPresenter.addContactInfo(paramsMap);
     }
 
-    public void submitContacts() {
+    private void submitContacts() {
         Map<String, String> params = new HashMap<>();
         params.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this)));
+        params.put("juid", "");
+        params.put("cust_juid", "");
+        params.put("login_token", "");
         mPresenter.submitContacts(params);
+    }
+
+    private void showContactInfo(List<ContactInfoBean> contactInfoBeanList) {
+        if (contactInfoBeanList != null && contactInfoBeanList.size() > 0) {
+            /**
+             * 联系人1
+             */
+            ContactInfoBean contactBean1 = contactInfoBeanList.get(0);
+            if (StringUtil.isNotEmpty(contactBean1.getContact_name())) {
+                // 姓名1
+                etContactName1.setText(contactBean1.getContact_name());
+            }
+            if (StringUtil.isNotEmpty(contactBean1.getContact_phone())) {
+                // 手机号1
+                etContactPhone1.setText(contactBean1.getContact_phone());
+            }
+            if (StringUtil.isNotEmpty(contactBean1.getRelation())) {
+                // 关系1
+                int index = AppConfig.getWorkInfo().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
+                if (index != -1) {
+                    relationCodeBean1 = AppConfig.contactRelation().get(index);
+                    tvRelation1.setText(relationCodeBean1.getName());
+                    selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
+                } else {
+                    tvRelation1.setText("");
+                }
+            }
+            /**
+             * 联系人2
+             */
+            ContactInfoBean contactBean2 = contactInfoBeanList.get(1);
+            if (StringUtil.isNotEmpty(contactBean2.getContact_name())) {
+                // 姓名2
+                etContactName1.setText(contactBean2.getContact_name());
+            }
+            if (StringUtil.isNotEmpty(contactBean2.getContact_phone())) {
+                // 手机号2
+                etContactPhone1.setText(contactBean2.getContact_phone());
+            }
+            if (StringUtil.isNotEmpty(contactBean2.getRelation())) {
+                // 关系2
+                int index = AppConfig.getWorkInfo().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
+                if (index != -1) {
+                    relationCodeBean2 = AppConfig.contactRelation().get(index);
+                    tvRelation2.setText(relationCodeBean2.getName());
+                    selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
+                } else {
+                    tvRelation2.setText("");
+                }
+            }
+        }
+
     }
 
 
     private void init() {
-        selectList = AppConfig.contactRelation();
+        selectList = AppConfig.contactRelation(); // 初始化联系人关系选择
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -253,22 +371,29 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     }
 
     @Override
-    public void onSuccessGet(String returnCode, ContactInfoBean model) {
+    public void onSuccessGet(String returnCode, List<ContactInfoBean> beanList) {
+        LogUtils.d("获取联系人信息成功---->" + returnCode + ",List<ContactInfoBean>:" + beanList.toString());
+    }
+
+    @Override
+    public void onSuccessAdd(String returnCode, List<ContactInfoBean> beanList) {
+        LogUtils.d("添加联系人信息成功---->" + returnCode + ",List<ContactInfoBean>:" + beanList.toString());
+    }
+
+    @Override
+    public void onSuccessEdit(String returnCode, List<ContactInfoBean> beanList) {
+        LogUtils.d("修改联系人信息成功---->" + returnCode + ",List<ContactInfoBean>:" + beanList.toString());
+    }
+
+    @Override
+    public void onFail(String returnCode, String flag, String errorMsg) {
 
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, ContactInfoBean model) {
+    public void onError(String returnCode, String errorMsg) {
 
     }
 
-    @Override
-    public void onSuccessEdit(String returnCode, ContactInfoBean model) {
 
-    }
-
-    @Override
-    public void onFail(String errorMessage) {
-
-    }
 }

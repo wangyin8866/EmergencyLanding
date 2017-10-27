@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 /**
  * Created by neil on 2017/10/13.
- * 联系人信息 bean  (待优化)
+ * 联系人信息 bean
  */
-public class ContactInfoBean implements Serializable{
+public class ContactInfoBean implements Serializable {
 
     private static final long serialVersionUID = -2345450930576365050L;
 

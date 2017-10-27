@@ -7,8 +7,7 @@ import com.zyjr.emergencylending.utils.PhoneInfoUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 /**
- * @author wangyin
- * @date 2017/10/12
+ * Created by wangyin on 2017/10/12.
  */
 
 public class Constants {
@@ -62,4 +61,37 @@ public class Constants {
 
         return String.valueOf(WYUtils.getVersionCode(context));
     }
+    // 上传身份证正面
+    public static final String UPLOAD_IDCARD_FRONT = "15";
+    // 上传身份证反面
+    public static final String UPLOAD_IDCARD_BACK = "16";
+    // 上传手持
+    public static final String UPLOAD_IDCARD_HOLD = "17";
+    // 添加个人资料
+    public static final String ADD_PERSONAL_INFO = "20";
+    // 获取个人资料
+    public static final String GET_PERSONAL_INFO = "21";
+    // 修改个人资料
+    public static final String EDIT_PERSONAL_INFO = "22";
+    // 添加工作信息
+    public static final String ADD_WORK_INFO = "23";
+    // 获取工作信息
+    public static final String GET_WORK_INFO = "24";
+    // 修改工作信息
+    public static final String EDIT_WORK_INFO = "25";
+    // 添加联系人信息
+    public static final String ADD_CONTACT_INFO = "26";
+    // 获取联系人信息
+    public static final String GET_CONTACT_INFO = "27";
+    // 修改联系人信息
+    public static final String EDIT_CONTACT_INFO = "28";
+    // 获取绑定银行卡信息
+    public static final String GET_BIND_BANKCARD_INFO = "29";
+    // 添加绑定银行卡信息
+    public static final String ADD_BIND_BANKCARD_INFO = "30";
+    // 删除绑定银行卡信息
+    public static final String EDIT_BIND_BANKCARD_INFO = "31";
+    // 获取支持的银行信息
+    public static final String GET_SUPPORT_BANK_INFO = "32";
+
 }

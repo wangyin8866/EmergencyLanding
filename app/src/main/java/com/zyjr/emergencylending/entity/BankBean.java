@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.entity;
 
 import java.io.Serializable;
 
+@Deprecated
 public class BankBean implements Serializable {
 
     private static final long serialVersionUID = -2364450930686205050L;

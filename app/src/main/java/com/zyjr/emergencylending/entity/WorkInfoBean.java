@@ -13,24 +13,20 @@ public class WorkInfoBean implements Serializable {
     private String unit_name; // 单位名称
     private String unit_nature; // 单位性质
     private String unit_industry; // 单位行业
+    private String unit_adr; // 单位地址 省市区
     private String unit_province; // 单位所在省
+    private String unit_province_name; // 单位所在省名称
     private String unit_city; // 单位所在市
+    private String unit_city_name; // 单位所在市名称
     private String unit_county; // 单位所在区
+    private String unit_county_name; // 单位所在区名称
     private String unit_adr_detail; // 单位详细地址
     private String unit_phone; //单位电话
     private String unit_department; // 单位部门
-    private String entry_date; // 入职日期
     private String title; // 职位
     private String professional; // 职业
-    private String month_payday; // 月发薪日
     private String month_pay; // 月薪
-    private String pay_channel; // 发薪渠道
-    private String month_repay_amount_max; // 每月最多还款额
-    private String other_income; // 其他收入
-
     private String id;
-    private String user_id;
-    private String unit_adr;
     private String create_date;
     private String del_flag;
 
@@ -40,22 +36,6 @@ public class WorkInfoBean implements Serializable {
 
     public void setUnit_name(String unit_name) {
         this.unit_name = unit_name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
     }
 
     public String getUnit_nature() {
@@ -82,6 +62,54 @@ public class WorkInfoBean implements Serializable {
         this.unit_adr = unit_adr;
     }
 
+    public String getUnit_province() {
+        return unit_province;
+    }
+
+    public void setUnit_province(String unit_province) {
+        this.unit_province = unit_province;
+    }
+
+    public String getUnit_province_name() {
+        return unit_province_name;
+    }
+
+    public void setUnit_province_name(String unit_province_name) {
+        this.unit_province_name = unit_province_name;
+    }
+
+    public String getUnit_city() {
+        return unit_city;
+    }
+
+    public void setUnit_city(String unit_city) {
+        this.unit_city = unit_city;
+    }
+
+    public String getUnit_city_name() {
+        return unit_city_name;
+    }
+
+    public void setUnit_city_name(String unit_city_name) {
+        this.unit_city_name = unit_city_name;
+    }
+
+    public String getUnit_county() {
+        return unit_county;
+    }
+
+    public void setUnit_county(String unit_county) {
+        this.unit_county = unit_county;
+    }
+
+    public String getUnit_county_name() {
+        return unit_county_name;
+    }
+
+    public void setUnit_county_name(String unit_county_name) {
+        this.unit_county_name = unit_county_name;
+    }
+
     public String getUnit_adr_detail() {
         return unit_adr_detail;
     }
@@ -106,14 +134,6 @@ public class WorkInfoBean implements Serializable {
         this.unit_department = unit_department;
     }
 
-    public String getEntry_date() {
-        return entry_date;
-    }
-
-    public void setEntry_date(String entry_date) {
-        this.entry_date = entry_date;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -130,14 +150,6 @@ public class WorkInfoBean implements Serializable {
         this.professional = professional;
     }
 
-    public String getMonth_payday() {
-        return month_payday;
-    }
-
-    public void setMonth_payday(String month_payday) {
-        this.month_payday = month_payday;
-    }
-
     public String getMonth_pay() {
         return month_pay;
     }
@@ -146,20 +158,12 @@ public class WorkInfoBean implements Serializable {
         this.month_pay = month_pay;
     }
 
-    public String getPay_channel() {
-        return pay_channel;
+    public String getId() {
+        return id;
     }
 
-    public void setPay_channel(String pay_channel) {
-        this.pay_channel = pay_channel;
-    }
-
-    public String getOther_income() {
-        return other_income;
-    }
-
-    public void setOther_income(String other_income) {
-        this.other_income = other_income;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCreate_date() {
@@ -178,61 +182,26 @@ public class WorkInfoBean implements Serializable {
         this.del_flag = del_flag;
     }
 
-    public String getUnit_province() {
-        return unit_province;
-    }
-
-    public void setUnit_province(String unit_province) {
-        this.unit_province = unit_province;
-    }
-
-    public String getUnit_city() {
-        return unit_city;
-    }
-
-    public void setUnit_city(String unit_city) {
-        this.unit_city = unit_city;
-    }
-
-    public String getUnit_county() {
-        return unit_county;
-    }
-
-    public void setUnit_county(String unit_county) {
-        this.unit_county = unit_county;
-    }
-
-    public String getMonth_repay_amount_max() {
-        return month_repay_amount_max;
-    }
-
-    public void setMonth_repay_amount_max(String month_repay_amount_max) {
-        this.month_repay_amount_max = month_repay_amount_max;
-    }
-
     @Override
     public String toString() {
         return "WorkInfoBean{" +
                 "unit_name='" + unit_name + '\'' +
                 ", unit_nature='" + unit_nature + '\'' +
                 ", unit_industry='" + unit_industry + '\'' +
+                ", unit_adr='" + unit_adr + '\'' +
                 ", unit_province='" + unit_province + '\'' +
+                ", unit_province_name='" + unit_province_name + '\'' +
                 ", unit_city='" + unit_city + '\'' +
+                ", unit_city_name='" + unit_city_name + '\'' +
                 ", unit_county='" + unit_county + '\'' +
+                ", unit_county_name='" + unit_county_name + '\'' +
                 ", unit_adr_detail='" + unit_adr_detail + '\'' +
                 ", unit_phone='" + unit_phone + '\'' +
                 ", unit_department='" + unit_department + '\'' +
-                ", entry_date='" + entry_date + '\'' +
                 ", title='" + title + '\'' +
                 ", professional='" + professional + '\'' +
-                ", month_payday='" + month_payday + '\'' +
                 ", month_pay='" + month_pay + '\'' +
-                ", pay_channel='" + pay_channel + '\'' +
-                ", month_repay_amount_max='" + month_repay_amount_max + '\'' +
-                ", other_income='" + other_income + '\'' +
                 ", id='" + id + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", unit_adr='" + unit_adr + '\'' +
                 ", create_date='" + create_date + '\'' +
                 ", del_flag='" + del_flag + '\'' +
                 '}';

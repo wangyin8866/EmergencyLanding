@@ -15,28 +15,27 @@ import rx.Observable;
  * Created by neil on 2017/10/23
  * 备注: 工作信息相关
  */
-
 public interface WorktInfoService {
 
     /**
      * 获取工作信息
      */
     @FormUrlEncoded
-    @POST("/113")
+    @POST("/zyUserJobService.getUserJobInfo")
     Observable<ApiResult<WorkInfoBean>> getWorkInfo(@FieldMap Map<String, String> params);
 
     /**
      * 保存工作信息
      */
     @FormUrlEncoded
-    @POST("/114")
+    @POST("/ZyUserJobService.saveUserJobInfo")
     Observable<ApiResult<WorkInfoBean>> addWorkInfo(@FieldMap Map<String, String> params);
 
     /**
      * 编辑工作信息
      */
     @FormUrlEncoded
-    @POST("/114")
+    @POST("/ZyUserJobService.saveUserJobInfo")
     Observable<ApiResult<WorkInfoBean>> editWorkInfo(@FieldMap Map<String, String> params);
 
 

@@ -1,9 +1,8 @@
 package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
-import com.zyjr.emergencylending.entity.WorkInfoBean;
+import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
-import com.zyjr.emergencylending.model.BaseModel;
 import com.zyjr.emergencylending.service.home.loan.WriteInfoService;
 
 import java.util.Map;

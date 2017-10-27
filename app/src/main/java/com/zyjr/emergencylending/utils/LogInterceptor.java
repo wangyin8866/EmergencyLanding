@@ -1,11 +1,18 @@
 package com.zyjr.emergencylending.utils;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 
 /**
@@ -21,9 +28,13 @@ public class LogInterceptor implements Interceptor {
     public okhttp3.Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         LogUtils.e(TAG, "request:" + request.toString());
-        Headers headers = request.headers();
-        if (headers != null && headers.size() > 0) {
-            LogUtils.e(TAG, "headers : " + headers.toString());
+        RequestBody requestBody = request.body();
+        if (requestBody instanceof FormBody) {
+            HashMap<String, Object> rootMap = new HashMap<>();
+            for (int i = 0; i < ((FormBody) requestBody).size(); i++) {
+                rootMap.put(((FormBody) requestBody).encodedName(i), ((FormBody) requestBody).encodedValue(i));
+            }
+            LogUtils.e(TAG, "params : " + new Gson().toJson(rootMap));
         }
         long t1 = System.nanoTime();
         okhttp3.Response response = chain.proceed(chain.request());

@@ -1,16 +1,15 @@
-package com.zyjr.emergencylending.base.utils.third;
+package com.zyjr.emergencylending.utils.third;
 
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.zyjr.emergencylending.pak.R;
 
 
 /**
- * Created by neil on 2017/9/30
  * Glide 工具类
+ * Created by neil on 2017/10/26
  */
 public class GlideUtils {
 

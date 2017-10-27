@@ -1,9 +1,7 @@
 package com.zyjr.emergencylending.config;
 
 /**
- *
- * @author wangyin
- * @date 2017/10/6
+ * Created by DELL on 2017/1/6.
  */
 
 public interface NetConstantValues {
@@ -79,5 +77,29 @@ public interface NetConstantValues {
      * 首页广告
      */
     String HOME_AD = "zyHomeAdService.getHomeAds";
+
+
+    String BASE_PREFIX = "?router=";
+
+    /**
+     * 获取支持银行列表
+     */
+    String ROUTER_GET_SUPPORT_BANK_LIST = BASE_PREFIX + "zyUserBankCardService.getSupportUserBankDicInfo";
+    /**
+     * 获取绑定银行卡信息
+     */
+    String ROUTER_GET_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.getUserBankCardInfo";
+    /**
+     * 保存银行卡
+     */
+    String ROUTER_ADD_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.saveOrUpdateUserBankCard";
+    /**
+     * 修改银行卡
+     */
+    String ROUTER_EDIT_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.saveOrUpdateUserBankCard";
+    /**
+     * 删除银行卡
+     */
+    String ROUTER_DELETE_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.deleteUserBankCard";
 
 }

@@ -1,10 +1,11 @@
 package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
-import com.zyjr.emergencylending.model.BaseModel;
 import com.zyjr.emergencylending.service.home.loan.ContactInfoService;
 
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -31,17 +32,17 @@ public class ContactInfoModel extends BaseModel {
     }
 
 
-    public Observable<ApiResult<ContactInfoBean>> getContactInfo(Map<String, String> params) {
+    public Observable<ApiResult<List<ContactInfoBean>>> getContactInfo(Map<String, String> params) {
         return contactInfoService.getContactInfo(params);
     }
 
 
-    public Observable<ApiResult<ContactInfoBean>> addContactInfo(Map<String, String> params) {
+    public Observable<ApiResult<List<ContactInfoBean>>> addContactInfo(Map<String, String> params) {
         return contactInfoService.addContactInfo(params);
     }
 
 
-    public Observable<ApiResult<ContactInfoBean>> editContactInfo(Map<String, String> params) {
+    public Observable<ApiResult<List<ContactInfoBean>>> editContactInfo(Map<String, String> params) {
         return contactInfoService.editContactInfo(params);
     }
 
