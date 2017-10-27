@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.service;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
+import com.zyjr.emergencylending.entity.account.RegisterBean;
 
 import java.util.Map;
 
@@ -23,7 +24,7 @@ public interface WyApi {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<Object> register(@FieldMap Map<String, String> params);
+    Observable<RegisterBean> register(@FieldMap Map<String, String> params);
 
     /**
      * 登录
@@ -51,4 +52,12 @@ public interface WyApi {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> sendSMS(@FieldMap Map<String, String> params);
+    /**
+     * 忘记密码
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> forgetPassword(@FieldMap Map<String, String> params);
 }

@@ -21,7 +21,6 @@ import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
@@ -41,7 +40,7 @@ import butterknife.Unbinder;
  * @date 2017/8/9
  */
 
-public class MyFragment extends BaseFragment<MyPresenter, BaseView> implements TakePhoto.TakeResultListener, InvokeListener {
+public class MyFragment extends BaseFragment implements TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.QR_code)
     ImageView QRCode;
     @BindView(R.id.message_center)

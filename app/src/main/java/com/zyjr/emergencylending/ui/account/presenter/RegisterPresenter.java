@@ -5,9 +5,11 @@ import android.content.Context;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.model.account.AccountModel;
-import com.zyjr.emergencylending.ui.account.view.RegisterView;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
  * author wangyin
@@ -17,7 +19,7 @@ import com.zyjr.emergencylending.ui.account.view.RegisterView;
  * @author wangyin
  */
 
-public class RegisterPresenter extends BasePresenter<RegisterView> {
+public class RegisterPresenter extends BasePresenter<BaseView<RegisterBean>> {
 
     public RegisterPresenter(Context context) {
         super(context);
@@ -26,21 +28,17 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
     public void register(String router, String phone, String clientid,
                          String verify_code, String password, String recommend_code,
                          String register_platform, String register_ip, String register_device_no) {
-        invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_platform, register_ip, register_device_no), new ProgressSubscriber<Object>(new SubscriberOnNextListener<Object>() {
+        invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_ip, register_device_no), new ProgressSubscriber<RegisterBean>(new SubscriberOnNextListener<RegisterBean>() {
             @Override
-            public void onNext(Object registerBean) {
+            public void onNext(RegisterBean registerBean) {
+                getView().callBack(registerBean);
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
 
-    @Override
-    public void overwriteSendSMS(BaseBean baseBean) {
-        super.overwriteSendSMS(baseBean);
-        getView().getSendSMS(baseBean);
-    }
 }

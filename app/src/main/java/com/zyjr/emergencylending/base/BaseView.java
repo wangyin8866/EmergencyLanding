@@ -1,12 +1,10 @@
 package com.zyjr.emergencylending.base;
 
 /**
- * Created by shanlin on 2017/2/26.
+ * @author wyman
+ * @date 2017/10/26
  */
 
-public interface BaseView {
-    void showSuccess(String msg);
-    void showError(String msg);
-
-
+public interface BaseView<T> {
+    void callBack(T t);
 }

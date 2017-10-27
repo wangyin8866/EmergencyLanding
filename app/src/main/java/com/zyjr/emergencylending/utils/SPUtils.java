@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 
 //实现标记的写入与读取
 public class SPUtils {
-    private static final String SP_NAME = "Haolly";
+    private static final String SP_NAME = "wyman";
     private static SharedPreferences sp;
 
     //保存布尔值

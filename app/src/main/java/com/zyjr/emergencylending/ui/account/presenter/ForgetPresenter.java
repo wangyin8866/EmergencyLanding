@@ -7,7 +7,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.entity.account.LoginBean;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.model.account.AccountModel;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
@@ -19,25 +19,24 @@ import com.zyjr.emergencylending.utils.ToastAlone;
  * @author wangyin
  */
 
-public class LoginPresenter extends BasePresenter<BaseView<LoginBean>> {
+public class ForgetPresenter extends BasePresenter<BaseView<BaseBean>> {
 
-    public void login(String router, String phone, String password,
-                      String clientid, String login_ip, String login_platform, String login_device_no) {
-        invoke(AccountModel.getInstance().login(router,phone,password,clientid,login_ip,login_device_no), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
+    public ForgetPresenter(Context context) {
+        super(context);
+    }
+
+    public void forgetPassword(String router, String phone,
+                               String verify_code, String password) {
+        invoke(AccountModel.getInstance().forgetPassword(router, phone, verify_code, password), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
-            public void onNext(LoginBean loginBean) {
-                getView().callBack(loginBean);
+            public void onNext(BaseBean baseBean) {
+                getView().callBack(baseBean);
             }
-
             @Override
             public void onError(Throwable e) {
                 ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
-    }
-
-    public LoginPresenter(Context context) {
-        super(context);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.zyjr.emergencylending.base;
 
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.utils.BasicParamsInterceptor;
 import com.zyjr.emergencylending.utils.LogInterceptor;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
@@ -21,7 +23,9 @@ import rx.schedulers.Schedulers;
 
 /**
  * 网络请求基类2.0版本
- * Created by NIUDEYANG on 2016/11/17.
+ *
+ * @author wangyin
+ * @date 2016/11/17
  */
 
 public class BaseModel {
@@ -32,11 +36,18 @@ public class BaseModel {
     OkHttpClient.Builder httpClientBuilder;
 
     public BaseModel() {
+
+        BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
+                .addQueryParam("version_no", Constants.getVersionCode(BaseApplication.getContext()))
+                .addQueryParam("register_platform", Constants.getPlatform(1))
+                .build();
+
+
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        }else {
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(basicParamsInterceptor).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        } else {
             httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         }
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -48,13 +59,14 @@ public class BaseModel {
                 .build();
 
     }
+
     public BaseModel(String url) {
 
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
             httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        }else {
+        } else {
             httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         }
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -66,6 +78,7 @@ public class BaseModel {
                 .build();
 
     }
+
     //添加线程订阅
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
         LogUtils.e("wyman", map.toString());

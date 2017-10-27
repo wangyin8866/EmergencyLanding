@@ -29,7 +29,7 @@ public class Constants {
      * @param type
      * @return
      */
-    public static String getAppType(int type) {
+    public static String getPlatform(int type) {
         if (1 == type) {
             return "JJT_1";
         } else if (2 == type) {

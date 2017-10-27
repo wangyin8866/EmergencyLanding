@@ -17,17 +17,15 @@ import com.jakewharton.rxbinding.widget.RxCompoundButton;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
+import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.ui.account.presenter.RegisterPresenter;
-import com.zyjr.emergencylending.ui.account.view.RegisterView;
-import com.zyjr.emergencylending.utils.DateUtil;
 import com.zyjr.emergencylending.utils.NetworkUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.UIUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -39,12 +37,11 @@ import rx.Subscription;
 import rx.functions.Action1;
 
 /**
- *
  * @author wangyin
  * @date 2017/10/12
  */
 
-public class RegisterActivity extends BaseActivity<RegisterPresenter, RegisterView> implements RegisterView {
+public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<RegisterBean>> implements BaseView<RegisterBean> {
     @BindView(R.id.iv_close)
     ImageView ivClose;
     @BindView(R.id.et_phone_number)
@@ -104,10 +101,12 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, RegisterVi
             public void call(Void aVoid) {
                 phone = etPhoneNumber.getText().toString().trim();
                 pwd = etPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(phone) || !WYUtils.checkPhone(phone) || TextUtils.isEmpty(pwd) || !WYUtils.checkPass(pwd)) {
-                    UIUtils.showToastCommon(mContext, Config.TIP_ALL);
+                if (TextUtils.isEmpty(phone)) {
+                    ToastAlone.showShortToast(mContext, "请输入手机号码");
+                } else if (!WYUtils.checkPhone(phone)) {
+                    ToastAlone.showShortToast(mContext, "请输入正确的手机号码");
                 } else {
-                    mPresenter.sendSMS(NetConstantValues.SMS, phone, Constants.getAppType(1), Constants.getVersionCode(mContext));
+                    mPresenter.sendSMS(btnLoginCode, NetConstantValues.SMS, phone);
                 }
             }
         });
@@ -119,10 +118,18 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, RegisterVi
                 inviteCode = etInviteCode.getText().toString().trim();
                 pwd = etPassword.getText().toString().trim();
                 sms = etSmsCode.getText().toString().trim();
-                if (TextUtils.isEmpty(phone) || !WYUtils.checkPhone(phone) || TextUtils.isEmpty(pwd) || !WYUtils.checkPass(pwd)||TextUtils.isEmpty(sms)) {
-                    UIUtils.showToastCommon(mContext, Config.TIP_ALL);
-                }  else {
-                    mPresenter.register(NetConstantValues.REGISTER,phone, BaseApplication.clientId,sms,pwd,inviteCode,Constants.getAppType(1), NetworkUtils.getIp(mContext),Constants.getDeviceCode());
+                if (TextUtils.isEmpty(phone)) {
+                    ToastAlone.showShortToast(mContext, "请输入手机号码");
+                } else if (!WYUtils.checkPhone(phone)) {
+                    ToastAlone.showShortToast(mContext, "请输入正确的手机号码");
+                } else if (TextUtils.isEmpty(sms)) {
+                    ToastAlone.showShortToast(mContext, "请输入验证码");
+                } else if (TextUtils.isEmpty(pwd)) {
+                    ToastAlone.showShortToast(mContext, "请输入新密码");
+                } else if (!WYUtils.checkPass(pwd)) {
+                    ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
+                } else {
+                    mPresenter.register(NetConstantValues.REGISTER, phone, BaseApplication.clientId, sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
                 }
             }
         });
@@ -153,23 +160,19 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, RegisterVi
 
 
     @Override
-    public void showData(RegisterBean registerBean) {
-
-        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-    }
-
-    @Override
-    public void getSendSMS(BaseBean baseBean) {
-        if (baseBean.getFlag().equals(Config.TIP_SUCCESS)) {
-            btnLoginCode.setEnabled(false);
-            DateUtil.countDown(btnLoginCode, "重新发送");
-        } else {
-            ToastAlone.showShortToast(mContext, baseBean.getMsg());
-        }
-    }
-    @Override
     protected void onDestroy() {
         subscription.unsubscribe();
         super.onDestroy();
+    }
+
+    @Override
+    public void callBack(RegisterBean registerBean) {
+        if (Config.CODE_SUCCESS.equals(registerBean.getFlag())) {
+            SPUtils.saveString(mContext, Config.KEY_JUID, registerBean.getResult().getJuid());
+            ToastAlone.showShortToast(mContext, "注册成功");
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+        } else {
+            ToastAlone.showShortToast(mContext, registerBean.getMsg());
+        }
     }
 }

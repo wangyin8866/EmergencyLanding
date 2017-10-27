@@ -1,11 +1,15 @@
 package com.zyjr.emergencylending.base;
 
 import android.content.Context;
+import android.widget.Button;
 
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.model.account.AccountModel;
+import com.zyjr.emergencylending.utils.DateUtil;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.lang.ref.WeakReference;
 
@@ -13,7 +17,6 @@ import rx.Observable;
 import rx.Subscriber;
 
 /**
- *
  * @author wy
  * @date 2016/9/2
  */
@@ -47,6 +50,7 @@ public abstract class BasePresenter<T> {
 
     /**
      * 关联
+     *
      * @param view
      */
     void attach(T view) {
@@ -73,21 +77,25 @@ public abstract class BasePresenter<T> {
     /**
      * 发送短信验证码
      */
-    public void sendSMS( String router, String phone,
-                        String registerPlatform, String versionNo) {
+    public void sendSMS(final Button button, String router, String phone
+                       ) {
 
-        invoke(AccountModel.getInstance().sendSMS(router, phone, registerPlatform, versionNo), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+        invoke(AccountModel.getInstance().sendSMS(router, phone), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean baseBean) {
-                overwriteSendSMS(baseBean);
+                if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
+                    ToastAlone.showShortToast(mContext, "短信发送成功");
+                    button.setEnabled(false);
+                    DateUtil.countDown(button, "重新发送");
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                }
             }
-
             @Override
             public void onError(Throwable e) {
+                ToastAlone.showShortToast(mContext, "短信发送失败，请重试");
             }
         }, mContext));
     }
-    public void overwriteSendSMS(BaseBean baseBean) {
 
-    }
 }

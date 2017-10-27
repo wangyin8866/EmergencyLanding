@@ -68,7 +68,7 @@ public interface NetConstantValues {
     /**
      * 重置密码
      */
-    String REST_PASSWORD = "zyUserService.findPassword";
+    String REST_PASSWORD = "zyUserService.resetPassword";
 
     /**
      * 版本更新
