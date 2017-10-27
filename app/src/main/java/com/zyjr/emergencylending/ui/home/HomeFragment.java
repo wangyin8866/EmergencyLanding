@@ -14,10 +14,13 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +32,12 @@ import butterknife.Unbinder;
 
 
 /**
- * Created by wangyin on 2017/8/9.
+ *
+ * @author wangyin
+ * @date 2017/8/9
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment<HomePresenter,BaseView<BaseBean>>implements BaseView<BaseBean> {
     @BindView(R.id.banner)
     ConvenientBanner banner;
     @BindView(R.id.QR_code)
@@ -58,6 +63,8 @@ public class HomeFragment extends BaseFragment {
     }
 
     protected void init() {
+
+        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
         auto_roll_data = new ArrayList<>();
         auto_roll_data.add("wangyin");
         auto_roll_data.add("wangyin2");
@@ -126,7 +133,12 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected HomePresenter createPresenter() {
+        return new HomePresenter(mContext);
+    }
+
+    @Override
+    public void callBack(BaseBean baseBean) {
+
     }
 }

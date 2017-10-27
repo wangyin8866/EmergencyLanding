@@ -1,10 +1,13 @@
 package com.zyjr.emergencylending.base;
 
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.service.Api;
 import com.zyjr.emergencylending.utils.BasicParamsInterceptor;
 import com.zyjr.emergencylending.utils.LogInterceptor;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.HashMap;
@@ -33,16 +36,17 @@ public class BaseModel {
     private static final int DEFAULT_TIMEOUT = 15;
     protected Retrofit retrofit;
     protected static Map<String, String> map = new HashMap<>();
-    OkHttpClient.Builder httpClientBuilder;
+    private OkHttpClient.Builder httpClientBuilder;
+    protected Api mApi;
 
-    public BaseModel() {
-
+    protected BaseModel() {
+        mApi = retrofit.create(Api.class);
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
+                .addQueryParam("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""))
+                .addQueryParam("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""))
                 .addQueryParam("version_no", Constants.getVersionCode(BaseApplication.getContext()))
                 .addQueryParam("register_platform", Constants.getPlatform(1))
                 .build();
-
-
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
@@ -59,6 +63,7 @@ public class BaseModel {
                 .build();
 
     }
+
 
     public BaseModel(String url) {
 

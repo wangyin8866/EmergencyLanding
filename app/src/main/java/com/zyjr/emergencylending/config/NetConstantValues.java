@@ -73,6 +73,11 @@ public interface NetConstantValues {
     /**
      * 版本更新
      */
-    String VERISON_UPDATE = "zyAppVersionService.checkAppVersion";
+    String VERSION_UPDATE = "zyAppVersionService.checkAppVersion";
+
+    /**
+     * 首页广告
+     */
+    String HOME_AD = "zyHomeAdService.getHomeAds";
 
 }

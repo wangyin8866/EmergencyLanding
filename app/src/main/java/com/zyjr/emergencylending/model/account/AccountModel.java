@@ -4,7 +4,7 @@ import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
-import com.zyjr.emergencylending.service.WyApi;
+import com.zyjr.emergencylending.service.Api;
 
 import rx.Observable;
 
@@ -15,11 +15,11 @@ import rx.Observable;
  */
 
 public class AccountModel extends BaseModel {
-    private WyApi mWyApi;
+    private Api mApi;
 
     private AccountModel() {
         super();
-        mWyApi = retrofit.create(WyApi.class);
+        mApi = retrofit.create(Api.class);
     }
 
     public static class SingletonHolder {
@@ -45,7 +45,7 @@ public class AccountModel extends BaseModel {
         map.put("recommend_code", recommend_code);
         map.put("register_ip", register_ip);
         map.put("register_device_no", register_device_no);
-        return mWyApi.register(map);
+        return mApi.register(map);
     }
 
     /**
@@ -60,7 +60,7 @@ public class AccountModel extends BaseModel {
         map.put("clientid", clientid);
         map.put("login_ip", login_ip);
         map.put("login_device_no", login_device_no);
-        return mWyApi.login(map);
+        return mApi.login(map);
     }
 
     /**
@@ -75,7 +75,7 @@ public class AccountModel extends BaseModel {
         map.clear();
         map.put("router", router);
         map.put("phone", phone);
-        return mWyApi.sendSMS(map);
+        return mApi.sendSMS(map);
     }
 
     /**
@@ -88,6 +88,6 @@ public class AccountModel extends BaseModel {
         map.put("phone", phone);
         map.put("verify_code", verify_code);
         map.put("password", password);
-        return mWyApi.sendSMS(map);
+        return mApi.sendSMS(map);
     }
 }

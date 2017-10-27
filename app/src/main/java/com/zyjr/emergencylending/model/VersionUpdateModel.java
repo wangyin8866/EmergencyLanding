@@ -1,7 +1,7 @@
 package com.zyjr.emergencylending.model;
 
 import com.zyjr.emergencylending.base.BaseModel;
-import com.zyjr.emergencylending.service.WyApi;
+import com.zyjr.emergencylending.service.Api;
 
 import rx.Observable;
 
@@ -10,11 +10,11 @@ import rx.Observable;
  */
 
 public class VersionUpdateModel extends BaseModel {
-    private WyApi mWyApi;
+    private Api mApi;
 
     private VersionUpdateModel() {
         super();
-        mWyApi = retrofit.create(WyApi.class);
+        mApi = retrofit.create(Api.class);
     }
 
     public static class SingletonHolder {
@@ -37,7 +37,7 @@ public class VersionUpdateModel extends BaseModel {
         map.put("app_version_no", app_version_no);
         map.put("app_type", app_type);
         map.put("platform_type", platform_type);
-        return mWyApi.versionUpdate(map);
+        return mApi.versionUpdate(map);
     }
 
 }

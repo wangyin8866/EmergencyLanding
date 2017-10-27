@@ -16,7 +16,7 @@ import rx.Observable;
  * Created by wangyin on 2017/10/24.
  */
 
-public interface WyApi {
+public interface Api {
     /**
      * 注册
      * @param params
@@ -60,4 +60,13 @@ public interface WyApi {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> forgetPassword(@FieldMap Map<String, String> params);
+
+    /**
+     * 首页广告
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> getHomeAds(@FieldMap Map<String, String> params);
 }

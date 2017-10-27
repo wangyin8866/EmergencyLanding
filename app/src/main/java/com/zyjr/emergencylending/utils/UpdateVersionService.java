@@ -213,7 +213,7 @@ public class UpdateVersionService {
      */
     private void Update() {
         versionCode = getVersionCode(context);
-        VersionUpdateModel.getInstance().update(NetConstantValues.VERISON_UPDATE, "", "", "", "", "").subscribeOn(Schedulers.io())
+        VersionUpdateModel.getInstance().update(NetConstantValues.VERSION_UPDATE, "", "", "", "", "").subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<String>() {
                     @Override
