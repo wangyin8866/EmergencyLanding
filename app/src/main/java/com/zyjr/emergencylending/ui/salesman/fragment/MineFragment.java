@@ -24,6 +24,8 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.my.SettingActivity;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
@@ -145,10 +147,12 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
                 PhotoUtils.showUserPicDialog(mContext,takePhoto);
                 break;
             case R.id.message_center:
+                startActivity(new Intent(mContext,MessageActivity.class));
                 break;
             case R.id.my_repayment:
                 break;
             case R.id.help:
+                H5WebView.skipH5WebView(mContext,"帮助说明");
                 break;
             case R.id.setting:
                 startActivity(new Intent(mContext,SettingActivity.class));

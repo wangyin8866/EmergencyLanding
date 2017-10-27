@@ -38,6 +38,8 @@ public class SettingActivity extends BaseActivity {
     TextView exit;
     @BindView(R.id.version_name)
     TextView versionName;
+    @BindView(R.id.version)
+    RelativeLayout version;
     private CustomerDialog dialog;
 
     @Override
@@ -61,10 +63,16 @@ public class SettingActivity extends BaseActivity {
 
             }
         });
-        versionName.setText("V" + WYUtils.getAppVersionName(this));
+
+        init();
     }
 
-    @OnClick({R.id.modify_password, R.id.about_us, R.id.advice_feedback, R.id.service_call, R.id.exit})
+    private void init() {
+        versionName.setText("V" + WYUtils.getAppVersionName(this));
+        dialog = new CustomerDialog(mContext);
+    }
+
+    @OnClick({R.id.modify_password, R.id.about_us, R.id.advice_feedback, R.id.service_call, R.id.exit, R.id.version})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.modify_password:
@@ -82,21 +90,36 @@ public class SettingActivity extends BaseActivity {
             case R.id.exit:
                 ActivityCollector.finishAll();
                 break;
+            case R.id.version:
+                dialog.versionUpdate(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.cancel:
+                                dialog.dismiss();
+                                break;
+                            case R.id.update:
+                                dialog.dismiss();
+                                break;
+                        }
+                    }
+                }, "版本更新！").show();
+                break;
         }
     }
+
     private void phoneDialog() {
-        dialog = new CustomerDialog(mContext);
+
         dialog.showHotLineDialog(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (view.getId() == R.id.left) {
                     dialog.dismiss();
                 } else if (view.getId() == R.id.right) {
-                    WYUtils.callPhone(mContext,"400-077-6667");
+                    WYUtils.callPhone(mContext, "400-077-6667");
                     dialog.dismiss();
                 }
             }
-        });
-        dialog.show();
+        }).show();
     }
 }

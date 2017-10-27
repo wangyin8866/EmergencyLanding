@@ -5,37 +5,35 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
-import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
-import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.model.home.loan.IDCardModel;
-import com.zyjr.emergencylending.model.home.loan.PersonalInfoModel;
-import com.zyjr.emergencylending.ui.home.View.PersonalInfoView;
+import com.zyjr.emergencylending.ui.home.View.IDCardView;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.io.File;
 import java.net.SocketTimeoutException;
-import java.util.Map;
 
 import retrofit2.HttpException;
 
 /**
  * Created by neil on 2017/10/19
- * 备注: 个人信息
+ * 备注: 身份证信息
  */
-public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
+@Deprecated
+public class IDCardPresenter extends BasePresenter<IDCardView> {
 
-    public PersonalInfoPresenter(Context context) {
+    public IDCardPresenter(Context context) {
         super(context);
     }
 
     public void uploadFileGetIDCardFrontInfo(File file) {
-        invoke(IDCardModel.getInstance().getIDCardFrontInfo(file), new ProgressSubscriber<IDCardFrontBean>(new SubscriberOnNextListener<IDCardFrontBean>() {
+        invoke(IDCardModel.getInstance().getIDCardFrontInfo(file), new ProgressSubscriber(new SubscriberOnNextListener<IDCardFrontBean>() {
             @Override
             public void onNext(IDCardFrontBean result) {
                 LogUtils.d("正面照返回数据结果集:---->" + new Gson().toJson(result));
@@ -64,7 +62,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
     }
 
     public void uploadFileGetIDCardBackInfo(File file) {
-        invoke(IDCardModel.getInstance().getIDCardBackInfo(file),new ProgressSubscriber<IDCardBackBean>(new SubscriberOnNextListener<IDCardBackBean>() {
+        invoke(IDCardModel.getInstance().getIDCardBackInfo(file),new ProgressSubscriber(new SubscriberOnNextListener<IDCardBackBean>() {
             @Override
             public void onNext(IDCardBackBean result) {
                 LogUtils.d("反面照返回数据结果集:---->" + new Gson().toJson(result));

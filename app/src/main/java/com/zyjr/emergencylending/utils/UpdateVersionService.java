@@ -12,7 +12,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -21,18 +20,19 @@ import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.model.VersionUpdateModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.OkHttpClient;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.scalars.ScalarsConverterFactory;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 检测安装更新文件的助手类
@@ -105,8 +105,6 @@ public class UpdateVersionService {
      */
     private void showUpdateVersionDialog() {
         // 构造对话框
-
-
         Builder builder = new Builder(context);
         builder.setCustomTitle(View.inflate(context, R.layout.update_title, null));
         builder.setMessage(Html.fromHtml(display));
@@ -138,11 +136,35 @@ public class UpdateVersionService {
     }
 
     /**
+     * 自定义弹框
+     */
+    private void showUpdateVersionDialog2() {
+
+        CustomerDialog dialog = new CustomerDialog(context);
+        dialog.versionUpdate(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.cancel:
+                        Constants.update = false;
+                        if (isMust == 1) {
+                            System.exit(1);
+                        }
+                        break;
+                    case R.id.update:
+                        // 显示下载对话框
+                        showDownloadDialog();
+                        break;
+                }
+            }
+        }, "版本更新！");
+    }
+
+    /**
      * 下载的提示框
      */
     protected void showDownloadDialog() {
         {
-            Log.e("tga", "下载更新");
             // 构造软件下载对话框
             Builder builder = new Builder(context);
             builder.setTitle("正在更新！");
@@ -175,6 +197,7 @@ public class UpdateVersionService {
 
     }
 
+
     /**
      * 下载apk,不能占用主线程.所以另开的线程
      */
@@ -190,32 +213,20 @@ public class UpdateVersionService {
      */
     private void Update() {
         versionCode = getVersionCode(context);
-        //手动创建一个OkHttpClient并设置超时时间
-        OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
-        httpClientBuilder.connectTimeout(3000, TimeUnit.SECONDS);
-        Retrofit retrofit = new Retrofit.Builder()
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .client(httpClientBuilder.build())  //retrofit基于okhttp网络框架，必须加这个，不然可能会报错
-                .baseUrl(updateVersionXMLPath)
-                .build();
-//        SecondApi requestSerives = retrofit.create(SecondApi.class);
-//        requestSerives.getVersionCode()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<String>() {
-//                    @Override
-//                    public void onCompleted() {
-//
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        Log.e("versionOnError", e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(String o) {
+        VersionUpdateModel.getInstance().update(NetConstantValues.VERSION_UPDATE, "", "", "", "", "").subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                    }
+
+                    @Override
+                    public void onNext(String o) {
 //
 //                        // 创建一个新的字符串
 //                        StringReader read = new StringReader(o);
@@ -237,8 +248,8 @@ public class UpdateVersionService {
 //                        } catch (DocumentException e) {
 //                            e.printStackTrace();
 //                        }
-//                    }
-//                });
+                    }
+                });
     }
 
     /**

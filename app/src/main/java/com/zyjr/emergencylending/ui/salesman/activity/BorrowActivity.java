@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.salesman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -9,12 +10,14 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 /**
@@ -143,5 +146,13 @@ public class BorrowActivity extends BaseActivity {
         tvMinLoadWeek.setText(minWeek + "周");
         week = Arithmetic.progressToWeek(progress, minWeek, maxWeek);
         tvMaxLoadWeek.setText(maxWeek + "周");
+    }
+
+    @OnClick(R.id.btn_apply_quickly)
+    public void onViewClicked() {
+        Intent intent = new Intent(this, WriteInfoMainActivity.class);
+        intent.putExtra("loanMoney", money);
+        intent.putExtra("loanWeek", week);
+        startActivity(intent);
     }
 }

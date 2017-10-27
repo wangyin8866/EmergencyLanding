@@ -135,7 +135,6 @@ public class ActivityApplyFor extends BaseActivity {
 
             @Override
             public void onItemClick(ActionItem item, int position) {
-                // TODO Auto-generated method stub
                 if (titlePopup.getAction(position).mTitle.equals(tvMark.getText())) {
                     ToastAlone.showShortToast(mContext, titlePopup.getAction(position).mTitle.toString());
                 } else {

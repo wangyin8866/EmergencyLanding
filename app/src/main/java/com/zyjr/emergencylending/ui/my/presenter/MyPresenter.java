@@ -3,16 +3,17 @@ package com.zyjr.emergencylending.ui.my.presenter;
 import android.content.Context;
 
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.base.BaseView;
 
 /**
- * Created by wangyin on 2017/8/9.
+ * @author wangyin
+ * @date 2017/8/9.
+ * @description :
  */
 
-public class MyPresenter extends BasePresenter<BaseView> {
+public class MyPresenter extends BasePresenter {
+
     public MyPresenter(Context context) {
         super(context);
     }
-
 
 }

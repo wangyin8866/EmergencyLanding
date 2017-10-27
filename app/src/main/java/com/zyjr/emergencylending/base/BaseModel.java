@@ -1,11 +1,13 @@
-package com.zyjr.emergencylending.model;
+package com.zyjr.emergencylending.base;
 
-
-import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.base.LifeSubscription;
+import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.service.Api;
+import com.zyjr.emergencylending.utils.BasicParamsInterceptor;
 import com.zyjr.emergencylending.utils.LogInterceptor;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.HashMap;
@@ -24,22 +26,32 @@ import rx.schedulers.Schedulers;
 
 /**
  * 网络请求基类2.0版本
- * Created by wy on 2016/11/17.
+ *
+ * @author wangyin
+ * @date 2016/11/17
  */
 
 public class BaseModel {
 
-    public static final int DEFAULT_TIMEOUT = 15;
+    private static final int DEFAULT_TIMEOUT = 15;
     protected Retrofit retrofit;
-    static Map<String, String> map = new HashMap<>();
-    OkHttpClient.Builder httpClientBuilder;
+    protected static Map<String, String> map = new HashMap<>();
+    private OkHttpClient.Builder httpClientBuilder;
+    protected Api mApi;
 
-    public BaseModel() {
+    protected BaseModel() {
+        mApi = retrofit.create(Api.class);
+        BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
+                .addQueryParam("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""))
+                .addQueryParam("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""))
+                .addQueryParam("version_no", Constants.getVersionCode(BaseApplication.getContext()))
+                .addQueryParam("register_platform", Constants.getPlatform(1))
+                .build();
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS).readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        }else {
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(basicParamsInterceptor).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        } else {
             httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         }
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -52,16 +64,14 @@ public class BaseModel {
 
     }
 
-    /**
-     * 外网
-     * @param baseURL
-     */
-    public BaseModel(String baseURL) {
+
+    public BaseModel(String url) {
+
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS).readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        }else {
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        } else {
             httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         }
         httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
@@ -69,10 +79,10 @@ public class BaseModel {
                 .client(httpClientBuilder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(baseURL)
+                .baseUrl(NetConstantValues.HOST_URL)
                 .build();
-    }
 
+    }
 
     //添加线程订阅
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
@@ -82,5 +92,4 @@ public class BaseModel {
                 .subscribe(subscriber);
         lifeSubscription.bindSubscription(subscription);
     }
-
 }

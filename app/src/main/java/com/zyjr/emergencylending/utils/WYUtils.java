@@ -18,6 +18,11 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.PermissionChecker;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -32,18 +37,18 @@ import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.zyjr.emergencylending.MainActivity;
+import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
-import com.zyjr.emergencylending.custom.XListView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+
+import static com.zyjr.emergencylending.utils.UIUtils.getResources;
 
 /**
  * Created by wangyin on 2017/5/23.
@@ -89,11 +94,6 @@ public class WYUtils {
         return fm.matches(fma);
     }
 
-    public static void onLoad(XListView xListView) {
-        xListView.stopRefresh();
-        xListView.stopLoadMore();
-        xListView.setRefreshTime(new SimpleDateFormat("HH:mm:ss", Locale.CHINA).format(new Date()));
-    }
 
     /**
      * 把金额字符串转化为数字
@@ -163,8 +163,6 @@ public class WYUtils {
     }
 
 
-
-
     /**
      * 保留两位小数 不进行四舍五入
      */
@@ -188,11 +186,12 @@ public class WYUtils {
             return "1.0";
         }
     }
+
     /**
      * 版本更新
      */
-    public static void upDateVersion(Context context,String url) {
-        UpdateVersionService service = new UpdateVersionService(url,context);
+    public static void upDateVersion(Context context, String url) {
+        UpdateVersionService service = new UpdateVersionService(url, context);
         service.checkUpdate();
     }
 
@@ -345,7 +344,6 @@ public class WYUtils {
     }
 
 
-
     /**
      * 拨打客服电话
      *
@@ -373,10 +371,10 @@ public class WYUtils {
                 //请求拨打电话权限
                 ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CALL_PHONE}, 0x11);
             } else {
-                serviceTel(context,phoneNum);
+                serviceTel(context, phoneNum);
             }
         } else {
-            serviceTel(context,phoneNum);
+            serviceTel(context, phoneNum);
         }
     }
 
@@ -487,6 +485,24 @@ public class WYUtils {
         return versionName;
     }
 
+    /**
+     * 获取当前版本和服务器版本.如果服务器版本高于本地安装的版本.就更新
+     *
+     * @return
+     */
+    public static int getVersionCode(Context context) {
+        int versionCode = 0;
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            versionCode = pi.versionCode;
+
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versionCode;
+
+    }
 
     /**
      * 判断按返回键是否退出本应用弹出对话框
@@ -524,5 +540,79 @@ public class WYUtils {
             return true;
         }
         return false;
+    }
+
+    /***
+     * 获取url 指定name的value;
+     * @param url
+     * @param name
+     * @return
+     */
+    public static String getValueByName(String url, String name) {
+        String result = "";
+        int index = url.indexOf("?");
+        String temp = url.substring(index + 1);
+        String[] keyValue = temp.split("&");
+        for (String str : keyValue) {
+            if (str.contains(name)) {
+                result = str.replace(name + "=", "");
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 遮盖页面不可编辑
+     *
+     * @param flag
+     * @param llCover
+     */
+    public static void coverPage(boolean flag, LinearLayout llCover) {
+        if (flag) {
+            llCover.setVisibility(View.GONE);
+        } else {
+            llCover.setVisibility(View.VISIBLE);
+            llCover.setOnClickListener(null);
+        }
+    }
+
+    /**
+     * 处理注册协议
+     */
+    public static void processProtocol(final Context mContext, TextView textView) {
+        String temp = "我已阅读并同意急借通《用户使用及安全隐私协议》《用户信息授权服务协议》";
+        //设置需要监听的字符串位置
+        SpannableString spannableString = new SpannableString(temp);
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View v) {
+                ToastAlone.showShortToast(mContext, "用户使用及安全隐私协议");
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setColor(getResources().getColor(R.color.front_text_color_agreement));
+            }
+        }, temp.indexOf("用") - 1, temp.indexOf("议") + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        spannableString.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View v) {
+                ToastAlone.showShortToast(mContext, "用户信息授权服务协议");
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+                ds.setColor(getResources().getColor(R.color.front_text_color_agreement));
+            }
+        }, temp.lastIndexOf("《"), temp.lastIndexOf("》") + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //将处理过的数据set到View里
+        textView.setText(spannableString);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

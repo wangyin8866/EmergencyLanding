@@ -1,13 +1,12 @@
 package com.xfqz.xjd.mylibrary;
 
 import android.content.Context;
-import android.util.Log;
+import android.widget.Toast;
 
 import rx.Subscriber;
 
 public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCancelListener {
-    private static final String TAG = "ProgressSubscriber";
-    String tag = this.getClass().getSimpleName();
+    private final String TAG = getClass().getSimpleName();
     private SubscriberOnNextListener<T> mSubscriberOnNextListener;
     private ProgressDialogHandler mProgressDialogHandler;
 
@@ -34,18 +33,23 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
 
     @Override
     public void onStart() {
+        if (!NetworkUtils.isNetAvailable(context)) {
+            Toast.makeText(context, "当前网络不可用，请检查网络情况！", Toast.LENGTH_SHORT).show();
+            // 一定好主动调用下面这一句
+            onCompleted();
+            return;
+        }
         showProgressDialog();
     }
 
     @Override
     public void onCompleted() {
         dismissProgressDialog();
-        //Toast.makeText(context, "Completed", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onError(Throwable e) {
-        Log.e(TAG, "onError: " + e.getMessage());
+
         dismissProgressDialog();
         mSubscriberOnNextListener.onError(e);
 
@@ -53,7 +57,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
 
     @Override
     public void onNext(T t) {
-            mSubscriberOnNextListener.onNext(t);
+        mSubscriberOnNextListener.onNext(t);
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 
 import com.zyjr.emergencylending.R;
@@ -14,6 +15,7 @@ import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.CircleView;
 import com.zyjr.emergencylending.custom.XListView;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivityApplyFor;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivityClient;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivitySuccess;
@@ -46,6 +48,8 @@ public class CustomerFragment extends BaseFragment implements XListView.IXListVi
     View bgLine1;
     @BindView(R.id.xlv)
     XListView xlv;
+    @BindView(R.id.ll_rank_list)
+    LinearLayout llRankList;
 
     @Nullable
     @Override
@@ -86,7 +90,7 @@ public class CustomerFragment extends BaseFragment implements XListView.IXListVi
 
     }
 
-    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success})
+    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success,R.id.ll_rank_list})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.circle_client:
@@ -97,6 +101,9 @@ public class CustomerFragment extends BaseFragment implements XListView.IXListVi
                 break;
             case R.id.circle_success:
                 startActivity(new Intent(mContext, ActivitySuccess.class));
+                break;
+            case R.id.ll_rank_list:
+                H5WebView.skipH5WebView(mContext,"龙虎榜");
                 break;
         }
     }
