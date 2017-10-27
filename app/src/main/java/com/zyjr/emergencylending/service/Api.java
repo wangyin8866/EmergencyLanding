@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service;
 
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
@@ -68,5 +69,5 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> getHomeAds(@FieldMap Map<String, String> params);
+    Observable<Banner> getHomeAds(@FieldMap Map<String, String> params);
 }
