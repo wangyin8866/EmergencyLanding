@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/layout_store_supported"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_home_notice"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_support_cities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="15dp"
+            android:text="请选择您所在的城市"
+            android:textColor="@color/input_text_color"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="183dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/orderprocess_bg">
+
+                <ImageView
+                    android:id="@+id/iv_order_status"
+                    android:layout_width="315dp"
+                    android:layout_height="12dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@mipmap/orderprocess_a"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/tv_order_status1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/iv_order_status"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="8.5dp"
+                    android:text="填写资料"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_order_status1"
+                    android:layout_below="@+id/iv_order_status"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="8.5dp"
+                    android:layout_toRightOf="@+id/tv_order_status1"
+                    android:text="认证中"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_order_status1"
+                    android:layout_below="@+id/iv_order_status"
+                    android:layout_marginLeft="22dp"
+                    android:layout_marginTop="8.5dp"
+                    android:layout_toRightOf="@+id/tv_order_status2"
+                    android:text="审核中"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_order_status1"
+                    android:layout_below="@+id/iv_order_status"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="8.5dp"
+                    android:layout_toRightOf="@+id/tv_order_status3"
+                    android:text="领取金额"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_order_status1"
+                    android:layout_below="@+id/iv_order_status"
+                    android:layout_marginLeft="14.5dp"
+                    android:layout_marginTop="8.5dp"
+                    android:layout_toRightOf="@+id/tv_order_status4"
+                    android:text="领取金额"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_order_status6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_order_status1"
+                    android:layout_below="@+id/iv_order_status"
+                    android:layout_marginLeft="13.5dp"
+                    android:layout_marginTop="8.5dp"
+                    android:layout_toRightOf="@+id/tv_order_status5"
+                    android:text="还款中"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View
+            style="@style/horizontal_line_style"
+            android:layout_height="1dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="14dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

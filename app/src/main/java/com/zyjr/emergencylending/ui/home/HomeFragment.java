@@ -17,7 +17,11 @@ import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
+import com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity;
+import com.zyjr.emergencylending.ui.home.loan.AuthCenterActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
+import com.zyjr.emergencylending.ui.home.loan.offline.ApplyConfirmActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +122,7 @@ public class HomeFragment extends BaseFragment {
                 startActivity(intent);
                 break;
             case R.id.pro2_btn:
-                Intent intent1 = new Intent(getActivity(), LoanMainActivity.class);
+                Intent intent1 = new Intent(getActivity(), ApplyConfirmActivity.class);
                 intent1.putExtra("flag", "offline");
                 startActivity(intent1);
                 break;
