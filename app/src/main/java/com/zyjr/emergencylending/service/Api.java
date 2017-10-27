@@ -3,6 +3,8 @@ package com.zyjr.emergencylending.service;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.MessageBean;
+import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 
@@ -70,4 +72,20 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<Banner> getHomeAds(@FieldMap Map<String, String> params);
+    /**
+     * 二维码
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<QrBean> getQr(@FieldMap Map<String, String> params);
+    /**
+     * 消息接口
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<MessageBean> getUserNews(@FieldMap Map<String, String> params);
 }

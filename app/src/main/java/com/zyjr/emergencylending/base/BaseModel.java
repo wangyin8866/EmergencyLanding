@@ -3,9 +3,7 @@ package com.zyjr.emergencylending.base;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.utils.BasicParamsInterceptor;
 import com.zyjr.emergencylending.utils.LogInterceptor;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -58,7 +56,8 @@ public class BaseModel {
                         for (int i = 0;i<oidFormBody.size();i++){
                             newFormBody.addEncoded(oidFormBody.encodedName(i),oidFormBody.encodedValue(i));
                         }
-                        newFormBody.add("juid",SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "e517fafd0d4a4034b4a88a6a1e041540"));
+//                        newFormBody.add("juid",SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "e517fafd0d4a4034b4a88a6a1e041540"));
+                        newFormBody.add("juid","1");
                         newFormBody.add("login_token",SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, "login_token"));
                         newFormBody.add("version_no", Constants.getVersionCode(BaseApplication.getContext()));
                         newFormBody.add("register_platform",Constants.getPlatform(1));
@@ -101,9 +100,14 @@ public class BaseModel {
 
     }
 
-    //添加线程订阅
+    /**
+     * 添加线程订阅
+     * @param lifeSubscription
+     * @param observable
+     * @param subscriber
+     * @param <T>
+     */
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
-        LogUtils.e("wyman", map.toString());
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

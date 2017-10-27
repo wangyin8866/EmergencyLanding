@@ -16,23 +16,27 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.SwipeAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.MessageBean;
+import com.zyjr.emergencylending.ui.home.presenter.MessagePresenter;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by wangyin on 2017/10/11.
+ *
+ * @author wangyin
+ * @date 2017/10/11
  */
 
-public class MessageActivity extends BaseActivity implements SwipeAdapter.onSwipeListener, EasyRefreshLayout.EasyEvent, BaseQuickAdapter.OnItemChildClickListener {
+public class MessageActivity extends BaseActivity<MessagePresenter, BaseView<MessageBean>> implements BaseView<MessageBean>, SwipeAdapter.onSwipeListener, EasyRefreshLayout.EasyEvent, BaseQuickAdapter.OnItemChildClickListener {
 
     @BindView(R.id.iv_back)
     ImageView ivBack;
@@ -48,11 +52,11 @@ public class MessageActivity extends BaseActivity implements SwipeAdapter.onSwip
 
     private int pageNum = 1;
     private int pageSize;
-    private List<MessageBean> messageBeanList;
+    private List<MessageBean.ResultBean.ResultListBean> messageBeanList;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected MessagePresenter createPresenter() {
+        return new MessagePresenter(mContext);
     }
 
     @Override
@@ -65,22 +69,15 @@ public class MessageActivity extends BaseActivity implements SwipeAdapter.onSwip
     }
 
     private void init() {
+        Map<String, String> map = new HashMap<String, String>(2);
+        map.put("router", NetConstantValues.USER_NEWS);
+        map.put("pageNo", "1");
+        mPresenter.getMessage(map);
 
 
         easylayout.setLoadMoreModel(LoadModel.NONE);
         easylayout.addEasyEvent(this);
-        messageBeanList = new ArrayList<>();
 
-        for (int i = 0; i < 10; i++) {
-            MessageBean messageBean = new MessageBean("test" + i, new Date().toString(), "wangyin" + i);
-            messageBeanList.add(messageBean);
-        }
-        myAdapter = new SwipeAdapter(R.layout.item_message_swipe, messageBeanList);
-
-        rvMain.setLayoutManager(new LinearLayoutManager(this));
-        rvMain.setAdapter(myAdapter);
-        myAdapter.setOnItemChildClickListener(this);
-        myAdapter.setOnDelListener(this);
 
 
     }
@@ -134,5 +131,17 @@ public class MessageActivity extends BaseActivity implements SwipeAdapter.onSwip
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
         startActivity(new Intent(mContext, MessageDetail.class));
+    }
+
+    @Override
+    public void callBack(MessageBean baseBean) {
+        messageBeanList = baseBean.getResult().getResultList();
+
+        myAdapter = new SwipeAdapter(R.layout.item_message_swipe, messageBeanList);
+
+        rvMain.setLayoutManager(new LinearLayoutManager(this));
+        rvMain.setAdapter(myAdapter);
+        myAdapter.setOnItemChildClickListener(this);
+        myAdapter.setOnDelListener(this);
     }
 }

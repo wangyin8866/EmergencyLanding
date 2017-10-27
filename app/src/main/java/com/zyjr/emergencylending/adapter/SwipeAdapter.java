@@ -16,7 +16,7 @@ import java.util.List;
  * Created by wangyin on 2017/10/11.
  */
 
-public class SwipeAdapter extends BaseQuickAdapter<MessageBean, BaseViewHolder> {
+public class SwipeAdapter extends BaseQuickAdapter<MessageBean.ResultBean.ResultListBean, BaseViewHolder> {
     /**
      * 和Activity通信的接口
      */
@@ -30,13 +30,13 @@ public class SwipeAdapter extends BaseQuickAdapter<MessageBean, BaseViewHolder> 
         this.mOnSwipeListener = mOnDelListener;
     }
 
-    public SwipeAdapter(@LayoutRes int layoutResId, @Nullable List<MessageBean> data) {
+    public SwipeAdapter(@LayoutRes int layoutResId, @Nullable List<MessageBean.ResultBean.ResultListBean> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(final BaseViewHolder viewHolder, MessageBean item) {
-        viewHolder.setText(R.id.title, item.getTitle())
+    protected void convert(final BaseViewHolder viewHolder, MessageBean.ResultBean.ResultListBean item) {
+        viewHolder.setText(R.id.title, item.getNews_title())
                 .addOnClickListener(R.id.ll_content);
 
         ((SwipeMenuView) viewHolder.getView(R.id.swipeMenuView)).setIos(true).setLeftSwipe(true);

@@ -8,7 +8,6 @@ import android.os.Looper;
 
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
-import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
 
@@ -65,7 +64,7 @@ public class BaseApplication extends Application {
         LogUtils.isDebug = true;
         //友盟日志
         Config.DEBUG = false;
-        UMShareAPI.get(this);
+//        UMShareAPI.get(this);
     }
 
     public static Context getContext() {

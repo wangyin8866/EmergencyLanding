@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
+import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.base.BaseView;
@@ -148,14 +149,22 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
             images.clear();
         }
         images = new ArrayList<String>();
-            for (int i=0;i<banner.getResult().getAd_list().size();i++) {
-                images.add(banner.getResult().getAd_list().get(i).getAd_pic());
+        for (int i = 0; i < banner.getResult().getAd_list().size(); i++) {
+            images.add(banner.getResult().getAd_list().get(i).getAd_pic());
+        }
+        this.banner.setPages(new CBViewHolderCreator() {
+            @Override
+            public Object createHolder() {
+                return new LocalImageHolderView();
             }
-            this.banner.setPages(new CBViewHolderCreator() {
-                @Override
-                public Object createHolder() {
-                    return new LocalImageHolderView();
-                }
-            }, images).startTurning(2000);
+        }, images).startTurning(2000);
+
+        this.banner.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+
+            }
+        });
     }
 }

@@ -13,6 +13,7 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.umeng.socialize.ShareAction;
@@ -23,14 +24,19 @@ import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.media.UMWeb;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.QrBean;
+import com.zyjr.emergencylending.ui.home.presenter.QrPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +47,7 @@ import butterknife.OnClick;
  * @date 2017/10/11
  */
 
-public class QrCodeActivity extends BaseActivity {
+public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> implements BaseView<QrBean> {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.qr_save)
@@ -52,6 +58,20 @@ public class QrCodeActivity extends BaseActivity {
     ImageView circleOfFriends;
     @BindView(R.id.iv_qr)
     ImageView ivQr;
+    @BindView(R.id.tv1)
+    TextView tv1;
+    @BindView(R.id.tv2)
+    TextView tv2;
+    @BindView(R.id.tv3)
+    TextView tv3;
+    @BindView(R.id.tv4)
+    TextView tv4;
+    @BindView(R.id.tv5)
+    TextView tv5;
+    @BindView(R.id.tv6)
+    TextView tv6;
+    @BindView(R.id.tv7)
+    TextView tv7;
     private boolean flag = false;
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
@@ -70,8 +90,8 @@ public class QrCodeActivity extends BaseActivity {
     private String sUrl = "http://www.baidu.com";
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected QrPresenter createPresenter() {
+        return new QrPresenter(mContext);
     }
 
     protected void init() {
@@ -86,7 +106,7 @@ public class QrCodeActivity extends BaseActivity {
 
             }
         });
-
+        mPresenter.getQr(NetConstantValues.QR_CODE);
     }
 
     @Override
@@ -215,4 +235,21 @@ public class QrCodeActivity extends BaseActivity {
 
         }
     };
+
+    @Override
+    public void callBack(QrBean baseBean) {
+//        Glide.with(mContext).load(baseBean.getResult().getUrl()).into(ivQr);
+        String code = baseBean.getResult().getRecommendcode();
+        List<TextView> textViews = new ArrayList<>();
+        textViews.add(tv1);
+        textViews.add(tv2);
+        textViews.add(tv3);
+        textViews.add(tv4);
+        textViews.add(tv5);
+        textViews.add(tv6);
+        textViews.add(tv7);
+        for (int i = 0; i < code.length(); i++) {
+            textViews.get(i).setText(String.valueOf(code.charAt(i)));
+        }
+    }
 }

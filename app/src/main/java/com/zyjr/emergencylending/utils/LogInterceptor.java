@@ -1,7 +1,5 @@
 package com.zyjr.emergencylending.utils;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -9,7 +7,6 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -27,7 +24,7 @@ public class LogInterceptor implements Interceptor {
     @Override
     public okhttp3.Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-        LogUtils.e(TAG, "request:" + request.toString());
+        LogUtils.e(TAG, "request:" + request.url());
         RequestBody requestBody = request.body();
         if (requestBody instanceof FormBody) {
             HashMap<String, Object> rootMap = new HashMap<>();

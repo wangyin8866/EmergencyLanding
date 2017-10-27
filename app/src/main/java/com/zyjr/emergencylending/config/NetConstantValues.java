@@ -77,8 +77,14 @@ public interface NetConstantValues {
      * 首页广告
      */
     String HOME_AD = "zyHomeAdService.getHomeAds";
-
-
+    /**
+     * 消息中心
+     */
+    String USER_NEWS = "zyUserNewsService.getUserNews";
+    /**
+     * 二维码
+     */
+    String QR_CODE = "userBorrowService.getMyQRCodeAndRecommendCode";
     String BASE_PREFIX = "?router=";
 
     /**
