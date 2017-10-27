@@ -3,7 +3,6 @@ package com.zyjr.emergencylending.base;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.service.Api;
 import com.zyjr.emergencylending.utils.BasicParamsInterceptor;
 import com.zyjr.emergencylending.utils.LogInterceptor;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -37,10 +36,8 @@ public class BaseModel {
     protected Retrofit retrofit;
     protected static Map<String, String> map = new HashMap<>();
     private OkHttpClient.Builder httpClientBuilder;
-    protected Api mApi;
 
     protected BaseModel() {
-        mApi = retrofit.create(Api.class);
         BasicParamsInterceptor basicParamsInterceptor = new BasicParamsInterceptor.Builder()
                 .addQueryParam("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""))
                 .addQueryParam("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""))

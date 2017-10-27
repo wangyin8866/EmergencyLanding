@@ -14,10 +14,14 @@ import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
+import com.zyjr.emergencylending.custom.LocalImageHolderView;
 import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
+import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +33,11 @@ import butterknife.Unbinder;
 
 
 /**
- *
  * @author wangyin
  * @date 2017/8/9
  */
 
-public class HomeFragment extends BaseFragment<HomePresenter,BaseView<BaseBean>>implements BaseView<BaseBean> {
+public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> implements BaseView<Banner> {
     @BindView(R.id.banner)
     ConvenientBanner banner;
     @BindView(R.id.QR_code)
@@ -50,6 +53,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,BaseView<BaseBean>>
     private int autoRollIndex;
     private List<String> auto_roll_data;
     private ArrayList<String> images;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,13 +65,15 @@ public class HomeFragment extends BaseFragment<HomePresenter,BaseView<BaseBean>>
 
     protected void init() {
 
-        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
+
         auto_roll_data = new ArrayList<>();
         auto_roll_data.add("wangyin");
         auto_roll_data.add("wangyin2");
         auto_roll_data.add("wangyin3");
         auto_roll_data.add("wangyin4");
         showAutoRollStrings();
+        //banner
+        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
         //本地图片
         ArrayList<Integer> imgs = new ArrayList<>();
@@ -80,6 +86,7 @@ public class HomeFragment extends BaseFragment<HomePresenter,BaseView<BaseBean>>
                 return new LocalImageHolderViewNative();
             }
         }, imgs).startTurning(2000);
+
     }
 
     private void showAutoRollStrings() {
@@ -134,8 +141,21 @@ public class HomeFragment extends BaseFragment<HomePresenter,BaseView<BaseBean>>
         return new HomePresenter(mContext);
     }
 
-    @Override
-    public void callBack(BaseBean baseBean) {
 
+    @Override
+    public void callBack(Banner banner) {
+        if (images != null) {
+            images.clear();
+        }
+        images = new ArrayList<String>();
+            for (int i=0;i<banner.getResult().getAd_list().size();i++) {
+                images.add(banner.getResult().getAd_list().get(i).getAd_pic());
+            }
+            this.banner.setPages(new CBViewHolderCreator() {
+                @Override
+                public Object createHolder() {
+                    return new LocalImageHolderView();
+                }
+            }, images).startTurning(2000);
     }
 }

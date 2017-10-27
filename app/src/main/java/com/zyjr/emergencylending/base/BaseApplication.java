@@ -63,7 +63,8 @@ public class BaseApplication extends Application {
         SupportCityConfig.getInstance().initCitys(); // 加载城市数据
         //是否打印日志
         LogUtils.isDebug = true;
-        Config.DEBUG = true;
+        //友盟日志
+        Config.DEBUG = false;
         UMShareAPI.get(this);
     }
 

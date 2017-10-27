@@ -10,6 +10,7 @@ import okhttp3.ResponseBody;
 
 /**
  * 采集okhttp3client的日志
+ * @author wangyin
  */
 
 public class LogInterceptor implements Interceptor {
@@ -26,8 +27,6 @@ public class LogInterceptor implements Interceptor {
         }
         long t1 = System.nanoTime();
         okhttp3.Response response = chain.proceed(chain.request());
-//        long t2 = System.nanoTime();
-//        LogUtils.v(TAG, String.format(Locale.getDefault(), "Received response for %s in %.1fms%n%s", response.request().url(), (t2 - t1) / 1e6d, response.headers()));
         okhttp3.MediaType mediaType = response.body().contentType();
         ResponseBody originalBody = response.body();
         if (null != originalBody) {
