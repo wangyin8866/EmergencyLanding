@@ -87,6 +87,7 @@ public interface NetConstantValues {
     String QR_CODE = "userBorrowService.getMyQRCodeAndRecommendCode";
     String BASE_PREFIX = "?router=";
 
+
     /**
      * 获取支持银行列表
      */
@@ -94,11 +95,11 @@ public interface NetConstantValues {
     /**
      * 获取绑定银行卡信息
      */
-    String ROUTER_GET_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.getUserBankCardInfo";
+    String ROUTER_GET_BIND_BANK_CARD = "zyUserBankCardService.getUserBankCardInfo";
     /**
      * 保存银行卡
      */
-    String ROUTER_ADD_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.saveOrUpdateUserBankCard";
+    String ROUTER_ADD_BIND_BANK_CARD = "zyUserBankCardService.saveOrUpdateUserBankCard";
     /**
      * 修改银行卡
      */

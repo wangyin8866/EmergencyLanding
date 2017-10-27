@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.service.home.loan.BankcardInfoService;
@@ -33,20 +34,24 @@ public class BankcardInfoModel extends BaseModel {
     }
 
     public Observable<ApiResult<List<SupportBank>>> getSupportBankList(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_GET_SUPPORT_BANK_LIST);
         return bankcardInfoService.getSupportBankList(params);
     }
 
     public Observable<ApiResult<BankcardInfo>> getBankcardInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_GET_BIND_BANK_CARD);
         return bankcardInfoService.getBankcardInfo(params);
     }
 
 
     public Observable<ApiResult<BankcardInfo>> addBankcardInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_ADD_BIND_BANK_CARD);
         return bankcardInfoService.addBankcardInfo(params);
     }
 
 
     public Observable<ApiResult<BankcardInfo>> editBankcardInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_EDIT_BIND_BANK_CARD);
         return bankcardInfoService.editBankcardInfo(params);
     }
 

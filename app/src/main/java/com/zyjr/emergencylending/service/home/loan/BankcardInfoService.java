@@ -24,21 +24,21 @@ public interface BankcardInfoService {
      * 获取支持银行列表
      */
     @FormUrlEncoded
-    @POST(NetConstantValues.ROUTER_GET_SUPPORT_BANK_LIST)
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<List<SupportBank>>> getSupportBankList(@FieldMap Map<String, String> params);
 
     /**
      * 获取银行卡信息
      */
     @FormUrlEncoded
-    @POST(NetConstantValues.ROUTER_GET_BIND_BANK_CARD)
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<BankcardInfo>> getBankcardInfo(@FieldMap Map<String, String> params);
 
     /**
      * 保存银行卡信息
      */
     @FormUrlEncoded
-    @POST(NetConstantValues.ROUTER_ADD_BIND_BANK_CARD)
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<BankcardInfo>> addBankcardInfo(@FieldMap Map<String, String> params);
 
 
@@ -46,7 +46,7 @@ public interface BankcardInfoService {
      * 修改银行卡信息
      */
     @FormUrlEncoded
-    @POST(NetConstantValues.ROUTER_EDIT_BIND_BANK_CARD)
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<BankcardInfo>> editBankcardInfo(@FieldMap Map<String, String> params);
 
 
@@ -54,6 +54,6 @@ public interface BankcardInfoService {
      * 删除银行卡信息
      */
     @FormUrlEncoded
-    @POST(NetConstantValues.ROUTER_DELETE_BIND_BANK_CARD)
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<BankcardInfo>> deteteBankcardInfo(@FieldMap Map<String, String> params);
 }

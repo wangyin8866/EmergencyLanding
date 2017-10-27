@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 
 import java.util.Map;
@@ -21,14 +22,14 @@ public interface PersonalInfoService {
      * 获取个人信息
      */
     @FormUrlEncoded
-    @POST("/111")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<PersonalInfoBean>> getPersonInfo(@FieldMap Map<String, String> params);
 
     /**
      * 添加个人信息
      */
     @FormUrlEncoded
-    @POST("/112")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<PersonalInfoBean>> addPersonInfo(@FieldMap Map<String, String> params);
 
 
@@ -36,14 +37,14 @@ public interface PersonalInfoService {
      * 编辑个人信息
      */
     @FormUrlEncoded
-    @POST("/112")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<PersonalInfoBean>> editPersonInfo(@FieldMap Map<String, String> params);
 
     /**
      * 上传照片
      */
     @FormUrlEncoded
-    @POST("/112")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<String>> uploadFile(@FieldMap Map<String, String> params);
 
 }

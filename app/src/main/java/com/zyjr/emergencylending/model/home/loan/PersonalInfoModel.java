@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.service.home.loan.PersonalInfoService;
 
@@ -32,20 +33,24 @@ public class PersonalInfoModel extends BaseModel {
 
 
     public Observable<ApiResult<PersonalInfoBean>> getPersonalInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_GET_PERSONAL_INFO);
         return personalInfoService.getPersonInfo(params);
     }
 
 
     public Observable<ApiResult<PersonalInfoBean>> addPersonalInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_ADD_PERSONAL_INFO);
         return personalInfoService.addPersonInfo(params);
     }
 
 
     public Observable<ApiResult<PersonalInfoBean>> editPersonalInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_EDIT_PERSONAL_INFO);
         return personalInfoService.editPersonInfo(params);
     }
 
     public Observable<ApiResult<String>> uploadFile(Map<String, String> params){
+        params.put("router", NetConstantValues.ROUTER_GET_SUPPORT_BANK_LIST);
         return personalInfoService.uploadFile(params);
     }
 }

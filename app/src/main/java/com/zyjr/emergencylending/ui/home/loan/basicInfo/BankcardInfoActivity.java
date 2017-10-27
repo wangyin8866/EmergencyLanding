@@ -2,7 +2,6 @@ package com.zyjr.emergencylending.ui.home.loan.basicInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,7 +12,6 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.BankcardInfo;
@@ -97,7 +95,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_CODE_ADD_BANKCARD && resultCode == RESULT_OK) {
 
-        }else if(requestCode == INTENT_CODE_EDIT_BANKCARD && resultCode == RESULT_OK){
+        } else if (requestCode == INTENT_CODE_EDIT_BANKCARD && resultCode == RESULT_OK) {
             loadingBindBankcardInfo();
         }
     }
@@ -180,9 +178,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private void loadingBindBankcardInfo() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("juid", "e517fafd0d4a4034b4a88a6a1e041540");
         paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
-        paramsMap.put("login_token", "login_token");
         mPresenter.getBindBankcardInfo(paramsMap);
     }
 
@@ -219,13 +215,10 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
         pullToRefreshScrollView.onRefreshComplete();
-        if (bean != null) {
-            rlEditBankcard.setVisibility(View.VISIBLE);
-            rlAddBankcard.setVisibility(View.GONE);
-            topBar.setRightButtonVisible(View.VISIBLE);
-            showBankcardInfo(bean);
-        }
-
+        rlEditBankcard.setVisibility(View.VISIBLE);
+        rlAddBankcard.setVisibility(View.GONE);
+        topBar.setRightButtonVisible(View.VISIBLE);
+        showBankcardInfo(bean);
     }
 
     @Override
