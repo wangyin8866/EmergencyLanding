@@ -69,7 +69,7 @@ public class H5WebView extends BaseActivity {
                 break;
             case "我的名片":
                 topBar.setTitle(title);
-                WYUtils.loadHtml(NetConstantValues.MY_NAME, webView, progressBar);
+                WYUtils.loadHtml(NetConstantValues.MY_CARD, webView, progressBar);
                 break;
             case "我的收入":
                 topBar.setTitle(title);

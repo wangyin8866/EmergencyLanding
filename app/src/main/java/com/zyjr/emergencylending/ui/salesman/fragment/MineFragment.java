@@ -22,11 +22,14 @@ import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
-import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.my.SettingActivity;
+import com.zyjr.emergencylending.ui.salesman.presenter.MinePresenter;
+import com.zyjr.emergencylending.ui.salesman.view.MineView;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -42,7 +45,7 @@ import butterknife.Unbinder;
  * Created by wangyin on 2017/8/9.
  */
 
-public class MineFragment extends BaseFragment implements TakePhoto.TakeResultListener, InvokeListener {
+public class MineFragment extends BaseFragment<MinePresenter,MineView> implements MineView,TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.edit_information)
     ImageView editInformation;
     @BindView(R.id.user_pic)
@@ -130,8 +133,8 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
     }
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected MinePresenter createPresenter() {
+        return new MinePresenter(mContext);
     }
 
     @Override
@@ -140,7 +143,7 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
         unbinder.unbind();
     }
 
-    @OnClick({R.id.user_pic, R.id.message_center, R.id.my_repayment, R.id.help, R.id.setting})
+    @OnClick({R.id.user_pic, R.id.message_center, R.id.my_repayment, R.id.help, R.id.setting,R.id.income})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.user_pic:
@@ -152,10 +155,15 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
             case R.id.my_repayment:
                 break;
             case R.id.help:
-                H5WebView.skipH5WebView(mContext,"帮助说明");
+                mPresenter.helpPage(NetConstantValues.HELP);
+
                 break;
             case R.id.setting:
                 startActivity(new Intent(mContext,SettingActivity.class));
+                break;
+            case R.id.income:
+                mPresenter.myIncome(NetConstantValues.MY_INCOME);
+
                 break;
         }
     }
@@ -189,4 +197,13 @@ public class MineFragment extends BaseFragment implements TakePhoto.TakeResultLi
     }
 
 
+    @Override
+    public void myIncome(BaseBean baseBean) {
+//        startActivity(new Intent(mContext,MyIncome.class));
+    }
+
+    @Override
+    public void helpPage(H5Bean baseBean) {
+//        H5WebView.skipH5WebView(mContext,"帮助说明");
+    }
 }

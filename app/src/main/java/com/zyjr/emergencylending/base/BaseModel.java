@@ -97,9 +97,7 @@ public class BaseModel {
 
     }
 
-    /**
-     * //添加线程订阅
-     */
+
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

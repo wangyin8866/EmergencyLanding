@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.service;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
@@ -104,4 +105,44 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> getNoticeList(@FieldMap Map<String, String> params);
+    /**
+     * 我的名片
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> myCard(@FieldMap Map<String, String> params);
+    /**
+     * 活动清单
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> getActivity(@FieldMap Map<String, String> params);
+    /**
+     * 我的收入
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> myIncome(@FieldMap Map<String, String> params);
+    /**
+     * 帮助页面
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<H5Bean> helpPage(@FieldMap Map<String, String> params);
+    /**
+     * 关于我们
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<H5Bean> aboutUs(@FieldMap Map<String, String> params);
 }

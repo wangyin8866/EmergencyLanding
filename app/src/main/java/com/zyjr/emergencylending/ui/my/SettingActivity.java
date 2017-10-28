@@ -9,10 +9,14 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.ui.account.ForgetPasswordActivity;
+import com.zyjr.emergencylending.ui.my.View.SettingView;
+import com.zyjr.emergencylending.ui.my.presenter.SettingPresenter;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -23,7 +27,7 @@ import butterknife.OnClick;
  * Created by wangyin on 2017/10/13.
  */
 
-public class SettingActivity extends BaseActivity {
+public class SettingActivity extends BaseActivity<SettingPresenter,SettingView>implements SettingView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.modify_password)
@@ -43,8 +47,8 @@ public class SettingActivity extends BaseActivity {
     private CustomerDialog dialog;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected SettingPresenter createPresenter() {
+        return new SettingPresenter(mContext);
     }
 
     @Override
@@ -79,7 +83,8 @@ public class SettingActivity extends BaseActivity {
                 startActivity(new Intent(mContext, ForgetPasswordActivity.class));
                 break;
             case R.id.about_us:
-                startActivity(new Intent(mContext, AboutUsActivity.class));
+                mPresenter.aboutUs(NetConstantValues.ABOUT_US);
+
                 break;
             case R.id.advice_feedback:
                 startActivity(new Intent(mContext, AdviceFeedbackActivity.class));
@@ -121,5 +126,11 @@ public class SettingActivity extends BaseActivity {
                 }
             }
         }).show();
+    }
+
+    @Override
+    public void aboutUs(H5Bean h5Bean) {
+        LogUtils.e("aboutUs", h5Bean.getResult().getHelp_h5_url());
+//        startActivity(new Intent(mContext, AboutUsActivity.class));
     }
 }

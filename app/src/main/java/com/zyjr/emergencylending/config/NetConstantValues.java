@@ -20,26 +20,23 @@ public interface NetConstantValues {
      */
 
     String order = "http://192.168.6.107:9090/jjth5/orderStatus.html";
-    /**
-     * 关于我们
-     */
-    String ABOUT_US = "http://192.168.6.107:9090/jjth5/about.html";
+
     /**
      * 帮助说明
      */
-    String HELP = "http://192.168.6.107:9090/jjth5/question.html";
+    String HELP = "zyUserService.getHelpNoteUrl";
     /**
      * 我的收入
      */
-    String MY_INCOME = "http://192.168.6.107:9090/jjth5/myIncome.html";
+    String MY_INCOME = "zyUserCommissionService.getUserCommission";
     /**
      * 我的名片
      */
-    String MY_NAME = "http://192.168.6.107:9090/jjth5/myCard.html";
+    String MY_CARD = "zySalesmanService.salesmanCard";
     /**
      * 龙虎榜
      */
-    String RANKING_LIST = "http://192.168.6.107:9090/jjth5/rankingList.html";
+    String RANKING_LIST = "zyUserService.getUserBillBoard";
 
     /**
      * 身份证扫描
@@ -142,4 +139,12 @@ public interface NetConstantValues {
      * 公告清单(标题)及详情
      */
     String NOTICE_LIST = "zyNoticeService.getNoticeList";
+    /**
+     * 活动清单
+     */
+    String APP_ACTIVITYS = "zyAppActivityService.getAppActivitys";
+    /**
+     * 关于我们
+     */
+    String ABOUT_US = "zyUserService.getAboutUsUrl";
 }

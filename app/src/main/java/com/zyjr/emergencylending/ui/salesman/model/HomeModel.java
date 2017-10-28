@@ -36,4 +36,16 @@ public class HomeModel extends BaseModel{
         map.put("get_num", get_num);
         return api.getNoticeList(map);
     }
+
+    public Observable<BaseBean> myCard(String router) {
+        Map<String, String> map = new HashMap<String, String>(1);
+        map.put("router", router);
+        return api.getNoticeList(map);
+    }
+    public Observable<BaseBean> getActivity(String router,String pageNo) {
+        Map<String, String> map = new HashMap<String, String>(3);
+        map.put("router", router);
+        map.put("pageNo", pageNo);
+        return api.getActivity(map);
+    }
 }

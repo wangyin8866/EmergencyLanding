@@ -13,13 +13,14 @@ import android.widget.LinearLayout;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
-import com.zyjr.emergencylending.ui.salesman.activity.ActivityActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ImmediatelyBorrowActivity;
+import com.zyjr.emergencylending.ui.salesman.presenter.HomePresenter;
+import com.zyjr.emergencylending.ui.salesman.view.HomeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +32,12 @@ import butterknife.Unbinder;
 
 
 /**
- * Created by wangyin on 2017/8/9.
+ *
+ * @author wangyin
+ * @date 2017/8/9
  */
 
-public class BorrowFragment extends BaseFragment {
+public class BorrowFragment extends BaseFragment<HomePresenter,HomeView>implements HomeView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.notice_auto_roll)
@@ -67,12 +70,16 @@ public class BorrowFragment extends BaseFragment {
     }
 
     protected void init() {
+
+        mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
         auto_roll_data = new ArrayList<>();
         auto_roll_data.add("wangyin");
         auto_roll_data.add("wangyin2");
         auto_roll_data.add("wangyin3");
         auto_roll_data.add("wangyin4");
         showAutoRollStrings();
+
+
     }
 
     private void showAutoRollStrings() {
@@ -94,8 +101,8 @@ public class BorrowFragment extends BaseFragment {
     };
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected HomePresenter createPresenter() {
+        return new HomePresenter(mContext);
     }
 
     @Override
@@ -114,10 +121,12 @@ public class BorrowFragment extends BaseFragment {
                 startActivity(new Intent(mContext, QrCodeActivity.class));
                 break;
             case R.id.visiting_card:
-                H5WebView.skipH5WebView(mContext,"我的名片");
+                mPresenter.myCard(NetConstantValues.MY_CARD);
+
                 break;
             case R.id.activity:
-                startActivity(new Intent(mContext, ActivityActivity.class));
+                mPresenter.getActivity(NetConstantValues.APP_ACTIVITYS, "1");
+
                 break;
             case R.id.invest:
                 break;
@@ -128,5 +137,20 @@ public class BorrowFragment extends BaseFragment {
             case R.id.buy:
                 break;
         }
+    }
+
+    @Override
+    public void callBack(BaseBean baseBean) {
+
+    }
+
+    @Override
+    public void myCard(BaseBean baseBean) {
+//        H5WebView.skipH5WebView(mContext,"我的名片");
+    }
+
+    @Override
+    public void getActivity(BaseBean baseBean) {
+//        startActivity(new Intent(mContext, ActivityActivity.class));
     }
 }
