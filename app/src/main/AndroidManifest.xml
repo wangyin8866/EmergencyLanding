@@ -29,7 +29,7 @@
         android:theme="@style/AppTheme">
         <!--线上-->
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.account.LoginActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait">
 
@@ -55,7 +55,7 @@
             android:screenOrientation="portrait" />
         <!--登录-->
         <activity
-            android:name=".ui.account.LoginActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
 
         </activity>
@@ -122,7 +122,7 @@
             android:screenOrientation="portrait" />
         <!--领取金额成功页面-->
         <activity
-            android:name="com.zyjr.emergencylending.ui.home.loan.GetLoanMoneyActivity"
+            android:name="com.zyjr.emergencylending.ui.home.loan.ReceiveMoneyActivity"
             android:screenOrientation="portrait" />
         <!-- 借款订单状态  -->
         <activity

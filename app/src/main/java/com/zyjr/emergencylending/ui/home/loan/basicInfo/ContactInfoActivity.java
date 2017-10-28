@@ -386,7 +386,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
+    public void onFail(String returnCode, String errorMsg) {
 
     }
 

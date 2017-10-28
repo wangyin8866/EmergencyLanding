@@ -99,9 +99,10 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 SupportBank supportBank = supportBankList.get(position);
                 LogUtils.d("选择银行--->" + supportBank.toString());
-                Intent intent = getIntent();
+                Intent intent = new Intent();
                 intent.putExtra("bank", supportBank);
                 setResult(RESULT_OK, intent);
+                finish();
             }
         });
     }
@@ -132,7 +133,7 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
+    public void onFail(String returnCode, String errorMsg) {
 
     }
 
@@ -147,9 +148,7 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
             bankAdapter.notifyDataSetChanged();
         }
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("juid", "e517fafd0d4a4034b4a88a6a1e041540");
         paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
-        paramsMap.put("login_token", "login_token");
         mPresenter.getSupportBankList(paramsMap);
     }
 }

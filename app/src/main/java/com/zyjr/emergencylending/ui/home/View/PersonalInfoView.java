@@ -11,10 +11,10 @@ import com.zyjr.emergencylending.entity.PersonalInfoBean;
  */
 public interface PersonalInfoView extends BeanBaseView<PersonalInfoBean> {
 
-    void onSuccessFrontBean(String returnCode, IDCardFrontBean bean);
+    void onSuccessFrontBean(String apiCode, IDCardFrontBean bean);
 
-    void onSuccessBackBean(String returnCode, IDCardBackBean bean);
+    void onSuccessBackBean(String apiCode, IDCardBackBean bean);
 
-    void onSuccessUploadPic(String returnCode);
+    void onSuccessUploadPic(String apiCode, String fileFlag, String msg);
 
 }

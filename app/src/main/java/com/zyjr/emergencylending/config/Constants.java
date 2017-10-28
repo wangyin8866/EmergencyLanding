@@ -61,6 +61,9 @@ public class Constants {
 
         return String.valueOf(WYUtils.getVersionCode(context));
     }
+
+    // 获取填写信息
+    public static final String GET_WRITE_INFO = "10";
     // 上传身份证正面
     public static final String UPLOAD_IDCARD_FRONT = "15";
     // 上传身份证反面
@@ -93,5 +96,7 @@ public class Constants {
     public static final String EDIT_BIND_BANKCARD_INFO = "31";
     // 获取支持的银行信息
     public static final String GET_SUPPORT_BANK_INFO = "32";
+    // 上传身份证图片
+    public static final String UPLOAD_IDCARD_FILE = "33";
 
 }

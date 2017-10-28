@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface WriteInfoService {
      * 获取用户资料完成信息
      */
     @FormUrlEncoded
-    @POST("1564")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<WriteInfoBean>> getWriteInfo(@FieldMap Map<String,String> map);
 
 
@@ -28,7 +29,7 @@ public interface WriteInfoService {
      * 提交填写资料
      */
     @FormUrlEncoded
-    @POST("")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<String>> submitWriteInfo(@FieldMap Map<String,String> map);
 }
 

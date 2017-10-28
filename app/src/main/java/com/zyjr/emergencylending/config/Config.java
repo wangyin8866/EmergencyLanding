@@ -41,5 +41,9 @@ public interface Config {
      * 推荐码
      */
     String KEY_RECOMMEND_CODE = "recommend_code";
+    /**
+     * 客户Id
+     */
+    String CUST_JUID = "cust_juid";
 
 }

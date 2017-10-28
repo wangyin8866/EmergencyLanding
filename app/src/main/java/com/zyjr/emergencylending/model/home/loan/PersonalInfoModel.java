@@ -49,8 +49,12 @@ public class PersonalInfoModel extends BaseModel {
         return personalInfoService.editPersonInfo(params);
     }
 
-    public Observable<ApiResult<String>> uploadFile(Map<String, String> params){
-        params.put("router", NetConstantValues.ROUTER_GET_SUPPORT_BANK_LIST);
+    public Observable<ApiResult<String>> uploadFile(Map<String, String> params) {
+        if (params.get("fileType").equals("2") || params.get("fileType").equals("3") || params.get("fileType").equals("4")) {
+            params.put("router", NetConstantValues.ROUTER_UPLOAD_IDCARD_FILE);
+        } else {
+            params.put("router", NetConstantValues.ROUTER_UPLOAD_FILE);
+        }
         return personalInfoService.uploadFile(params);
     }
 }

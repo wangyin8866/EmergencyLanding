@@ -398,7 +398,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
+    public void onFail(String returnCode, String errorMsg) {
 
     }
 

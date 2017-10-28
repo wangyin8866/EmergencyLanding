@@ -79,10 +79,6 @@ public interface NetConstantValues {
      */
     String USER_NEWS = "zyUserNewsService.getUserNews";
     /**
-     * 消息操作
-     */
-    String UPDATE_USER_NEWS = "zyUserNewsService.updateUserNewsStatus";
-    /**
      * 二维码
      */
     String QR_CODE = "userBorrowService.getMyQRCodeAndRecommendCode";
@@ -135,6 +131,19 @@ public interface NetConstantValues {
      * 上传通讯录资料
      */
     String ROUTER_SUBMIT_CONTACTS_BOOK = "";
+    /**
+     * 获取填写信息(当前资料完成情况)
+     */
+    String ROUTER_GET_WRITE_INFO = "zyUserService.getUserInfoStatus";
+    /**
+     * 上传身份证图片信息
+     */
+    String ROUTER_UPLOAD_IDCARD_FILE = "zyUserService.uploadIdCard";
+    /**
+     * 上传头像图片
+     */
+    String ROUTER_UPLOAD_FILE = "zyUserService.uploadHead";
+
     /**
      * 公告清单(标题)及详情
      */

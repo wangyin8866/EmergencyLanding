@@ -424,8 +424,6 @@ public class StringUtil {
     public static boolean isMobile(String tel) {
         Pattern p = Pattern.compile("^1[3|4|5|7|8]\\d{9}$");
         Matcher m = p.matcher(tel);
-        LogUtils.d("手机号码校验:" + m.matches());
-        LogUtils.d("校验结果:---->" + String.valueOf(tel.matches("^1[3|4|5|7|8]\\d{9}$")));
         return m.matches();
     }
 

@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.ToolImage;
+import com.zyjr.emergencylending.utils.WYUtils;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.utils.third.GlideUtils;
 import com.zyjr.emergencylending.utils.third.IdcardUtils;
@@ -104,6 +106,8 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     TextView tvLiveAddress;  // 居住地址
     @BindView(R.id.et_live_detail_address)
     ClearEditText etLiveDetailAddress; // 居住详细地址
+    @BindView(R.id.ll_cover)
+    LinearLayout llCover;
 
     private File idcardFile;
     private File holdCardFile;
@@ -115,7 +119,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     private static final int INTENT_IDCARD_HOLD = 10002; // 请求码 拍照
     private int mWidth;
     private int mHeight;
-    private int isEdit = 1;
+    private String isEdit = "1"; // 默认可编辑
     private CodeBean marriageCodeBean = null; // 婚姻状态codeBean
     private CodeBean liveCodeBean = null; // 居住状态codeBean
     private LiveAddressBean liveAddressBean = null; // 居住地址bean
@@ -135,6 +139,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         setContentView(R.layout.activity_personal_data);
         ButterKnife.bind(this);
         init();
+        initGetData();
     }
 
     @Override
@@ -256,7 +261,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                         hujiAddressBean.setHuji_city_name(cityode.getName());
                         hujiAddressBean.setHuji_county(dCode.getZipcode());
                         hujiAddressBean.setHuji_county_name(dCode.getName());
-                        hujiAddressBean.setHuji_adr(tvHujiAddress.getText().toString().trim());
+                        hujiAddressBean.setHuji_adr(pCode.getProvinceCode() + "," + cityode.getCityCode() + "," + dCode.getZipcode());
                         LogUtils.d("户籍地址选择--->" + hujiAddressBean.toString());
                     }
                 });
@@ -284,7 +289,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                         liveAddressBean.setLive_city_name(cityode.getName());
                         liveAddressBean.setLive_county(dCode.getZipcode());
                         liveAddressBean.setLive_county_name(dCode.getName());
-                        liveAddressBean.setLive_adr(tvLiveAddress.getText().toString().trim());
+                        liveAddressBean.setLive_adr(pCode.getProvinceCode() + "," + cityode.getCityCode() + "," + dCode.getZipcode());
                         LogUtils.d("居住地址选择--->" + liveAddressBean.toString());
 
                     }
@@ -301,6 +306,23 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         }
     }
 
+    /**
+     * 接受 传递数据,根据标识判断是新添加资料还是编辑资料
+     */
+    private void initGetData() {
+        Intent intent = getIntent();
+        isEdit = intent.getStringExtra("isEdit");
+        String status = intent.getStringExtra("status");
+        // 已完成状态获取资料信息
+        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+            loadingPersonInfo();
+        }
+        if (isEdit.equals("0")) {
+            WYUtils.coverPage(false, llCover);
+        }
+    }
+
+
     private void validateData() {
         String personalName = tvPersonalName.getText().toString().trim(); // 姓名
         String personalIdcard = tvPersonalIdcard.getText().toString().trim(); // 身份证
@@ -310,10 +332,10 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         String hujiDetailAddress = tvHujiDetailAddress.getText().toString().trim(); // 户籍详细地址(根据证件上地址来的,不可更改)
         String liveAddress = tvLiveAddress.getText().toString().trim(); // 居住地址
         String liveDetailAddress = etLiveDetailAddress.getText().toString().trim(); // 居住详细地址
-        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress)) {
-            ToastAlone.showLongToast(this, "请拍照扫描身份证!");
-            return;
-        }
+//        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress)) {
+//            ToastAlone.showLongToast(this, "请拍照扫描身份证!");
+//            return;
+//        }
         if (StringUtil.isEmpty(marriageStatus) && marriageCodeBean == null) {
             ToastAlone.showLongToast(this, "请选择婚姻关系!");
             return;
@@ -344,13 +366,17 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 return;
             }
         }
-        if (StringUtil.isEmpty(liveDetailAddress)) {
-            ToastAlone.showLongToast(this, "请填写现居住详细地址!");
-            return;
+//        if (StringUtil.isEmpty(liveDetailAddress)) {
+//            ToastAlone.showLongToast(this, "请填写现居住详细地址!");
+//            return;
+//        }
+        if (personalInfoBean == null) {
+            personalInfoBean = new PersonalInfoBean();
         }
-        personalInfoBean = new PersonalInfoBean();
-        personalInfoBean.setUsername(personalName); // 用户姓名
-        personalInfoBean.setIdCard(personalIdcard); // 用户身份证
+//        personalInfoBean.setUsername(personalName); // 用户姓名
+        personalInfoBean.setUsername("虞进");
+//        personalInfoBean.setIdCard(personalIdcard); // 用户身份证
+        personalInfoBean.setIdCard("421182199204043832");
         personalInfoBean.setMarriage(marriageCodeBean.getCode()); // 婚姻状况
         personalInfoBean.setHuji_adr(hujiAddressBean.getHuji_adr()); // 户籍省市区
         personalInfoBean.setHuji_province(hujiAddressBean.getHuji_province()); // 户籍省编码
@@ -359,7 +385,8 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         personalInfoBean.setHuji_city_name(hujiAddressBean.getHuji_city_name());
         personalInfoBean.setHuji_county(hujiAddressBean.getHuji_county()); // 户籍所在区
         personalInfoBean.setHuji_county_name(hujiAddressBean.getHuji_county_name());
-        personalInfoBean.setHuji_adr_detail(hujiDetailAddress); // 户籍详细地址
+//        personalInfoBean.setHuji_adr_detail(hujiDetailAddress); // 户籍详细地址
+        personalInfoBean.setHuji_adr_detail("武汉市车位无无无无1号"); // 户籍详细地址
         personalInfoBean.setLive_status(liveCodeBean.getCode()); // 居住状况
         personalInfoBean.setLive_adr(liveAddressBean.getLive_adr()); // 居住地省市区
         personalInfoBean.setLive_province(liveAddressBean.getLive_province()); // 居住省编码
@@ -368,13 +395,11 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         personalInfoBean.setLive_city_name(liveAddressBean.getLive_city_name());
         personalInfoBean.setLive_county(liveAddressBean.getLive_county()); // 居住所在区
         personalInfoBean.setLive_county_name(liveAddressBean.getLive_county_name());
-        personalInfoBean.setLive_adr_detail(liveDetailAddress); // 居住详细地址
+//        personalInfoBean.setLive_adr_detail(liveDetailAddress); // 居住详细地址
+        personalInfoBean.setLive_adr_detail("胜多负少大幅度水电费");
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(personalInfoBean);
         LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
         LogUtils.d("参数数量:" + paramsMap.size());
-        paramsMap.put("juid", "");
-        paramsMap.put("cust_juid", "");
-        paramsMap.put("login_token", "");
         mPresenter.addPersonalInfo(paramsMap);
     }
 
@@ -453,7 +478,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                             hujiAddressBean.setHuji_city_name(c.getName());
                             hujiAddressBean.setHuji_county(d.getZipcode());
                             hujiAddressBean.setHuji_county_name(d.getName());
-                            hujiAddressBean.setHuji_adr(tvHujiAddress.getText().toString().trim());
+                            hujiAddressBean.setHuji_adr(p.getProvinceCode() + "," + c.getCityCode() + "," + d.getZipcode());
                             LogUtils.d("获取填写户籍地址--->" + hujiAddressBean.toString());
                         }
                     } else {
@@ -502,7 +527,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                             liveAddressBean.setLive_city_name(c.getName());
                             liveAddressBean.setLive_county(d.getZipcode());
                             liveAddressBean.setLive_county_name(d.getName());
-                            liveAddressBean.setLive_adr(tvLiveAddress.getText().toString().trim());
+                            liveAddressBean.setLive_adr(p.getProvinceCode() + "," + c.getCityCode() + "," + d.getZipcode());
                             LogUtils.d("获取填写居住地址--->" + liveAddressBean.toString());
                         }
                     } else {
@@ -561,7 +586,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         }
     }
 
-
     /**
      * 获取TakePhoto实例
      */
@@ -571,7 +595,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         }
         return takePhoto;
     }
-
 
     // 图片拍照回调
     @Override
@@ -669,7 +692,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         });
         CommonUtils.addressDatas(this);
         IdcardUtils.getInstance().init(this);
-
     }
 
     private View getRootView() {
@@ -682,14 +704,16 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         String fileSuffixName = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());  // 后缀名(文件类型)
         String data = ToolImage.fileBase64(filePath);
         Map<String, String> params = new HashMap<String, String>();
-        params.put("juid", "");
-        params.put("cust_juid", "");
-        params.put("login_token", "");
         params.put("fileName", fileName);
         params.put("fileExtName", fileSuffixName);
         params.put("fileContext", data);
-        params.put("fileContext", fileType);
+        params.put("fileType", fileType);
         mPresenter.uploadFile(params);
+    }
+
+    private void loadingPersonInfo() {
+        Map<String, String> paramMaps = new HashMap<>();
+        mPresenter.getPersonalInfo(paramMaps);
     }
 
     @Override
@@ -717,54 +741,45 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     }
 
     @Override
-    public void onSuccessUploadPic(String returnCode) {
+    public void onSuccessUploadPic(String apiCode, String fileFlag, String msg) {
+        ToastAlone.showLongToast(this, msg);
         // 区分 正面和反面
-        if (returnCode.equals("2")) {
+        if (fileFlag.equals("2")) {
             ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
             tvPersonalName.setText(idCardFrontBean.getName().trim());
             tvPersonalIdcard.setText(idCardFrontBean.getId_card_number().trim());
             tvHujiDetailAddress.setText(idCardFrontBean.getAddress());
-        } else if (returnCode.equals("3")) {
+        } else if (fileFlag.equals("3")) {
             ivIdcardBack.setImageBitmap(mBitmapIDcardBack);
-        } else if (returnCode.equals("4")) {
+        } else if (fileFlag.equals("4")) {
             ivHoldIdcard.setImageBitmap(mBitmapHoldIdcard);
         }
     }
 
-
     @Override
     public void onSuccessGet(String returnCode, PersonalInfoBean bean) {
-        LogUtils.d("获取个人资料成功---->" + returnCode + ",PersonalInfoBean:" + bean.toString());
-        showUserInfo(bean);
+        personalInfoBean = bean;
+        showUserInfo(personalInfoBean);
     }
 
     @Override
     public void onSuccessAdd(String returnCode, PersonalInfoBean bean) {
-        LogUtils.d("添加个人资料成功---->" + returnCode + ",PersonalInfoBean:" + bean.toString());
+        finish();
     }
 
     @Override
     public void onSuccessEdit(String returnCode, PersonalInfoBean bean) {
-        LogUtils.d("修改个人资料成功---->" + returnCode + ",PersonalInfoBean:" + bean.toString());
+        finish();
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
-
+    public void onFail(String returnCode, String errorMsg) {
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-//        if (isEdit == 1) {
-//            LogUtils.d("拦击所有点击事件");
-//            isEdit = 0;
-//            return true;
-//        }
-        return super.dispatchTouchEvent(ev);
-    }
 }

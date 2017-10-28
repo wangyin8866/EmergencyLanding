@@ -3,6 +3,9 @@ package com.zyjr.emergencylending.utils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +17,7 @@ import okhttp3.ResponseBody;
 
 /**
  * 采集okhttp3client的日志
+ *
  * @author wangyin
  */
 
@@ -29,7 +33,7 @@ public class LogInterceptor implements Interceptor {
         if (requestBody instanceof FormBody) {
             HashMap<String, Object> rootMap = new HashMap<>();
             for (int i = 0; i < ((FormBody) requestBody).size(); i++) {
-                rootMap.put(((FormBody) requestBody).encodedName(i), ((FormBody) requestBody).encodedValue(i));
+                rootMap.put(((FormBody) requestBody).encodedName(i), getValueDecode(((FormBody) requestBody).encodedValue(i)));
             }
             LogUtils.e(TAG, "params : " + new Gson().toJson(rootMap));
         }
@@ -46,5 +50,19 @@ public class LogInterceptor implements Interceptor {
         return response.newBuilder()
                 .body(ResponseBody.create(mediaType, content))
                 .build();
+    }
+
+    /**
+     * 解决中文乱码结果集
+     * @param value
+     * @return
+     */
+    private static String getValueDecode(String value) {
+        try {
+            return URLDecoder.decode(value, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return value;
     }
 }

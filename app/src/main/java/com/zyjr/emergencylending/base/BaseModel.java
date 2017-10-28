@@ -53,9 +53,10 @@ public class BaseModel {
                         for (int i = 0; i < oidFormBody.size(); i++) {
                             newFormBody.addEncoded(oidFormBody.encodedName(i), oidFormBody.encodedValue(i));
                         }
-//                        newFormBody.add("juid",SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "e517fafd0d4a4034b4a88a6a1e041540"));
-                        newFormBody.add("juid","1");
-                        newFormBody.add("login_token",SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, "login_token"));
+                        newFormBody.add("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""));
+                        newFormBody.add("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""));
+//                        newFormBody.add("juid","1");
+                        newFormBody.add("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""));
                         newFormBody.add("version_no", Constants.getVersionCode(BaseApplication.getContext()));
                         newFormBody.add("register_platform", Constants.getPlatform(1));
                         requestBuilder.method(original.method(), newFormBody.build());

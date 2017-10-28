@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.service.home.loan.WriteInfoService;
 
@@ -21,15 +22,16 @@ public class WriteInfoModel extends BaseModel {
         writeInfoService = retrofit.create(WriteInfoService.class);
     }
 
-    private static class SingletonHolder{
+    private static class SingletonHolder {
         private static final WriteInfoModel writeInfoModel = new WriteInfoModel();
     }
 
-    public static WriteInfoModel getInstance(){
+    public static WriteInfoModel getInstance() {
         return SingletonHolder.writeInfoModel;
     }
 
     public Observable<ApiResult<WriteInfoBean>> getWriteInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_GET_WRITE_INFO);
         return writeInfoService.getWriteInfo(params);
     }
 

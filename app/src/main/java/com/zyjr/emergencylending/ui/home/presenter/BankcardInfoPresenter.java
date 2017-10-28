@@ -31,12 +31,14 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
         invoke(BankcardInfoModel.getInstance().getSupportBankList(params), new ProgressSubscriber<ApiResult<List<SupportBank>>>(new SubscriberOnNextListener<ApiResult<List<SupportBank>>>() {
             @Override
             public void onNext(ApiResult<List<SupportBank>> result) {
-                if (result.getResult() != null) {
-                    LogUtils.d("获取支持银行信息成功---->" + result.getResult().toString());
-                    getView().onSuccessGetSupportBanks(Constants.GET_SUPPORT_BANK_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取支持银行信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGetSupportBanks(Constants.GET_SUPPORT_BANK_INFO, result.getResult());
+                    }
                 } else {
-                    LogUtils.d("获取支持银行信息失败---->" + result.getResult().toString());
-                    getView().onFail(Constants.GET_SUPPORT_BANK_INFO, result.getFlag(), result.getMsg());
+                    LogUtils.d("获取支持银行信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_SUPPORT_BANK_INFO, result.getMsg());
                 }
             }
 
@@ -52,12 +54,14 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
         invoke(BankcardInfoModel.getInstance().getBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
-                LogUtils.d("获取绑定银行卡信息成功---->" + result.getResult().toString());
-                if (result.getResult() != null) {
-                    getView().onSuccessGet(Constants.GET_BIND_BANKCARD_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取绑定银行卡信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGet(Constants.GET_BIND_BANKCARD_INFO, result.getResult());
+                    }
                 } else {
-                    LogUtils.d("获取银行卡信息失败---->" + result.getResult().toString());
-                    getView().onFail(Constants.GET_BIND_BANKCARD_INFO, result.getFlag(), result.getMsg());
+                    LogUtils.d("获取银行卡信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_BIND_BANKCARD_INFO, result.getMsg());
                 }
             }
 
@@ -73,12 +77,14 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
         invoke(BankcardInfoModel.getInstance().addBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
-                LogUtils.d("添加银行卡信息成功---->" + result.getResult().toString());
-                if (result.getResult() != null) {
-                    getView().onSuccessGet(Constants.ADD_BIND_BANKCARD_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("添加银行卡信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGet(Constants.ADD_BIND_BANKCARD_INFO, result.getResult());
+                    }
                 } else {
-                    LogUtils.d("添加银行卡信息失败---->" + result.getResult().toString());
-                    getView().onFail(Constants.ADD_BIND_BANKCARD_INFO, result.getFlag(), result.getMsg());
+                    LogUtils.d("添加银行卡信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.ADD_BIND_BANKCARD_INFO, result.getMsg());
                 }
             }
 
@@ -94,12 +100,14 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
         invoke(BankcardInfoModel.getInstance().editBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
-                if (result.getResult() != null) {
-                    LogUtils.d("修改银行卡信息成功---->" + result.getResult().toString());
-                    getView().onSuccessGet(Constants.EDIT_BIND_BANKCARD_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("修改银行卡信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGet(Constants.EDIT_BIND_BANKCARD_INFO, result.getResult());
+                    }
                 } else {
-                    LogUtils.d("修改银行卡信息失败---->" + result.getResult().toString());
-                    getView().onFail(Constants.EDIT_BIND_BANKCARD_INFO, result.getFlag(), result.getMsg());
+                    LogUtils.d("修改银行卡信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.EDIT_BIND_BANKCARD_INFO, result.getMsg());
                 }
             }
 

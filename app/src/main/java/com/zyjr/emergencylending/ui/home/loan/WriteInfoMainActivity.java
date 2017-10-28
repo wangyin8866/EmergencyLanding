@@ -27,6 +27,9 @@ import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.SettingItemView;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -79,31 +82,72 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         if (BaseApplication.isSalesman) {
             //线下
             rlNoSalesman.setVisibility(View.GONE);
-
         } else {
             rlNoSalesman.setVisibility(View.VISIBLE);
         }
+        loadingWriteInfoStatus();
     }
 
+    /**
+     * status是否已完成:1完成 0:未完成;isEdit是否可编辑:1是 0:否
+     *
+     * @param view
+     */
     @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info, R.id.btn_apply_quickly, R.id.btn_submit})
     public void onViewClicked(View view) {
+        Intent intent = null;
         switch (view.getId()) {
             case R.id.layout_personal_info:
-                startActivity(new Intent(WriteInfoMainActivity.this, PersonalInfoActivity.class));
+                if (writeInfoBean == null) {
+                    intent = new Intent(this, PersonalInfoActivity.class);
+//                    intent.putExtra("status", "0");
+                    intent.putExtra("status", "1");
+                    intent.putExtra("isEdit", "0");
+                } else {
+                    intent.putExtra("isEdit", writeInfoBean.getUser_data_edit());
+                    intent.putExtra("status", writeInfoBean.getUser_data_status());
+                }
+                startActivity(intent);
                 break;
             case R.id.layout_work_info:
-                startActivity(new Intent(WriteInfoMainActivity.this, WorkInfoActivity.class));
+                if (writeInfoBean == null) {
+                    intent = new Intent(this, WorkInfoActivity.class);
+                    intent.putExtra("status", "0");
+                    intent.putExtra("isEdit", "1");
+                } else {
+                    intent.putExtra("isEdit", writeInfoBean.getUser_job_edit());
+                    intent.putExtra("status", writeInfoBean.getUser_job_status());
+                }
+                startActivity(intent);
                 break;
             case R.id.layout_contact_info:
-                startActivity(new Intent(WriteInfoMainActivity.this, ContactInfoActivity.class));
+                if (writeInfoBean == null) {
+                    intent = new Intent(this, ContactInfoActivity.class);
+                } else {
+                    if (writeInfoBean.getUser_contact_status().equals("1")) {
+                        intent.putExtra("isEdit", "1");
+                    } else {
+                        LogUtils.d("用户联系人资料不可修改");
+                        return;
+                    }
+                }
+                startActivity(intent);
                 break;
             case R.id.layout_bank_info:
-                startActivity(new Intent(WriteInfoMainActivity.this, BankcardInfoActivity.class));
-//                startActivity(new Intent(WriteInfoMainActivity.this, SupportBankActivity.class));
-//                startActivity(new Intent(WriteInfoMainActivity.this, AddBankcardActivity.class));
+                if (writeInfoBean == null) {
+                    intent = new Intent(this, ContactInfoActivity.class);
+                } else {
+                    if (writeInfoBean.getUser_bank_status().equals("1")) {
+                        intent.putExtra("isEdit", "1");
+                    } else {
+                        LogUtils.d("用户银行资料不可修改");
+                        return;
+                    }
+                }
+                startActivity(intent);
                 break;
             case R.id.btn_apply_quickly:
-                Intent intent = new Intent(WriteInfoMainActivity.this, LoanMainActivity.class);
+                intent = new Intent(WriteInfoMainActivity.this, LoanMainActivity.class);
                 intent.putExtra("flag", "offline");
                 startActivity(intent);
                 break;
@@ -115,11 +159,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
 
     private void initData() {
-        intent = getIntent();
-        loanMoney = intent.getStringExtra("loanMoney");
-        loanWeek = intent.getStringExtra("loanWeek");
-        LogUtils.d("WriteInfoMainActivity接收数据---->" + loanMoney + "," + loanWeek);
-        infoFinishStatus("", "1", "1", "");
+//        intent = getIntent();
+//        loanMoney = intent.getStringExtra("loanMoney");
+//        loanWeek = intent.getStringExtra("loanWeek");
+//        LogUtils.d("WriteInfoMainActivity接收数据---->" + loanMoney + "," + loanWeek);
     }
 
 
@@ -139,7 +182,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
             @Override
             public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-                ToastAlone.showLongToast(WriteInfoMainActivity.this, "刷新");
+                loadingWriteInfoStatus();
             }
         });
     }
@@ -157,22 +200,22 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         if (personal.equals("1")) {
             layoutPersonalInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
         } else {
-            layoutPersonalInfo.setRightContentVisible(false);
+            layoutPersonalInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
         if (work.equals("1")) {
             layoutWorkInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
         } else {
-            layoutWorkInfo.setRightContentVisible(false);
+            layoutWorkInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
         if (contact.equals("1")) {
             layoutContactInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
         } else {
-            layoutContactInfo.setRightContentVisible(false);
+            layoutContactInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
         if (bank.equals("1")) {
             layoutBankInfo.setRightContent("已完成", getResources().getColor(R.color.mine_center_bg));
         } else {
-            layoutBankInfo.setRightContentVisible(false);
+            layoutBankInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
     }
 
@@ -195,6 +238,11 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     }
 
 
+    private void loadingWriteInfoStatus() {
+        Map<String, String> paramsMap = new HashMap<>();
+        mPresenter.getWriteInfo(paramsMap);
+    }
+
     @Override
     public void onSuccessGet(String returnCode, WriteInfoBean model) {
         pullToRefreshScrollView.onRefreshComplete();
@@ -207,7 +255,17 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     }
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onFail(String returnCode, String flag, String errorMsg) {
         pullToRefreshScrollView.onRefreshComplete();
+        infoFinishStatus("", "", "", "");
+        ToastAlone.showLongToast(this, errorMsg);
     }
+
+    @Override
+    public void onError(String returnCode, String errorMsg) {
+        pullToRefreshScrollView.onRefreshComplete();
+        ToastAlone.showLongToast(this, errorMsg);
+    }
+
+
 }

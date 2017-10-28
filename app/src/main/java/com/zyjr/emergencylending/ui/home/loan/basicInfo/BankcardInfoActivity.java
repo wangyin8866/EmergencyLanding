@@ -94,7 +94,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_CODE_ADD_BANKCARD && resultCode == RESULT_OK) {
-
+            loadingBindBankcardInfo();
         } else if (requestCode == INTENT_CODE_EDIT_BANKCARD && resultCode == RESULT_OK) {
             loadingBindBankcardInfo();
         }
@@ -134,25 +134,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }).show();
     }
 
-    private void showOperateConfirm() {
-        final CustomerDialog customerDialog = new CustomerDialog(BankcardInfoActivity.this);
-        customerDialog.operateComfirm(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.message_left:
-                        ToastAlone.showLongToast(BankcardInfoActivity.this, "取消");
-                        customerDialog.dismiss();
 
-                        break;
-                    case R.id.message_right:
-                        ToastAlone.showLongToast(BankcardInfoActivity.this, "确认");
-
-                        break;
-                }
-            }
-        }, "您确定要保存修改信息吗", 0, "取消", 0, "确定", 0).show();
-    }
 
     private void init() {
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
@@ -232,17 +214,17 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
     @Override
+    public void onFail(String apiCode, String errorMsg) {
+        ToastAlone.showLongToast(this, errorMsg);
+    }
+
+    @Override
     public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
 
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
-
-    }
-
-    @Override
     public void onError(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 }

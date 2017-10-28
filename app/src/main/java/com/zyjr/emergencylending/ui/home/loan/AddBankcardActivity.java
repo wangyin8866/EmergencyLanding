@@ -28,11 +28,13 @@ import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,14 +88,10 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
 
-    @OnClick({R.id.ll_openbank_select, R.id.btn_add, R.id.iv_choose_bank})
+    @OnClick({R.id.ll_openbank_select, R.id.btn_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_openbank_select:
-                startActivity(new Intent(this, SupportBankActivity.class));
-                break;
-
-            case R.id.iv_choose_bank:
                 Intent intent = new Intent(this, SupportBankActivity.class);
                 startActivityForResult(intent, 1);
                 break;
@@ -105,10 +103,41 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     private void validateData() {
+        String userName = tvUserName.getText().toString().trim(); // 姓名
+        String idcardNumber = tvIdcardNumer.getText().toString().trim(); // 身份证号
         String bankcardNumber = etBankcardNumber.getText().toString().trim(); // 银行卡号
         String openBank = tvOpenbank.getText().toString().trim(); // 开户行
         String reservedPhone = etReservedPhone.getText().toString().trim();// 预留手机号
-
+        if (StringUtil.isEmpty(userName) || StringUtil.isEmpty(idcardNumber)) {
+            ToastAlone.showLongToast(this, "请重新获取信息");
+            return;
+        }
+        if (StringUtil.isEmpty(bankcardNumber)) {
+            ToastAlone.showLongToast(this, "请输入银行卡");
+            return;
+        }
+        if (StringUtil.isEmpty(openBank)) {
+            ToastAlone.showLongToast(this, "请选择开户银行");
+            return;
+        }
+        if (StringUtil.isEmpty(reservedPhone)) {
+            ToastAlone.showLongToast(this, "请输入银行预留手机号");
+            return;
+        }
+        if (!StringUtil.isMobile(reservedPhone)) {
+            ToastAlone.showLongToast(this, "请输入正确的手机号");
+            return;
+        }
+        if (bankcardInfo == null) {
+            bankcardInfo = new BankcardInfo();
+        }
+        bankcardInfo.setBank_username(userName);
+        bankcardInfo.setId_card(idcardNumber);
+        bankcardInfo.setBank_phone(reservedPhone);
+        bankcardInfo.setBank_name(openBank);
+        Map<String, String> paramsMap = ReflectionUtils.beanToMap(bankcardInfo);
+        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
+        mPresenter.addBindBankcardInfo(paramsMap);
     }
 
 
@@ -138,27 +167,28 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (temp.length() > 6) {
+                if (temp.length() > 10) {
                     if (StringUtil.isEmpty(tvOpenbank.getText().toString().trim())) {
                         BankDbBean bankDbBean = BankcardDb.getInstance().queryBankcard(db, etBankcardNumber.getText().toString());
                         if (null == bankDbBean) {
 //                            ToastAlone.showShortToast(AddBankcardActivity.this, "暂未查到对应的银行");
                         } else {
                             LogUtils.d("获取的银行信息为:" + bankDbBean + ",可用");
-                            bankcardInfo = new BankcardInfo();
+                            if (bankcardInfo == null) {
+                                bankcardInfo = new BankcardInfo();
+                            }
                             if (StringUtil.isNotEmpty(bankDbBean.getBank_code())) {
                                 bankcardInfo.setBank_code(bankDbBean.getBank_code());
                             }
                             if (StringUtil.isNotEmpty(bankDbBean.getBank_name())) {
-                                bankcardInfo.setBank_name(bankDbBean.getBank_name());
                                 tvOpenbank.setText(bankDbBean.getBank_name().trim());
-                                ToastAlone.showShortToast(AddBankcardActivity.this, bankDbBean.getBank_name());
                             }
                         }
                     }
-                } else {
+                } else if (temp.length() < 6 && temp.length() > 0) {
                     tvOpenbank.setText("");
-                    bankcardInfo = null;
+                    bankcardInfo.setBank_code("");
+                    bankcardInfo.setBank_name("");
                 }
             }
         });
@@ -176,9 +206,9 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
     @Override
     public void onSuccessAdd(String returnCode, BankcardInfo bean) {
-        LogUtils.d("添加绑定银行卡信息成功---->" + returnCode + ",BankcardInfo:" + bean.toString());
         ToastAlone.showLongToast(this, "添加成功");
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -188,7 +218,7 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
+    public void onFail(String returnCode, String errorMsg) {
 
     }
 
@@ -207,10 +237,15 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == 11) {
-            data = getIntent();
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             supportBank = (SupportBank) data.getSerializableExtra("bank");
-            tvOpenbank.setText(supportBank.getName_());
+            if (StringUtil.isNotEmpty(supportBank.getCode_()) && StringUtil.isNotEmpty(supportBank.getName_())) {
+                tvOpenbank.setText(supportBank.getName_().trim());
+                if (bankcardInfo == null) {
+                    bankcardInfo = new BankcardInfo();
+                }
+                bankcardInfo.setBank_code(supportBank.getCode_().trim());
+            }
         }
     }
 }

@@ -19,12 +19,14 @@ import com.zyjr.emergencylending.adapter.BankFrontshowAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.db.BankcardDb;
 import com.zyjr.emergencylending.entity.BankBean;
 import com.zyjr.emergencylending.entity.BankDbBean;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
+import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ReflectionUtils;
@@ -72,7 +74,6 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private CharSequence temp;
     private BankcardInfo bankcardInfo = null;
     private SQLiteDatabase db = null;
-    private Intent intent = null;
 
     @Override
     protected BankcardInfoPresenter createPresenter() {
@@ -89,14 +90,10 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
 
-    @OnClick({R.id.ll_openbank_select, R.id.btn_add, R.id.iv_choose_bank})
+    @OnClick({R.id.ll_openbank_select, R.id.btn_add})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_openbank_select:
-                startActivity(new Intent(this, SupportBankActivity.class));
-                break;
-
-            case R.id.iv_choose_bank:
                 Intent intent = new Intent(this, SupportBankActivity.class);
                 startActivityForResult(intent, 1);
                 break;
@@ -110,9 +107,16 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1 && resultCode == RESULT_OK){
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             SupportBank supportBank = (SupportBank) data.getSerializableExtra("bank");
             LogUtils.d("接收回传信息--->" + supportBank.toString());
+            if (StringUtil.isNotEmpty(supportBank.getCode_()) && StringUtil.isNotEmpty(supportBank.getName_())) {
+                tvOpenbank.setText(supportBank.getName_().trim());
+                if (bankcardInfo == null) {
+                    bankcardInfo = new BankcardInfo();
+                }
+                bankcardInfo.setBank_code(supportBank.getCode_().trim());
+            }
         }
     }
 
@@ -152,11 +156,7 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
         bankcardInfo.setBank_phone(reservedPhone);
         bankcardInfo.setBank_name(openBank);
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(bankcardInfo);
-        paramsMap.put("juid", "e517fafd0d4a4034b4a88a6a1e041540");
         paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
-        paramsMap.put("login_token", "login_token");
-        LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
-        LogUtils.d("参数数量:" + paramsMap.size());
         mPresenter.editBindBankcardInfo(paramsMap);
     }
 
@@ -168,7 +168,6 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
     private void defaultHttp() {
-        intent = getIntent();
         loadingBindBankcardInfo();
     }
 
@@ -220,27 +219,47 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
                             }
                         }
                     }
-                } else {
+                } else if (temp.length() < 6 && temp.length() > 0) {
                     tvOpenbank.setText("");
-                    bankcardInfo = null;
+                    bankcardInfo.setBank_code("");
+                    bankcardInfo.setBank_name("");
                 }
             }
         });
     }
 
+    /**
+     * 弹出确认对话框
+     */
+    private void showOperateConfirm() {
+        final CustomerDialog customerDialog = new CustomerDialog(EditBankcardActivity.this);
+        customerDialog.operateComfirm(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.message_left:
+                        ToastAlone.showLongToast(EditBankcardActivity.this, "取消");
+                        customerDialog.dismiss();
+
+                        break;
+                    case R.id.message_right:
+                        ToastAlone.showLongToast(EditBankcardActivity.this, "确认");
+
+                        break;
+                }
+            }
+        }, "您确定要保存修改信息吗", 0, "取消", 0, "确定", 0).show();
+    }
+
     private void loadingBindBankcardInfo() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("juid", "e517fafd0d4a4034b4a88a6a1e041540");
         paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
-        paramsMap.put("login_token", "login_token");
         mPresenter.getBindBankcardInfo(paramsMap);
     }
 
     private void loadingSupportBankList() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("juid", "e517fafd0d4a4034b4a88a6a1e041540");
         paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
-        paramsMap.put("login_token", "login_token");
         mPresenter.getSupportBankList(paramsMap);
     }
 
@@ -259,7 +278,6 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
-        LogUtils.d("获取绑定银行卡信息成功---->" + returnCode + ",BankcardInfo:" + bean.toString());
         bankcardInfo = bean;
         showBankcardInfo(bankcardInfo);
         loadingSupportBankList();
@@ -272,19 +290,19 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessEdit(String returnCode, BankcardInfo bean) {
-        LogUtils.d("修改绑定银行卡信息成功---->" + returnCode + ",BankcardInfo:" + bean.toString());
         ToastAlone.showLongToast(this, "修改成功");
-        setResult(RESULT_OK);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
-
+    public void onFail(String returnCode, String errorMsg) {
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 }
