@@ -85,13 +85,11 @@ public interface NetConstantValues {
      * 二维码
      */
     String QR_CODE = "userBorrowService.getMyQRCodeAndRecommendCode";
-    String BASE_PREFIX = "?router=";
-
 
     /**
      * 获取支持银行列表
      */
-    String ROUTER_GET_SUPPORT_BANK_LIST = BASE_PREFIX + "zyUserBankCardService.getSupportUserBankDicInfo";
+    String ROUTER_GET_SUPPORT_BANK_LIST = "zyUserBankCardService.getSupportUserBankDicInfo";
     /**
      * 获取绑定银行卡信息
      */
@@ -103,10 +101,38 @@ public interface NetConstantValues {
     /**
      * 修改银行卡
      */
-    String ROUTER_EDIT_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.saveOrUpdateUserBankCard";
+    String ROUTER_EDIT_BIND_BANK_CARD = "zyUserBankCardService.saveOrUpdateUserBankCard";
     /**
      * 删除银行卡
      */
-    String ROUTER_DELETE_BIND_BANK_CARD = BASE_PREFIX + "zyUserBankCardService.deleteUserBankCard";
+    String ROUTER_DELETE_BIND_BANK_CARD = "zyUserBankCardService.deleteUserBankCard";
+    /**
+     * 获取个人资料
+     */
+    String ROUTER_GET_PERSONAL_INFO = "zyUserService.getUserPersonlInfo";
+    /**
+     * 保存个人资料
+     */
+    String ROUTER_ADD_PERSONAL_INFO = "zyUserService.saveUserPersonlInfo";
+    /**
+     * 修改个人资料
+     */
+    String ROUTER_EDIT_PERSONAL_INFO = "zyUserService.saveUserPersonlInfo";
+    /**
+     * 获取联系人资料
+     */
+    String ROUTER_GET_CONTACT_INFO = "zyUserContactService.getUserContactInfo";
+    /**
+     * 添加联系人资料
+     */
+    String ROUTER_ADD_CONTACT_INFO = "zyUserContactService.saveUserContactInfo";
+    /**
+     * 修改联系人资料
+     */
+    String ROUTER_EDIT_CONTACT_INFO = "zyUserContactService.saveUserContactInfo";
+    /**
+     * 上传通讯录资料
+     */
+    String ROUTER_SUBMIT_CONTACTS_BOOK = "";
 
 }
