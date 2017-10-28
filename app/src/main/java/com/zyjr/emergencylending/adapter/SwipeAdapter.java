@@ -32,13 +32,18 @@ public class SwipeAdapter extends BaseQuickAdapter<MessageBean.ResultBean.Result
 
     public SwipeAdapter(@LayoutRes int layoutResId, @Nullable List<MessageBean.ResultBean.ResultListBean> data) {
         super(layoutResId, data);
+        notifyDataSetChanged();
     }
 
     @Override
     protected void convert(final BaseViewHolder viewHolder, MessageBean.ResultBean.ResultListBean item) {
-        viewHolder.setText(R.id.title, item.getNews_title())
+        viewHolder.setText(R.id.title, item.getNews_title()).setText(R.id.date,item.getCreate_date()).setText(R.id.content,item.getNews_detail())
                 .addOnClickListener(R.id.ll_content);
-
+        if (item.getStatus()==1) {
+            viewHolder.getView(R.id.iv_mark).setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.getView(R.id.iv_mark).setVisibility(View.GONE);
+        }
         ((SwipeMenuView) viewHolder.getView(R.id.swipeMenuView)).setIos(true).setLeftSwipe(true);
 
         viewHolder.getView(R.id.btnDelete).setOnClickListener(new View.OnClickListener() {

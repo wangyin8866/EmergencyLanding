@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:drawableLeft="@drawable/ic_launcher"
+        android:drawableLeft="@mipmap/icon_time"
         android:drawablePadding="3dp"
         android:gravity="center_vertical"
         android:text="2017-09-26 10:47:23"

@@ -3,6 +3,9 @@ package com.zyjr.emergencylending.model;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.service.Api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rx.Observable;
 
 /**
@@ -30,7 +33,7 @@ public class VersionUpdateModel extends BaseModel {
      */
     public Observable<String> update(String router, String juid, String form_token,
                                      String app_version_no, String app_type, String platform_type) {
-        map.clear();
+        Map<String, String> map = new HashMap<String, String>(6);
         map.put("router", router);
         map.put("juid", juid);
         map.put("form_token", form_token);

@@ -15,6 +15,10 @@ public interface Config {
     String TIP_ALL = "您所输入的账号或密码有误，请重新输入！";
     String TIP_NET_ERROR = "网络异常！";
     /**
+     * 每页数据
+     */
+    int PAGE_SIZE =15;
+    /**
      * 请求成功
      */
     String CODE_SUCCESS = "API0000";

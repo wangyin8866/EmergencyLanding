@@ -7,6 +7,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.MessageBean;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +40,10 @@ public class MessageDetail extends BaseActivity {
     }
 
     private void init() {
+        MessageBean.ResultBean.ResultListBean resultListBean = (MessageBean.ResultBean.ResultListBean) getIntent().getSerializableExtra("message");
+        messageTitle.setText(resultListBean.getNews_title());
+        messageDate.setText(resultListBean.getCreate_date());
+        messageContent.setText(resultListBean.getNews_detail());
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {

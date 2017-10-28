@@ -3,15 +3,11 @@ package com.zyjr.emergencylending.base;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.utils.BasicParamsInterceptor;
 import com.zyjr.emergencylending.utils.LogInterceptor;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
@@ -39,7 +35,6 @@ public class BaseModel {
 
     private static final int DEFAULT_TIMEOUT = 15;
     protected Retrofit retrofit;
-    protected static Map<String, String> map = new HashMap<>();
     private OkHttpClient.Builder httpClientBuilder;
 
     protected BaseModel() {
@@ -102,9 +97,10 @@ public class BaseModel {
 
     }
 
-    //添加线程订阅
+    /**
+     * //添加线程订阅
+     */
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
-        LogUtils.e("wyman", map.toString());
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(subscriber);

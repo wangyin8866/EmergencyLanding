@@ -1,7 +1,7 @@
-package com.zyjr.emergencylending.model.home;
+package com.zyjr.emergencylending.ui.salesman.model;
 
 import com.zyjr.emergencylending.base.BaseModel;
-import com.zyjr.emergencylending.entity.Banner;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.service.Api;
 
 import java.util.HashMap;
@@ -29,10 +29,11 @@ public class HomeModel extends BaseModel{
         return SingletonHolder.HOME_MODEL;
     }
 
-    public Observable<Banner> getHomeAds(String router) {
-        Map<String, String> map = new HashMap<String, String>(1);
-        map.put("router", router);
-        return api.getHomeAds(map);
-    }
 
+    public Observable<BaseBean> getNoticeList(String router,String get_num) {
+        Map<String, String> map = new HashMap<String, String>(2);
+        map.put("router", router);
+        map.put("get_num", get_num);
+        return api.getNoticeList(map);
+    }
 }

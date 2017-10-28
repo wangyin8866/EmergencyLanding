@@ -6,6 +6,9 @@ import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.service.Api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rx.Observable;
 
 /**
@@ -36,7 +39,7 @@ public class AccountModel extends BaseModel {
     public Observable<RegisterBean> register(String router, String phone, String clientid,
                                              String verify_code, String password, String recommend_code,
                                               String register_ip, String register_device_no) {
-        map.clear();
+        Map<String, String> map = new HashMap<String, String>(8);
         map.put("router", router);
         map.put("phone", phone);
         map.put("clientid", clientid);
@@ -53,7 +56,7 @@ public class AccountModel extends BaseModel {
      */
     public Observable<LoginBean> login(String router, String phone, String password,
                                        String clientid, String login_ip, String login_device_no) {
-        map.clear();
+        Map<String, String> map = new HashMap<String, String>(6);
         map.put("router", router);
         map.put("phone", phone);
         map.put("password", password);
@@ -72,7 +75,7 @@ public class AccountModel extends BaseModel {
      */
     public Observable<BaseBean> sendSMS(String router, String phone
                                         ) {
-        map.clear();
+        Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("phone", phone);
         return mApi.sendSMS(map);
@@ -83,7 +86,7 @@ public class AccountModel extends BaseModel {
      */
     public Observable<BaseBean> forgetPassword(String router, String phone,
                                                String verify_code, String password) {
-        map.clear();
+        Map<String, String> map = new HashMap<String, String>(4);
         map.put("router", router);
         map.put("phone", phone);
         map.put("verify_code", verify_code);

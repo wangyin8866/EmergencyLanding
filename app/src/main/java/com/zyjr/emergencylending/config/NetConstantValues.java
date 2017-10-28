@@ -29,7 +29,7 @@ public interface NetConstantValues {
      */
     String HELP = "http://192.168.6.107:9090/jjth5/question.html";
     /**
-     *  我的收入
+     * 我的收入
      */
     String MY_INCOME = "http://192.168.6.107:9090/jjth5/myIncome.html";
     /**
@@ -37,7 +37,7 @@ public interface NetConstantValues {
      */
     String MY_NAME = "http://192.168.6.107:9090/jjth5/myCard.html";
     /**
-     *   龙虎榜
+     * 龙虎榜
      */
     String RANKING_LIST = "http://192.168.6.107:9090/jjth5/rankingList.html";
 
@@ -81,6 +81,10 @@ public interface NetConstantValues {
      * 消息中心
      */
     String USER_NEWS = "zyUserNewsService.getUserNews";
+    /**
+     * 消息操作
+     */
+    String UPDATE_USER_NEWS = "zyUserNewsService.updateUserNewsStatus";
     /**
      * 二维码
      */
@@ -134,5 +138,8 @@ public interface NetConstantValues {
      * 上传通讯录资料
      */
     String ROUTER_SUBMIT_CONTACTS_BOOK = "";
-
+    /**
+     * 公告清单(标题)及详情
+     */
+    String NOTICE_LIST = "zyNoticeService.getNoticeList";
 }

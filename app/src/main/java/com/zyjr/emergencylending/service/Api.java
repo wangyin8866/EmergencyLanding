@@ -88,4 +88,20 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<MessageBean> getUserNews(@FieldMap Map<String, String> params);
+    /**
+     * 消息操作
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> updateUserNews(@FieldMap Map<String, String> params);
+    /**
+     * 公告清单(标题)及详情
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> getNoticeList(@FieldMap Map<String, String> params);
 }

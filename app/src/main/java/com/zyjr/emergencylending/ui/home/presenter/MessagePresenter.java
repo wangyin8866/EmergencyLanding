@@ -5,10 +5,11 @@ import android.content.Context;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.model.home.MessageModel;
+import com.zyjr.emergencylending.ui.home.View.MessageView;
 
 import java.util.Map;
 
@@ -18,7 +19,7 @@ import java.util.Map;
  * @description :
  */
 
-public class MessagePresenter extends BasePresenter<BaseView<MessageBean>> {
+public class MessagePresenter extends BasePresenter<MessageView> {
     public MessagePresenter(Context context) {
         super(context);
     }
@@ -27,7 +28,37 @@ public class MessagePresenter extends BasePresenter<BaseView<MessageBean>> {
             @Override
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-                    getView().callBack(baseBean);
+                    getView().getMessage(baseBean);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        },mContext));
+    }
+    public void getMessageMore(Map<String, String> map) {
+        invoke(MessageModel.getInstance().getMessage(map),new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
+            @Override
+            public void onNext(MessageBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().getMessageMore(baseBean);
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        },mContext));
+    }
+    public void updateUserNews(Map<String, String> map) {
+        invoke(MessageModel.getInstance().updateUserNews(map),new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+            @Override
+            public void onNext(BaseBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().updateMessage(baseBean);
                 }
             }
 

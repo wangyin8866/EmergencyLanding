@@ -4,6 +4,9 @@ import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.service.Api;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import rx.Observable;
 
 /**
@@ -28,7 +31,7 @@ public class QrModel extends BaseModel{
 
 
     public Observable<QrBean> getQr(String router) {
-        map.clear();
+        Map<String, String> map = new HashMap<String, String>(1);
         map.put("router", router);
         return api.getQr(map);
     }

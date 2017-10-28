@@ -4,6 +4,14 @@
         "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
     },
     {
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_horizontal.xml",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_horizontal.xml"
+    },
+    {
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
+    },
+    {
         "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\pull_to_refresh_header_vertical.xml",
         "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\layout\\pull_to_refresh_header_vertical.xml"
     }
