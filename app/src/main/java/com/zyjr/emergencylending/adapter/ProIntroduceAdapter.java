@@ -16,15 +16,15 @@ import java.util.List;
  * 备注: 产品描述 适配器
  */
 
-public class ProIntroduceAdapter extends BaseQuickAdapter<ProIntroduceBean, BaseViewHolder> {
+public class ProIntroduceAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-    public ProIntroduceAdapter(@LayoutRes int layoutResId, @Nullable List<ProIntroduceBean> data) {
+    public ProIntroduceAdapter(@LayoutRes int layoutResId, @Nullable List<String> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, ProIntroduceBean item) {
-        helper.setText(R.id.tv_item_product_desc, item.getContent());
+    protected void convert(BaseViewHolder helper, String info) {
+        helper.setText(R.id.tv_item_product_desc, info);
 
     }
 }

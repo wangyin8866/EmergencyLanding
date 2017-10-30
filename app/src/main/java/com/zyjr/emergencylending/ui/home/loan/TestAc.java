@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.BubbleSeekBar;
+import com.zyjr.emergencylending.widget.CustomSeekBar1;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,9 +23,9 @@ import butterknife.ButterKnife;
 public class TestAc extends Activity {
 
     @BindView(R.id.seekbar_loan_money)
-    BubbleSeekBar seekbarMoney;
+    CustomSeekBar1 seekbarMoney;
     @BindView(R.id.seekbar_loan_week)
-    BubbleSeekBar seekbarWeek;
+    CustomSeekBar1 seekbarWeek;
     @BindView(R.id.tv_loan_money_min)
     TextView tvMinLoadMoney;
     @BindView(R.id.tv_loan_money_max)
@@ -48,14 +49,16 @@ public class TestAc extends Activity {
     private static int money = 2000;
     private static int week = 5;
     private static int moneyProgress = 12;
-    private static int weekProgress = 0;
+    private static int weekProgress = 1;
     private static int moneyCritical = 30;
-    private static int MIN_WEEK = 2;
-    private static int MAX_WEEK = 15;
+    private static int MIN_WEEK = 14;
+    private static int MIN_WEEK_UNIT = 1;
+    private static int MAX_WEEK = 24;
     private static int MIN_MONEY = 500;
     private static int MAX_MONEY = 5000;
 
     public void initSeekMoney() {
+        seekbarMoney.setType(0);
         seekbarMoney.setMONEY_MIN(MIN_MONEY);
         seekbarMoney.setMONEY_MAX(MAX_MONEY);
         if (seekbarMoney != null) {
@@ -67,21 +70,22 @@ public class TestAc extends Activity {
     }
 
     public void initSeekWeek() {
-        seekbarWeek.setONLINE(1); //标识是线下 还是线上,当如果是线上时,开始显示的是14天(2周),具体以借口返回数据为准
-        seekbarWeek.setWEEK_MIN(MIN_WEEK);
-        seekbarWeek.setWEEK_MAX(MAX_WEEK);
+        seekbarWeek.setType(1);
+        seekbarWeek.setPERIOD_MIN_UNIT(MIN_WEEK_UNIT); //标识是线下 还是线上,当如果是线上时,开始显示的是14天(2周),具体以借口返回数据为准
+        seekbarWeek.setPERIOD_MIN(MIN_WEEK);
+        seekbarWeek.setPERIOD_MAX(MAX_WEEK);
         if (seekbarWeek != null) {
-            seekbarWeek.setProgress(1);
+            seekbarWeek.setProgress(weekProgress);
         }
-        week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK);
-        tvMinLoadWeek.setText(MIN_WEEK * 7 + "天");
+        week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK, MIN_WEEK_UNIT);
+        tvMinLoadWeek.setText(MIN_WEEK + "天");
         tvMaxLoadWeek.setText(MAX_WEEK + "周");
     }
 
     public void defaultSeekWeek() {
-        seekbarWeek.setONLINE(1);
-        seekbarWeek.setWEEK_MIN(2);
-        seekbarWeek.setWEEK_MAX(15);
+
+        seekbarWeek.setPERIOD_MIN(2);
+        seekbarWeek.setMONEY_MAX(15);
     }
 
     private void initListener() {
@@ -107,7 +111,7 @@ public class TestAc extends Activity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 weekProgress = progress;
-                week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK);
+                week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK, MIN_WEEK_UNIT);
                 LogUtils.e("周期:" + week);
             }
 

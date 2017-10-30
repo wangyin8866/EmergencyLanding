@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.loan.basicInfo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -40,6 +41,7 @@ import com.zyjr.emergencylending.utils.third.GlideUtils;
 import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -82,7 +84,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
     ScrollView root;
     @BindView(R.id.ll_cover)
     LinearLayout llCover;
-    private boolean isJobEdit;
+    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
 
     @Override
     protected WorkInfoPresenter createPresenter() {
@@ -95,6 +97,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         setContentView(R.layout.activity_work_info);
         ButterKnife.bind(this);
         init();
+        initGetData();
     }
 
     @OnClick({R.id.ll_unit_industry, R.id.ll_work_address, R.id.ll_work_position, R.id.ll_income, R.id.btn_submit})
@@ -132,8 +135,8 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
                         workAddressBean.setUnit_city_name(cityode.getName());
                         workAddressBean.setUnit_county(dCode.getZipcode());
                         workAddressBean.setUnit_county_name(dCode.getName());
-                        workAddressBean.setUnit_adr(tvWorkAddress.getText().toString().trim());
-                        LogUtils.d("工作地址选择--->" + workAddressBean.toString());
+                        workAddressBean.setUnit_adr(pCode.getProvinceCode() + "," + cityode.getCityCode() + "," + dCode.getZipcode());
+                        LogUtils.d("工作地址选择:" + workAddressBean.toString());
                     }
                 });
                 if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
@@ -246,9 +249,6 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(workInfoBean);
         LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
         LogUtils.d("参数数量:" + paramsMap.size());
-        paramsMap.put("juid", "");
-        paramsMap.put("cust_juid", "");
-        paramsMap.put("login_token", "");
         mPresenter.addWorkInfo(paramsMap);
     }
 
@@ -263,6 +263,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
             if (index != -1) {
                 unintIndustryCodebean = AppConfig.getWorkInfo().get(index);
                 tvUintIndustry.setText(unintIndustryCodebean.getName());
+                LogUtils.d("获取填写的单位行业:" + unintIndustryCodebean.toString());
             } else {
                 tvUintIndustry.setText("");
             }
@@ -315,8 +316,8 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
                             workAddressBean.setUnit_city_name(c.getName());
                             workAddressBean.setUnit_county(d.getZipcode());
                             workAddressBean.setUnit_county_name(d.getName());
-                            workAddressBean.setUnit_adr(tvWorkAddress.getText().toString().trim());
-                            LogUtils.d("获取填写的工作地址--->" + workAddressBean.toString());
+                            workAddressBean.setUnit_adr(p.getProvinceCode() + "," + c.getCityCode() + "," + d.getZipcode());
+                            LogUtils.d("获取填写的工作地址:" + workAddressBean.toString());
                         }
                     } else {
                         tvWorkAddress.setText("");
@@ -329,6 +330,10 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
                 e.printStackTrace();
             }
         }
+        if (StringUtil.isNotEmpty(workInfoBean.getUnit_adr_detail())) {
+            // 工作详细地址
+            etWorkDetailAddress.setText(workInfoBean.getUnit_adr_detail());
+        }
         if (StringUtil.isNotEmpty(workInfoBean.getUnit_department())) {
             // 部门
             etWorkDepartment.setText(workInfoBean.getUnit_department());
@@ -339,6 +344,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
             if (index != -1) {
                 workPositionCodebean = AppConfig.job().get(index);
                 tvWorkPosition.setText(workPositionCodebean.getName());
+                LogUtils.d("获取填写的职位信息:" + workPositionCodebean.toString());
             } else {
                 tvWorkPosition.setText("");
             }
@@ -349,6 +355,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
             if (index != -1) {
                 inComeCodebean = AppConfig.monthSalary().get(index);
                 tvIncome.setText(inComeCodebean.getName());
+                LogUtils.d("获取填写的税后月收入:" + inComeCodebean.toString());
             } else {
                 tvIncome.setText("");
             }
@@ -358,11 +365,6 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
 
 
     private void init() {
-        //是否可编辑
-        isJobEdit = getIntent().getBooleanExtra("isJobEdit", true);
-        WYUtils.coverPage(isJobEdit,llCover);
-
-
         CommonUtils.addressDatas(this);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
@@ -377,33 +379,53 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         });
     }
 
+
+    private void initGetData() {
+        Intent intent = getIntent();
+        isEdit = intent.getStringExtra("isEdit");
+        String status = intent.getStringExtra("status");
+        // 已完成状态获取资料信息
+        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+            loadingWorkInfo();
+        }
+        if (isEdit.equals("0")) { // 不可编辑
+            WYUtils.coverPage(false, llCover);
+        }
+    }
+
+    private void loadingWorkInfo() {
+        Map<String, String> paramMaps = new HashMap<>();
+        mPresenter.getWorkInfo(paramMaps);
+    }
+
     private View getRootView() {
         return this.getWindow().getDecorView();
     }
 
     @Override
     public void onSuccessGet(String returnCode, WorkInfoBean bean) {
-        LogUtils.d("获取工作信息成功---->" + returnCode + ",PersonalInfoBean:" + bean.toString());
         showWorkInfo(bean);
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, WorkInfoBean bean) {
-        LogUtils.d("添加工作信息成功---->" + returnCode + ",PersonalInfoBean:" + bean.toString());
+    public void onSuccessAdd(String returnCode, String msg) {
+        ToastAlone.showLongToast(this, msg);
+        finish();
     }
 
     @Override
-    public void onSuccessEdit(String returnCode, WorkInfoBean bean) {
-        LogUtils.d("修改工作信息成功---->" + returnCode + ",PersonalInfoBean:" + bean.toString());
+    public void onSuccessEdit(String returnCode, String msg) {
+        ToastAlone.showLongToast(this, msg);
+        finish();
     }
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 }

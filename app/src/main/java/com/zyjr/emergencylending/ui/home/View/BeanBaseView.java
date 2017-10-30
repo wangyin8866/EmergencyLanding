@@ -8,9 +8,9 @@ public interface BeanBaseView<T> {
 
     void onSuccessGet(String apiCode, T bean);
 
-    void onSuccessAdd(String apiCode, T bean);
+    void onSuccessAdd(String apiCode, String msg);
 
-    void onSuccessEdit(String apiCode, T bean);
+    void onSuccessEdit(String apiCode, String msg);
 
     void onFail(String apiCode, String errorMsg);
 

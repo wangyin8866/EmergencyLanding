@@ -17,7 +17,6 @@ public class HujiAddressBean implements Serializable {
     private String huji_county; // 区/镇编码
     private String huji_county_name; // 名称
     private String huji_adr; // 户籍省市区
-    private String huji_adr_detail; //现居住详细地址
 
     public String getHuji_province() {
         return huji_province;
@@ -67,14 +66,6 @@ public class HujiAddressBean implements Serializable {
         this.huji_county_name = huji_county_name;
     }
 
-    public String getHuji_adr_detail() {
-        return huji_adr_detail;
-    }
-
-    public void setHuji_adr_detail(String huji_adr_detail) {
-        this.huji_adr_detail = huji_adr_detail;
-    }
-
     public String getHuji_adr() {
         return huji_adr;
     }
@@ -93,7 +84,6 @@ public class HujiAddressBean implements Serializable {
                 ", huji_county='" + huji_county + '\'' +
                 ", huji_county_name='" + huji_county_name + '\'' +
                 ", huji_adr='" + huji_adr + '\'' +
-                ", huji_adr_detail='" + huji_adr_detail + '\'' +
                 '}';
     }
 }

@@ -18,7 +18,7 @@ import com.zyjr.emergencylending.utils.UIUtils;
  * @date 2017/10/18
  */
 
-public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
+public class CustomSeekBar1 extends android.support.v7.widget.AppCompatSeekBar {
     /**
      * 文本画笔
      */
@@ -44,19 +44,19 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
      * 设置周期区间范围
      */
     public int PERIOD_MIN = 0;
-    public int PERIOD_MIN_UNIT = 0; // 最小周期单位 1:天,2:周
+    public int PERIOD_MIN_UNIT = 0; // 最小周期单位
     public int PERIOD_MAX = 0;
     private Context mContext;
 
-    public CustomSeekBar(Context context) {
+    public CustomSeekBar1(Context context) {
         this(context, null);
     }
 
-    public CustomSeekBar(Context context, AttributeSet attrs) {
+    public CustomSeekBar1(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public CustomSeekBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomSeekBar1(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.mContext = context;
         setOnSeekBarChangeListener(mOnSeekBarChangeListener);
@@ -96,7 +96,7 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
     }
 
     @Override
-    protected synchronized void onDraw(Canvas canvas) {
+    protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (type == MONEY) {
             mText = Arithmetic.progressToMoney(getProgress(), MONEY_MIN, MONEY_MAX) + "元";
@@ -106,7 +106,7 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
                     mText = PERIOD_MIN + "天";
                 } else {
                     int value = Arithmetic.progressToWeek(getProgress(), PERIOD_MIN, PERIOD_MAX, PERIOD_MIN_UNIT);
-                    if (value == PERIOD_MIN && getProgress() < 10) {
+                    if (value == PERIOD_MIN && getProgress() < 5) {
                         mText = PERIOD_MIN + "天";
                     } else {
                         mText = value + "周";

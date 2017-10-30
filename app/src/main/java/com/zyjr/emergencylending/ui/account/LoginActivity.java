@@ -77,7 +77,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     }
 
     private void initView() {
-        //登录按钮
+        mPresenter.login(NetConstantValues.LOGIN, "17621920452", "abc123", "123", Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode());
+
+
+                //登录按钮
         subscription = RxView.clicks(btnLogin).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
@@ -132,7 +135,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
         }
     }
 
-
     @Override
     protected void onDestroy() {
         subscription.unsubscribe();
@@ -147,6 +149,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
             SPUtils.saveString(mContext, Config.KEY_TOKEN, loginBean.getResult().getLogin_token());
             SPUtils.saveString(mContext, Config.KEY_USER_TYPE, loginBean.getResult().getUser_type());
             SPUtils.saveString(mContext, Config.KEY_RECOMMEND_CODE, loginBean.getResult().getRecommendCode());
+            SPUtils.saveString(mContext, Config.KEY_JUID, loginBean.getResult().getJuid());
             if (Config.USER_SALESMAN.equals(loginBean.getResult().getUser_type())) {
                 startActivity(new Intent(mContext, LineMainActivity.class));
             } else {

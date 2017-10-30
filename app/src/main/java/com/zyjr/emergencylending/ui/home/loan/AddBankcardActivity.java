@@ -33,6 +33,7 @@ import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,6 +86,8 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         ButterKnife.bind(this);
 
         init();
+        initGetData();
+        loadingSupportBankList();
     }
 
 
@@ -97,7 +100,7 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
                 break;
 
             case R.id.btn_add:  // 添加银行卡
-
+                validateData();
                 break;
         }
     }
@@ -133,10 +136,10 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         }
         bankcardInfo.setBank_username(userName);
         bankcardInfo.setId_card(idcardNumber);
-        bankcardInfo.setBank_phone(reservedPhone);
+        bankcardInfo.setBankcard_no(bankcardNumber);
         bankcardInfo.setBank_name(openBank);
+        bankcardInfo.setBank_phone(reservedPhone);
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(bankcardInfo);
-        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
         mPresenter.addBindBankcardInfo(paramsMap);
     }
 
@@ -171,7 +174,7 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
                     if (StringUtil.isEmpty(tvOpenbank.getText().toString().trim())) {
                         BankDbBean bankDbBean = BankcardDb.getInstance().queryBankcard(db, etBankcardNumber.getText().toString());
                         if (null == bankDbBean) {
-//                            ToastAlone.showShortToast(AddBankcardActivity.this, "暂未查到对应的银行");
+                            LogUtils.d(etBankcardNumber.getText().toString() + ",暂未查到对应的银行");
                         } else {
                             LogUtils.d("获取的银行信息为:" + bankDbBean + ",可用");
                             if (bankcardInfo == null) {
@@ -187,11 +190,23 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
                     }
                 } else if (temp.length() < 6 && temp.length() > 0) {
                     tvOpenbank.setText("");
-                    bankcardInfo.setBank_code("");
-                    bankcardInfo.setBank_name("");
                 }
             }
         });
+    }
+
+    private void initGetData() {
+        Intent intent = getIntent();
+        String bank_username = intent.getStringExtra("bank_username");
+        String id_card = intent.getStringExtra("id_card");
+        tvUserName.setText(StringUtil.isEmpty(bank_username) ? "" : bank_username);
+        tvIdcardNumer.setText(StringUtil.isEmpty(id_card) ? "" : id_card);
+    }
+
+
+    private void loadingSupportBankList() {
+        Map<String, String> paramsMap = new HashMap<>();
+        mPresenter.getSupportBankList(paramsMap);
     }
 
     @Override
@@ -205,7 +220,7 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, BankcardInfo bean) {
+    public void onSuccessAdd(String returnCode, String msg) {
         ToastAlone.showLongToast(this, "添加成功");
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -213,18 +228,18 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     @Override
-    public void onSuccessEdit(String returnCode, BankcardInfo bean) {
+    public void onSuccessEdit(String returnCode, String msg) {
 
     }
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     private void showSupportBanklist(List<SupportBank> supportBanks) {

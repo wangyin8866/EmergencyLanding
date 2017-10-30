@@ -17,7 +17,6 @@ public class LiveAddressBean implements Serializable {
     private String live_county; // 区/镇编码
     private String live_county_name; // 名称
     private String live_adr; // 居住省市区
-    private String live_adr_detail; //现居住详细地址
 
     public String getLive_province() {
         return live_province;
@@ -67,14 +66,6 @@ public class LiveAddressBean implements Serializable {
         this.live_county_name = live_county_name;
     }
 
-    public String getLive_adr_detail() {
-        return live_adr_detail;
-    }
-
-    public void setLive_adr_detail(String live_adr_detail) {
-        this.live_adr_detail = live_adr_detail;
-    }
-
     public String getLive_adr() {
         return live_adr;
     }
@@ -93,7 +84,6 @@ public class LiveAddressBean implements Serializable {
                 ", live_county='" + live_county + '\'' +
                 ", live_county_name='" + live_county_name + '\'' +
                 ", live_adr='" + live_adr + '\'' +
-                ", live_adr_detail='" + live_adr_detail + '\'' +
                 '}';
     }
 }

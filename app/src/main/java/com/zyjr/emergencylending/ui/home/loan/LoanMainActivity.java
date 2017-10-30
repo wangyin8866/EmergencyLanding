@@ -14,7 +14,6 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.ui.home.View.ProductInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.ProductInfoPresenter;
@@ -23,8 +22,9 @@ import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,14 +35,14 @@ import butterknife.OnClick;
  * 备注: 借款(急速 和传统 )
  * 1.网络请求：获取产品介绍--->包含额度
  */
-public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductInfoView> implements ProductInfoView{
+public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, ProductInfoView> implements ProductInfoView {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.seekbar_loan_money)
     CustomSeekBar seekbarMoney;
     @BindView(R.id.seekbar_loan_week)
-    CustomSeekBar seekbarWeek;
+    CustomSeekBar seekbarPeriod;
     @BindView(R.id.tv_loan_money_min)
     TextView tvMinLoadMoney;
     @BindView(R.id.tv_loan_money_max)
@@ -62,15 +62,19 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
     LinearLayout llTraditionalSupportCities; // 传统借款支持城市
 
     private String flag = "";
-    private int money = 0;
-    private int week = 0;
-    private int moneyProgress = 1;
-    private int weekProgress = 1;
-    private int MIN_WEEK = 0;
-    private int MAX_WEEK = 0;
-    private int MIN_MONEY = 0;
-    private int MAX_MONEY = 0;
-    private List<ProIntroduceBean> proIntroduceList = null;
+    // 急速贷款
+    private int moneyProgress = 1; // 金额进度
+    private int periodProgress = 1; // 借款周期进度
+    private int minLoanPeriod = 0; // 最低借款期限
+    private int minLoanPeriodUint = 0; // 最低借款期限
+    private int maxLoanPeriod = 0; // 最高借款期限
+    private int minLoanMoney = 0; // 最低借款金额
+    private int maxLoanMoney = 0; // 最高借款金额
+    // 提交
+    private int loanMoney = 0; // 借款金额
+    private int loanPeriod = 0; // 借款周期
+    private List<String> proIntroduceList = null;
+
 
     @Override
     protected ProductInfoPresenter createPresenter() {
@@ -84,12 +88,11 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
         ButterKnife.bind(this);
 
         init();
-        initData();
         initGetData();
+        initData();
         initListener();
-        LogUtils.e("weekProgress:" + weekProgress + ",moneyProgress:" + moneyProgress);
+//        LogUtils.e("weekProgress:" + weekProgress + ",moneyProgress:" + moneyProgress);
     }
-
 
 
     @OnClick({R.id.btn_apply_quickly, R.id.layout_traditional_support_cities})
@@ -98,8 +101,14 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
             case R.id.btn_apply_quickly:
                 // TODO 携带 借款数据到下个页面
                 Intent intent = new Intent(this, WriteInfoMainActivity.class);
-                intent.putExtra("loanMoney", money +"");
-                intent.putExtra("loanWeek", week +"");
+                intent.putExtra("loanMoney", loanMoney + "");
+                if (periodProgress < 10 && loanPeriod == 14) {
+                    intent.putExtra("loanWeek", loanPeriod + "");
+                    intent.putExtra("loan_unit", "1");
+                } else {
+                    intent.putExtra("loanWeek", loanPeriod + "");
+                    intent.putExtra("loan_unit", "2");
+                }
                 startActivity(intent);
                 break;
             case R.id.layout_traditional_support_cities:
@@ -110,15 +119,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
 
     private void initData() {
         // TODO 获取产品介绍
-        proIntroduceList = new ArrayList<>();
-        for (int i = 0; i < 4; i++) {
-            ProIntroduceBean item = new ProIntroduceBean("新产品" + i, "快来体验" + i);
-            proIntroduceList.add(item);
-        }
-        ProIntroduceAdapter adapter = new ProIntroduceAdapter(R.layout.rv_item_pro_introduce, proIntroduceList);
-        rvProductIntroduce.setLayoutManager(new LinearLayoutManager(this));
-        rvProductIntroduce.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, 12, getResources().getColor(R.color.white)));
-        rvProductIntroduce.setAdapter(adapter);
+
+
     }
 
 
@@ -127,24 +129,28 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
         flag = intent.getStringExtra("flag");
         if (flag.equals("online")) {
             topBar.setTitle("急速借款");
-            MIN_WEEK = 2;
-            MAX_WEEK = 15;
-            MIN_MONEY = 500;
-            MAX_MONEY = 5000;
-            initSeekMoney(10, MIN_MONEY, MAX_MONEY);
-            initSeekWeek(1, MIN_WEEK, MAX_WEEK, flag);
+            minLoanPeriod = 14; // 14天
+            maxLoanPeriod = 15; // 15周
+            minLoanPeriodUint = 1;
+            minLoanMoney = 500;
+            maxLoanMoney = 5000;
+            initSeekMoney(10, minLoanMoney, maxLoanMoney);
+            initSeekPeriod(1, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
             llFastloanSupportCities.setVisibility(View.VISIBLE);
             llTraditionalSupportCities.setVisibility(View.GONE);
+            loadingProIntroduce("0");
         } else if (flag.equals("offline")) {
             topBar.setTitle("传统借款");
-            MIN_WEEK = 15;
-            MAX_WEEK = 52;
-            MIN_MONEY = 5000;
-            MAX_MONEY = 30000;
-            initSeekMoney(10, MIN_MONEY, MAX_MONEY);
-            initSeekWeek(1, MIN_WEEK, MAX_WEEK, flag);
+            minLoanPeriod = 15;
+            maxLoanPeriod = 52;
+            minLoanPeriodUint = 2;
+            minLoanMoney = 5000;
+            maxLoanMoney = 30000;
+            initSeekMoney(10, minLoanMoney, maxLoanMoney);
+            initSeekPeriod(1, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
             llFastloanSupportCities.setVisibility(View.GONE);
             llTraditionalSupportCities.setVisibility(View.VISIBLE);
+            loadingProIntroduce("1");
         }
     }
 
@@ -154,8 +160,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 moneyProgress = progress;
-                money = Arithmetic.progressToMoney(moneyProgress, MIN_MONEY, MAX_MONEY);
-                LogUtils.e("金额:" + money);
+                loanMoney = Arithmetic.progressToMoney(moneyProgress, minLoanMoney, maxLoanMoney);
+                LogUtils.e("借款金额:" + loanMoney);
             }
 
             @Override
@@ -167,12 +173,12 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
             }
         });
 
-        seekbarWeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        seekbarPeriod.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                weekProgress = progress;
-                week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK);
-                LogUtils.e("周期:" + week);
+                periodProgress = progress;
+                loanPeriod = Arithmetic.progressToWeek(periodProgress, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
+                LogUtils.e("借款周期:" + loanPeriod);
             }
 
             @Override
@@ -192,28 +198,34 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
         if (seekbarMoney != null) {
             seekbarMoney.setProgress(progress);
         }
-        money = Arithmetic.progressToMoney(progress, minMoney, maxMoney);
-        LogUtils.d("借款金额:---->" + money);
+        loanMoney = Arithmetic.progressToMoney(progress, minMoney, maxMoney);
+        LogUtils.d("借款金额:" + loanMoney);
         tvMinLoadMoney.setText(minMoney + "元");
         tvMaxLoadMoney.setText(maxMoney + "元");
     }
 
-    public void initSeekWeek(int progress, int minWeek, int maxWeek, String flag) {
-        seekbarWeek.setType(1);
-        seekbarWeek.setWEEK_MIN(minWeek);
-        seekbarWeek.setWEEK_MAX(maxWeek);
-        if (seekbarWeek != null) {
-            seekbarWeek.setProgress(progress);
+    /**
+     * @param progress
+     * @param minPeriod 最小周期
+     * @param maxPeriod 最大周期
+     * @param minUnit   周期单位 1.天;2.周
+     */
+    public void initSeekPeriod(int progress, int minPeriod, int maxPeriod, int minUnit) {
+        seekbarPeriod.setType(1);
+        seekbarPeriod.setPERIOD_MIN(minPeriod);
+        seekbarPeriod.setPERIOD_MIN_UNIT(minUnit);
+        seekbarPeriod.setPERIOD_MAX(maxPeriod);
+        if (seekbarPeriod != null) {
+            seekbarPeriod.setProgress(progress);
         }
-        if (flag.equals("online")) {
-            seekbarWeek.setONLINE(1); //标识是线下 还是线上,当如果是线上时,开始显示的是14天(2周),具体以借口返回数据为准
-            tvMinLoadWeek.setText(minWeek * 7 + "天");
+        if (minUnit == 1) {
+            tvMinLoadWeek.setText(minPeriod + "天");
         } else {
-            tvMinLoadWeek.setText(minWeek + "周");
+            tvMinLoadWeek.setText(minPeriod + "周");
         }
-        week = Arithmetic.progressToWeek(progress, minWeek, maxWeek);
-        LogUtils.d("借款周期:---->" + week);
-        tvMaxLoadWeek.setText(maxWeek + "周");
+        loanPeriod = Arithmetic.progressToWeek(progress, minPeriod, maxPeriod, minUnit);
+        LogUtils.d("借款周期:" + loanPeriod);
+        tvMaxLoadWeek.setText(maxPeriod + "周");
     }
 
     private void init() {
@@ -230,18 +242,38 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter,ProductI
         });
     }
 
+    private void loadingProIntroduce(String type) {
+        Map<String, String> map = new HashMap<>();
+        map.put("product_id", type);
+        mPresenter.getProIntroduce(map);
+    }
+
     @Override
     public void onSuccessGetSupportCity(String returnCode, List<SupportCityBean> cityList) {
 
     }
 
     @Override
-    public void onSuccessGetIntro(String returnCode, List<String> introList) {
+    public void onSuccessGetIntro(String returnCode, List<String> result) {
+        proIntroduceList = result;
+        ProIntroduceAdapter adapter = new ProIntroduceAdapter(R.layout.rv_item_pro_introduce, proIntroduceList);
+        rvProductIntroduce.setLayoutManager(new LinearLayoutManager(this));
+        rvProductIntroduce.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, 12, getResources().getColor(R.color.white)));
+        rvProductIntroduce.setAdapter(adapter);
+        if (flag.equals("offline")) {
+            // TODO 获取支持城市
+            Map<String, String> map = new HashMap<>();
+            mPresenter.getSupportCities(map);
+        }
+    }
+
+    @Override
+    public void onFail(String returnCode, String errorMessage) {
 
     }
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onError(String returnCode, String errorMsg) {
 
     }
 

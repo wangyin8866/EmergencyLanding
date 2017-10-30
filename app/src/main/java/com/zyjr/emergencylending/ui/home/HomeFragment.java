@@ -133,7 +133,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
                 startActivity(intent);
                 break;
             case R.id.pro2_btn:
-                Intent intent1 = new Intent(getActivity(), WriteInfoMainActivity.class);
+                Intent intent1 = new Intent(getActivity(), LoanMainActivity.class);
                 intent1.putExtra("flag", "offline");
                 startActivity(intent1);
                 break;

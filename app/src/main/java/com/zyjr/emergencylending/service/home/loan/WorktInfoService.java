@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
 import com.zyjr.emergencylending.entity.WorkInfoBean;
 
@@ -21,21 +22,21 @@ public interface WorktInfoService {
      * 获取工作信息
      */
     @FormUrlEncoded
-    @POST("/zyUserJobService.getUserJobInfo")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<WorkInfoBean>> getWorkInfo(@FieldMap Map<String, String> params);
 
     /**
      * 保存工作信息
      */
     @FormUrlEncoded
-    @POST("/ZyUserJobService.saveUserJobInfo")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<WorkInfoBean>> addWorkInfo(@FieldMap Map<String, String> params);
 
     /**
      * 编辑工作信息
      */
     @FormUrlEncoded
-    @POST("/ZyUserJobService.saveUserJobInfo")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<WorkInfoBean>> editWorkInfo(@FieldMap Map<String, String> params);
 
 

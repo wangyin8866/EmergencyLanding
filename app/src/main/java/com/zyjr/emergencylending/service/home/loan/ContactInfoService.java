@@ -40,11 +40,4 @@ public interface ContactInfoService {
     @POST(NetConstantValues.LOAN)
     Observable<ApiResult<List<ContactInfoBean>>> editContactInfo(@FieldMap Map<String, String> params);
 
-    /**
-     * 上传通讯录信息
-     */
-    @FormUrlEncoded
-    @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<String>> submitContacts(@FieldMap Map<String, String> params);
-
 }

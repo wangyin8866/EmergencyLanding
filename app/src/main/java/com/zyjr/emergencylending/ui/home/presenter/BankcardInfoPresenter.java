@@ -78,10 +78,8 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
                 if (result.getFlag().equals("API0000")) {
-                    if (result.getResult() != null) {
-                        LogUtils.d("添加银行卡信息成功---->" + result.getResult().toString());
-                        getView().onSuccessGet(Constants.ADD_BIND_BANKCARD_INFO, result.getResult());
-                    }
+                    LogUtils.d("添加银行卡信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.ADD_BIND_BANKCARD_INFO, result.getMsg());
                 } else {
                     LogUtils.d("添加银行卡信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.ADD_BIND_BANKCARD_INFO, result.getMsg());
@@ -101,10 +99,8 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
             @Override
             public void onNext(ApiResult<BankcardInfo> result) {
                 if (result.getFlag().equals("API0000")) {
-                    if (result.getResult() != null) {
-                        LogUtils.d("修改银行卡信息成功---->" + result.getResult().toString());
-                        getView().onSuccessGet(Constants.EDIT_BIND_BANKCARD_INFO, result.getResult());
-                    }
+                    LogUtils.d("修改银行卡信息成功---->" + result.getMsg());
+                    getView().onSuccessEdit(Constants.EDIT_BIND_BANKCARD_INFO, result.getMsg());
                 } else {
                     LogUtils.d("修改银行卡信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.EDIT_BIND_BANKCARD_INFO, result.getMsg());

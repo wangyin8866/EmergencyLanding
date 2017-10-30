@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -30,6 +31,7 @@ import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
 import com.zyjr.emergencylending.utils.permission.AppOpsManagerUtil;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
@@ -67,6 +69,8 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     ImageView ivContactPhone2;
     @BindView(R.id.tv_relation2)
     TextView tvRelation2; // 关系2
+    @BindView(R.id.ll_cover)
+    LinearLayout llCover;
 
     List<CodeBean> selectList; // 初始化选择列表
     List<CodeBean> selectList1 = new ArrayList<>(); // 联系人1可选择的
@@ -77,6 +81,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
     private ContactInfoBean contactInfoBean = null;
+    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
 
     @Override
     protected ContactInfoPresenter createPresenter() {
@@ -89,6 +94,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         setContentView(R.layout.activity_contact_info);
         ButterKnife.bind(this);
         init();
+        initGetData();
     }
 
     @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2, R.id.btn_submit})
@@ -228,7 +234,13 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             ToastAlone.showLongToast(this, "请选择“关系2”联系人!");
             return;
         }
-        contactInfoBean = new ContactInfoBean();
+        if (contactPhone1.equals(contactPhone2)) {
+            ToastAlone.showLongToast(this, "联系人手机号不能相同!");
+            return;
+        }
+        if (contactInfoBean == null) {
+            contactInfoBean = new ContactInfoBean();
+        }
         List<ContactInfoBean> contactsList = new ArrayList<>();
         ContactInfoBean contactBean1 = new ContactInfoBean();
         contactBean1.setContact_name(contactName1.trim());
@@ -244,19 +256,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         paramsMap.put("contactList", new Gson().toJson(contactsList));
         LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
         LogUtils.d("参数数量:" + paramsMap.size());
-        paramsMap.put("juid", "");
-        paramsMap.put("cust_juid", "");
-        paramsMap.put("login_token", "");
         mPresenter.addContactInfo(paramsMap);
-    }
-
-    private void submitContacts() {
-        Map<String, String> params = new HashMap<>();
-        params.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this)));
-        params.put("juid", "");
-        params.put("cust_juid", "");
-        params.put("login_token", "");
-        mPresenter.submitContacts(params);
     }
 
     private void showContactInfo(List<ContactInfoBean> contactInfoBeanList) {
@@ -275,11 +275,12 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             }
             if (StringUtil.isNotEmpty(contactBean1.getRelation())) {
                 // 关系1
-                int index = AppConfig.getWorkInfo().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
+                int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
                 if (index != -1) {
                     relationCodeBean1 = AppConfig.contactRelation().get(index);
                     tvRelation1.setText(relationCodeBean1.getName());
                     selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
+                    LogUtils.d("获取填写关系1信息:" + relationCodeBean1.toString());
                 } else {
                     tvRelation1.setText("");
                 }
@@ -290,25 +291,25 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             ContactInfoBean contactBean2 = contactInfoBeanList.get(1);
             if (StringUtil.isNotEmpty(contactBean2.getContact_name())) {
                 // 姓名2
-                etContactName1.setText(contactBean2.getContact_name());
+                etContactName2.setText(contactBean2.getContact_name());
             }
             if (StringUtil.isNotEmpty(contactBean2.getContact_phone())) {
                 // 手机号2
-                etContactPhone1.setText(contactBean2.getContact_phone());
+                etContactPhone2.setText(contactBean2.getContact_phone());
             }
             if (StringUtil.isNotEmpty(contactBean2.getRelation())) {
                 // 关系2
-                int index = AppConfig.getWorkInfo().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
+                int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
                 if (index != -1) {
                     relationCodeBean2 = AppConfig.contactRelation().get(index);
                     tvRelation2.setText(relationCodeBean2.getName());
                     selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
+                    LogUtils.d("获取填写关系2信息:" + relationCodeBean2.toString());
                 } else {
                     tvRelation2.setText("");
                 }
             }
         }
-
     }
 
 
@@ -325,6 +326,24 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
             }
         });
+    }
+
+    private void initGetData() {
+        Intent intent = getIntent();
+        isEdit = intent.getStringExtra("isEdit");
+        String status = intent.getStringExtra("status");
+        // 已完成状态获取资料信息
+        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+            loadingContactInfo();
+        }
+        if (isEdit.equals("0")) { // 不可编辑
+            WYUtils.coverPage(false, llCover);
+        }
+    }
+
+    private void loadingContactInfo() {
+        Map<String, String> paramMaps = new HashMap<>();
+        mPresenter.getContantInfo(paramMaps);
     }
 
     private void jumpToSelectPhone(int i) {
@@ -372,28 +391,29 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     @Override
     public void onSuccessGet(String returnCode, List<ContactInfoBean> beanList) {
-        LogUtils.d("获取联系人信息成功---->" + returnCode + ",List<ContactInfoBean>:" + beanList.toString());
+        showContactInfo(beanList);
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, List<ContactInfoBean> beanList) {
-        LogUtils.d("添加联系人信息成功---->" + returnCode + ",List<ContactInfoBean>:" + beanList.toString());
+    public void onSuccessAdd(String returnCode, String msg) {
+        ToastAlone.showLongToast(this, msg);
+        finish();
     }
 
     @Override
-    public void onSuccessEdit(String returnCode, List<ContactInfoBean> beanList) {
-        LogUtils.d("修改联系人信息成功---->" + returnCode + ",List<ContactInfoBean>:" + beanList.toString());
+    public void onSuccessEdit(String returnCode, String msg) {
+        ToastAlone.showLongToast(this, msg);
+        finish();
     }
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
-
 
 }

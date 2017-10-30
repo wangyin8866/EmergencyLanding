@@ -122,12 +122,12 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, BankcardInfo bean) {
+    public void onSuccessAdd(String returnCode, String msg) {
 
     }
 
     @Override
-    public void onSuccessEdit(String returnCode, BankcardInfo bean) {
+    public void onSuccessEdit(String returnCode, String msg) {
 
     }
 

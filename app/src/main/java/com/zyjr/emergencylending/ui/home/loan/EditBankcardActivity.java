@@ -153,10 +153,10 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
         bankcardInfo.setBank_username(userName);
         bankcardInfo.setId_card(idcardNumber);
-        bankcardInfo.setBank_phone(reservedPhone);
+        bankcardInfo.setBankcard_no(bankcardNumber);
         bankcardInfo.setBank_name(openBank);
+        bankcardInfo.setBank_phone(reservedPhone);
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(bankcardInfo);
-        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
         mPresenter.editBindBankcardInfo(paramsMap);
     }
 
@@ -253,13 +253,11 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private void loadingBindBankcardInfo() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
         mPresenter.getBindBankcardInfo(paramsMap);
     }
 
     private void loadingSupportBankList() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
         mPresenter.getSupportBankList(paramsMap);
     }
 
@@ -284,12 +282,12 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, BankcardInfo bean) {
+    public void onSuccessAdd(String returnCode, String msg) {
 
     }
 
     @Override
-    public void onSuccessEdit(String returnCode, BankcardInfo bean) {
+    public void onSuccessEdit(String returnCode, String msg) {
         ToastAlone.showLongToast(this, "修改成功");
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);

@@ -109,8 +109,8 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("添加个人信息成功---->" + result.getResult());
-                    getView().onSuccessAdd(Constants.ADD_PERSONAL_INFO, result.getResult());
+                    LogUtils.d("添加个人信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.ADD_PERSONAL_INFO, result.getMsg());
                 } else {
                     LogUtils.d("添加个人信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.ADD_PERSONAL_INFO, result.getMsg());
@@ -131,8 +131,8 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("更新个人信息成功---->" + result.getResult());
-                    getView().onSuccessAdd(Constants.EDIT_PERSONAL_INFO, result.getResult());
+                    LogUtils.d("更新个人信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.EDIT_PERSONAL_INFO, result.getMsg());
                 } else {
                     LogUtils.d("更新个人信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.EDIT_PERSONAL_INFO, result.getMsg());

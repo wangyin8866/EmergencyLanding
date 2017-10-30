@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.WorkInfoBean;
 import com.zyjr.emergencylending.service.home.loan.WorktInfoService;
 
@@ -32,16 +33,19 @@ public class WorkInfoModel extends BaseModel {
 
 
     public Observable<ApiResult<WorkInfoBean>> getWorkInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_GET_WORK_INFO);
         return worktInfoService.getWorkInfo(params);
     }
 
 
     public Observable<ApiResult<WorkInfoBean>> addWorkInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_ADD_WORK_INFO);
         return worktInfoService.addWorkInfo(params);
     }
 
 
     public Observable<ApiResult<WorkInfoBean>> editWorkInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_EDIT_WORK_INFO);
         return worktInfoService.editWorkInfo(params);
     }
 

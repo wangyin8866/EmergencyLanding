@@ -98,5 +98,10 @@ public class Constants {
     public static final String GET_SUPPORT_BANK_INFO = "32";
     // 上传身份证图片
     public static final String UPLOAD_IDCARD_FILE = "33";
-
+    // 上传通讯录资料
+    public static final String UPLOAD_CONTACTS_LIST = "34";
+    // 获取支持城市清单
+    public static final String GET_SUPPORT_CITIES_LIST = "35";
+    // 获取产品介绍
+    public static final String GET_PRODUCT_INTRODUCE = "36";
 }

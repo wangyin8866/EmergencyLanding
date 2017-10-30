@@ -50,9 +50,4 @@ public class ContactInfoModel extends BaseModel {
         return contactInfoService.editContactInfo(params);
     }
 
-    public Observable<ApiResult<String>> submitContacts(Map<String, String> params){
-        params.put("router", NetConstantValues.ROUTER_SUBMIT_CONTACTS_BOOK);
-        return contactInfoService.submitContacts(params);
-    }
-
 }

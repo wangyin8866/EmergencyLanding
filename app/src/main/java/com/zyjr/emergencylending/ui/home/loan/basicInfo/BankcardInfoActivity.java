@@ -22,6 +22,7 @@ import com.zyjr.emergencylending.ui.home.loan.EditBankcardActivity;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +60,9 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private static final int INTENT_CODE_ADD_BANKCARD = 1; // 添加银行卡 请求码
     private static final int INTENT_CODE_EDIT_BANKCARD = 2; // 编辑银行卡 请求码
+    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String bank_username = ""; // 银行卡户主
+    private String id_card = "";// 身份证号
 
     @Override
     protected BankcardInfoPresenter createPresenter() {
@@ -71,7 +75,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         setContentView(R.layout.activity_my_bankcard);
         ButterKnife.bind(this);
         init();
-        loadingBindBankcardInfo();
+        initGetData();
     }
 
     @OnClick({R.id.rl_add_bankcard})
@@ -79,6 +83,8 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         switch (view.getId()) {
             case R.id.rl_add_bankcard:
                 Intent intent = new Intent(this, AddBankcardActivity.class);
+                intent.putExtra("bank_username", bank_username);
+                intent.putExtra("id_card", id_card);
                 startActivityForResult(intent, INTENT_CODE_ADD_BANKCARD);
                 break;
         }
@@ -100,17 +106,6 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
     }
 
-    private void showBankcardInfo(BankcardInfo bankcard) {
-        bankcardInfo = bankcard;
-        setBankIcon(bankcardInfo);
-        tvBankcardName.setText(bankcardInfo.getBank_name());
-        tvBankcardType.setText(""); // 此处没有字段返回
-        if (StringUtil.isNotEmpty(bankcardInfo.getBankcard_no())) {
-            String bankcardNum = bankcardInfo.getBankcard_no();
-            tvBankcardNumber.setText(bankcardNum.substring(0, 4) + "* * * *   * * * *" + bankcardNum.substring(bankcardNum.length() - 4, bankcardNum.length()));
-        }
-    }
-
 
     private void showEditDialog() {
         final CustomerDialog customerDialog = new CustomerDialog(BankcardInfoActivity.this);
@@ -124,16 +119,16 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
                         Intent intent = new Intent(BankcardInfoActivity.this, EditBankcardActivity.class);
                         intent.putExtra("bankcardInfo", bankcardInfo);
                         startActivityForResult(intent, INTENT_CODE_EDIT_BANKCARD);
+
                         break;
                     case R.id.tv_cancel:
-                        ToastAlone.showLongToast(BankcardInfoActivity.this, "取消");
                         customerDialog.dismiss();
+
                         break;
                 }
             }
         }).show();
     }
-
 
 
     private void init() {
@@ -158,9 +153,46 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         topBar.setRightButtonVisible(View.INVISIBLE);
     }
 
+    private void initGetData() {
+//        Intent intent = getIntent();
+//        isEdit = intent.getStringExtra("isEdit");
+//        String status = intent.getStringExtra("status");
+//        // 已完成状态获取资料信息
+//        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+//            loadingBindBankcardInfo();
+//        }
+//        if (isEdit.equals("0")) { // 不可编辑
+//
+//        }
+        loadingBindBankcardInfo();
+    }
+
+    private void judgeBankcardInfo(BankcardInfo bankcard) {
+        bankcardInfo = bankcard;
+        if (StringUtil.isEmpty(bankcardInfo.getBankcard_no())) {
+            // 没有绑定银行卡
+            rlAddBankcard.setVisibility(View.VISIBLE);
+            rlEditBankcard.setVisibility(View.GONE);
+            topBar.setRightButtonVisible(View.INVISIBLE);
+            bank_username = bankcardInfo.getBank_username();
+            id_card = bankcardInfo.getId_card();
+        } else {
+            rlEditBankcard.setVisibility(View.VISIBLE);
+            rlAddBankcard.setVisibility(View.GONE);
+            topBar.setRightButtonVisible(View.VISIBLE);
+            setBankIcon(bankcardInfo);
+            tvBankcardName.setText(bankcardInfo.getBank_name());
+            tvBankcardType.setText(""); // 此处没有字段返回
+            if (StringUtil.isNotEmpty(bankcardInfo.getBankcard_no())) {
+                String bankcardNum = bankcardInfo.getBankcard_no();
+                tvBankcardNumber.setText(bankcardNum.substring(0, 4) + "* * * *   * * * *" + bankcardNum.substring(bankcardNum.length() - 4, bankcardNum.length()));
+            }
+        }
+    }
+
+
     private void loadingBindBankcardInfo() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
         mPresenter.getBindBankcardInfo(paramsMap);
     }
 
@@ -197,24 +229,23 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
         pullToRefreshScrollView.onRefreshComplete();
-        rlEditBankcard.setVisibility(View.VISIBLE);
-        rlAddBankcard.setVisibility(View.GONE);
-        topBar.setRightButtonVisible(View.VISIBLE);
-        showBankcardInfo(bean);
+
+        judgeBankcardInfo(bean);
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, BankcardInfo bean) {
+    public void onSuccessAdd(String returnCode, String msg) {
 
     }
 
     @Override
-    public void onSuccessEdit(String returnCode, BankcardInfo bean) {
+    public void onSuccessEdit(String returnCode, String msg) {
 
     }
 
     @Override
     public void onFail(String apiCode, String errorMsg) {
+        pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showLongToast(this, errorMsg);
     }
 
@@ -225,6 +256,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+        pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showLongToast(this, errorMsg);
     }
 }

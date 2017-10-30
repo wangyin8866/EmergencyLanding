@@ -29,13 +29,19 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().getContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
-                LogUtils.d("获取联系人信息成功---->" + result.getResult().toString());
-                getView().onSuccessGet(Constants.GET_CONTACT_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("获取联系人信息成功---->" + result.getResult().toString());
+                    getView().onSuccessGet(Constants.GET_CONTACT_INFO, result.getResult());
+                } else {
+                    LogUtils.d("获取联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_WORK_INFO, result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("获取联系人信息异常---->" + e.getMessage());
+                getView().onError(Constants.GET_WORK_INFO, e.getMessage());
             }
         }, mContext));
     }
@@ -44,13 +50,19 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().addContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
-                LogUtils.d("添加联系人信息成功---->" + result.getResult());
-                getView().onSuccessAdd(Constants.ADD_CONTACT_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("添加联系人信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.ADD_CONTACT_INFO, result.getMsg());
+                } else {
+                    LogUtils.d("添加联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.ADD_CONTACT_INFO, result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("添加联系人信息异常---->" + e.getMessage());
+                getView().onError(Constants.ADD_CONTACT_INFO, e.getMessage());
             }
         }, mContext));
     }
@@ -59,30 +71,21 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().editContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
-                LogUtils.d("保存联系人信息成功---->" + result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("修改联系人信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.EDIT_CONTACT_INFO, result.getMsg());
+                } else {
+                    LogUtils.d("修改联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.EDIT_CONTACT_INFO, result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("修改联系人信息异常---->" + e.getMessage());
+                getView().onError(Constants.EDIT_CONTACT_INFO, e.getMessage());
             }
         }, mContext));
     }
-
-    public void submitContacts(Map<String, String> params) {
-        invoke(ContactInfoModel.getInstance().submitContacts(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
-            @Override
-            public void onNext(ApiResult<String> result) {
-                LogUtils.d("上传通讯录信息成功---->" + result.getResult());
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        }, mContext));
-    }
-
 
 }

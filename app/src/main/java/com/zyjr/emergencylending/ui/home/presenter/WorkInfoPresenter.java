@@ -28,17 +28,21 @@ public class WorkInfoPresenter extends BasePresenter<WorkInfoView> {
         invoke(WorkInfoModel.getInstance().getWorkInfo(params), new ProgressSubscriber<ApiResult<WorkInfoBean>>(new SubscriberOnNextListener<ApiResult<WorkInfoBean>>() {
             @Override
             public void onNext(ApiResult<WorkInfoBean> result) {
-                if (result.getResult() != null) {
-                    LogUtils.d("获取工作信息成功---->" + result.getResult().toString());
-                    getView().onSuccessAdd(Constants.GET_WORK_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取工作信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGet(Constants.GET_WORK_INFO, result.getResult());
+                    }
                 } else {
-                    LogUtils.d("获取工作信息---->" + result.getResult());
+                    LogUtils.d("获取工作信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_WORK_INFO, result.getMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("获取工作信息异常---->" + e.getMessage());
+                getView().onError(Constants.ADD_PERSONAL_INFO, e.getMessage());
             }
         }, mContext));
     }
@@ -47,17 +51,19 @@ public class WorkInfoPresenter extends BasePresenter<WorkInfoView> {
         invoke(WorkInfoModel.getInstance().addWorkInfo(params), new ProgressSubscriber<ApiResult<WorkInfoBean>>(new SubscriberOnNextListener<ApiResult<WorkInfoBean>>() {
             @Override
             public void onNext(ApiResult<WorkInfoBean> result) {
-                if (result.getResult() != null) {
-                    LogUtils.d("添加工作信息成功---->" + result.getResult().toString());
-                    getView().onSuccessAdd(Constants.ADD_WORK_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("添加工作信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.ADD_WORK_INFO, result.getMsg());
                 } else {
-                    LogUtils.d("添加工作信息---->" + result.getResult());
+                    LogUtils.d("添加工作信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.ADD_WORK_INFO, result.getMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("添加工作信息异常---->" + e.getMessage());
+                getView().onError(Constants.ADD_WORK_INFO, e.getMessage());
             }
         }, mContext));
     }
@@ -66,17 +72,19 @@ public class WorkInfoPresenter extends BasePresenter<WorkInfoView> {
         invoke(WorkInfoModel.getInstance().editWorkInfo(params), new ProgressSubscriber<ApiResult<WorkInfoBean>>(new SubscriberOnNextListener<ApiResult<WorkInfoBean>>() {
             @Override
             public void onNext(ApiResult<WorkInfoBean> result) {
-                if (result.getResult() != null) {
-                    LogUtils.d("保存工作信息成功---->" + result.getResult().toString());
-                    getView().onSuccessAdd(Constants.EDIT_WORK_INFO, result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("修改工作信息成功---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.EDIT_WORK_INFO, result.getMsg());
                 } else {
-                    LogUtils.d("保存工作信息---->" + result.getResult());
+                    LogUtils.d("修改工作信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.EDIT_WORK_INFO, result.getMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("修改工作信息异常---->" + e.getMessage());
+                getView().onError(Constants.ADD_WORK_INFO, e.getMessage());
             }
         }, mContext));
     }

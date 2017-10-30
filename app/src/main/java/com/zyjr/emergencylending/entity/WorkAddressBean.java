@@ -17,7 +17,6 @@ public class WorkAddressBean implements Serializable {
     private String unit_city_name; // 单位所在市名称
     private String unit_county; // 单位所在区
     private String unit_county_name; // 单位所在区名称
-    private String unit_adr_detail; // 单位详细地址
 
     public String getUnit_adr() {
         return unit_adr;
@@ -75,14 +74,6 @@ public class WorkAddressBean implements Serializable {
         this.unit_county_name = unit_county_name;
     }
 
-    public String getUnit_adr_detail() {
-        return unit_adr_detail;
-    }
-
-    public void setUnit_adr_detail(String unit_adr_detail) {
-        this.unit_adr_detail = unit_adr_detail;
-    }
-
     @Override
     public String toString() {
         return "WorkAddressBean{" +
@@ -93,7 +84,6 @@ public class WorkAddressBean implements Serializable {
                 ", unit_city_name='" + unit_city_name + '\'' +
                 ", unit_county='" + unit_county + '\'' +
                 ", unit_county_name='" + unit_county_name + '\'' +
-                ", unit_adr_detail='" + unit_adr_detail + '\'' +
                 '}';
     }
 }

@@ -83,7 +83,7 @@ public class BorrowActivity extends BaseActivity {
         MIN_MONEY = 5000;
         MAX_MONEY = 30000;
         initSeekMoney(10, MIN_MONEY, MAX_MONEY);
-        initSeekWeek(1, MIN_WEEK, MAX_WEEK);
+        initSeekWeek(1, MIN_WEEK, MAX_WEEK, 2);
     }
 
 
@@ -109,7 +109,7 @@ public class BorrowActivity extends BaseActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 weekProgress = progress;
-                week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK);
+                week = Arithmetic.progressToWeek(weekProgress, MIN_WEEK, MAX_WEEK, 2);
                 LogUtils.e("周期:" + week);
             }
 
@@ -135,16 +135,16 @@ public class BorrowActivity extends BaseActivity {
         tvMaxLoadMoney.setText(maxMoney + "元");
     }
 
-    public void initSeekWeek(int progress, int minWeek, int maxWeek) {
+    public void initSeekWeek(int progress, int minWeek, int maxWeek, int minUnit) {
         seekbarWeek.setType(1);
-        seekbarWeek.setWEEK_MIN(minWeek);
-        seekbarWeek.setWEEK_MAX(maxWeek);
+        seekbarWeek.setPERIOD_MIN(minWeek);
+        seekbarWeek.setPERIOD_MAX(maxWeek);
         if (seekbarWeek != null) {
             seekbarWeek.setProgress(progress);
         }
 
         tvMinLoadWeek.setText(minWeek + "周");
-        week = Arithmetic.progressToWeek(progress, minWeek, maxWeek);
+        week = Arithmetic.progressToWeek(progress, minWeek, maxWeek, minUnit);
         tvMaxLoadWeek.setText(maxWeek + "周");
     }
 

@@ -1,6 +1,8 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 
 import java.util.List;
@@ -21,15 +23,15 @@ public interface ProductInfoService {
      * 获取产品说明
      */
     @FormUrlEncoded
-    @POST("zyProductInfoService.getProductInfoByType")
-    Observable<ApiResult<List<String>>> getProIntroduce(@FieldMap Map<String, String> params);
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<ProIntroduceBean>> getProIntroduce(@FieldMap Map<String, String> params);
 
 
     /**
      * 获取支持城市
      */
     @FormUrlEncoded
-    @POST("444")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<List<SupportCityBean>>> getProSupportCities(@FieldMap Map<String, String> params);
 
 

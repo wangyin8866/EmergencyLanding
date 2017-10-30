@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by neil on 2017/10/14
@@ -10,27 +11,13 @@ public class ProIntroduceBean implements Serializable {
 
     private static final long serialVersionUID = -2164450930686205050L;
 
-    private String title;
-    private String content;
+    private List<String> product_info;
 
-    public ProIntroduceBean(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public List<String> getProduct_info() {
+        return product_info;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setProduct_info(List<String> product_info) {
+        this.product_info = product_info;
     }
 }

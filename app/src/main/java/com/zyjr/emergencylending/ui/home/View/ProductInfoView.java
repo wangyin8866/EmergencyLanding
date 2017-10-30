@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.View;
 
+import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface ProductInfoView {
 
     void onSuccessGetIntro(String returnCode, List<String> introList);
 
-    void onFail(String errorMessage);
+    void onFail(String returnCode, String errorMessage);
+
+    void onError(String returnCode, String errorMsg);
 
 }

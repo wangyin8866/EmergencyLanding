@@ -10,7 +10,8 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
+//    String HOST_URL = "http://192.168.6.107:8086/";
+    String HOST_URL = "http://192.168.10.12:8080/";
 
     /**
      * 二级地址
@@ -170,4 +171,25 @@ public interface NetConstantValues {
      * 关于我们
      */
     String ABOUT_US = "zyUserService.getAboutUsUrl";
+    /**
+     * 获取工作信息
+     */
+    String ROUTER_GET_WORK_INFO = "zyUserJobService.getUserJobInfo";
+    /**
+     * 保存工作信息
+     */
+    String ROUTER_ADD_WORK_INFO = "zyUserJobService.saveUserJobInfo";
+    /**
+     * 修改工作信息
+     */
+    String ROUTER_EDIT_WORK_INFO = "zyUserJobService.saveUserJobInfo";
+    /**
+     * 获取产品介绍
+     */
+    String ROUTER_GET_PRODUCT_INTRODUCE = "zyProductInfoService.getProductExplainByProductId";
+    /**
+     * 获取支持城市
+     */
+    String ROUTER_GET_SUPPORT_CITIES_LIST = "zyStoreService.getSuppertCityInfo";
+
 }

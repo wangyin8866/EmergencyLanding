@@ -122,7 +122,7 @@ public class BubbleSeekBar extends AppCompatSeekBar {
                 if (ONLINE == 1 && getProgress() <= 1) {
                     mText = WEEK_MIN * 7 + "天";
                 } else {
-                    mText = Arithmetic.progressToWeek(getProgress(), WEEK_MIN, WEEK_MAX) + "周";
+                    mText = Arithmetic.progressToWeek(getProgress(), WEEK_MIN, WEEK_MAX,2) + "周";
                 }
             } else {
                 mText = "";
