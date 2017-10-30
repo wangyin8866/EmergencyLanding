@@ -79,6 +79,10 @@ public interface NetConstantValues {
      */
     String USER_NEWS = "zyUserNewsService.getUserNews";
     /**
+     * 消息操作
+     */
+    String UPDATE_USER_NEWS = "zyUserNewsService.updateUserNewsStatus";
+    /**
      * 二维码
      */
     String QR_CODE = "userBorrowService.getMyQRCodeAndRecommendCode";
