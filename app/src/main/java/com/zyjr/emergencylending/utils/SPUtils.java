@@ -72,5 +72,11 @@ public class SPUtils {
         int result = sp.getInt(key, defValue);
         return result;
     }
-
+    //清楚数据
+    public static void clear(Context context) {
+        if (sp == null) {
+            sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+        }
+        sp.edit().clear().apply();
+    }
 }

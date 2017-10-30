@@ -23,6 +23,7 @@ import rx.Observable;
 public interface Api {
     /**
      * 注册
+     *
      * @param params
      * @return
      */
@@ -32,6 +33,7 @@ public interface Api {
 
     /**
      * 登录
+     *
      * @param params
      * @return
      */
@@ -41,6 +43,7 @@ public interface Api {
 
     /**
      * 版本更新
+     *
      * @param params
      * @return
      */
@@ -50,14 +53,17 @@ public interface Api {
 
     /**
      * 发送验证码
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> sendSMS(@FieldMap Map<String, String> params);
+
     /**
      * 忘记密码
+     *
      * @param params
      * @return
      */
@@ -67,82 +73,131 @@ public interface Api {
 
     /**
      * 首页广告
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<Banner> getHomeAds(@FieldMap Map<String, String> params);
+
     /**
      * 二维码
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<QrBean> getQr(@FieldMap Map<String, String> params);
+
     /**
      * 消息接口
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<MessageBean> getUserNews(@FieldMap Map<String, String> params);
+
     /**
      * 消息操作
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> updateUserNews(@FieldMap Map<String, String> params);
+
     /**
      * 公告清单(标题)及详情
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> getNoticeList(@FieldMap Map<String, String> params);
+
     /**
      * 我的名片
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> myCard(@FieldMap Map<String, String> params);
+
     /**
      * 活动清单
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> getActivity(@FieldMap Map<String, String> params);
+
     /**
      * 我的收入
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> myIncome(@FieldMap Map<String, String> params);
+
     /**
      * 帮助页面
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<H5Bean> helpPage(@FieldMap Map<String, String> params);
+
     /**
      * 关于我们
+     *
      * @param params
      * @return
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<H5Bean> aboutUs(@FieldMap Map<String, String> params);
+
+    /**
+     * 我的业绩
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> myPerformance(@FieldMap Map<String, String> params);
+
+    /**
+     * 当月榜单
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> rankList(@FieldMap Map<String, String> params);
+
+    /**
+     * 等待申请
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> waitApply(@FieldMap Map<String, String> params);
 }

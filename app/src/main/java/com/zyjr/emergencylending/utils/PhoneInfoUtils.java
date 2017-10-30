@@ -112,5 +112,19 @@ public class PhoneInfoUtils {
         return ProvidersName;
     }
 
-
+    /**
+     * 获取设备的唯一标识，deviceId
+     *
+     * @param context
+     * @return
+     */
+    public static String getDeviceId(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceId = tm.getDeviceId();
+        if (deviceId == null) {
+            return "";
+        } else {
+            return deviceId;
+        }
+    }
 }

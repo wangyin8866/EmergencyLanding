@@ -17,6 +17,7 @@ import com.zyjr.emergencylending.ui.account.ForgetPasswordActivity;
 import com.zyjr.emergencylending.ui.my.View.SettingView;
 import com.zyjr.emergencylending.ui.my.presenter.SettingPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -27,7 +28,7 @@ import butterknife.OnClick;
  * Created by wangyin on 2017/10/13.
  */
 
-public class SettingActivity extends BaseActivity<SettingPresenter,SettingView>implements SettingView {
+public class SettingActivity extends BaseActivity<SettingPresenter, SettingView> implements SettingView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.modify_password)
@@ -93,6 +94,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter,SettingView>i
                 phoneDialog();
                 break;
             case R.id.exit:
+                SPUtils.clear(mContext);
                 ActivityCollector.finishAll();
                 break;
             case R.id.version:

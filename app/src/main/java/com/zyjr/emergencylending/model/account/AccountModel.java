@@ -12,7 +12,6 @@ import java.util.Map;
 import rx.Observable;
 
 /**
- *
  * @author wangyin
  * @date 2017/10/24
  */
@@ -38,7 +37,7 @@ public class AccountModel extends BaseModel {
      */
     public Observable<RegisterBean> register(String router, String phone, String clientid,
                                              String verify_code, String password, String recommend_code,
-                                              String register_ip, String register_device_no) {
+                                             String register_ip, String register_device_no) {
         Map<String, String> map = new HashMap<String, String>(8);
         map.put("router", router);
         map.put("phone", phone);
@@ -55,13 +54,14 @@ public class AccountModel extends BaseModel {
      * 登录
      */
     public Observable<LoginBean> login(String router, String phone, String password,
-                                       String clientid, String login_ip, String login_device_no) {
+                                       String clientid, String login_ip, String login_platform, String login_device_no) {
         Map<String, String> map = new HashMap<String, String>(6);
         map.put("router", router);
         map.put("phone", phone);
         map.put("password", password);
         map.put("clientid", clientid);
         map.put("login_ip", login_ip);
+        map.put("login_platform", login_platform);
         map.put("login_device_no", login_device_no);
         return mApi.login(map);
     }
@@ -74,7 +74,7 @@ public class AccountModel extends BaseModel {
      * @return
      */
     public Observable<BaseBean> sendSMS(String router, String phone
-                                        ) {
+    ) {
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("phone", phone);

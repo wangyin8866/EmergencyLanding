@@ -1,7 +1,9 @@
 package com.zyjr.emergencylending.config;
 
 /**
- * Created by DELL on 2017/1/6.
+ *
+ * @author DELL
+ * @date 2017/1/6
  */
 
 public interface NetConstantValues {
@@ -29,6 +31,14 @@ public interface NetConstantValues {
      * 我的收入
      */
     String MY_INCOME = "zyUserCommissionService.getUserCommission";
+    /**
+     * 我的业绩
+     */
+    String MY_PERFORMANCE = "zyUserService.getUserAchievement";
+    /**
+     * 待跟进申请
+     */
+    String WAIT_APPLY = "zySalesmanService.clerkRecordList";
     /**
      * 我的名片
      */

@@ -29,7 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by wangyin on 2017/10/18.
+ *
+ * @author wangyin
+ * @date 2017/10/18
  */
 
 public class LineMainActivity extends BaseActivity implements View.OnClickListener {

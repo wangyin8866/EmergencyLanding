@@ -22,44 +22,38 @@
             android:textColor="#FFFFFF"
             android:textSize="16sp" />
 
-        <RadioGroup
-            android:id="@+id/rg_title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
-
-            <RadioButton
+            <TextView
+                android:id="@+id/type1"
                 android:layout_width="60dp"
-                android:layout_height="match_parent"
+                android:layout_height="26dp"
+                android:gravity="center"
                 android:layout_marginRight="58dp"
-                android:background="@drawable/btn_shape_gradient_mine"
-                android:button="@null"
-                android:gravity="center"
-                android:text="近7天"
-                android:textColor="@color/color_tv_selector" />
-
-            <RadioButton
+                android:background="@drawable/tv_type_shape_gradient_mine"
+                android:textColor="#FFFFFF"
+                android:text="近七天" />
+            <TextView
+                android:id="@+id/type2"
                 android:layout_width="60dp"
-                android:layout_height="match_parent"
+                android:layout_height="26dp"
+                android:gravity="center"
                 android:layout_marginRight="58dp"
-                android:background="@drawable/btn_shape_gradient_mine"
-                android:button="@null"
-                android:gravity="center"
-                android:text="当月"
-                android:textColor="@color/color_tv_selector" />
-
-            <RadioButton
+                android:background="@drawable/tv_type_shape_gradient_mine"
+                android:textColor="#FFFFFF"
+                android:text="当月" />
+            <TextView
+                android:id="@+id/type3"
                 android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/btn_shape_gradient_mine"
-                android:button="@null"
+                android:layout_height="26dp"
                 android:gravity="center"
-                android:text="上月"
-                android:textColor="@color/color_tv_selector" />
-        </RadioGroup>
+                android:background="@drawable/tv_type_shape_gradient_mine"
+                android:textColor="#FFFFFF"
+                android:text="上月" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

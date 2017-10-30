@@ -46,4 +46,6 @@ public interface Config {
      */
     String CUST_JUID = "cust_juid";
 
+    String KEY_LOGIN = "is_login";
+
 }

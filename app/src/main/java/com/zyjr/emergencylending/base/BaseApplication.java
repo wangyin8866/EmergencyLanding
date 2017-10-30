@@ -10,6 +10,8 @@ import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.PhoneInfoUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 
 
 /**
@@ -48,6 +50,11 @@ public class BaseApplication extends Application {
     public static boolean isSalesman;
     public static String clientId = "";
 
+    /**
+     * 是否登录
+     */
+    public static boolean isLogin;
+
 
     @Override
     public void onCreate() {
@@ -65,6 +72,10 @@ public class BaseApplication extends Application {
         //友盟日志
         Config.DEBUG = false;
 //        UMShareAPI.get(this);
+
+        clientId = PhoneInfoUtils.getDeviceId(this);
+
+        isLogin = SPUtils.getBoolean(this, "isLogin", false);
     }
 
     public static Context getContext() {
