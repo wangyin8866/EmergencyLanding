@@ -27,14 +27,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--线上-->
-        <!--<activity-->
-            <!--android:name=".ui.account.LoginActivity"-->
-            <!--android:launchMode="singleTask"-->
-            <!--android:screenOrientation="portrait">-->
-
-        <!--</activity>-->
-        <!--线下入口-->
+        <!--登录-->
         <activity
             android:name=".ui.account.LoginActivity"
             android:launchMode="singleTask"
@@ -45,6 +38,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--线下入口-->
+        <activity
+            android:name=".ui.salesman.activity.LineMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <!--线上-->
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
         <!--二维码-->
         <activity
             android:name=".ui.home.QrCodeActivity"
@@ -53,12 +59,7 @@
         <activity
             android:name=".ui.home.MessageActivity"
             android:screenOrientation="portrait" />
-        <!--登录-->
-        <activity
-            android:name=".MainActivity"
-            android:screenOrientation="portrait">
 
-        </activity>
         <!--注册-->
         <activity
             android:name=".ui.account.RegisterActivity"
@@ -254,11 +255,17 @@
             android:name=".ui.h5.H5WebView"
             android:screenOrientation="portrait" />
         <!--个人资料-->
-        <activity android:name=".ui.my.PersonalDataActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.my.PersonalDataActivity"
+            android:screenOrientation="portrait" />
         <!-- 编辑银行卡 -->
-        <activity android:name="com.zyjr.emergencylending.ui.home.loan.EditBankcardActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.EditBankcardActivity"
+            android:screenOrientation="portrait" />
         <!--我的收入-->
-        <activity android:name=".ui.salesman.activity.MyIncome" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.salesman.activity.MyIncome"
+            android:screenOrientation="portrait" />
 
     </application>
 
