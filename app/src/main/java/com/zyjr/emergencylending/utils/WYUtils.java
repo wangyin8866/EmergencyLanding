@@ -615,4 +615,23 @@ public class WYUtils {
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
+    /**
+     * 用户名隐藏
+     *
+     * @param string
+     * @return
+     */
+    public static String nameSecret(String string) {
+        return string.replace(string.substring(0, 1), "*");
+    }
+
+    /**
+     * 手机号******
+     */
+    public static String phoneSecret(String s) {
+        String head = s.substring(0, 3);
+        String end = s.substring(s.length() - 4, s.length());
+        return head + "****" + end;
+    }
 }

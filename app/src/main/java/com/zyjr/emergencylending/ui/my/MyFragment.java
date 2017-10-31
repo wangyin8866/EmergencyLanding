@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -21,8 +22,8 @@ import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
-import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.custom.GlideCircleTransform;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
@@ -46,7 +47,7 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
     @BindView(R.id.message_center)
     ImageView messageCenter;
     @BindView(R.id.user_pic)
-    RoundImageViewByXfermode userPic;
+    ImageView userPic;
     @BindView(R.id.user_info)
     TextView userInfo;
     @BindView(R.id.my_borrow)
@@ -141,7 +142,7 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
             case R.id.my_repayment:
                 break;
             case R.id.help:
-                H5WebView.skipH5WebView(mContext, "帮助说明");
+                mPresenter.getH5Url(Config.H5_URL_HELP,"帮助说明");
                 break;
             case R.id.setting:
                 startActivity(new Intent(mContext,SettingActivity.class));
@@ -158,7 +159,7 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
         String imgPath = result.getImage().getOriginalPath();
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
         Bitmap mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-        userPic.setImageBitmap(mBitmap);
+        Glide.with(mContext).load(mBitmap).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 
     @Override

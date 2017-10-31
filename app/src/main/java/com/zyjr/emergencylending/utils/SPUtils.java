@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 public class SPUtils {
     private static final String SP_NAME = "wyman";
     private static SharedPreferences sp;
+    private static SharedPreferences sp2;
 
     //保存布尔值
     public static void saveBoolean(Context context, String key, boolean value) {
@@ -21,8 +22,7 @@ public class SPUtils {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        boolean result = sp.getBoolean(key, defValue);
-        return result;
+        return sp.getBoolean(key, defValue);
     }
 
     //保存字符串
@@ -37,8 +37,7 @@ public class SPUtils {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        String result = sp.getString(key, defValue);
-        return result;
+        return sp.getString(key, defValue);
     }
 
     //保存Long---token
@@ -53,8 +52,7 @@ public class SPUtils {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        long result = sp.getLong(key, defValue);
-        return result;
+        return sp.getLong(key, defValue);
     }
 
     //保存int
@@ -69,14 +67,30 @@ public class SPUtils {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        int result = sp.getInt(key, defValue);
-        return result;
+        return sp.getInt(key, defValue);
     }
+
     //清楚数据
     public static void clear(Context context) {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
         sp.edit().clear().apply();
+
+    }
+
+    //保存导航页
+    public static void saveGuideBoolean(Context context, String key, boolean value) {
+        if (sp2 == null) {
+            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+        }
+        sp2.edit().putBoolean(key, value).apply();
+    }
+
+    public static boolean getGuideBoolean(Context context, String key, boolean defValue) {
+        if (sp2 == null) {
+            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+        }
+        return sp2.getBoolean(key, defValue);
     }
 }

@@ -62,6 +62,8 @@ public class Constants {
         return String.valueOf(WYUtils.getVersionCode(context));
     }
 
+
+
     // 获取填写信息
     public static final String GET_WRITE_INFO = "10";
     // 上传身份证正面

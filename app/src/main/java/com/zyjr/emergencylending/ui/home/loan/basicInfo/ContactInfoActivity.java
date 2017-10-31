@@ -21,6 +21,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.AppConfig;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CodeBean;
@@ -146,7 +147,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     protected void onResume() {
         super.onResume();
-        if (BaseApplication.isSalesman) {
+        if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             // 线下业务员
             etContactPhone1.setEnabled(true);
             etContactPhone1.setHint("请填写手机号");

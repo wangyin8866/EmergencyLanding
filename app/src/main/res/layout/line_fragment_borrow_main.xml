@@ -18,34 +18,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="#FFF5E5"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:background="#FFFFFF">
+
+        <LinearLayout
+            android:id="@+id/ll_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFF5E5"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="visible">
 
 
-        <ImageView
-            android:id="@+id/notice_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:src="@mipmap/icon_notice" />
+            <ImageView
+                android:id="@+id/notice_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
+                android:src="@mipmap/icon_notice" />
 
-        <com.zyjr.emergencylending.custom.AutoVerticalScrollTextView
-            android:id="@+id/notice_auto_roll"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1" />
+            <com.zyjr.emergencylending.custom.AutoVerticalScrollTextView
+                android:id="@+id/notice_auto_roll"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/notice_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_marginRight="15dp"
-            android:src="@mipmap/close_notice" />
+            <ImageView
+                android:id="@+id/notice_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/close_notice" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -172,6 +180,7 @@
             android:textSize="15dp" />
 
         <LinearLayout
+            android:id="@+id/more_dynamic"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="12dp"

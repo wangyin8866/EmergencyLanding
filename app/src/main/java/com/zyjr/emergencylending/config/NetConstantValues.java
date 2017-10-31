@@ -1,7 +1,6 @@
 package com.zyjr.emergencylending.config;
 
 /**
- *
  * @author DELL
  * @date 2017/1/6
  */
@@ -11,7 +10,11 @@ public interface NetConstantValues {
      * 测试服务器
      */
 //    String HOST_URL = "http://192.168.6.107:8086/";
-    String HOST_URL = "http://192.168.10.12:8080/";
+//    String HOST_URL = "http://192.168.10.12:8080/";
+    /**
+     * 杨存本地
+     */
+    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 二级地址
@@ -27,27 +30,7 @@ public interface NetConstantValues {
     /**
      * 帮助说明
      */
-    String HELP = "zyUserService.getHelpNoteUrl";
-    /**
-     * 我的收入
-     */
-    String MY_INCOME = "zyUserCommissionService.getUserCommission";
-    /**
-     * 我的业绩
-     */
-    String MY_PERFORMANCE = "zyUserService.getUserAchievement";
-    /**
-     * 待跟进申请
-     */
-    String WAIT_APPLY = "zySalesmanService.clerkRecordList";
-    /**
-     * 我的名片
-     */
-    String MY_CARD = "zySalesmanService.salesmanCard";
-    /**
-     * 龙虎榜
-     */
-    String RANKING_LIST = "zyUserService.getUserBillBoard";
+    String H5_URL = "zySalesmanService.getH5Url";
 
     /**
      * 身份证扫描
@@ -191,5 +174,8 @@ public interface NetConstantValues {
      * 获取支持城市
      */
     String ROUTER_GET_SUPPORT_CITIES_LIST = "zyStoreService.getSuppertCityInfo";
-
+    /**
+     * 业务员名片
+     */
+    String MY_CARD = "zySalesmanService.salesmanCard";
 }

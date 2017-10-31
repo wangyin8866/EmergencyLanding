@@ -12,10 +12,9 @@ import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
@@ -23,7 +22,6 @@ import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.WriteInfoPresenter;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.SettingItemView;
@@ -80,7 +78,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @Override
     protected void onResume() {
         super.onResume();
-        if (BaseApplication.isSalesman) {
+        if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             //线下
             rlNoSalesman.setVisibility(View.GONE);
         } else {

@@ -13,12 +13,10 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.LineCustomerAdapter;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.CircleView;
 import com.zyjr.emergencylending.custom.XListView;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.H5Bean;
-import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivityApplyFor;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivityClient;
 import com.zyjr.emergencylending.ui.salesman.activity.ActivitySuccess;
@@ -115,7 +113,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 startActivity(new Intent(mContext, ActivitySuccess.class));
                 break;
             case R.id.ll_rank_list:
-                H5WebView.skipH5WebView(mContext, "龙虎榜");
+//                H5WebView.skipH5WebView(mContext, "龙虎榜");
                 break;
             case R.id.type1:
                 selectTv(1);
@@ -154,9 +152,9 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 type3.setTextColor(Color.parseColor("#FFA200"));
                 break;
         }
-        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
-        mPresenter.rankList(NetConstantValues.RANKING_LIST);
+//        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
+//        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
+//        mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override

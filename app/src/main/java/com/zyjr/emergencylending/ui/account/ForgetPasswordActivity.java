@@ -30,7 +30,9 @@ import rx.Subscription;
 import rx.functions.Action1;
 
 /**
- * Created by wangyin on 2017/10/12.
+ *
+ * @author wangyin
+ * @date 2017/10/12
  */
 
 public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseView<BaseBean>> implements BaseView<BaseBean> {
@@ -65,6 +67,8 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
     }
 
     private void init() {
+        String title = getIntent().getStringExtra("title");
+        topBar.setTitle(title);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {

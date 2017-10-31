@@ -25,7 +25,7 @@ public class TopBarHelper {
     /*用户定义的view*/
     private View mUserView;
 
-    /*toolbar*/
+    /*tool_bar*/
     private TopBar mTopBar;
 
     /*视图构造器*/

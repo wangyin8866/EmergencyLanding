@@ -81,7 +81,7 @@ public class PhotoUtils {
 
     private static CropOptions getCropOptions() {
         CropOptions.Builder builder = new CropOptions.Builder();
-        builder.setOutputX(400).setOutputY(300);
+        builder.setOutputX(400).setOutputY(400);
         builder.setWithOwnCrop(true);
         return builder.create();
     }

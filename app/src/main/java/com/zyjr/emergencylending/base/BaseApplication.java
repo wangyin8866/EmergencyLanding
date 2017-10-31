@@ -6,8 +6,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhoneInfoUtils;
@@ -47,7 +47,7 @@ public class BaseApplication extends Application {
     /**
      * 是否是线下（业务员）
      */
-    public static boolean isSalesman;
+    public static String isSalesman;
     public static String clientId = "";
 
     /**
@@ -70,12 +70,13 @@ public class BaseApplication extends Application {
         //是否打印日志
         LogUtils.isDebug = true;
         //友盟日志
-        Config.DEBUG = false;
+//        Config.DEBUG = false;
 //        UMShareAPI.get(this);
 
         clientId = PhoneInfoUtils.getDeviceId(this);
 
-        isLogin = SPUtils.getBoolean(this, "isLogin", false);
+        isLogin = SPUtils.getBoolean(this, Config.KEY_LOGIN, false);
+        isSalesman = SPUtils.getString(this, Config.KEY_USER_TYPE,Config.USER_COMMON);
     }
 
     public static Context getContext() {

@@ -77,15 +77,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     }
 
     private void initView() {
-        mPresenter.login(NetConstantValues.LOGIN, "17621920452", "abc123", "123", Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode());
-
-
-                //登录按钮
+        //登录按钮
         subscription = RxView.clicks(btnLogin).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
-
-                clearData();
                 phone = etPhoneNumber.getText().toString();
                 pwd = etPassword.getText().toString();
                 if (TextUtils.isEmpty(phone) || !WYUtils.checkPhone(phone) || TextUtils.isEmpty(pwd)) {
@@ -126,7 +121,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
                 etPassword.postInvalidate();
                 break;
             case R.id.tv_forget:
-                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
+                Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
+                intent.putExtra("title", "忘记密码");
+                startActivity(intent);
                 break;
             case R.id.tv_register:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
@@ -145,11 +142,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     public void callBack(LoginBean loginBean) {
         if (Config.CODE_SUCCESS.equals(loginBean.getFlag())) {
             SPUtils.saveBoolean(mContext, Config.KEY_LOGIN, true);
-            BaseApplication.isLogin = true;
             SPUtils.saveString(mContext, Config.KEY_TOKEN, loginBean.getResult().getLogin_token());
             SPUtils.saveString(mContext, Config.KEY_USER_TYPE, loginBean.getResult().getUser_type());
             SPUtils.saveString(mContext, Config.KEY_RECOMMEND_CODE, loginBean.getResult().getRecommendCode());
             SPUtils.saveString(mContext, Config.KEY_JUID, loginBean.getResult().getJuid());
+            BaseApplication.isLogin = true;
+            BaseApplication.isSalesman = SPUtils.getString(mContext, Config.KEY_USER_TYPE, Config.USER_COMMON);
             if (Config.USER_SALESMAN.equals(loginBean.getResult().getUser_type())) {
                 startActivity(new Intent(mContext, LineMainActivity.class));
             } else {

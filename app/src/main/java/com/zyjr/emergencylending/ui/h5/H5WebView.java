@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -20,6 +19,8 @@ import butterknife.ButterKnife;
  * author wangyin
  * date 2017/10/25.
  * description :
+ *
+ * @author wangyin
  */
 
 public class H5WebView extends BaseActivity {
@@ -35,9 +36,10 @@ public class H5WebView extends BaseActivity {
         return null;
     }
 
-    public static void skipH5WebView(Context context, String title) {
+    public static void skipH5WebView(Context context, String title, String url) {
         Intent intent = new Intent(context, H5WebView.class);
         intent.putExtra("title", title);
+        intent.putExtra("url", url);
         context.startActivity(intent);
     }
 
@@ -51,6 +53,8 @@ public class H5WebView extends BaseActivity {
 
     private void init() {
         String title = getIntent().getStringExtra("title");
+        String url = getIntent().getStringExtra("url");
+        topBar.setTitle(title);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -62,25 +66,6 @@ public class H5WebView extends BaseActivity {
 
             }
         });
-        switch (title) {
-            case "帮助说明":
-                topBar.setTitle(title);
-                WYUtils.loadHtml(NetConstantValues.HELP, webView, progressBar);
-                break;
-            case "我的名片":
-                topBar.setTitle(title);
-                WYUtils.loadHtml(NetConstantValues.MY_CARD, webView, progressBar);
-                break;
-            case "我的收入":
-                topBar.setTitle(title);
-                WYUtils.loadHtml(NetConstantValues.MY_INCOME, webView, progressBar);
-                break;
-            case "龙虎榜":
-                topBar.setTitle(title);
-                WYUtils.loadHtml(NetConstantValues.RANKING_LIST, webView, progressBar);
-                break;
-        }
-
-
+        WYUtils.loadHtml(url, webView, progressBar);
     }
 }

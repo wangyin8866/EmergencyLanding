@@ -67,14 +67,10 @@ public class H5Bean {
          * help_h5_url : www.baidu.com
          */
 
-        private String help_h5_url;
+        private String h5_url;
 
-        public String getHelp_h5_url() {
-            return help_h5_url;
-        }
-
-        public void setHelp_h5_url(String help_h5_url) {
-            this.help_h5_url = help_h5_url;
+        public String getH5_url() {
+            return h5_url;
         }
     }
 }

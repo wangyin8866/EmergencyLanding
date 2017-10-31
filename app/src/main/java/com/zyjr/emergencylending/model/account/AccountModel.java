@@ -1,7 +1,9 @@
 package com.zyjr.emergencylending.model.account;
 
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.service.Api;
@@ -93,5 +95,14 @@ public class AccountModel extends BaseModel {
         map.put("verify_code", verify_code);
         map.put("password", password);
         return mApi.sendSMS(map);
+    }
+    /**
+     * h5
+     */
+    public Observable<H5Bean> getH5Url(String url_type) {
+        Map<String, String> map = new HashMap<String, String>(2);
+        map.put("router", NetConstantValues.H5_URL);
+        map.put("url_type", url_type);
+        return mApi.getH5Url(map);
     }
 }

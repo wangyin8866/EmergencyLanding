@@ -48,4 +48,80 @@ public interface Config {
 
     String KEY_LOGIN = "is_login";
 
+    /**
+     * h5 Key
+     */
+    /**
+     * 关于我们
+     */
+    String H5_URL_HELP = "H5_URL_HELP";
+    /**
+     * 帮助说明
+     */
+    String H5_URL_ABOUTUS = "H5_URL_ABOUTUS";
+    /**
+     * 订单状态
+     */
+    String H5_URL_ORDERSTATUS = "H5_URL_ORDERSTATUS";
+    /**
+     * 龙虎榜
+     */
+    String H5_URL_WINNERSLIST = "H5_URL_WINNERSLIST";
+    /**
+     * 客户管理模块-我的业绩子页面(客户)
+     */
+    String H5_URL_MYRESULTS_CUSTOMER = "H5_URL_MYRESULTS_CUSTOMER";
+    /**
+     * 客户管理模块-我的业绩子页面(申请)
+     */
+    String H5_URL_MYRESULTS_APPLY = "H5_URL_MYRESULTS_APPLY";
+    /**
+     * //业务员首页(更多动态)
+     */
+    String H5_URL_MYRESULTS_SUCCESS = "H5_URL_MYRESULTS_SUCCESS";
+    /**
+     * 推荐有奖
+     */
+    String H5_URL_INVITE = "H5_URL_INVITE";
+    /**
+     * //业务员首页(更多动态)
+     */
+    String H5_URL_CLERKHOMEPAGE = "H5_URL_CLERKHOMEPAGE";
+    /**
+     * //帮助说明(客户经理)
+     */
+    String H5_URL_CLERKHELP = "H5_URL_CLERKHELP";
+    /**
+     *  //收入明细
+     */
+    String H5_URL_INCOMEDETAIL = "H5_URL_INCOMEDETAIL";
+    /**
+     * //我的收入
+     */
+    String H5_URL_MYINCOME = "H5_URL_MYINCOME";
+    /**
+     * //我的榜单
+     */
+    String H5_URL_MYLIST = "H5_URL_MYLIST";
+    /**
+     * //活动详情
+     */
+    String H5_URL_ACTIVITYDETAILS = "H5_URL_ACTIVITYDETAILS";
+    /**
+     *  //活动列表
+     */
+    String H5_URL_ACTIVITYLIST = "H5_URL_ACTIVITYLIST";
+    /**
+     *  //我的名片
+     */
+    String H5_URL_MYCARD = "H5_URL_MYCARD";
+    /**
+     *  //客服电话
+     */
+    String H5_URL_SERVICETEL = "H5_URL_SERVICETEL";
+    /**
+     *  //意见反馈
+     */
+    String H5_URL_FEEDBACK = "H5_URL_FEEDBACK";
+
 }

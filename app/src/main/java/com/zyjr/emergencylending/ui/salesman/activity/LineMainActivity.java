@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.salesman.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,8 +16,10 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.NoScrollViewPager;
+import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.salesman.fragment.BorrowFragment;
 import com.zyjr.emergencylending.ui.salesman.fragment.CustomerFragment;
 import com.zyjr.emergencylending.ui.salesman.fragment.MineFragment;
@@ -118,8 +121,13 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
                 setTabSelection(currentPage);
                 break;
             case R.id.id_tab_ll_03:
-                currentPage = 2;
-                setTabSelection(currentPage);
+                if (BaseApplication.isLogin) {
+                    currentPage = 2;
+                    setTabSelection(currentPage);
+                } else {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                }
+
                 break;
             default:
         }

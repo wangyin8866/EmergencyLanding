@@ -1,7 +1,7 @@
 package com.zyjr.emergencylending.ui.salesman.view;
 
 import com.zyjr.emergencylending.base.BaseView;
-import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.NoticeBean;
 
 /**
  * @author wangyin
@@ -9,16 +9,5 @@ import com.zyjr.emergencylending.entity.BaseBean;
  * @description :
  */
 
-public interface HomeView extends BaseView<BaseBean> {
-    /**
-     * 我的名片
-     * @param baseBean
-     */
-    void myCard(BaseBean baseBean);
-
-    /**
-     * 活动
-     * @param baseBean
-     */
-    void getActivity(BaseBean baseBean);
+public interface HomeView extends BaseView<NoticeBean> {
 }

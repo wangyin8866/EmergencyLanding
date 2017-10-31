@@ -13,10 +13,12 @@ import android.widget.LinearLayout;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.NoticeBean;
+import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ImmediatelyBorrowActivity;
 import com.zyjr.emergencylending.ui.salesman.presenter.HomePresenter;
@@ -32,12 +34,11 @@ import butterknife.Unbinder;
 
 
 /**
- *
  * @author wangyin
  * @date 2017/8/9
  */
 
-public class BorrowFragment extends BaseFragment<HomePresenter,HomeView>implements HomeView {
+public class BorrowFragment extends BaseFragment<HomePresenter, HomeView> implements HomeView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.notice_auto_roll)
@@ -57,6 +58,10 @@ public class BorrowFragment extends BaseFragment<HomePresenter,HomeView>implemen
     @BindView(R.id.buy)
     LinearLayout buy;
     Unbinder unbinder;
+    @BindView(R.id.more_dynamic)
+    LinearLayout moreDynamic;
+    @BindView(R.id.ll_notice)
+    LinearLayout llNotice;
     private int autoRollIndex;
     private List<String> auto_roll_data;
 
@@ -72,12 +77,6 @@ public class BorrowFragment extends BaseFragment<HomePresenter,HomeView>implemen
     protected void init() {
 
         mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
-        auto_roll_data = new ArrayList<>();
-        auto_roll_data.add("wangyin");
-        auto_roll_data.add("wangyin2");
-        auto_roll_data.add("wangyin3");
-        auto_roll_data.add("wangyin4");
-        showAutoRollStrings();
 
 
     }
@@ -112,27 +111,29 @@ public class BorrowFragment extends BaseFragment<HomePresenter,HomeView>implemen
         unbinder.unbind();
     }
 
-    @OnClick({R.id.notice_close, R.id.QR_code, R.id.visiting_card, R.id.activity, R.id.invest, R.id.handle, R.id.buy})
+    @OnClick({R.id.notice_close, R.id.QR_code, R.id.visiting_card, R.id.activity, R.id.invest, R.id.handle, R.id.buy, R.id.more_dynamic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.notice_close:
+                llNotice.setVisibility(View.INVISIBLE);
                 break;
             case R.id.QR_code:
                 startActivity(new Intent(mContext, QrCodeActivity.class));
                 break;
             case R.id.visiting_card:
-                mPresenter.myCard(NetConstantValues.MY_CARD);
-
+                mPresenter.getH5Url(Config.H5_URL_MYCARD, "我的名片");
                 break;
             case R.id.activity:
-                mPresenter.getActivity(NetConstantValues.APP_ACTIVITYS, "1");
-
+                mPresenter.getH5Url(Config.H5_URL_ACTIVITYLIST, "活动");
                 break;
             case R.id.invest:
+                mPresenter.getH5Url(Config.H5_URL_INVITE, "邀请");
+                break;
+            case R.id.more_dynamic:
+                startActivity(new Intent(mContext,MessageActivity.class));
                 break;
             case R.id.handle:
                 startActivity(new Intent(mContext, ImmediatelyBorrowActivity.class));
-
                 break;
             case R.id.buy:
                 break;
@@ -140,17 +141,12 @@ public class BorrowFragment extends BaseFragment<HomePresenter,HomeView>implemen
     }
 
     @Override
-    public void callBack(BaseBean baseBean) {
-
+    public void callBack(NoticeBean baseBean) {
+        auto_roll_data = new ArrayList<>();
+        for (int i = 0; i < baseBean.getResult().getResultList().size(); i++) {
+            auto_roll_data.add(baseBean.getResult().getResultList().get(i).getTitle());
+        }
+        showAutoRollStrings();
     }
 
-    @Override
-    public void myCard(BaseBean baseBean) {
-//        H5WebView.skipH5WebView(mContext,"我的名片");
-    }
-
-    @Override
-    public void getActivity(BaseBean baseBean) {
-//        startActivity(new Intent(mContext, ActivityActivity.class));
-    }
 }

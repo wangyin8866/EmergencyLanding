@@ -131,16 +131,6 @@
         <attr name="setting_right_icon" format="reference" />
         <attr name="setting_right_content" format="string" />
     </declare-styleable>
-    <!--圆形图片-->
-        <attr name="borderRadius" format="dimension" />
-        <attr name="type">
-            <enum name="circle" value="0" />
-            <enum name="round" value="1" />
-        </attr>
-        <declare-styleable name="RoundImageViewByXfermode">
-            <attr name="borderRadius" />
-            <attr name="type" />
-        </declare-styleable>
 
     <!-- imageview背景切换选择 -->
     <declare-styleable name="SelectorImageView">

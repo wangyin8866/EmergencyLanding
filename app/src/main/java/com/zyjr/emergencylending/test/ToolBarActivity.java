@@ -31,7 +31,7 @@ public abstract class ToolBarActivity extends BaseActivity {
         toolbar = mToolBarHelper.getToolBar();
         toolBarView = mToolBarHelper.getView();
         setContentView(mToolBarHelper.getContentView());
-        /*把 toolbar 设置到Activity 中*/
+        /*把 tool_bar 设置到Activity 中*/
         setSupportActionBar(toolbar);
         /*自定义的一些操作*/
         onCreateCustomToolBar(toolbar);

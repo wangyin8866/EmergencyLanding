@@ -3,8 +3,10 @@ package com.zyjr.emergencylending.service;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.CardBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MessageBean;
+import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
@@ -21,6 +23,15 @@ import rx.Observable;
  */
 
 public interface Api {
+    /**
+     * 发送验证码
+     *
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<H5Bean> getH5Url(@FieldMap Map<String, String> params);
     /**
      * 注册
      *
@@ -119,7 +130,7 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> getNoticeList(@FieldMap Map<String, String> params);
+    Observable<NoticeBean> getNoticeList(@FieldMap Map<String, String> params);
 
     /**
      * 我的名片
@@ -149,7 +160,7 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> myIncome(@FieldMap Map<String, String> params);
+    Observable<CardBean> myIncome(@FieldMap Map<String, String> params);
 
     /**
      * 帮助页面
@@ -200,4 +211,10 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> waitApply(@FieldMap Map<String, String> params);
+    /**
+     * 上传照片
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> uploadFile(@FieldMap Map<String, String> params);
 }

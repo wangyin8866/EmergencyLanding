@@ -1,7 +1,7 @@
 package com.zyjr.emergencylending.ui.salesman.model;
 
 import com.zyjr.emergencylending.base.BaseModel;
-import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.service.Api;
 
 import java.util.HashMap;
@@ -30,22 +30,11 @@ public class HomeModel extends BaseModel{
     }
 
 
-    public Observable<BaseBean> getNoticeList(String router,String get_num) {
+    public Observable<NoticeBean> getNoticeList(String router, String get_num) {
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("get_num", get_num);
         return api.getNoticeList(map);
     }
 
-    public Observable<BaseBean> myCard(String router) {
-        Map<String, String> map = new HashMap<String, String>(1);
-        map.put("router", router);
-        return api.getNoticeList(map);
-    }
-    public Observable<BaseBean> getActivity(String router,String pageNo) {
-        Map<String, String> map = new HashMap<String, String>(3);
-        map.put("router", router);
-        map.put("pageNo", pageNo);
-        return api.getActivity(map);
-    }
 }

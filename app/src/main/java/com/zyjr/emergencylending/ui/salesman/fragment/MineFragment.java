@@ -1,8 +1,6 @@
 package com.zyjr.emergencylending.ui.salesman.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,28 +10,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jph.takephoto.app.TakePhoto;
-import com.jph.takephoto.app.TakePhotoImpl;
-import com.jph.takephoto.model.InvokeParam;
-import com.jph.takephoto.model.TContextWrap;
-import com.jph.takephoto.model.TResult;
-import com.jph.takephoto.permission.InvokeListener;
-import com.jph.takephoto.permission.PermissionManager;
-import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.bumptech.glide.Glide;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.custom.RoundImageViewByXfermode;
-import com.zyjr.emergencylending.entity.BaseBean;
-import com.zyjr.emergencylending.entity.H5Bean;
+import com.zyjr.emergencylending.custom.GlideCircleTransform;
+import com.zyjr.emergencylending.entity.CardBean;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.my.SettingActivity;
+import com.zyjr.emergencylending.ui.salesman.activity.EditInformation;
 import com.zyjr.emergencylending.ui.salesman.presenter.MinePresenter;
 import com.zyjr.emergencylending.ui.salesman.view.MineView;
-import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.PhotoUtils;
-import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.UIUtils;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,14 +32,13 @@ import butterknife.Unbinder;
 
 
 /**
- * Created by wangyin on 2017/8/9.
+ * @author wangyin
+ * @date 2017/8/9
  */
 
-public class MineFragment extends BaseFragment<MinePresenter,MineView> implements MineView,TakePhoto.TakeResultListener, InvokeListener {
+public class MineFragment extends BaseFragment<MinePresenter, MineView> implements MineView {
     @BindView(R.id.edit_information)
     ImageView editInformation;
-    @BindView(R.id.user_pic)
-    RoundImageViewByXfermode userPic;
     @BindView(R.id.ll_starts)
     LinearLayout llStarts;
     @BindView(R.id.income)
@@ -63,45 +52,14 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
     @BindView(R.id.setting)
     TextView setting;
     Unbinder unbinder;
-    private TakePhoto takePhoto;
-    private InvokeParam invokeParam;
+    @BindView(R.id.user_pic)
+    ImageView userPic;
+    @BindView(R.id.user_name_phone)
+    TextView userNamePhone;
+    @BindView(R.id.user_position)
+    TextView userPosition;
+    private CardBean.ResultBean resultBean;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        getTakePhoto().onCreate(savedInstanceState);
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        getTakePhoto().onSaveInstanceState(outState);
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        getTakePhoto().onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        PermissionManager.handlePermissionsResult(getActivity(), type, invokeParam, this);
-    }
-
-    /**
-     * 获取TakePhoto实例
-     *
-     * @return
-     */
-    public TakePhoto getTakePhoto() {
-        if (takePhoto == null) {
-            takePhoto = (TakePhoto) TakePhotoInvocationHandler.of(this).bind(new TakePhotoImpl(this, this));
-        }
-        return takePhoto;
-    }
 
     @Nullable
     @Override
@@ -113,8 +71,15 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
     }
 
     private void init() {
+
         //创建星级
         addGroupImage(3);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.myCard(NetConstantValues.MY_CARD);
     }
 
     private void addGroupImage(int size) {
@@ -143,67 +108,43 @@ public class MineFragment extends BaseFragment<MinePresenter,MineView> implement
         unbinder.unbind();
     }
 
-    @OnClick({R.id.user_pic, R.id.message_center, R.id.my_repayment, R.id.help, R.id.setting,R.id.income})
+    @OnClick({R.id.user_pic, R.id.message_center, R.id.my_repayment, R.id.help, R.id.setting, R.id.income, R.id.edit_information})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.user_pic:
-                PhotoUtils.showUserPicDialog(mContext,takePhoto);
                 break;
             case R.id.message_center:
-                startActivity(new Intent(mContext,MessageActivity.class));
+                startActivity(new Intent(mContext, MessageActivity.class));
                 break;
             case R.id.my_repayment:
                 break;
             case R.id.help:
-                mPresenter.helpPage(NetConstantValues.HELP);
+                mPresenter.getH5Url(Config.H5_URL_CLERKHELP, "帮助说明");
 
                 break;
             case R.id.setting:
-                startActivity(new Intent(mContext,SettingActivity.class));
+                startActivity(new Intent(mContext, SettingActivity.class));
                 break;
             case R.id.income:
-                mPresenter.myIncome(NetConstantValues.MY_INCOME);
+                mPresenter.getH5Url(Config.H5_URL_MYINCOME, "我的收入");
+                break;
+            case R.id.edit_information:
+                Intent intent = new Intent(mContext, EditInformation.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("information", resultBean);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
                 break;
         }
     }
 
-    @Override
-    public void takeSuccess(TResult result) {
-        LogUtils.e("takeSuccess", "takeSuccess：" + result.getImage().getCompressPath());
-        String imgPath = result.getImage().getOriginalPath();
-        Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-        Bitmap mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-        userPic.setImageBitmap(mBitmap);
-    }
 
     @Override
-    public void takeFail(TResult result, String msg) {
-        ToastAlone.showLongToast(getActivity(), "takeFail:" + msg);
-    }
-
-    @Override
-    public void takeCancel() {
-        ToastAlone.showShortToast(getActivity(), getResources().getString(com.jph.takephoto.R.string.msg_operation_canceled));
-    }
-
-    @Override
-    public PermissionManager.TPermissionType invoke(InvokeParam invokeParam) {
-        PermissionManager.TPermissionType type = PermissionManager.checkPermission(TContextWrap.of(this), invokeParam.getMethod());
-        if (PermissionManager.TPermissionType.WAIT.equals(type)) {
-            this.invokeParam = invokeParam;
-        }
-        return type;
-    }
-
-
-    @Override
-    public void myIncome(BaseBean baseBean) {
-//        startActivity(new Intent(mContext,MyIncome.class));
-    }
-
-    @Override
-    public void helpPage(H5Bean baseBean) {
-//        H5WebView.skipH5WebView(mContext,"帮助说明");
+    public void myCard(CardBean baseBean) {
+        resultBean = baseBean.getResult();
+        Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
+        userNamePhone.setText(WYUtils.nameSecret(resultBean.getName()) + " " + WYUtils.phoneSecret(resultBean.getPhone()));
+        userPosition.setText(resultBean.getPosition());
     }
 }

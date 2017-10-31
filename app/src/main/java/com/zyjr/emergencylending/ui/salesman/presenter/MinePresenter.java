@@ -6,8 +6,7 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.entity.BaseBean;
-import com.zyjr.emergencylending.entity.H5Bean;
+import com.zyjr.emergencylending.entity.CardBean;
 import com.zyjr.emergencylending.ui.salesman.model.MineModel;
 import com.zyjr.emergencylending.ui.salesman.view.MineView;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -23,12 +22,12 @@ public class MinePresenter extends BasePresenter<MineView> {
         super(context);
     }
 
-    public void myIncome(String router) {
-        invoke(MineModel.getInstance().myIncome(router), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+    public void myCard(String router) {
+        invoke(MineModel.getInstance().myCard(router),new ProgressSubscriber<CardBean>(new SubscriberOnNextListener<CardBean>() {
             @Override
-            public void onNext(BaseBean baseBean) {
+            public void onNext(CardBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-
+                    getView().myCard(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }
@@ -38,25 +37,8 @@ public class MinePresenter extends BasePresenter<MineView> {
             public void onError(Throwable e) {
 
             }
-        }, mContext));
-
+        },mContext));
     }
-    public void helpPage(String router) {
-        invoke(MineModel.getInstance().helpPage(router), new ProgressSubscriber<H5Bean>(new SubscriberOnNextListener<H5Bean>() {
-            @Override
-            public void onNext(H5Bean baseBean) {
-                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
 
-                } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
-                }
-            }
 
-            @Override
-            public void onError(Throwable e) {
-
-            }
-        }, mContext));
-
-    }
 }

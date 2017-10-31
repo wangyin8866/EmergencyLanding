@@ -29,7 +29,7 @@ public class ToolBarHelper {
     /*用户定义的view*/
     private View mUserView;
 
-    /*toolbar*/
+    /*tool_bar*/
     private Toolbar mToolBar;
 
     /*视图构造器*/
@@ -68,7 +68,7 @@ public class ToolBarHelper {
 
     private void initToolBar() {
         /*通过inflater获取toolbar的布局文件*/
-        toolbarView = mInflater.inflate(R.layout.toolbar, mContentView);
+        toolbarView = mInflater.inflate(R.layout.tool_bar, mContentView);
         mToolBar = (Toolbar) toolbarView.findViewById(R.id.id_tool_bar);
         mToolBar.setTitle("");
         measureView(toolbarView);

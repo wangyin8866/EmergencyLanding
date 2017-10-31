@@ -9,14 +9,11 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.ui.account.ForgetPasswordActivity;
-import com.zyjr.emergencylending.ui.my.View.SettingView;
-import com.zyjr.emergencylending.ui.my.presenter.SettingPresenter;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -25,10 +22,12 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by wangyin on 2017/10/13.
+ *
+ * @author wangyin
+ * @date 2017/10/13
  */
 
-public class SettingActivity extends BaseActivity<SettingPresenter, SettingView> implements SettingView {
+public class SettingActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.modify_password)
@@ -47,9 +46,10 @@ public class SettingActivity extends BaseActivity<SettingPresenter, SettingView>
     RelativeLayout version;
     private CustomerDialog dialog;
 
+
     @Override
-    protected SettingPresenter createPresenter() {
-        return new SettingPresenter(mContext);
+    protected BasePresenter createPresenter() {
+        return new BasePresenter(SettingActivity.this);
     }
 
     @Override
@@ -81,14 +81,15 @@ public class SettingActivity extends BaseActivity<SettingPresenter, SettingView>
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.modify_password:
-                startActivity(new Intent(mContext, ForgetPasswordActivity.class));
+                Intent intent = new Intent(mContext, ForgetPasswordActivity.class);
+                intent.putExtra("title", "修改密码");
+                startActivity(intent);
                 break;
             case R.id.about_us:
-                mPresenter.aboutUs(NetConstantValues.ABOUT_US);
-
+                mPresenter.getH5Url(Config.H5_URL_ABOUTUS,"关于我们");
                 break;
             case R.id.advice_feedback:
-                startActivity(new Intent(mContext, AdviceFeedbackActivity.class));
+                mPresenter.getH5Url(Config.H5_URL_FEEDBACK,"意见反馈");
                 break;
             case R.id.service_call:
                 phoneDialog();
@@ -96,6 +97,7 @@ public class SettingActivity extends BaseActivity<SettingPresenter, SettingView>
             case R.id.exit:
                 SPUtils.clear(mContext);
                 ActivityCollector.finishAll();
+                System.exit(0);
                 break;
             case R.id.version:
                 dialog.versionUpdate(new View.OnClickListener() {
@@ -128,11 +130,5 @@ public class SettingActivity extends BaseActivity<SettingPresenter, SettingView>
                 }
             }
         }).show();
-    }
-
-    @Override
-    public void aboutUs(H5Bean h5Bean) {
-        LogUtils.e("aboutUs", h5Bean.getResult().getHelp_h5_url());
-//        startActivity(new Intent(mContext, AboutUsActivity.class));
     }
 }

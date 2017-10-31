@@ -60,7 +60,6 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
     CheckBox cbCheck;
     @BindView(R.id.tv_agreed)
     TextView tvAgreed;
-
     @BindView(R.id.btn_register)
     Button btnRegister;
     private boolean isShow;
@@ -136,7 +135,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
 
     }
 
-    @OnClick({R.id.iv_close, R.id.iv_show_pwd, R.id.cb_check, R.id.btn_register})
+    @OnClick({R.id.iv_close, R.id.iv_show_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_close:

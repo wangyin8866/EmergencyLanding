@@ -7,7 +7,9 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.model.account.AccountModel;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.utils.DateUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
@@ -20,7 +22,7 @@ import rx.Subscriber;
  * @author wy
  * @date 2016/9/2
  */
-public abstract class BasePresenter<T> {
+public class BasePresenter<T> {
 
     /**
      * 弱引用,有效防止view内存泄漏
@@ -78,7 +80,7 @@ public abstract class BasePresenter<T> {
      * 发送短信验证码
      */
     public void sendSMS(final Button button, String router, String phone
-                       ) {
+    ) {
 
         invoke(AccountModel.getInstance().sendSMS(router, phone), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
@@ -91,6 +93,7 @@ public abstract class BasePresenter<T> {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }
             }
+
             @Override
             public void onError(Throwable e) {
                 ToastAlone.showShortToast(mContext, "短信发送失败，请重试");
@@ -98,4 +101,25 @@ public abstract class BasePresenter<T> {
         }, mContext));
     }
 
+    /**
+     * h5
+     */
+    public void getH5Url( String url_type, final String title
+    ) {
+
+        invoke(AccountModel.getInstance().getH5Url(url_type), new ProgressSubscriber<H5Bean>(new SubscriberOnNextListener<H5Bean>() {
+            @Override
+            public void onNext(H5Bean baseBean) {
+                if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
+                    H5WebView.skipH5WebView(mContext,title,baseBean.getResult().getH5_url());
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+            }
+        }, mContext));
+    }
 }
