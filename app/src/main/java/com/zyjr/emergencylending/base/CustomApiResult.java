@@ -3,21 +3,35 @@ package com.zyjr.emergencylending.base;
 import java.io.Serializable;
 
 /**
- * Created by neil on 2017/10/19
- * 备注: 通用结果返回
+ * 定义Api结果返回
+ *
+ * @author neil
+ * @date 2017/10/31
  */
-public class ApiResult<T> implements Serializable {
+public class CustomApiResult<T, Q> implements Serializable {
 
-    private static final long serialVersionUID = -2164450630686205050L;
+    private static final long serialVersionUID = -2164450631686205050L;
 
+    /**
+     * 处理结果
+     */
     private String flag;
 
+    /**
+     * 处理消息
+     */
     private String msg;
 
-    private String ext;
+    /**
+     * 额外信息返回
+     */
+    private Q ext;
 
     private boolean lockerFlag;
 
+    /**
+     * 正常信息返回
+     */
     private T result;
 
     public String getFlag() {
@@ -36,19 +50,11 @@ public class ApiResult<T> implements Serializable {
         this.msg = msg;
     }
 
-    public T getResult() {
-        return result;
-    }
-
-    public void setResult(T result) {
-        this.result = result;
-    }
-
-    public String getExt() {
+    public Q getExt() {
         return ext;
     }
 
-    public void setExt(String ext) {
+    public void setExt(Q ext) {
         this.ext = ext;
     }
 
@@ -58,5 +64,13 @@ public class ApiResult<T> implements Serializable {
 
     public void setLockerFlag(boolean lockerFlag) {
         this.lockerFlag = lockerFlag;
+    }
+
+    public T getResult() {
+        return result;
+    }
+
+    public void setResult(T result) {
+        this.result = result;
     }
 }

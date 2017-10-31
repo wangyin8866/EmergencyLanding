@@ -169,24 +169,15 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private void judgeBankcardInfo(BankcardInfo bankcard) {
         bankcardInfo = bankcard;
-        if (StringUtil.isEmpty(bankcardInfo.getBankcard_no())) {
-            // 没有绑定银行卡
-            rlAddBankcard.setVisibility(View.VISIBLE);
-            rlEditBankcard.setVisibility(View.GONE);
-            topBar.setRightButtonVisible(View.INVISIBLE);
-            bank_username = bankcardInfo.getBank_username();
-            id_card = bankcardInfo.getId_card();
-        } else {
-            rlEditBankcard.setVisibility(View.VISIBLE);
-            rlAddBankcard.setVisibility(View.GONE);
-            topBar.setRightButtonVisible(View.VISIBLE);
-            setBankIcon(bankcardInfo);
-            tvBankcardName.setText(bankcardInfo.getBank_name());
-            tvBankcardType.setText(""); // 此处没有字段返回
-            if (StringUtil.isNotEmpty(bankcardInfo.getBankcard_no())) {
-                String bankcardNum = bankcardInfo.getBankcard_no();
-                tvBankcardNumber.setText(bankcardNum.substring(0, 4) + "* * * *   * * * *" + bankcardNum.substring(bankcardNum.length() - 4, bankcardNum.length()));
-            }
+        rlEditBankcard.setVisibility(View.VISIBLE);
+        rlAddBankcard.setVisibility(View.GONE);
+        topBar.setRightButtonVisible(View.VISIBLE);
+        setBankIcon(bankcardInfo);
+        tvBankcardName.setText(bankcardInfo.getBank_name());
+        tvBankcardType.setText(""); // 此处没有字段返回
+        if (StringUtil.isNotEmpty(bankcardInfo.getBankcard_no())) {
+            String bankcardNum = bankcardInfo.getBankcard_no();
+            tvBankcardNumber.setText(bankcardNum.substring(0, 4) + "* * * *   * * * *" + bankcardNum.substring(bankcardNum.length() - 4, bankcardNum.length()));
         }
     }
 
@@ -229,8 +220,16 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
         pullToRefreshScrollView.onRefreshComplete();
-
         judgeBankcardInfo(bean);
+    }
+
+    @Override
+    public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
+        rlAddBankcard.setVisibility(View.VISIBLE);
+        rlEditBankcard.setVisibility(View.GONE);
+        topBar.setRightButtonVisible(View.INVISIBLE);
+        bank_username = bankUsername;
+        id_card = idCard;
     }
 
     @Override
@@ -253,6 +252,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
 
     }
+
 
     @Override
     public void onError(String returnCode, String errorMsg) {

@@ -11,9 +11,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -43,7 +41,6 @@ import com.zyjr.emergencylending.entity.IDCardFrontBean;
 import com.zyjr.emergencylending.entity.LiveAddressBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ProvinceModel;
-import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.ui.home.View.PersonalInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.PersonalInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
@@ -52,7 +49,7 @@ import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.ToolImage;
+import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.utils.third.GlideUtils;
@@ -170,7 +167,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 idcardFile.mkdirs();
             }
             idcardFile = new File(idcardFile.getPath() + "/" + System.currentTimeMillis() + ".jpg");
-            ToolImage.compressBitmapToFile(bitmap, Bitmap.CompressFormat.JPEG, 100, idcardFile); // 保存文件
+            ImageUtils.compressBitmapToFile(bitmap, Bitmap.CompressFormat.JPEG, 100, idcardFile); // 保存文件
             if (requestCode == INTENT_IDCARD_FRONT) {
                 mPresenter.uploadFileGetIDCardFrontInfo(idcardFile);
             } else if (requestCode == INTENT_IDCARD_BACK) {
@@ -265,9 +262,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                         LogUtils.d("户籍地址选择:" + hujiAddressBean.toString());
                     }
                 });
-                if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
-                    popHujiAddressSelect.setWheel();
-                }
                 popHujiAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.ll_live_address: // 居住地址选择
@@ -294,9 +288,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
                     }
                 });
-                if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
-                    popLiveAddressSelect.setWheel();
-                }
                 popLiveAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.btn_submit: // 提交
@@ -405,15 +396,15 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     private void showUserInfo(PersonalInfoBean userInfo) {
         if (StringUtil.isNotEmpty(userInfo.getIdcard_z())) {
             // 身份证正面照
-            GlideUtils.displayImageWithPre(this, userInfo.getIdcard_z(), R.mipmap.shotcard_positive, ivIdcardFront);
+            GlideUtils.displayImageWithFixedSize(this, userInfo.getIdcard_z(), R.mipmap.shotcard_positive, ivIdcardFront, mWidth, mHeight);
         }
         if (StringUtil.isNotEmpty(userInfo.getIdcard_f())) {
             // 身份证反面照
-            GlideUtils.displayImageWithPre(this, userInfo.getIdcard_z(), R.mipmap.shotcard_back, ivIdcardBack);
+            GlideUtils.displayImageWithFixedSize(this, userInfo.getIdcard_f(), R.mipmap.shotcard_back, ivIdcardBack, mWidth, mHeight);
         }
         if (StringUtil.isNotEmpty(userInfo.getIdcard_hand())) {
             // 手持证件照
-            GlideUtils.displayImageWithPre(this, userInfo.getIdcard_z(), R.mipmap.shotcard_hold, ivHoldIdcard);
+            GlideUtils.displayImageWithFixedSize(this, userInfo.getIdcard_hand(), R.mipmap.shotcard_back, ivHoldIdcard, mWidth, mHeight);
         }
         if (StringUtil.isNotEmpty(userInfo.getUsername())) {
             // 姓名
@@ -604,11 +595,11 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             ToastAlone.showLongToast(PersonalInfoActivity.this, "图片为空").show();
             return;
         }
-        Bitmap decode = ToolImage.comp(bitmap);
+        Bitmap decode = ImageUtils.comp(bitmap);
         if (bitmap != null && !bitmap.isRecycled()) {
             bitmap.recycle();
         }
-        ToolImage.compressBitmapToFile(decode, Bitmap.CompressFormat.PNG, 100, new File(filePath));
+        ImageUtils.compressBitmapToFile(decode, Bitmap.CompressFormat.PNG, 100, new File(filePath));
         if (decode != null && !decode.isRecycled()) {
             decode.recycle();
         }
@@ -700,7 +691,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         String filePath = file.getPath();
         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.lastIndexOf(".")); // 文件名
         String fileSuffixName = filePath.substring(filePath.lastIndexOf(".") + 1, filePath.length());  // 后缀名(文件类型)
-        String data = ToolImage.fileBase64(filePath);
+        String data = ImageUtils.fileBase64(filePath);
         Map<String, String> params = new HashMap<String, String>();
         params.put("fileName", fileName);
         params.put("fileExtName", fileSuffixName);
@@ -762,13 +753,13 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
-        ToastAlone.showLongToast(this,msg);
+        ToastAlone.showLongToast(this, msg);
         finish();
     }
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
-        ToastAlone.showLongToast(this,msg);
+        ToastAlone.showLongToast(this, msg);
         finish();
     }
 

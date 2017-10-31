@@ -9,8 +9,7 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.widget.BubbleSeekBar;
-import com.zyjr.emergencylending.widget.CustomSeekBar1;
+import com.zyjr.emergencylending.widget.CustomSeekBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,9 +22,9 @@ import butterknife.ButterKnife;
 public class TestAc extends Activity {
 
     @BindView(R.id.seekbar_loan_money)
-    CustomSeekBar1 seekbarMoney;
+    CustomSeekBar seekbarMoney;
     @BindView(R.id.seekbar_loan_week)
-    CustomSeekBar1 seekbarWeek;
+    CustomSeekBar seekbarWeek;
     @BindView(R.id.tv_loan_money_min)
     TextView tvMinLoadMoney;
     @BindView(R.id.tv_loan_money_max)
@@ -47,7 +46,7 @@ public class TestAc extends Activity {
     }
 
     private static int money = 2000;
-    private static int week = 5;
+    private static String week = "";
     private static int moneyProgress = 12;
     private static int weekProgress = 1;
     private static int moneyCritical = 30;

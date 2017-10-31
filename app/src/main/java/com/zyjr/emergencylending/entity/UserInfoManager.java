@@ -6,6 +6,7 @@ import java.util.List;
 /**
  * Created by User on 2016/8/10.
  */
+@Deprecated
 public class UserInfoManager {
     private static UserInfoManager instance = null;
     private String renew_loans;

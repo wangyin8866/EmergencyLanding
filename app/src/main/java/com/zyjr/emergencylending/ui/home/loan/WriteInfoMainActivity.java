@@ -1,12 +1,16 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
+import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
+import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
@@ -22,8 +26,11 @@ import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.WriteInfoPresenter;
+import com.zyjr.emergencylending.utils.CommonUtils;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.widget.SettingItemView;
 
 import java.util.HashMap;
@@ -55,10 +62,14 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @BindView(R.id.root_refreshview)
     PullToRefreshScrollView pullToRefreshScrollView;
 
-    private Intent intent;
-    private String loanMoney = ""; // 借款金额
-    private String loanWeek = ""; // 借款周期
+    private Intent intent = null;
+    private String apply_amount = ""; // 申请借款金额
+    private String apply_zq = ""; // 申请借款周期
+    private String apply_periods_unit = ""; // 借款周期单位
+    private String online_type = ""; // 产品类型
+    private String product_id = ""; // 产品id
     private WriteInfoBean writeInfoBean = null;
+    private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
 
     @Override
     protected WriteInfoPresenter createPresenter() {
@@ -72,7 +83,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         ButterKnife.bind(this);
 
         init();
-        initData();
+        initGetData();
     }
 
     @Override
@@ -86,6 +97,19 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         }
         loadingWriteInfoStatus();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (CODE_PERMISSION_CONTANCT_LIST == requestCode) {
+            if (ToolPermission.checkPermission(permissions, grantResults)) {
+                judgeMatchProInfo("", false, apply_amount, apply_zq);
+            } else {
+                CommonUtils.jumpAppInfoSetting(WriteInfoMainActivity.this, "请允许读取权限!");
+            }
+        }
+    }
+
 
     /**
      * status是否已完成:1完成 0:未完成;isEdit是否可编辑:1是 0:否
@@ -124,15 +148,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 startActivity(intent);
                 break;
             case R.id.layout_bank_info:
-//                if (writeInfoBean == null) {
-//                    return;
-//                }
-//                intent = new Intent(this, BankcardInfoActivity.class);
-//                intent.putExtra("isEdit", writeInfoBean.getUser_contact_edit());
-//                intent.putExtra("status", writeInfoBean.getUser_contact_status());
-//                startActivity(intent);
+                if (writeInfoBean == null) {
+                    return;
+                }
 
                 intent = new Intent(this, BankcardInfoActivity.class);
+                intent.putExtra("isEdit", writeInfoBean.getUser_contact_edit());
+                intent.putExtra("status", writeInfoBean.getUser_contact_status());
                 startActivity(intent);
                 break;
             case R.id.btn_apply_quickly:
@@ -141,17 +163,24 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 startActivity(intent);
                 break;
             case R.id.btn_submit:
-                startActivity(new Intent(WriteInfoMainActivity.this, AuthCenterActivity.class));
+                // TODO 获取通讯资料
+                if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
+                    judgeMatchProInfo("", false, apply_amount, apply_zq);
+                }
                 break;
         }
     }
 
 
-    private void initData() {
-//        intent = getIntent();
-//        loanMoney = intent.getStringExtra("loanMoney");
-//        loanWeek = intent.getStringExtra("loanWeek");
-//        LogUtils.d("WriteInfoMainActivity接收数据---->" + loanMoney + "," + loanWeek);
+    private void initGetData() {
+        intent = getIntent();
+        apply_amount = intent.getStringExtra("loanMoney"); // 金额
+        apply_zq = intent.getStringExtra("loanPeriod"); // 申请周期
+        apply_periods_unit = intent.getStringExtra("loanPeriodUnit"); // 申请周期单位
+        online_type = intent.getStringExtra("online_type"); // 产品类型
+        product_id = intent.getStringExtra("product_id"); // 产品类型
+        LogUtils.d("【接收数据】:" + "\n申请金额apply_amount:" + apply_amount + "\n申请周期apply_zq:" + apply_zq + "\n申请周期单位apply_periods_unit:"
+                + apply_periods_unit + "\n产品id:" + product_id + "\n产品类型online_type:" + online_type);
     }
 
 
@@ -206,11 +235,19 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         } else {
             layoutBankInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
-        if(personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")){
+        if (personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")) {
             // TODO 根据状态,获取可申请产品
         }
     }
 
+    /**
+     * 匹配金额 pop
+     *
+     * @param userFlag
+     * @param second
+     * @param money
+     * @param week
+     */
     private void judgeMatchProInfo(String userFlag, boolean second, String money, String week) {
         final CustomerDialog customerDialog = new CustomerDialog(this);
         customerDialog.loanProductMatchInfo(new View.OnClickListener() {
@@ -222,7 +259,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                         break;
 
                     case R.id.btn_comfirm_submit:
-                        ToastAlone.showLongToast(WriteInfoMainActivity.this, "确认提交");
+                        customerDialog.dismiss();
+                        submitLoanInfo();
                         break;
                 }
             }
@@ -235,6 +273,21 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         mPresenter.getWriteInfo(paramsMap);
     }
 
+    private void submitLoanInfo() {
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("online_type", online_type); // 产品类型
+        paramsMap.put("product_id", product_id); // 产品ID
+        paramsMap.put("apply_amount", apply_amount); // 申请金额
+        paramsMap.put("apply_periods", "1"); // 申请期数
+        paramsMap.put("apply_zq", apply_zq); // 申请周期
+        paramsMap.put("apply_periods_unit", apply_periods_unit); // 申请周期单位
+        if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+            paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
+        }
+        mPresenter.submitLoanInformation(paramsMap);
+    }
+
+
     @Override
     public void onSuccessGet(String returnCode, WriteInfoBean model) {
         pullToRefreshScrollView.onRefreshComplete();
@@ -244,6 +297,12 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 StringUtil.isEmpty(model.getUser_job_status()) ? "" : model.getUser_job_status(),
                 StringUtil.isEmpty(model.getUser_contact_status()) ? "" : model.getUser_contact_status(),
                 StringUtil.isEmpty(model.getUser_bank_status()) ? "" : model.getUser_bank_status());
+
+    }
+
+    @Override
+    public void onSuccessSubmit(String apiCode, String msg) {
+        ToastAlone.showLongToast(this, msg);
 
     }
 

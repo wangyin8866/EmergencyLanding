@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -24,7 +27,8 @@ import java.text.SimpleDateFormat;
  * e-mail:zengdongyang@incamel.com
  */
 
-public class ToolImage {
+public class ImageUtils {
+
     /**
      * 拍照
      *
@@ -111,7 +115,11 @@ public class ToolImage {
         }
     }
 
-    //图片按比例大小压缩方法（根据Bitmap图片压缩）
+    /**
+     * 图片按比例大小压缩方法（根据Bitmap图片压缩）
+     * @param image
+     * @return
+     */
     public static Bitmap comp(Bitmap image) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int options = 80;
@@ -201,6 +209,17 @@ public class ToolImage {
         Bitmap bm = BitmapFactory.decodeFile(imagePath, options); // 解码文件  
         LogUtils.d("Compress", "size: " + bm.getByteCount() + " width: " + bm.getWidth() + " heigth:" + bm.getHeight()); // 输出图像数据
         return bm;
+    }
+
+    public static Bitmap drawableToBitmap(Drawable drawable) {
+        int w = drawable.getIntrinsicWidth();
+        int h = drawable.getIntrinsicHeight();
+        Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
+        Bitmap bitmap = Bitmap.createBitmap(w, h, config);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, w, h);
+        drawable.draw(canvas);
+        return bitmap;
     }
 
 

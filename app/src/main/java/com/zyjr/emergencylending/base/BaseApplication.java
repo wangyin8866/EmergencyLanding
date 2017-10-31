@@ -10,7 +10,6 @@ import com.umeng.socialize.PlatformConfig;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.PhoneInfoUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 
 
@@ -73,7 +72,7 @@ public class BaseApplication extends Application {
 //        Config.DEBUG = false;
 //        UMShareAPI.get(this);
 
-        clientId = PhoneInfoUtils.getDeviceId(this);
+//        clientId = PhoneInfoUtils.getDeviceId(this);
 
         isLogin = SPUtils.getBoolean(this, Config.KEY_LOGIN, false);
         isSalesman = SPUtils.getString(this, Config.KEY_USER_TYPE,Config.USER_COMMON);

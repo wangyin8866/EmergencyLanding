@@ -2,7 +2,6 @@ package com.zyjr.emergencylending.ui.home.loan.basicInfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
@@ -13,20 +12,13 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.CityModel;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.DistrictModel;
-import com.zyjr.emergencylending.entity.HujiAddressBean;
-import com.zyjr.emergencylending.entity.IDCardFrontBean;
-import com.zyjr.emergencylending.entity.LiveAddressBean;
-import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ProvinceModel;
-import com.zyjr.emergencylending.entity.UserInfoManager;
 import com.zyjr.emergencylending.entity.WorkAddressBean;
 import com.zyjr.emergencylending.entity.WorkInfoBean;
 import com.zyjr.emergencylending.ui.home.View.WorkInfoView;
@@ -37,7 +29,6 @@ import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
-import com.zyjr.emergencylending.utils.third.GlideUtils;
 import com.zyjr.emergencylending.widget.pop.AreaSelectPop;
 import com.zyjr.emergencylending.widget.pop.SingleSelectPop;
 
@@ -139,9 +130,6 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
                         LogUtils.d("工作地址选择:" + workAddressBean.toString());
                     }
                 });
-                if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
-                    popJobAddressSelect.setWheel();
-                }
                 popJobAddressSelect.showAtLocation(getRootView(), Gravity.BOTTOM, 0, 0);
                 break;
 

@@ -20,7 +20,6 @@ import com.zyjr.emergencylending.ui.home.presenter.ProductInfoPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
-import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,12 +55,16 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @BindView(R.id.btn_apply_quickly)
     Button btnApplyQuicky;
-    @BindView(R.id.layout_fastloan_support_cities)
-    LinearLayout llFastloanSupportCities; // 急速借款支持城市
-    @BindView(R.id.layout_traditional_support_cities)
-    LinearLayout llTraditionalSupportCities; // 传统借款支持城市
+    @BindView(R.id.layout_online_support_cities)
+    LinearLayout llOnlineSupCities; // 线上借款支持城市
+    @BindView(R.id.layout_offline_support_cities)
+    LinearLayout llOfflineSupCities; // 传统借款支持城市
+    @BindView(R.id.tv_offline_support_cities_desc)
+    TextView tvOfflineSupCities; // 线下支持城市
 
     private String flag = "";
+    private String online_type = ""; // 产品类型
+    private String product_id = ""; // 产品id
     // 急速贷款
     private int moneyProgress = 1; // 金额进度
     private int periodProgress = 1; // 借款周期进度
@@ -72,7 +75,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     private int maxLoanMoney = 0; // 最高借款金额
     // 提交
     private int loanMoney = 0; // 借款金额
-    private int loanPeriod = 0; // 借款周期
+    private String loanPeriod = ""; // 借款周期
+    private String loanPeriodUnit = "";
     private List<String> proIntroduceList = null;
 
 
@@ -91,27 +95,37 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         initGetData();
         initData();
         initListener();
-//        LogUtils.e("weekProgress:" + weekProgress + ",moneyProgress:" + moneyProgress);
     }
 
 
-    @OnClick({R.id.btn_apply_quickly, R.id.layout_traditional_support_cities})
+    @OnClick({R.id.btn_apply_quickly, R.id.layout_online_support_cities})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_quickly:
                 // TODO 携带 借款数据到下个页面
                 Intent intent = new Intent(this, WriteInfoMainActivity.class);
+                loanMoney = Arithmetic.progressToMoney(seekbarMoney.getProgress(), minLoanMoney, maxLoanMoney);
+                loanPeriod = Arithmetic.progressToWeek(seekbarPeriod.getProgress(), minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
+                intent.putExtra("online_type", online_type);
+                intent.putExtra("product_id", product_id);
                 intent.putExtra("loanMoney", loanMoney + "");
-                if (periodProgress < 10 && loanPeriod == 14) {
-                    intent.putExtra("loanWeek", loanPeriod + "");
-                    intent.putExtra("loan_unit", "1");
-                } else {
-                    intent.putExtra("loanWeek", loanPeriod + "");
-                    intent.putExtra("loan_unit", "2");
+                if (loanPeriod.contains("天")) {
+                    int indexEnd = loanPeriod.indexOf("天");
+                    loanPeriod = loanPeriod.substring(0, indexEnd);
+                    loanPeriodUnit = "1";
+                    intent.putExtra("loanPeriod", loanPeriod + "");
+                    intent.putExtra("loanPeriodUnit", loanPeriodUnit);
+                } else if (loanPeriod.contains("周")) {
+                    int indexEnd = loanPeriod.indexOf("周");
+                    loanPeriod = loanPeriod.substring(0, indexEnd);
+                    loanPeriodUnit = "2";
+                    intent.putExtra("loanPeriod", loanPeriod + "");
+                    intent.putExtra("loanPeriodUnit", loanPeriodUnit);
                 }
+                LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",loanMoney:" + loanMoney + ",loanPeriod:" + loanPeriod + ",loanPeriodUnit:" + loanPeriodUnit + ",product_id:" + product_id);
                 startActivity(intent);
                 break;
-            case R.id.layout_traditional_support_cities:
+            case R.id.layout_online_support_cities:
                 startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));
                 break;
         }
@@ -129,6 +143,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         flag = intent.getStringExtra("flag");
         if (flag.equals("online")) {
             topBar.setTitle("急速借款");
+            online_type = "0";
+            product_id = "0";
             minLoanPeriod = 14; // 14天
             maxLoanPeriod = 15; // 15周
             minLoanPeriodUint = 1;
@@ -136,11 +152,13 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             maxLoanMoney = 5000;
             initSeekMoney(10, minLoanMoney, maxLoanMoney);
             initSeekPeriod(1, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
-            llFastloanSupportCities.setVisibility(View.VISIBLE);
-            llTraditionalSupportCities.setVisibility(View.GONE);
+            llOnlineSupCities.setVisibility(View.VISIBLE);
+            llOfflineSupCities.setVisibility(View.GONE);
             loadingProIntroduce("0");
         } else if (flag.equals("offline")) {
             topBar.setTitle("传统借款");
+            online_type = "1";
+            product_id = "1";
             minLoanPeriod = 15;
             maxLoanPeriod = 52;
             minLoanPeriodUint = 2;
@@ -148,8 +166,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             maxLoanMoney = 30000;
             initSeekMoney(10, minLoanMoney, maxLoanMoney);
             initSeekPeriod(1, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
-            llFastloanSupportCities.setVisibility(View.GONE);
-            llTraditionalSupportCities.setVisibility(View.VISIBLE);
+            llOnlineSupCities.setVisibility(View.GONE);
+            llOfflineSupCities.setVisibility(View.VISIBLE);
             loadingProIntroduce("1");
         }
     }
@@ -250,7 +268,11 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onSuccessGetSupportCity(String returnCode, List<SupportCityBean> cityList) {
-
+        String str = "";
+        for (SupportCityBean item : cityList) {
+            str += item.getCity_name() + "、";
+        }
+        tvOfflineSupCities.setText(str);
     }
 
     @Override
@@ -258,7 +280,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         proIntroduceList = result;
         ProIntroduceAdapter adapter = new ProIntroduceAdapter(R.layout.rv_item_pro_introduce, proIntroduceList);
         rvProductIntroduce.setLayoutManager(new LinearLayoutManager(this));
-        rvProductIntroduce.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, 12, getResources().getColor(R.color.white)));
+//        rvProductIntroduce.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL, 12, getResources().getColor(R.color.white)));
         rvProductIntroduce.setAdapter(adapter);
         if (flag.equals("offline")) {
             // TODO 获取支持城市

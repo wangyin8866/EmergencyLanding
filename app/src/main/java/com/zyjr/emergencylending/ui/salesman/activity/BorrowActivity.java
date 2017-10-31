@@ -44,7 +44,7 @@ public class BorrowActivity extends BaseActivity {
     @BindView(R.id.btn_apply_quickly)
     Button btnApplyQuicky;
     private int money = 0;
-    private int week = 0;
+    private String week = "";
     private int moneyProgress = 1;
     private int weekProgress = 1;
     private int MIN_WEEK = 0;

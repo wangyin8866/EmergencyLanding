@@ -1,11 +1,15 @@
 package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.base.CustomApiResult;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.service.home.loan.BankcardInfoService;
+import com.zyjr.emergencylending.utils.SPUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -38,20 +42,23 @@ public class BankcardInfoModel extends BaseModel {
         return bankcardInfoService.getSupportBankList(params);
     }
 
-    public Observable<ApiResult<BankcardInfo>> getBankcardInfo(Map<String, String> params) {
+    public Observable<CustomApiResult<BankcardInfo, BankcardInfo>> getBankcardInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_BIND_BANK_CARD);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return bankcardInfoService.getBankcardInfo(params);
     }
 
 
     public Observable<ApiResult<BankcardInfo>> addBankcardInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_ADD_BIND_BANK_CARD);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return bankcardInfoService.addBankcardInfo(params);
     }
 
 
     public Observable<ApiResult<BankcardInfo>> editBankcardInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_EDIT_BIND_BANK_CARD);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return bankcardInfoService.editBankcardInfo(params);
     }
 

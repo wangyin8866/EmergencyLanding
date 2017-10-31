@@ -1,8 +1,15 @@
 package com.zyjr.emergencylending.utils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.preference.PreferenceActivity;
 import android.provider.ContactsContract;
 
 import com.zyjr.emergencylending.entity.CityModel;
@@ -215,5 +222,33 @@ public class CommonUtils {
         }
         return mConnectInfos;
     }
+
+
+    /**
+     * 弹框,跳转到应用设置详情页面
+     */
+    public static void jumpAppInfoSetting(final Activity activity, String msg) {
+        new AlertDialog.Builder(activity).setMessage(msg)
+                .setPositiveButton("设置", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent localIntent = new Intent();
+                        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        if (Build.VERSION.SDK_INT >= 9) {
+                            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                            localIntent.setData(Uri.fromParts("package", activity.getPackageName(), null));
+                        } else if (Build.VERSION.SDK_INT <= 8) {
+                            localIntent.setAction(Intent.ACTION_VIEW);
+                            localIntent.setClassName("com.android.settings", "com.android.settings.InstalledAppDetails");
+                            localIntent.putExtra("com.android.settings.ApplicationPkgName", activity.getPackageName());
+                        }
+                        activity.startActivity(localIntent);
+                    }
+                })
+                .setNegativeButton("取消", null)
+                .show();
+    }
+
 
 }

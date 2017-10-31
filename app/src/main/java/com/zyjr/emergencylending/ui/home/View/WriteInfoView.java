@@ -8,9 +8,11 @@ import com.zyjr.emergencylending.entity.WriteInfoBean;
  */
 public interface WriteInfoView {
 
-    void onSuccessGet(String returnCode, WriteInfoBean bean);
+    void onSuccessGet(String apiCode, WriteInfoBean bean);
 
-    void onFail(String returnCode, String flag, String errorMsg);
+    void onSuccessSubmit(String apiCode, String msg);
 
-    void onError(String returnCode, String errorMsg);
+    void onFail(String apiCode, String flag, String errorMsg);
+
+    void onError(String apiCode, String errorMsg);
 }

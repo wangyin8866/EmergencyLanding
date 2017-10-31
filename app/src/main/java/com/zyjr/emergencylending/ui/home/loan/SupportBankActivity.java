@@ -115,6 +115,11 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
         bankAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
+
+    }
+
 
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {

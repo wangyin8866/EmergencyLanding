@@ -25,9 +25,9 @@ import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.CardBean;
 import com.zyjr.emergencylending.ui.salesman.presenter.EditInformationPresenter;
+import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.ToolImage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -135,7 +135,7 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
         // 后缀名(文件类型)
         String fileSuffixName = imgPath.substring(imgPath.lastIndexOf(".") + 1, imgPath.length());
 
-        String data = ToolImage.fileBase64(imgPath);
+        String data = ImageUtils.fileBase64(imgPath);
         mPresenter.uploadFile(NetConstantValues.ROUTER_UPLOAD_FILE, fileName, fileSuffixName, data, "1");
     }
 

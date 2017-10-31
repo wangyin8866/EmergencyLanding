@@ -120,30 +120,33 @@ public class Arithmetic {
      * @param minType  最小借款周期 1.天；2.周
      * @return
      */
-    public static int progressToWeek(int progress, int min, int max, int minType) {
+    public static String progressToWeek(int progress, int min, int max, int minType) {
         LogUtils.e("借款周期滑动进度:----------->" + progress);
         int week = 0;
         if (progress <= 0) {
-            return min;
+            if (minType == 1) {
+                return min + "天";
+            }
+            return min + "周";
         } else if (progress > 0 && progress < 50) {
             if (minType == 1) {
                 week = (int) Math.floor(max * progress / 50); // 周
                 // 最小是天,最大是周
                 if (week * 7 > min) {
-                    return week;
+                    return week + "周";
                 }
-                return min;
+                return min + "天";
             } else if (minType == 2) {
-                week = (int) Math.floor((max-min) * progress / 50); // 周
+                week = (int) Math.floor((max - min) * progress / 50); // 周
                 if (min + week <= min) {
-                    return min;
+                    return min + "周";
                 }
-                return min + week;
+                return min + week + "周";
             }
-            return week;
+            return week + "周";
         } else if (progress >= 50) {
-            return max;
+            return max + "周";
         }
-        return week;
+        return week + "周";
     }
 }

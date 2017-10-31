@@ -104,17 +104,9 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
             if (PERIOD_MIN_UNIT == 1) {
                 if (getProgress() <= 1) {
                     mText = PERIOD_MIN + "天";
-                } else {
-                    int value = Arithmetic.progressToWeek(getProgress(), PERIOD_MIN, PERIOD_MAX, PERIOD_MIN_UNIT);
-                    if (value == PERIOD_MIN && getProgress() < 10) {
-                        mText = PERIOD_MIN + "天";
-                    } else {
-                        mText = value + "周";
-                    }
                 }
-            } else {
-                mText = Arithmetic.progressToWeek(getProgress(), PERIOD_MIN, PERIOD_MAX, PERIOD_MIN_UNIT) + "周";
             }
+            mText = Arithmetic.progressToWeek(getProgress(), PERIOD_MIN, PERIOD_MAX, PERIOD_MIN_UNIT);
         } else {
             mText = "";
         }

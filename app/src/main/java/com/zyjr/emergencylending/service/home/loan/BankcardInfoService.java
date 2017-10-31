@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.CustomApiResult;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BankcardInfo;
@@ -32,7 +33,7 @@ public interface BankcardInfoService {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<BankcardInfo>> getBankcardInfo(@FieldMap Map<String, String> params);
+    Observable<CustomApiResult<BankcardInfo,BankcardInfo>> getBankcardInfo(@FieldMap Map<String, String> params);
 
     /**
      * 保存银行卡信息

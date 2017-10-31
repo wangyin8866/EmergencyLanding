@@ -30,7 +30,7 @@ public interface WriteInfoService {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<String>> submitWriteInfo(@FieldMap Map<String,String> map);
+    Observable<ApiResult<String>> submitLoanInformation(@FieldMap Map<String,String> map);
 }
 
 

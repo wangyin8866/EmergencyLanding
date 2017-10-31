@@ -2,16 +2,21 @@ package com.zyjr.emergencylending.ui.home.presenter;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.CustomApiResult;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.model.home.loan.BankcardInfoModel;
 import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
 import com.zyjr.emergencylending.utils.LogUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.Map;
@@ -51,13 +56,16 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
     }
 
     public void getBindBankcardInfo(Map<String, String> params) {
-        invoke(BankcardInfoModel.getInstance().getBankcardInfo(params), new ProgressSubscriber<ApiResult<BankcardInfo>>(new SubscriberOnNextListener<ApiResult<BankcardInfo>>() {
+        invoke(BankcardInfoModel.getInstance().getBankcardInfo(params), new ProgressSubscriber<CustomApiResult<BankcardInfo, BankcardInfo>>(new SubscriberOnNextListener<CustomApiResult<BankcardInfo, BankcardInfo>>() {
             @Override
-            public void onNext(ApiResult<BankcardInfo> result) {
+            public void onNext(CustomApiResult<BankcardInfo, BankcardInfo> result) {
                 if (result.getFlag().equals("API0000")) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取绑定银行卡信息成功---->" + result.getResult().toString());
+                        LogUtils.d("获取绑定银行卡信息成功(存在银行卡)---->" + result.getResult().toString());
                         getView().onSuccessGet(Constants.GET_BIND_BANKCARD_INFO, result.getResult());
+                    } else if (result.getExt() != null) {
+                        LogUtils.d("获取绑定银行卡信息成功(没有银行卡)---->" + result.getExt().toString());
+                        getView().onSuccessGetNoCard(Constants.GET_BIND_BANKCARD_INFO, result.getExt().getBank_username(), result.getExt().getId_card());
                     }
                 } else {
                     LogUtils.d("获取银行卡信息失败---->" + result.getFlag() + "," + result.getMsg());

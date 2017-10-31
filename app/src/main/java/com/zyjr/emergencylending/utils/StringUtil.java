@@ -7,7 +7,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.BackgroundColorSpan;
-import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -468,4 +467,42 @@ public class StringUtil {
         String regex = "[\u4e00-\u9fa5]";
         return Pattern.compile(regex).matcher(value).find();
     }
+
+    /**
+     * 身份证 前6位-后4位
+     */
+    public static String hideIDcard(String num) {
+        if (isEmpty(num)) {
+            return "";
+        }
+        return num.substring(0, 6) + "**** ****" + num.substring(num.length() - 4, num.length());
+    }
+
+    /**
+     * 手机号 前3位-后4位
+     */
+    public static String hideMobilePhone(String num) {
+        if (isEmpty(num)) {
+            return "";
+        }
+        if (num.length() < 11) {
+            return "";
+        }
+        return num.substring(0, 4) + "****" + num.substring(num.length() - 4, num.length());
+    }
+
+    /**
+     * 银行账号 前6位-后4位
+     *
+     * @param cardNum
+     * @return
+     */
+    public static String hideBankCard(String cardNum) {
+        if (isEmpty(cardNum)) {
+            return "";
+        }
+        return cardNum.substring(0, 6) + "**** ****" + cardNum.substring(cardNum.length() - 4, cardNum.length());
+    }
+
+
 }

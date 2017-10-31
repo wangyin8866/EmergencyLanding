@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.entity.UserInfoManager;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.widget.wheel.ArrayWheelAdapter;
 import com.zyjr.emergencylending.widget.wheel.OnWheelChangedListener;
 import com.zyjr.emergencylending.widget.wheel.OnWheelScrollListener;
@@ -105,20 +103,6 @@ public class AreaSelectPop extends PopupWindow implements OnClickListener {
 
         initWheel();
 //        setWheel();
-    }
-
-    public void setWheel() {
-        String current = UserInfoManager.getInstance().getLocation().getmCurrentCity();
-        LogUtils.d("CurrentProvince", current);
-        if (!TextUtils.isEmpty(UserInfoManager.getInstance().getLocation().getmCurrentCity())) {
-            for (int i = 0; i < mProvinceDatas.length; i++) {
-                if (UserInfoManager.getInstance().getLocation().getmCurrentCity().startsWith(mProvinceDatas[i])) {
-                    country.setCurrentItem(i);
-                    updateCities(city, i);
-                    break;
-                }
-            }
-        }
     }
 
     public void setMyOnClickListener(OnClickListener itemsOnClick) {

@@ -13,4 +13,6 @@ public interface BankcardInfoView extends BeanBaseView<BankcardInfo> {
 
     void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks);
 
+    void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard);
+
 }

@@ -106,4 +106,6 @@ public class Constants {
     public static final String GET_SUPPORT_CITIES_LIST = "35";
     // 获取产品介绍
     public static final String GET_PRODUCT_INTRODUCE = "36";
+    // 提交借款资料
+    public static final String SUBMIT_LOAN_INFORMATION = "37";
 }

@@ -162,8 +162,8 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private void showBankcardInfo(BankcardInfo bankcard) {
         tvUserName.setText(bankcard.getBank_username());
-        tvIdcardNumer.setText(bankcard.getId_card());
-        etBankcardNumber.setText(bankcard.getBankcard_no());
+        tvIdcardNumer.setText(StringUtil.hideIDcard(bankcard.getId_card()));
+        etBankcardNumber.setText(StringUtil.hideBankCard(bankcard.getBankcard_no()));
         tvOpenbank.setText(bankcard.getBank_name());
     }
 
@@ -274,11 +274,17 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
         showSupportBanklist(supportBanks);
     }
 
+
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
         bankcardInfo = bean;
         showBankcardInfo(bankcardInfo);
         loadingSupportBankList();
+    }
+
+    @Override
+    public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
+
     }
 
     @Override

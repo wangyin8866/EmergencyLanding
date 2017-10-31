@@ -178,4 +178,8 @@ public interface NetConstantValues {
      * 业务员名片
      */
     String MY_CARD = "zySalesmanService.salesmanCard";
+    /**
+     * 提交借款资料
+     */
+    String ROUTER_SUBMIT_LOAN_INFORMATION = "userBorrowService.saveBorrowMessage";
 }

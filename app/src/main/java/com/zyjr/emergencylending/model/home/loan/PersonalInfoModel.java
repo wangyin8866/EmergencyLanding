@@ -1,10 +1,13 @@
 package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.service.home.loan.PersonalInfoService;
+import com.zyjr.emergencylending.utils.SPUtils;
 
 import java.util.Map;
 
@@ -34,18 +37,21 @@ public class PersonalInfoModel extends BaseModel {
 
     public Observable<ApiResult<PersonalInfoBean>> getPersonalInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_PERSONAL_INFO);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return personalInfoService.getPersonInfo(params);
     }
 
 
     public Observable<ApiResult<PersonalInfoBean>> addPersonalInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_ADD_PERSONAL_INFO);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return personalInfoService.addPersonInfo(params);
     }
 
 
     public Observable<ApiResult<PersonalInfoBean>> editPersonalInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_EDIT_PERSONAL_INFO);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return personalInfoService.editPersonInfo(params);
     }
 

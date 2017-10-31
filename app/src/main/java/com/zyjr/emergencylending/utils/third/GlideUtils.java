@@ -1,10 +1,15 @@
 package com.zyjr.emergencylending.utils.third;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.zyjr.emergencylending.utils.ImageUtils;
 
 
 /**
@@ -76,6 +81,25 @@ public class GlideUtils {
     public static void clear(final Context context) {
         clearMemoryCache(context);
         clearDiskCache(context);
+    }
+
+    /**
+     * 根据
+     */
+    public static void displayImageWithFixedSize(Context context, String url, int preResourceId, final ImageView imageView, final int fixedWidth, final int fixedHeight) {
+        Glide.with(context).load(url).placeholder(preResourceId)
+                .override(fixedWidth, fixedHeight)
+                .into(new SimpleTarget<GlideDrawable>() {
+                    @Override
+                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
+                        Bitmap bmp = ImageUtils.drawableToBitmap(resource);
+                        Bitmap mBitmapIDcardBack = Bitmap.createScaledBitmap(bmp, fixedWidth, fixedHeight, true);
+                        bmp.recycle();
+                        System.gc();
+                        imageView.setImageBitmap(mBitmapIDcardBack);
+                    }
+                });
+
     }
 
 }

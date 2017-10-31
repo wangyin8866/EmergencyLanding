@@ -214,8 +214,15 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         showSupportBanklist(supportBanks);
     }
 
+
+
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
+
+    }
+
+    @Override
+    public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
 
     }
 

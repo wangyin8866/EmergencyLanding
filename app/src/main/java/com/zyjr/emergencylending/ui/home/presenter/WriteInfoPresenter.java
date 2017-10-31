@@ -43,7 +43,30 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("获取填写信息(资料完成情况)异常---->" + e.getMessage());
-                getView().onError(Constants.ADD_PERSONAL_INFO, e.getMessage());
+                getView().onError(Constants.GET_WRITE_INFO, e.getMessage());
+            }
+        }, mContext));
+    }
+
+    public void submitLoanInformation(Map<String, String> params) {
+        invoke(WriteInfoModel.getInstance().submitLoanInformation(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+            @Override
+            public void onNext(ApiResult<String> result) {
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("提交借款资料成功---->" + result.getResult().toString());
+                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
+                    }
+                } else {
+                    LogUtils.d("提交借款资料失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("提交借款资料异常---->" + e.getMessage());
+                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, e.getMessage());
             }
         }, mContext));
     }
