@@ -23,6 +23,7 @@ import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
 import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
@@ -133,7 +134,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
                 startActivity(intent);
                 break;
             case R.id.pro2_btn:
-                Intent intent1 = new Intent(getActivity(), LoanMainActivity.class);
+                Intent intent1 = new Intent(getActivity(), LoanOrderStatusActivity.class);
                 intent1.putExtra("flag", "offline");
                 startActivity(intent1);
                 break;

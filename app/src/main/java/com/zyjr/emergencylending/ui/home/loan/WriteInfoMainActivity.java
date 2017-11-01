@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
@@ -264,6 +265,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
      * @param week
      */
     private void judgeMatchProInfo(String userFlag, boolean second, String money, String week) {
+
         final CustomerDialog customerDialog = new CustomerDialog(this);
         customerDialog.loanProductMatchInfo(new View.OnClickListener() {
             @Override
@@ -275,7 +277,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
                     case R.id.btn_comfirm_submit:
                         customerDialog.dismiss();
-                        submitLoanInfo();
+//                        submitLoanInfo();
+                        startActivity(new Intent(WriteInfoMainActivity.this, AuthCenterActivity.class));
+                        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
+                        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
                         break;
                 }
             }
@@ -318,7 +323,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
         ToastAlone.showLongToast(this, msg);
-
+        // TODO 预检ok后 调往认证 注意 此时需要清空栈内的堆积
+        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
+        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
+        startActivity(new Intent(this, AuthCenterActivity.class));
     }
 
     @Override

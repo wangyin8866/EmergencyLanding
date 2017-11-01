@@ -18,6 +18,7 @@ import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.StoreBean;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.BubbleSeekBar;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
 import com.zyjr.emergencylending.widget.SelectorImageView;
@@ -92,11 +93,9 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit_apply:
-                loanMoney = Arithmetic.progressToMoney(seekbarMoney.getProgress(), minLoanMoney, maxLoanMoney);
-                loanPeriod = Arithmetic.progressToWeek(seekbarPeriod.getProgress(), minLoanPeriod, maxLoanPeriod, 2);
-                int indexEnd = loanPeriod.indexOf("周");
-                loanPeriod = loanPeriod.substring(0, indexEnd);
-                LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",loanMoney:" + loanMoney + ",loanPeriod:" + loanPeriod + ",loanPeriodUnit:" + loanPeriodUnit + ",product_id:" + product_id);
+                validateData();
+
+
                 break;
         }
     }
@@ -224,5 +223,20 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity {
         tvMaxLoadWeek.setText(maxPeriod + "周");
     }
 
+    private void validateData() {
+        if (storeBean == null) {
+            ToastAlone.showLongToast(this, "请选择您所在的城市");
+            return;
+        }
+
+    }
+
+    private void submitTransformApply(){
+        loanMoney = Arithmetic.progressToMoney(seekbarMoney.getProgress(), minLoanMoney, maxLoanMoney);
+        loanPeriod = Arithmetic.progressToWeek(seekbarPeriod.getProgress(), minLoanPeriod, maxLoanPeriod, 2);
+        int indexEnd = loanPeriod.indexOf("周");
+        loanPeriod = loanPeriod.substring(0, indexEnd);
+        LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",loanMoney:" + loanMoney + ",loanPeriod:" + loanPeriod + ",loanPeriodUnit:" + loanPeriodUnit + ",product_id:" + product_id);
+    }
 
 }

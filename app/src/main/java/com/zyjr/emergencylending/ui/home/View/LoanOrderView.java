@@ -8,8 +8,10 @@ import com.zyjr.emergencylending.entity.LoanOrderBean;
  */
 public interface LoanOrderView {
 
-    void onSuccessGet(String returnCode, LoanOrderBean bean);
+    void onSuccessGet(String apiCode, LoanOrderBean bean);
 
-    void onFail(String errorMessage);
+    void onFail(String apiCode, String failMsg);
+
+    void onError(String apiCode, String errorMsg);
 
 }

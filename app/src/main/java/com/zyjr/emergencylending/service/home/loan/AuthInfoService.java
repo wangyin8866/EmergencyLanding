@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public interface AuthInfoService {
      * 获取当前借款信息的有效认证状态集合
      */
     @FormUrlEncoded
-    @POST("customerService.getAuthStatus")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<List<AuthInfoBean>>> getCurrentAuthInfo(@FieldMap Map<String,String> params);
 
     /**

@@ -15,6 +15,10 @@ import com.zyjr.emergencylending.entity.LoanOrderBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
 import com.zyjr.emergencylending.ui.home.presenter.LoanOrderPresenter;
+import com.zyjr.emergencylending.utils.ToastAlone;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +30,7 @@ import butterknife.OnClick;
  * 线上急速借款(填写资料:1、认证中:2、审核中:3、领取金额:4、放款中:5、还款中:6)
  * 传统借款(填写资料:1、认证中:2、受理中:3、领取金额:4、放款中:5、还款中:6)
  */
-public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter,LoanOrderView> implements LoanOrderView {
+public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, LoanOrderView> implements LoanOrderView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.iv_order_status)
@@ -66,17 +70,17 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter,Loa
         ButterKnife.bind(this);
 
         init();
+        loadingLoanOrder();
         initData();
     }
 
-    private void initData() {
-
-    }
 
     @OnClick({R.id.tv_order_status1, R.id.tv_order_status2, R.id.tv_order_status3, R.id.tv_order_status4, R.id.tv_order_status5, R.id.tv_order_status6})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_order_status2:  // 认证中 2
+            case R.id.tv_order_status2:  // 认证中 | 受理中 2
+
+
                 setOrderStatusInfo(1, 2);
                 break;
             case R.id.tv_order_status3:  // 审核中
@@ -94,12 +98,26 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter,Loa
         }
     }
 
+    private void loadingLoanOrder() {
+        Map<String, String> map = new HashMap<>();
+        mPresenter.getCurrentOrderDetail(map);
+    }
 
     private void setOrderStatusInfo(int flag, int status) {
         setOrderStatus(flag, status);
     }
 
 
+    private void initData() {
+
+    }
+
+    /**
+     * 订单状态
+     *
+     * @param flag   普通用户|业务员
+     * @param status 订单状态
+     */
     private void setOrderStatus(int flag, int status) {
         Drawable drawable = null;
         int orderStatusIocn = 0;
@@ -170,11 +188,16 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter,Loa
     }
 
     @Override
-    public void onFail(String errorMessage) {
-
+    public void onFail(String apiCode, String failMsg) {
+        ToastAlone.showLongToast(this, failMsg);
     }
 
-    private void init(){
+    @Override
+    public void onError(String apiCode, String errorMsg) {
+        ToastAlone.showLongToast(this, errorMsg);
+    }
+
+    private void init() {
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {

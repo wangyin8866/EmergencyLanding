@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
 
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface ReceiveMoneyService {
      * 获取领取金额信息
      */
     @FormUrlEncoded
-    @POST("/111")
+    @POST(NetConstantValues.LOAN)
     Observable<ApiResult<ReceiveMoneyBean>> getReceiveMoneyInfo(@FieldMap Map<String, String> params);
 
 }

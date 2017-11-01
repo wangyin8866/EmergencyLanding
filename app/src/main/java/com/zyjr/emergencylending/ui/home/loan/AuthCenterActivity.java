@@ -39,6 +39,7 @@ import org.json.JSONObject;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,23 +70,6 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     private static final int MESSAGE_LIVENESS_WARRANTY_FAIL = 2; // 活体授权失败
     private MediaPlayer mMediaPlayer = null;
 
-    @Override
-    protected AuthInfoPresenter createPresenter() {
-        return new AuthInfoPresenter(this);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_auth_center);
-        ButterKnife.bind(this);
-
-        init();
-        netWorkWarranty(); // 联网授权
-
-    }
-
-
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -100,6 +84,22 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
             }
         }
     };
+
+    @Override
+    protected AuthInfoPresenter createPresenter() {
+        return new AuthInfoPresenter(this);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_auth_center);
+        ButterKnife.bind(this);
+
+        init();
+        loadingAuthStatus();
+        netWorkWarranty(); // 联网授权
+    }
 
     @OnClick({R.id.rl_zhimaxinyong_auth, R.id.rl_mobile_auth, R.id.rl_face_auth})
     public void onViewClicked(View view) {
@@ -170,6 +170,11 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         });
     }
 
+    private void loadingAuthStatus(){
+        Map<String,String>  params = new HashMap<>();
+        mPresenter.getCurrentAuthInfo(params);
+    }
+
 
     @TargetApi(Build.VERSION_CODES.M)
     private void jumpToFaceAuth(final int requestCode) {
@@ -182,6 +187,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
             startActivityForResult(new Intent(this, LivenessActivity.class), RC_PAGE_TO_LIVENESS);
         }
     }
+
 
 
     /**
@@ -313,6 +319,5 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     @Override
     protected void onResume() {
         super.onResume();
-        LogUtils.d("执行onResume");
     }
 }

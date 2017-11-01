@@ -8,8 +8,10 @@ import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
  */
 public interface ReceiveMoneyView {
 
-    void onSuccessGet(String returnCode, ReceiveMoneyBean bean);
+    void onSuccessGet(String apiCode, ReceiveMoneyBean bean);
 
-    void onFail(String errorMessage);
+    void onFail(String apiCode, String failMsg);
+
+    void onError(String apiCode, String errorMsg);
 
 }

@@ -9,15 +9,12 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
-    /**
-     * 生产
-     */
+//    String HOST_URL = "http://192.168.6.107:8086/";
 //    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
-//    String HOST_URL = "http://192.168.9.152:8086/";
+    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 二级地址
@@ -185,6 +182,18 @@ public interface NetConstantValues {
      * 提交借款资料
      */
     String ROUTER_SUBMIT_LOAN_INFORMATION = "userBorrowService.saveBorrowMessage";
+    /**
+     * 获取所有认证状态
+     */
+    String ROUTER_GET_AUTH_STATUS = "customerService.getAuthStatus";
+    /**
+     * 获取当前用户借款的订单
+     */
+    String ROUTER_GET_CURRENT_ORDER_INFO = "userBorrowService.orderQuery";
+    /**
+     * 领取借款金额
+     */
+    String RONTER_GET_RECEIVE_MONEY = "contractSignService.signGetAmount";
     /**
      * 我的业绩
      */

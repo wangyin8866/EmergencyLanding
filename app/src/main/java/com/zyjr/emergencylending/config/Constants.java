@@ -108,4 +108,8 @@ public class Constants {
     public static final String GET_PRODUCT_INTRODUCE = "36";
     // 提交借款资料
     public static final String SUBMIT_LOAN_INFORMATION = "37";
+    // 查询当前借款订单详情
+    public static final String GET_CURRENT_LOAN_ORDER_INFO = "38";
+    // 获取当前领取金额信息
+    public static final String GET_RECEIVE_MONEY_INFO = "39";
 }

@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
 import com.zyjr.emergencylending.service.home.loan.LoanOrderService;
 
@@ -22,15 +23,16 @@ public class LoanOrderModel extends BaseModel {
         loanOrderService = retrofit.create(LoanOrderService.class);
     }
 
-    private static class SingletonHolder{
+    private static class SingletonHolder {
         private static final LoanOrderModel loanOrderModel = new LoanOrderModel();
     }
 
-   public static LoanOrderModel getInstance(){
-       return SingletonHolder.loanOrderModel;
-   }
+    public static LoanOrderModel getInstance() {
+        return SingletonHolder.loanOrderModel;
+    }
 
-    public Observable<ApiResult<LoanOrderBean>> getCurrentOrderDetail(Map<String, String> params){
+    public Observable<ApiResult<LoanOrderBean>> getCurrentOrderDetail(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_GET_CURRENT_ORDER_INFO);
         return loanOrderService.getCurrentOrderDetail(params);
     }
 
