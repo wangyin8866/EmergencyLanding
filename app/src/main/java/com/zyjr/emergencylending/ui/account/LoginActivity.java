@@ -153,6 +153,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
             SPUtils.saveString(mContext, Config.KEY_USER_TYPE, loginBean.getResult().getUser_type());
             SPUtils.saveString(mContext, Config.KEY_RECOMMEND_CODE, loginBean.getResult().getRecommendCode());
             SPUtils.saveString(mContext, Config.KEY_JUID, loginBean.getResult().getJuid());
+            SPUtils.saveString(mContext, Config.KEY_PHONE, phone);
             BaseApplication.isLogin = true;
             BaseApplication.isSalesman = SPUtils.getString(mContext, Config.KEY_USER_TYPE, Config.USER_COMMON);
             if (Config.USER_SALESMAN.equals(loginBean.getResult().getUser_type())) {

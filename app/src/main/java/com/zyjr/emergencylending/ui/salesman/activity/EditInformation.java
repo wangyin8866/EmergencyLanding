@@ -160,6 +160,6 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
 
     @Override
     public void callBack(BaseBean baseBean) {
-        userPic.setImageBitmap(mBitmap);
+        Glide.with(this).load(mBitmap).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 }
