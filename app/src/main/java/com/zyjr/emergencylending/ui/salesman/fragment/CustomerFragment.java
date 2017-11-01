@@ -1,6 +1,5 @@
 package com.zyjr.emergencylending.ui.salesman.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,13 +12,11 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.LineCustomerAdapter;
 import com.zyjr.emergencylending.base.BaseFragment;
+import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.CircleView;
 import com.zyjr.emergencylending.custom.XListView;
 import com.zyjr.emergencylending.entity.BaseBean;
-import com.zyjr.emergencylending.entity.H5Bean;
-import com.zyjr.emergencylending.ui.salesman.activity.ActivityApplyFor;
-import com.zyjr.emergencylending.ui.salesman.activity.ActivityClient;
-import com.zyjr.emergencylending.ui.salesman.activity.ActivitySuccess;
 import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -104,16 +101,20 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.circle_client:
-                startActivity(new Intent(mContext, ActivityClient.class));
+//                startActivity(new Intent(mContext, ActivityClient.class));
+                mPresenter.getH5Url(Config.H5_URL_MYRESULTS_CUSTOMER, "客户");
                 break;
             case R.id.circle_apply_for:
-                startActivity(new Intent(mContext, ActivityApplyFor.class));
+//                startActivity(new Intent(mContext, ActivityApplyFor.class));
+                mPresenter.getH5Url(Config.H5_URL_MYRESULTS_APPLY, "申请");
                 break;
             case R.id.circle_success:
-                startActivity(new Intent(mContext, ActivitySuccess.class));
+//                startActivity(new Intent(mContext, ActivitySuccess.class));
+                mPresenter.getH5Url(Config.H5_URL_MYRESULTS_SUCCESS, "成功");
                 break;
             case R.id.ll_rank_list:
 //                H5WebView.skipH5WebView(mContext, "龙虎榜");
+                mPresenter.getH5Url(Config.H5_URL_WINNERSLIST, "龙虎榜");
                 break;
             case R.id.type1:
                 selectTv(1);
@@ -152,9 +153,9 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 type3.setTextColor(Color.parseColor("#FFA200"));
                 break;
         }
-//        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
-//        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
-//        mPresenter.rankList(NetConstantValues.RANKING_LIST);
+        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
+        mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
@@ -173,12 +174,12 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     }
 
     @Override
-    public void rankList(H5Bean baseBean) {
+    public void rankList(BaseBean baseBean) {
 
     }
 
     @Override
-    public void waitApply(H5Bean baseBean) {
+    public void waitApply(BaseBean baseBean) {
 
     }
 

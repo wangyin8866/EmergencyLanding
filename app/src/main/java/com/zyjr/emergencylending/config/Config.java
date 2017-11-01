@@ -27,6 +27,10 @@ public interface Config {
      */
     String KEY_JUID = "juid";
     /**
+     * client_ID
+     */
+    String KEY_CLIENT_ID = "client_id";
+    /**
      * 用户token
      */
     String KEY_TOKEN = "token";

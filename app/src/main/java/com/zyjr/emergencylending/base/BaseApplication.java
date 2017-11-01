@@ -6,9 +6,13 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
+import com.igexin.sdk.PushManager;
 import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.SupportCityConfig;
+import com.zyjr.emergencylending.service.DemoIntentService;
+import com.zyjr.emergencylending.service.DemoPushService;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 
@@ -47,7 +51,7 @@ public class BaseApplication extends Application {
      * 是否是线下（业务员）
      */
     public static String isSalesman;
-    public static String clientId = "";
+    public static String clientId;
 
     /**
      * 是否登录
@@ -69,13 +73,13 @@ public class BaseApplication extends Application {
         //是否打印日志
         LogUtils.isDebug = true;
         //友盟日志
-//        Config.DEBUG = false;
-//        UMShareAPI.get(this);
-
-//        clientId = PhoneInfoUtils.getDeviceId(this);
-
+        com.umeng.socialize.Config.DEBUG = true;
+        UMShareAPI.get(this);
         isLogin = SPUtils.getBoolean(this, Config.KEY_LOGIN, false);
-        isSalesman = SPUtils.getString(this, Config.KEY_USER_TYPE,Config.USER_COMMON);
+        isSalesman = SPUtils.getString(this, Config.KEY_USER_TYPE, Config.USER_COMMON);
+
+        PushManager.getInstance().initialize(this.getApplicationContext(), DemoPushService.class);
+        PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), DemoIntentService.class);
     }
 
     public static Context getContext() {
@@ -109,7 +113,6 @@ public class BaseApplication extends Application {
     }
 
     {
-
         PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");

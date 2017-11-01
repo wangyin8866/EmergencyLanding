@@ -243,6 +243,8 @@ public class WYUtils {
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //打开DOM储存
+        settings.setDomStorageEnabled(true);
         mWebView.loadUrl(url);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
@@ -255,13 +257,14 @@ public class WYUtils {
             }
         });
         mWebView.setWebViewClient(new WebViewClient() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                LogUtils.e("webViewUrl", url);
-                view.loadUrl(url);
+
                 return true;
 
             }
+
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {

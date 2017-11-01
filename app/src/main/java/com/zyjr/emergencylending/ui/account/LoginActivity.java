@@ -25,7 +25,6 @@ import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.UIUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -83,9 +82,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
             public void call(Void aVoid) {
                 phone = etPhoneNumber.getText().toString();
                 pwd = etPassword.getText().toString();
-                if (TextUtils.isEmpty(phone) || !WYUtils.checkPhone(phone) || TextUtils.isEmpty(pwd)) {
-                    UIUtils.showToastCommon(mContext, Config.TIP_ALL);
-                } else {
+                if (TextUtils.isEmpty(phone)) {
+                    ToastAlone.showShortToast(mContext, "请输入手机号码");
+                } else if (!WYUtils.checkPhone(phone)) {
+                    ToastAlone.showShortToast(mContext, "请输入正确的手机号码");
+                } else if (TextUtils.isEmpty(pwd)) {
+                    ToastAlone.showShortToast(mContext, "请输入密码");
+                }
+//                else if (!WYUtils.checkPass(pwd)) {
+//                    ToastAlone.showShortToast(mContext, "密码由6-16位字母和数字组成");
+//                }
+                else {
                     mPresenter.login(NetConstantValues.LOGIN, phone, pwd, BaseApplication.clientId, Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode()
                     );
                 }
