@@ -120,7 +120,7 @@ public class Arithmetic {
      * @param minType  最小借款周期 1.天；2.周
      * @return
      */
-    public static String progressToWeek(int progress, int min, int max, int minType) {
+    public static String  progressToWeek(int progress, int min, int max, int minType) {
         LogUtils.e("借款周期滑动进度:----------->" + progress);
         int week = 0;
         if (progress <= 0) {

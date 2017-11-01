@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.ui.home.View.ProductInfoView;
@@ -93,7 +94,6 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
         init();
         initGetData();
-        initData();
         initListener();
     }
 
@@ -130,13 +130,6 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                 break;
         }
     }
-
-    private void initData() {
-        // TODO 获取产品介绍
-
-
-    }
-
 
     private void initGetData() {
         Intent intent = getIntent();
@@ -296,7 +289,11 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+        if (returnCode.equals(Constants.GET_SUPPORT_CITIES_LIST)) {
 
+        } else if (returnCode.equals(Constants.GET_PRODUCT_INTRODUCE)) {
+
+        }
     }
 
 }

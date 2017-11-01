@@ -67,7 +67,7 @@ public class ProductInfoPresenter extends BasePresenter<ProductInfoView> {
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("查询产品介绍信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_SUPPORT_CITIES_LIST, e.getMessage());
+                getView().onError(Constants.GET_PRODUCT_INTRODUCE, e.getMessage());
             }
         }, mContext));
     }

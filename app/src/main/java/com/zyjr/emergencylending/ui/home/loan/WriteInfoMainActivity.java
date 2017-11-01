@@ -25,6 +25,7 @@ import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
+import com.zyjr.emergencylending.ui.home.loan.online.ApplyToOfflineConfirmActivity;
 import com.zyjr.emergencylending.ui.home.presenter.WriteInfoPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -89,12 +90,6 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @Override
     protected void onResume() {
         super.onResume();
-        if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
-            //线下
-            rlNoSalesman.setVisibility(View.GONE);
-        } else {
-            rlNoSalesman.setVisibility(View.VISIBLE);
-        }
         loadingWriteInfoStatus();
     }
 
@@ -105,7 +100,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 judgeMatchProInfo("", false, apply_amount, apply_zq);
             } else {
-                CommonUtils.jumpAppInfoSetting(WriteInfoMainActivity.this, "请允许读取权限!");
+//                CommonUtils.jumpAppInfoSetting(WriteInfoMainActivity.this, "请允许读取权限!");
+                ToastAlone.showLongToast(WriteInfoMainActivity.this, "请允许通讯录权限!");
             }
         }
     }
@@ -150,19 +146,37 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             case R.id.layout_bank_info:
                 if (writeInfoBean == null) {
                     return;
+                } else {
+                    if (writeInfoBean.getUser_data_status().equals("0")
+                            || writeInfoBean.getUser_job_status().equals("0")
+                            || writeInfoBean.getUser_contact_status().equals("0")) {
+                        ToastAlone.showLongToast(this, "请先完善个人信息!");
+                        return;
+                    }
                 }
-
                 intent = new Intent(this, BankcardInfoActivity.class);
                 intent.putExtra("isEdit", writeInfoBean.getUser_contact_edit());
                 intent.putExtra("status", writeInfoBean.getUser_contact_status());
                 startActivity(intent);
                 break;
             case R.id.btn_apply_quickly:
-                intent = new Intent(WriteInfoMainActivity.this, LoanMainActivity.class);
-                intent.putExtra("flag", "offline");
+                intent = new Intent(WriteInfoMainActivity.this, ApplyToOfflineConfirmActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn_submit:
+                if (writeInfoBean == null) {
+                    return;
+                } else {
+                    if (writeInfoBean.getUser_data_status().equals("0")
+                            || writeInfoBean.getUser_job_status().equals("0")
+                            || writeInfoBean.getUser_contact_status().equals("0")) {
+                        ToastAlone.showLongToast(this, "请先完善个人信息!");
+                        return;
+                    } else if (writeInfoBean.getUser_bank_status().equals("0")) {
+                        ToastAlone.showLongToast(this, "请完善资料信息!");
+                        return;
+                    }
+                }
                 // TODO 获取通讯资料
                 if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
                     judgeMatchProInfo("", false, apply_amount, apply_zq);
@@ -237,6 +251,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         }
         if (personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")) {
             // TODO 根据状态,获取可申请产品
+            rlNoSalesman.setVisibility(View.VISIBLE);
         }
     }
 
@@ -289,14 +304,14 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
 
     @Override
-    public void onSuccessGet(String returnCode, WriteInfoBean model) {
+    public void onSuccessGet(String returnCode, WriteInfoBean bean) {
         pullToRefreshScrollView.onRefreshComplete();
-        writeInfoBean = model;
+        writeInfoBean = bean;
         infoFinishStatus(
-                StringUtil.isEmpty(model.getUser_data_status()) ? "" : model.getUser_data_status(),
-                StringUtil.isEmpty(model.getUser_job_status()) ? "" : model.getUser_job_status(),
-                StringUtil.isEmpty(model.getUser_contact_status()) ? "" : model.getUser_contact_status(),
-                StringUtil.isEmpty(model.getUser_bank_status()) ? "" : model.getUser_bank_status());
+                StringUtil.isEmpty(writeInfoBean.getUser_data_status()) ? "" : writeInfoBean.getUser_data_status(),
+                StringUtil.isEmpty(writeInfoBean.getUser_job_status()) ? "" : writeInfoBean.getUser_job_status(),
+                StringUtil.isEmpty(writeInfoBean.getUser_contact_status()) ? "" : writeInfoBean.getUser_contact_status(),
+                StringUtil.isEmpty(writeInfoBean.getUser_bank_status()) ? "" : writeInfoBean.getUser_bank_status());
 
     }
 
@@ -308,17 +323,14 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     @Override
     public void onFail(String returnCode, String flag, String errorMsg) {
-        writeInfoBean = null;
-        pullToRefreshScrollView.onRefreshComplete();
-        infoFinishStatus("", "", "", "");
         ToastAlone.showLongToast(this, errorMsg);
+        pullToRefreshScrollView.onRefreshComplete();
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        writeInfoBean = null;
-        pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showLongToast(this, errorMsg);
+        pullToRefreshScrollView.onRefreshComplete();
     }
 
 
