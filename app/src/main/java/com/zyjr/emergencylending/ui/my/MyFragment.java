@@ -23,11 +23,19 @@ import com.jph.takephoto.permission.TakePhotoInvocationHandler;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.GlideCircleTransform;
+import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.CardBean;
+import com.zyjr.emergencylending.ui.home.MessageActivity;
+import com.zyjr.emergencylending.ui.home.QrCodeActivity;
+import com.zyjr.emergencylending.ui.my.View.MyView;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
+import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,12 +44,11 @@ import butterknife.Unbinder;
 
 
 /**
- *
  * @author wangyin
  * @date 2017/8/9
  */
 
-public class MyFragment extends BaseFragment implements TakePhoto.TakeResultListener, InvokeListener {
+public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyView, TakePhoto.TakeResultListener, InvokeListener {
     @BindView(R.id.QR_code)
     ImageView QRCode;
     @BindView(R.id.message_center)
@@ -59,8 +66,12 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
     @BindView(R.id.setting)
     TextView setting;
     Unbinder unbinder;
+    @BindView(R.id.user_name_phone)
+    TextView userNamePhone;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
+    private CardBean.ResultBean resultBean;
+    private Bitmap mBitmap;
 
     @Override
     protected MyPresenter createPresenter() {
@@ -114,7 +125,12 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
     }
 
     private void init() {
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.myCard(NetConstantValues.MY_CARD);
     }
 
     @Override
@@ -127,30 +143,30 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.QR_code:
+                startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 break;
             case R.id.message_center:
+                startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.user_pic:
-                PhotoUtils.showUserPicDialog(mContext,takePhoto);
+                PhotoUtils.showUserPicDialog(mContext, takePhoto);
                 break;
             case R.id.user_info:
-                startActivity(new Intent(mContext,PersonalDataActivity.class));
+                startActivity(new Intent(mContext, PersonalDataActivity.class));
                 break;
             case R.id.my_borrow:
-                startActivity(new Intent(mContext,MyBorrowActivity.class));
+                startActivity(new Intent(mContext, MyBorrowActivity.class));
                 break;
             case R.id.my_repayment:
                 break;
             case R.id.help:
-                mPresenter.getH5Url(Config.H5_URL_HELP,"帮助说明");
+                mPresenter.getH5Url(Config.H5_URL_HELP, "帮助说明");
                 break;
             case R.id.setting:
-                startActivity(new Intent(mContext,SettingActivity.class));
+                startActivity(new Intent(mContext, SettingActivity.class));
                 break;
         }
     }
-
-
 
 
     @Override
@@ -158,8 +174,15 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
         LogUtils.e("takeSuccess", "takeSuccess：" + result.getImage().getCompressPath());
         String imgPath = result.getImage().getOriginalPath();
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-        Bitmap mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
-        Glide.with(mContext).load(mBitmap).transform(new GlideCircleTransform(mContext)).into(userPic);
+        mBitmap = Bitmap.createScaledBitmap(bitmap, 100, 100, true);
+        // 文件名
+        String fileName = imgPath.substring(imgPath.lastIndexOf("/") + 1, imgPath.lastIndexOf("."));
+        // 后缀名(文件类型)
+        String fileSuffixName = imgPath.substring(imgPath.lastIndexOf(".") + 1, imgPath.length());
+
+        String data = ImageUtils.fileBase64(imgPath);
+
+        mPresenter.uploadFile(NetConstantValues.ROUTER_UPLOAD_FILE, fileName, fileSuffixName, data, "1");
     }
 
     @Override
@@ -179,5 +202,17 @@ public class MyFragment extends BaseFragment implements TakePhoto.TakeResultList
             this.invokeParam = invokeParam;
         }
         return type;
+    }
+
+    @Override
+    public void myCard(CardBean cardBean) {
+        resultBean = cardBean.getResult();
+        Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
+        userNamePhone.setText(WYUtils.nameSecret(resultBean.getName()) + " " + WYUtils.phoneSecret(resultBean.getPhone()));
+    }
+
+    @Override
+    public void update(BaseBean baseBean) {
+        Glide.with(this).load(mBitmap).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 }

@@ -24,6 +24,7 @@ import butterknife.OnClick;
  * author wangyin
  * date 2017/10/14.
  * description : 个人资料
+ * @author wangyin
  */
 
 public class PersonalDataActivity extends BaseActivity {
@@ -108,6 +109,9 @@ public class PersonalDataActivity extends BaseActivity {
     }
 
     private void switchIconState() {
+
+
+
 
         if (isOrder) {//已提交订单,都不能修改
 

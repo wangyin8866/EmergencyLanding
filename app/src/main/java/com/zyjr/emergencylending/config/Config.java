@@ -17,7 +17,7 @@ public interface Config {
     /**
      * 每页数据
      */
-    int PAGE_SIZE =15;
+    int PAGE_SIZE = 15;
     /**
      * 请求成功
      */
@@ -96,7 +96,7 @@ public interface Config {
      */
     String H5_URL_CLERKHELP = "H5_URL_CLERKHELP";
     /**
-     *  //收入明细
+     * //收入明细
      */
     String H5_URL_INCOMEDETAIL = "H5_URL_INCOMEDETAIL";
     /**
@@ -112,20 +112,23 @@ public interface Config {
      */
     String H5_URL_ACTIVITYDETAILS = "H5_URL_ACTIVITYDETAILS";
     /**
-     *  //活动列表
+     * //活动列表
      */
     String H5_URL_ACTIVITYLIST = "H5_URL_ACTIVITYLIST";
     /**
-     *  //我的名片
+     * //我的名片
      */
     String H5_URL_MYCARD = "H5_URL_MYCARD";
     /**
-     *  //客服电话
+     * //客服电话
      */
     String H5_URL_SERVICETEL = "H5_URL_SERVICETEL";
     /**
-     *  //意见反馈
+     * //意见反馈
      */
     String H5_URL_FEEDBACK = "H5_URL_FEEDBACK";
-
+    /**
+     * 手机号
+     */
+    String KEY_PHONE = "phone";
 }
