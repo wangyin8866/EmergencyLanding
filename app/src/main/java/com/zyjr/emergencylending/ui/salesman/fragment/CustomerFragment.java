@@ -17,6 +17,8 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.CircleView;
 import com.zyjr.emergencylending.custom.XListView;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.CustomerBean;
+import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -169,8 +171,11 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     }
 
     @Override
-    public void myPerformance(BaseBean baseBean) {
-
+    public void myPerformance(CustomerBean baseBean) {
+        LogUtils.e("myPerformance",baseBean.getResult().getCust_num()+"");
+        circleClient.setmCircleText(String.valueOf(baseBean.getResult().getCust_num()));
+        circleApplyFor.setmCircleText(String.valueOf(baseBean.getResult().getOrder_num()));
+        circleSuccess.setmCircleText(String.valueOf(baseBean.getResult().getLend_num()));
     }
 
     @Override
@@ -179,7 +184,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     }
 
     @Override
-    public void waitApply(BaseBean baseBean) {
+    public void waitApply(WaitApplyBean baseBean) {
 
     }
 

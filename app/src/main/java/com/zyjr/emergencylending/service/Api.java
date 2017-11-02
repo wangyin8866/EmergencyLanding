@@ -4,10 +4,14 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.CardBean;
+import com.zyjr.emergencylending.entity.CustomerBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.entity.QrBean;
+import com.zyjr.emergencylending.entity.UserInfo;
+import com.zyjr.emergencylending.entity.UserStatus;
+import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 
@@ -32,6 +36,7 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<H5Bean> getH5Url(@FieldMap Map<String, String> params);
+
     /**
      * 注册
      *
@@ -190,7 +195,7 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> myPerformance(@FieldMap Map<String, String> params);
+    Observable<CustomerBean> myPerformance(@FieldMap Map<String, String> params);
 
     /**
      * 当月榜单
@@ -210,11 +215,25 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> waitApply(@FieldMap Map<String, String> params);
+    Observable<WaitApplyBean> waitApply(@FieldMap Map<String, String> params);
+
     /**
      * 上传照片
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<BaseBean> uploadFile(@FieldMap Map<String, String> params);
+
+    /**
+     * 获取用户资料完成信息
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<UserStatus> getUserInfoStatus(@FieldMap Map<String, String> params);
+    /**
+     * 获取用户资料
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<UserInfo> getBasicInfo(@FieldMap Map<String, String> params);
 }

@@ -138,5 +138,18 @@ public class CardBean implements Serializable{
         public void setName(String name) {
             this.name = name;
         }
+
+        @Override
+        public String toString() {
+            return "ResultBean{" +
+                    "head_url='" + head_url + '\'' +
+                    ", position='" + position + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", rq_code='" + rq_code + '\'' +
+                    ", product_img_url='" + product_img_url + '\'' +
+                    ", company='" + company + '\'' +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
 }

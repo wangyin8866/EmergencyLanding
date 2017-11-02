@@ -1,8 +1,13 @@
 package com.zyjr.emergencylending.ui.home.View;
 
+import com.zyjr.emergencylending.entity.Banner;
+import com.zyjr.emergencylending.entity.UserInfo;
+
 /**
  * Created by wangyin on 2017/8/9.
  */
 
-public class HomeView {
+public interface HomeView {
+    void getBanner(Banner banner);
+    void getBasicInfo(UserInfo userInfo);
 }

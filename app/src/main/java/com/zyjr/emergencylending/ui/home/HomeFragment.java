@@ -15,17 +15,15 @@ import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
-import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderView;
-import com.zyjr.emergencylending.custom.LocalImageHolderViewNative;
-import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.Banner;
+import com.zyjr.emergencylending.entity.UserInfo;
+import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
-import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
-import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 
 import java.util.ArrayList;
@@ -42,7 +40,7 @@ import butterknife.Unbinder;
  * @date 2017/8/9
  */
 
-public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> implements BaseView<Banner> {
+public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implements HomeView {
     @BindView(R.id.banner)
     ConvenientBanner banner;
     @BindView(R.id.QR_code)
@@ -68,6 +66,16 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //banner
+        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
+
+        //是否有消息
+        mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
+    }
+
     protected void init() {
 
 
@@ -77,20 +85,19 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
         auto_roll_data.add("wangyin3");
         auto_roll_data.add("wangyin4");
         showAutoRollStrings();
-        //banner
-        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
+
 
         //本地图片
-        ArrayList<Integer> imgs = new ArrayList<>();
-        imgs.add(R.mipmap.ic_launcher);
-        imgs.add(R.mipmap.ic_launcher_round);
-        imgs.add(R.mipmap.ic_launcher);
-        this.banner.setPages(new CBViewHolderCreator() {
-            @Override
-            public Object createHolder() {
-                return new LocalImageHolderViewNative();
-            }
-        }, imgs).startTurning(2000);
+//        ArrayList<Integer> imgs = new ArrayList<>();
+//        imgs.add(R.mipmap.ic_launcher);
+//        imgs.add(R.mipmap.ic_launcher_round);
+//        imgs.add(R.mipmap.ic_launcher);
+//        this.banner.setPages(new CBViewHolderCreator() {
+//            @Override
+//            public Object createHolder() {
+//                return new LocalImageHolderViewNative();
+//            }
+//        }, imgs).startTurning(2000);
 
     }
 
@@ -148,7 +155,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
 
 
     @Override
-    public void callBack(Banner banner) {
+    public void getBanner(Banner banner) {
         if (images != null) {
             images.clear();
         }
@@ -170,5 +177,14 @@ public class HomeFragment extends BaseFragment<HomePresenter, BaseView<Banner>> 
 
             }
         });
+    }
+
+    @Override
+    public void getBasicInfo(UserInfo userInfo) {
+        if (Config.TRUE.equals(userInfo.getResult().getNews_status())) {
+            messageCenter.setImageResource(R.mipmap.icon_message_reddot);
+        } else {
+            messageCenter.setImageResource(R.mipmap.icon_message);
+        }
     }
 }

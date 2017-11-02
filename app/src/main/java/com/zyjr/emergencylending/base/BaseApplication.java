@@ -51,14 +51,6 @@ public class BaseApplication extends Application {
      * 是否是线下（业务员）
      */
     public static String isSalesman;
-    public static String clientId;
-
-    /**
-     * 是否登录
-     */
-    public static boolean isLogin;
-
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -75,7 +67,7 @@ public class BaseApplication extends Application {
         //友盟日志
         com.umeng.socialize.Config.DEBUG = true;
         UMShareAPI.get(this);
-        isLogin = SPUtils.getBoolean(this, Config.KEY_LOGIN, false);
+
         isSalesman = SPUtils.getString(this, Config.KEY_USER_TYPE, Config.USER_COMMON);
 
         PushManager.getInstance().initialize(this.getApplicationContext(), DemoPushService.class);

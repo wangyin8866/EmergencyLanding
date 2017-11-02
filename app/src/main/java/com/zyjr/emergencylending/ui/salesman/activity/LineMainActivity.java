@@ -16,13 +16,14 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.NoScrollViewPager;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.salesman.fragment.BorrowFragment;
 import com.zyjr.emergencylending.ui.salesman.fragment.CustomerFragment;
 import com.zyjr.emergencylending.ui.salesman.fragment.MineFragment;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- *
  * @author wangyin
  * @date 2017/10/18
  */
@@ -83,9 +83,9 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
 
         fragments = new ArrayList<>();
 
-        BorrowFragment borrowFragment= new BorrowFragment();
-        CustomerFragment customerFragment= new CustomerFragment();
-        MineFragment mineFragment= new MineFragment();
+        BorrowFragment borrowFragment = new BorrowFragment();
+        CustomerFragment customerFragment = new CustomerFragment();
+        MineFragment mineFragment = new MineFragment();
         fragments.add(borrowFragment);
         fragments.add(customerFragment);
         fragments.add(mineFragment);
@@ -121,7 +121,7 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
                 setTabSelection(currentPage);
                 break;
             case R.id.id_tab_ll_03:
-                if (BaseApplication.isLogin) {
+                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
                     currentPage = 2;
                     setTabSelection(currentPage);
                 } else {

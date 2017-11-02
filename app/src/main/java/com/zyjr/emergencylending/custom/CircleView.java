@@ -213,6 +213,7 @@ public class CircleView extends View {
 
     public void setmCircleText(String mCircleText) {
         this.mCircleText = mCircleText;
+        postInvalidate();
     }
 
     public String getmCircleText() {

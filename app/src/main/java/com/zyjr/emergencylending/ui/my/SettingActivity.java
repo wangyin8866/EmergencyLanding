@@ -7,8 +7,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
@@ -95,9 +95,8 @@ public class SettingActivity extends BaseActivity {
                 phoneDialog();
                 break;
             case R.id.exit:
-                SPUtils.clear(mContext);
-                ActivityCollector.finishAll();
-                System.exit(0);
+                SPUtils.clear(BaseApplication.getContext());
+
                 break;
             case R.id.version:
                 dialog.versionUpdate(new View.OnClickListener() {

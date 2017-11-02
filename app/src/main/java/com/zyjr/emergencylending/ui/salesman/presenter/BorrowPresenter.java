@@ -8,7 +8,7 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.ui.salesman.model.HomeModel;
-import com.zyjr.emergencylending.ui.salesman.view.HomeView;
+import com.zyjr.emergencylending.ui.salesman.view.BorrowView;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
@@ -17,8 +17,8 @@ import com.zyjr.emergencylending.utils.ToastAlone;
  * @description :
  */
 
-public class HomePresenter extends BasePresenter<HomeView> {
-    public HomePresenter(Context context) {
+public class BorrowPresenter extends BasePresenter<BorrowView> {
+    public BorrowPresenter(Context context) {
         super(context);
     }
 

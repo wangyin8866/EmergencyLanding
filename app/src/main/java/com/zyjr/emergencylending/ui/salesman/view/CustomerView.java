@@ -1,6 +1,8 @@
 package com.zyjr.emergencylending.ui.salesman.view;
 
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.CustomerBean;
+import com.zyjr.emergencylending.entity.WaitApplyBean;
 
 /**
  * @author wangyin
@@ -13,7 +15,7 @@ public interface CustomerView {
      * 我的业绩
      * @param baseBean
      */
-    void myPerformance(BaseBean baseBean);
+    void myPerformance(CustomerBean baseBean);
 
     /**
      * 当月榜单
@@ -24,5 +26,5 @@ public interface CustomerView {
      * 等待申请
      * @param baseBean
      */
-    void waitApply(BaseBean baseBean);
+    void waitApply(WaitApplyBean baseBean);
 }

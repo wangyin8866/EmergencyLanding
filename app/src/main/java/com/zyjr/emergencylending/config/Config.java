@@ -131,4 +131,8 @@ public interface Config {
      * 手机号
      */
     String KEY_PHONE = "phone";
+    String TRUE = "1";
+    String FALSE = "0";
+
+    String KEY_USER_PIC = "user_pic";
 }

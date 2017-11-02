@@ -16,7 +16,6 @@ import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxCompoundButton;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
@@ -128,7 +127,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
                 } else if (!WYUtils.checkPass(pwd)) {
                     ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
                 } else {
-                    mPresenter.register(NetConstantValues.REGISTER, phone, BaseApplication.clientId, sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
+                    mPresenter.register(NetConstantValues.REGISTER, phone, SPUtils.getString(mContext,Config.KEY_CLIENT_ID,""), sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
                 }
             }
         });

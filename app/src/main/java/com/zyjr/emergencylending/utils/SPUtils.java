@@ -3,11 +3,23 @@ package com.zyjr.emergencylending.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.zyjr.emergencylending.base.ActivityCollector;
 
-//实现标记的写入与读取
+
+/**
+ * //实现标记的写入与读取
+ *
+ * @author wangyin
+ */
 public class SPUtils {
     private static final String SP_NAME = "wyman";
+    /**
+     * //保存是否登录,用户基本信息
+     */
     private static SharedPreferences sp;
+    /**
+     * //保存是否第一次进入APP
+     */
     private static SharedPreferences sp2;
 
     //保存布尔值
@@ -76,7 +88,8 @@ public class SPUtils {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
         sp.edit().clear().apply();
-
+        ActivityCollector.finishAll();
+        System.exit(0);
     }
 
     //保存导航页

@@ -2,6 +2,8 @@ package com.zyjr.emergencylending.ui.salesman.model;
 
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.CustomerBean;
+import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.service.Api;
 
 import java.util.HashMap;
@@ -30,7 +32,7 @@ public class CustomerModel extends BaseModel{
     }
 
 
-    public Observable<BaseBean> myPerformance(String router,String type) {
+    public Observable<CustomerBean> myPerformance(String router, String type) {
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("type", type);
@@ -41,7 +43,7 @@ public class CustomerModel extends BaseModel{
         map.put("router", router);
         return api.rankList(map);
     }
-    public Observable<BaseBean> waitApply(String router,String type) {
+    public Observable<WaitApplyBean> waitApply(String router, String type) {
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("type", type);

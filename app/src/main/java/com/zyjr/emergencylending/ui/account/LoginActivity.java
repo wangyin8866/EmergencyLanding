@@ -93,7 +93,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
 //                    ToastAlone.showShortToast(mContext, "密码由6-16位字母和数字组成");
 //                }
                 else {
-                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd, BaseApplication.clientId, Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode()
+                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd, SPUtils.getString(mContext, Config.KEY_CLIENT_ID, ""), Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode()
                     );
                 }
             }
@@ -154,7 +154,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
             SPUtils.saveString(mContext, Config.KEY_RECOMMEND_CODE, loginBean.getResult().getRecommendCode());
             SPUtils.saveString(mContext, Config.KEY_JUID, loginBean.getResult().getJuid());
             SPUtils.saveString(mContext, Config.KEY_PHONE, phone);
-            BaseApplication.isLogin = true;
             BaseApplication.isSalesman = SPUtils.getString(mContext, Config.KEY_USER_TYPE, Config.USER_COMMON);
             if (Config.USER_SALESMAN.equals(loginBean.getResult().getUser_type())) {
                 startActivity(new Intent(mContext, LineMainActivity.class));

@@ -9,12 +9,12 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
+//    String HOST_URL = "http://192.168.6.107:8086/";
 //    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
-//    String HOST_URL = "http://192.168.9.152:8086/";
+    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 二级地址
@@ -105,6 +105,10 @@ public interface NetConstantValues {
      * 获取个人资料
      */
     String ROUTER_GET_PERSONAL_INFO = "zyUserService.getUserPersonlInfo";
+    /**
+     * 获取用户资料
+     */
+    String GET_BASIC_INFO = "zyUserService.getBasicInfo";
     /**
      * 保存个人资料
      */

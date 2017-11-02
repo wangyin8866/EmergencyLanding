@@ -5,8 +5,9 @@ import android.content.Context;
 import com.igexin.sdk.GTIntentService;
 import com.igexin.sdk.message.GTCmdMessage;
 import com.igexin.sdk.message.GTTransmitMessage;
-import com.zyjr.emergencylending.base.BaseApplication;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 
 /**
  * @author wangyin
@@ -31,7 +32,7 @@ public class DemoIntentService extends GTIntentService {
     @Override
     public void onReceiveClientId(Context context, String clientid) {
         LogUtils.e(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
-        BaseApplication.clientId = clientid;
+        SPUtils.saveString(context, Config.KEY_CLIENT_ID, clientid);
     }
 
     @Override

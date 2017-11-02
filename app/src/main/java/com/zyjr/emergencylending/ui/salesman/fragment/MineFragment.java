@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.ui.salesman.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -144,7 +145,15 @@ public class MineFragment extends BaseFragment<MinePresenter, MineView> implemen
     public void myCard(CardBean baseBean) {
         resultBean = baseBean.getResult();
         Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
-        userNamePhone.setText(WYUtils.nameSecret(resultBean.getName()) + " " + WYUtils.phoneSecret(resultBean.getPhone()));
-        userPosition.setText(resultBean.getPosition());
+        if (!TextUtils.isEmpty(resultBean.getName())) {
+            userNamePhone.setText(WYUtils.nameSecret(resultBean.getName()) + " " + WYUtils.phoneSecret(resultBean.getPhone()));
+        } else {
+            userNamePhone.setText("未实名" + " " + WYUtils.phoneSecret(resultBean.getPhone()));
+        }
+        if (!TextUtils.isEmpty(resultBean.getPosition())) {
+            userPosition.setText(resultBean.getPosition());
+        } else {
+            userPosition.setText("客户经理");
+        }
     }
 }

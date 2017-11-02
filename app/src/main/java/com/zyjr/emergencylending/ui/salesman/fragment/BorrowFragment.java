@@ -21,8 +21,8 @@ import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ImmediatelyBorrowActivity;
-import com.zyjr.emergencylending.ui.salesman.presenter.HomePresenter;
-import com.zyjr.emergencylending.ui.salesman.view.HomeView;
+import com.zyjr.emergencylending.ui.salesman.presenter.BorrowPresenter;
+import com.zyjr.emergencylending.ui.salesman.view.BorrowView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ import butterknife.Unbinder;
  * @date 2017/8/9
  */
 
-public class BorrowFragment extends BaseFragment<HomePresenter, HomeView> implements HomeView {
+public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> implements BorrowView {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.notice_auto_roll)
@@ -100,8 +100,8 @@ public class BorrowFragment extends BaseFragment<HomePresenter, HomeView> implem
     };
 
     @Override
-    protected HomePresenter createPresenter() {
-        return new HomePresenter(mContext);
+    protected BorrowPresenter createPresenter() {
+        return new BorrowPresenter(mContext);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.GlideCircleTransform;
 import com.zyjr.emergencylending.entity.BaseBean;
-import com.zyjr.emergencylending.entity.CardBean;
+import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.my.View.MyView;
@@ -36,6 +37,8 @@ import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
+
+import java.io.ByteArrayOutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +73,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     TextView userNamePhone;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
-    private CardBean.ResultBean resultBean;
+    private UserInfo.ResultBean resultBean;
     private Bitmap mBitmap;
 
     @Override
@@ -130,7 +133,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.myCard(NetConstantValues.MY_CARD);
+        mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
     }
 
     @Override
@@ -205,14 +208,28 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     }
 
     @Override
-    public void myCard(CardBean cardBean) {
-        resultBean = cardBean.getResult();
+    public void getUserInfo(UserInfo userInfo) {
+        resultBean = userInfo.getResult();
+        LogUtils.e("myCard", resultBean.toString());
         Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
-        userNamePhone.setText(WYUtils.nameSecret(resultBean.getName()) + " " + WYUtils.phoneSecret(resultBean.getPhone()));
+        if (!TextUtils.isEmpty(resultBean.getUser_name())) {
+            userNamePhone.setText(WYUtils.nameSecret(resultBean.getUser_name()) + " " + WYUtils.phoneSecret(resultBean.getTel()));
+        } else {
+            userNamePhone.setText("未实名" + " " + WYUtils.phoneSecret(resultBean.getTel()));
+        }
+        if (Config.TRUE.equals(resultBean.getNews_status())) {
+            messageCenter.setImageResource(R.mipmap.icon_message_reddot);
+        } else {
+            messageCenter.setImageResource(R.mipmap.icon_message);
+        }
     }
+
 
     @Override
     public void update(BaseBean baseBean) {
-        Glide.with(this).load(mBitmap).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] bytes = baos.toByteArray();
+        Glide.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 }

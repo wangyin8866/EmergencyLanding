@@ -1,7 +1,7 @@
 package com.zyjr.emergencylending.ui.my.View;
 
 import com.zyjr.emergencylending.entity.BaseBean;
-import com.zyjr.emergencylending.entity.CardBean;
+import com.zyjr.emergencylending.entity.UserInfo;
 
 /**
  *
@@ -10,6 +10,6 @@ import com.zyjr.emergencylending.entity.CardBean;
  */
 
 public interface MyView {
-    void myCard(CardBean cardBean);
+    void getUserInfo(UserInfo userInfo);
     void update(BaseBean baseBean);
 }

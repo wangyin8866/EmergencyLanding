@@ -7,14 +7,15 @@ import android.widget.ImageView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.UserStatus;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
-import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.ui.my.presenter.PersonalDataPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,10 +25,11 @@ import butterknife.OnClick;
  * author wangyin
  * date 2017/10/14.
  * description : 个人资料
+ *
  * @author wangyin
  */
 
-public class PersonalDataActivity extends BaseActivity {
+public class PersonalDataActivity extends BaseActivity<PersonalDataPresenter, BaseView<UserStatus>> implements BaseView<UserStatus> {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.pic_personal)
@@ -49,49 +51,45 @@ public class PersonalDataActivity extends BaseActivity {
     /**
      * 是否填写个人资料
      */
-    private boolean personalStatus = true;
+    private String personalStatus;
     /**
      * 是否可编辑
      */
-    private boolean isPersonalEdit = true;
+    private String isPersonalEdit;
     /**
      * 是否填写工作信息
      */
-    private boolean jobStatus;
+    private String jobStatus;
     /**
      * 是否可编辑
      */
-    private boolean isJobEdit = true;
+    private String isJobEdit;
     /**
      * 是否填写联系人
      */
-    private boolean contactStatus;
+    private String contactStatus;
     /**
      * 是否可编辑
      */
-    private boolean isContactEdit = true;
+    private String isContactEdit;
     /**
      * 是否绑定银行卡
      */
-    private boolean cardStatus;
+    private String cardStatus;
     /**
      * 是否可编辑
      */
-    private boolean isCardEdit = true;
+    private String isCardEdit;
 
-    /**
-     * 是否已提交订单
-     */
-    private boolean isOrder = true;
     /**
      * 是否银行卡放款失败
      */
-    private boolean isBankError = true;
+    private String isBankError;
 
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected PersonalDataPresenter createPresenter() {
+        return new PersonalDataPresenter(mContext);
     }
 
     @Override
@@ -105,64 +103,10 @@ public class PersonalDataActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        switchIconState();
+        mPresenter.getUserInfoStatus(NetConstantValues.ROUTER_GET_WRITE_INFO);
+
     }
 
-    private void switchIconState() {
-
-
-
-
-        if (isOrder) {//已提交订单,都不能修改
-
-            isPersonalEdit = false;
-            isJobEdit = false;
-            isContactEdit = false;
-            iconPicPersonal.setImageResource(R.mipmap.data_icon_complete);
-            iconPicJob.setImageResource(R.mipmap.data_icon_complete);
-            iconPicContact.setImageResource(R.mipmap.data_icon_complete);
-
-            if (isBankError) {//银行放款失败
-                isCardEdit = true;
-                iconPicCard.setVisibility(View.GONE);
-            } else {
-                iconPicCard.setVisibility(View.VISIBLE);
-                iconPicCard.setImageResource(R.mipmap.data_icon_complete);
-                isCardEdit = false;
-            }
-
-        } else {//未提交订单
-
-            isPersonalEdit = true;
-            isJobEdit = true;
-            isContactEdit = true;
-            isCardEdit = true;
-            if (!personalStatus) {
-                iconPicPersonal.setVisibility(View.GONE);
-            } else {
-                iconPicPersonal.setVisibility(View.VISIBLE);
-                iconPicPersonal.setImageResource(R.mipmap.data_icon_edit_complete);
-            }
-            if (!jobStatus) {
-                iconPicJob.setVisibility(View.GONE);
-            } else {
-                iconPicJob.setVisibility(View.VISIBLE);
-                iconPicJob.setImageResource(R.mipmap.data_icon_edit_complete);
-            }
-            if (!contactStatus) {
-                iconPicContact.setVisibility(View.GONE);
-            } else {
-                iconPicContact.setVisibility(View.VISIBLE);
-                iconPicContact.setImageResource(R.mipmap.data_icon_edit_complete);
-            }
-            if (!cardStatus) {
-                iconPicCard.setVisibility(View.GONE);
-            } else {
-                iconPicCard.setVisibility(View.VISIBLE);
-                iconPicCard.setImageResource(R.mipmap.data_icon_edit_complete);
-            }
-        }
-    }
 
     private void init() {
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
@@ -181,31 +125,50 @@ public class PersonalDataActivity extends BaseActivity {
 
     @OnClick({R.id.pic_personal, R.id.pic_job, R.id.pic_contact, R.id.pic_card})
     public void onViewClicked(View view) {
+        Intent intent;
         switch (view.getId()) {
             case R.id.pic_personal:
-                // TODO: 2017/10/16 个人资料
-                ToastAlone.showShortToast(mContext, "个人资料");
-                startActivity(new Intent(mContext, PersonalInfoActivity.class));
+                intent = new Intent(mContext, PersonalInfoActivity.class);
+                intent.putExtra("isEdit", isPersonalEdit);
+                intent.putExtra("status", personalStatus);
+                startActivity(intent);
                 break;
             case R.id.pic_job:
-                // TODO: 2017/10/16 工作信息
-                ToastAlone.showShortToast(mContext, "工作信息");
-                Intent intent = new Intent(mContext, WorkInfoActivity.class);
-                LogUtils.e("isJobEdit", isJobEdit + "");
-                intent.putExtra("isJobEdit", isJobEdit);
+                intent = new Intent(mContext, WorkInfoActivity.class);
+                intent.putExtra("isEdit", isJobEdit);
+                intent.putExtra("status", jobStatus);
                 startActivity(intent);
 
                 break;
             case R.id.pic_contact:
-                // TODO: 2017/10/16 联系人
-                ToastAlone.showShortToast(mContext, "联系人");
-                startActivity(new Intent(mContext, ContactInfoActivity.class));
+                intent = new Intent(mContext, ContactInfoActivity.class);
+                intent.putExtra("isEdit", isContactEdit);
+                intent.putExtra("status", contactStatus);
+                startActivity(intent);
                 break;
             case R.id.pic_card:
-                // TODO: 2017/10/16 银行卡
-                ToastAlone.showShortToast(mContext, "银行卡");
-                startActivity(new Intent(mContext, BankcardInfoActivity.class));
+                intent = new Intent(mContext, BankcardInfoActivity.class);
+                intent.putExtra("isEdit", isCardEdit);
+                intent.putExtra("status", cardStatus);
+                startActivity(intent);
                 break;
         }
+    }
+
+    @Override
+    public void callBack(UserStatus baseBean) {
+        UserStatus.ResultBean resultBean = baseBean.getResult();
+        personalStatus = resultBean.getUser_data_status();
+        isPersonalEdit = resultBean.getUser_data_edit();
+        jobStatus = resultBean.getUser_job_status();
+        isJobEdit = resultBean.getUser_job_edit();
+        contactStatus = resultBean.getUser_contact_status();
+        isContactEdit = resultBean.getUser_contact_edit();
+        cardStatus = resultBean.getUser_bank_status();
+        isCardEdit = resultBean.getUser_bank_edit();
+        isBankError = resultBean.getIs_loan_fail();
+        mPresenter.initStatus(personalStatus, isPersonalEdit, jobStatus, isJobEdit, contactStatus, isContactEdit, cardStatus, isCardEdit, isBankError,
+                iconPicPersonal, iconPicJob, iconPicContact, iconPicCard);
+
     }
 }

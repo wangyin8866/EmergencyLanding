@@ -4,6 +4,8 @@ import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.H5Bean;
+import com.zyjr.emergencylending.entity.UserInfo;
+import com.zyjr.emergencylending.entity.UserStatus;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.service.Api;
@@ -104,5 +106,22 @@ public class AccountModel extends BaseModel {
         map.put("router", NetConstantValues.H5_URL);
         map.put("url_type", url_type);
         return mApi.getH5Url(map);
+    }
+    /**
+     * 获取用户状态
+     */
+    public Observable<UserStatus> getUserInfoStatus(String router) {
+        Map<String, String> map = new HashMap<String, String>(1);
+        map.put("router", router);
+        return mApi.getUserInfoStatus(map);
+    }
+
+    /**
+     * 获取用户资料
+     */
+    public Observable<UserInfo> getBasicInfo(String router) {
+        Map<String, String> map = new HashMap<String, String>(1);
+        map.put("router", router);
+        return mApi.getBasicInfo(map);
     }
 }
