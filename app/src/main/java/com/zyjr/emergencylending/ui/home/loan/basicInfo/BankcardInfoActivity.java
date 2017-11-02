@@ -1,7 +1,12 @@
 package com.zyjr.emergencylending.ui.home.loan.basicInfo;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -10,6 +15,8 @@ import android.widget.TextView;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.jph.takephoto.compress.CompressConfig;
+import com.jph.takephoto.model.TakePhotoOptions;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
@@ -20,10 +27,13 @@ import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
 import com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity;
 import com.zyjr.emergencylending.ui.home.loan.EditBankcardActivity;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
+import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
+import com.zyjr.emergencylending.utils.permission.ToolPermission;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,6 +70,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private static final int INTENT_CODE_ADD_BANKCARD = 1; // 添加银行卡 请求码
     private static final int INTENT_CODE_EDIT_BANKCARD = 2; // 编辑银行卡 请求码
+    private static final int PERMISSION_CODE_STORAGE = 10005; // 存储权限
     private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
     private String bank_username = ""; // 银行卡户主
     private String id_card = "";// 身份证号
@@ -82,10 +93,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_add_bankcard:
-                Intent intent = new Intent(this, AddBankcardActivity.class);
-                intent.putExtra("bank_username", bank_username);
-                intent.putExtra("id_card", id_card);
-                startActivityForResult(intent, INTENT_CODE_ADD_BANKCARD);
+                jumpToNext(PERMISSION_CODE_STORAGE, "add");
                 break;
         }
     }
@@ -106,6 +114,18 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE_STORAGE) {
+            if (ToolPermission.checkPermission(permissions, grantResults)) {
+                jumpToNext(PERMISSION_CODE_STORAGE, "add");
+            } else {
+                AppToast.makeToast(BankcardInfoActivity.this, "存储权限被拒绝");
+            }
+        }
+    }
+
 
     private void showEditDialog() {
         final CustomerDialog customerDialog = new CustomerDialog(BankcardInfoActivity.this);
@@ -116,9 +136,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
                     case R.id.tv_edit_bankcard:
                         customerDialog.dismiss();
                         // TODO: 调往编辑银行卡页面
-                        Intent intent = new Intent(BankcardInfoActivity.this, EditBankcardActivity.class);
-                        intent.putExtra("bankcardInfo", bankcardInfo);
-                        startActivityForResult(intent, INTENT_CODE_EDIT_BANKCARD);
+                        jumpToNext(PERMISSION_CODE_STORAGE, "edit");
 
                         break;
                     case R.id.tv_cancel:
@@ -154,17 +172,16 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
     private void initGetData() {
-//        Intent intent = getIntent();
-//        isEdit = intent.getStringExtra("isEdit");
-//        String status = intent.getStringExtra("status");
-//        // 已完成状态获取资料信息
-//        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-//            loadingBindBankcardInfo();
-//        }
-//        if (isEdit.equals("0")) { // 不可编辑
-//
-//        }
-        loadingBindBankcardInfo();
+        Intent intent = getIntent();
+        isEdit = intent.getStringExtra("isEdit");
+        String status = intent.getStringExtra("status");
+        // 已完成状态获取资料信息
+        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+            loadingBindBankcardInfo();
+        }
+        if (isEdit.equals("0")) { // 不可编辑
+            topBar.setRightButtonVisible(View.INVISIBLE);
+        }
     }
 
     private void judgeBankcardInfo(BankcardInfo bankcard) {
@@ -217,6 +234,28 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
+    private void jumpToNext(final int requestCode, String turnFlag) {
+        if (ToolPermission.checkSelfPermission(
+                this,
+                null,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                "请允许存储权限",
+                requestCode)) {
+            if (turnFlag.equals("add")) {
+                Intent intent = new Intent(this, AddBankcardActivity.class);
+                intent.putExtra("bank_username", bank_username);
+                intent.putExtra("id_card", id_card);
+                startActivityForResult(intent, INTENT_CODE_ADD_BANKCARD);
+            } else {
+                Intent intent = new Intent(BankcardInfoActivity.this, EditBankcardActivity.class);
+                intent.putExtra("bankcardInfo", bankcardInfo);
+                startActivityForResult(intent, INTENT_CODE_EDIT_BANKCARD);
+            }
+        }
+    }
+
+
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
         pullToRefreshScrollView.onRefreshComplete();
@@ -233,17 +272,13 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
     @Override
-    public void onSuccessAdd(String returnCode, String msg) {
-
-    }
-
-    @Override
-    public void onSuccessEdit(String returnCode, String msg) {
-
-    }
-
-    @Override
     public void onFail(String apiCode, String errorMsg) {
+        pullToRefreshScrollView.onRefreshComplete();
+        ToastAlone.showLongToast(this, errorMsg);
+    }
+
+    @Override
+    public void onError(String returnCode, String errorMsg) {
         pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showLongToast(this, errorMsg);
     }
@@ -253,10 +288,13 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     }
 
+    @Override
+    public void onSuccessAdd(String returnCode, String msg) {
+
+    }
 
     @Override
-    public void onError(String returnCode, String errorMsg) {
-        pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, errorMsg);
+    public void onSuccessEdit(String returnCode, String msg) {
+
     }
 }

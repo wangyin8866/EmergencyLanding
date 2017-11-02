@@ -77,7 +77,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     // 提交
     private int loanMoney = 0; // 借款金额
     private String loanPeriod = ""; // 借款周期
-    private String loanPeriodUnit = "";
+    private String loanPeriodUnit = ""; // 申请周期单位
     private List<String> proIntroduceList = null;
 
 
@@ -108,21 +108,23 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                 loanPeriod = Arithmetic.progressToWeek(seekbarPeriod.getProgress(), minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
                 intent.putExtra("online_type", online_type);
                 intent.putExtra("product_id", product_id);
-                intent.putExtra("loanMoney", loanMoney + "");
+                intent.putExtra("apply_amount", loanMoney + ""); // 借款金额
                 if (loanPeriod.contains("天")) {
                     int indexEnd = loanPeriod.indexOf("天");
                     loanPeriod = loanPeriod.substring(0, indexEnd);
                     loanPeriodUnit = "1";
-                    intent.putExtra("loanPeriod", loanPeriod + "");
-                    intent.putExtra("loanPeriodUnit", loanPeriodUnit);
+                    intent.putExtra("apply_periods", "1"); // 申请期数 ps:14天，14天为1期,共1期,所以期数间隔为14天
+                    intent.putExtra("apply_zq", "14"); // 申请期数间隔
+                    intent.putExtra("apply_periods_unit", loanPeriodUnit); // 申请周期单位
                 } else if (loanPeriod.contains("周")) {
                     int indexEnd = loanPeriod.indexOf("周");
                     loanPeriod = loanPeriod.substring(0, indexEnd);
                     loanPeriodUnit = "2";
-                    intent.putExtra("loanPeriod", loanPeriod + "");
-                    intent.putExtra("loanPeriodUnit", loanPeriodUnit);
+                    intent.putExtra("apply_periods", loanPeriod + "");  // ps: 4周，每期1期,共4期,所以期数间隔为4期
+                    intent.putExtra("apply_zq", "1");
+                    intent.putExtra("apply_periods_unit", loanPeriodUnit);
                 }
-                LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",loanMoney:" + loanMoney + ",loanPeriod:" + loanPeriod + ",loanPeriodUnit:" + loanPeriodUnit + ",product_id:" + product_id);
+                LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",apply_amount:" + loanMoney + ",apply_periods:" + loanPeriod + ",apply_periods_unit:" + loanPeriodUnit + ",product_id:" + product_id);
                 startActivity(intent);
                 break;
             case R.id.layout_online_support_cities:

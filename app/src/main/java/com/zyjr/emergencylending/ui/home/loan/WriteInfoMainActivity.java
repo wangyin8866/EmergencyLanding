@@ -66,7 +66,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     private Intent intent = null;
     private String apply_amount = ""; // 申请借款金额
-    private String apply_zq = ""; // 申请借款周期
+    private String apply_periods = ""; // 申请借款周期
+    private String apply_zq = ""; // 申请期数间隔
     private String apply_periods_unit = ""; // 借款周期单位
     private String online_type = ""; // 产品类型
     private String product_id = ""; // 产品id
@@ -189,13 +190,19 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     private void initGetData() {
         intent = getIntent();
-        apply_amount = intent.getStringExtra("loanMoney"); // 金额
-        apply_zq = intent.getStringExtra("loanPeriod"); // 申请周期
-        apply_periods_unit = intent.getStringExtra("loanPeriodUnit"); // 申请周期单位
+        apply_amount = intent.getStringExtra("apply_amount"); // 申请金额
+        apply_periods = intent.getStringExtra("apply_periods"); // 申请期数 天|周
+        apply_zq = intent.getStringExtra("apply_zq"); // 申请期数间隔
+        apply_periods_unit = intent.getStringExtra("apply_periods_unit"); // 申请周期单位
         online_type = intent.getStringExtra("online_type"); // 产品类型
         product_id = intent.getStringExtra("product_id"); // 产品类型
-        LogUtils.d("【接收数据】:" + "\n申请金额apply_amount:" + apply_amount + "\n申请周期apply_zq:" + apply_zq + "\n申请周期单位apply_periods_unit:"
-                + apply_periods_unit + "\n产品id:" + product_id + "\n产品类型online_type:" + online_type);
+        LogUtils.d("【接收数据】:" +
+                "\n申请金额apply_amount:" + apply_amount +
+                "\n申请期数apply_periods:" + apply_periods +
+                "\n申请期数间隔apply_zq:" + apply_zq +
+                "\n申请周期单位apply_periods_unit:" + apply_periods_unit +
+                "\n产品id:" + product_id +
+                "\n产品类型online_type:" + online_type);
     }
 
 
@@ -277,10 +284,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
                     case R.id.btn_comfirm_submit:
                         customerDialog.dismiss();
-//                        submitLoanInfo();
-                        startActivity(new Intent(WriteInfoMainActivity.this, AuthCenterActivity.class));
-                        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
-                        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
+                        submitLoanInfo();
+//                        startActivity(new Intent(WriteInfoMainActivity.this, AuthCenterActivity.class));
+//                        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
+//                        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
                         break;
                 }
             }
@@ -298,8 +305,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         paramsMap.put("online_type", online_type); // 产品类型
         paramsMap.put("product_id", product_id); // 产品ID
         paramsMap.put("apply_amount", apply_amount); // 申请金额
-        paramsMap.put("apply_periods", "1"); // 申请期数
-        paramsMap.put("apply_zq", apply_zq); // 申请周期
+        paramsMap.put("apply_periods", apply_periods); // 申请期数
+        paramsMap.put("apply_zq", apply_zq); // 申请期数间隔
         paramsMap.put("apply_periods_unit", apply_periods_unit); // 申请周期单位
         if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
@@ -324,9 +331,9 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     public void onSuccessSubmit(String apiCode, String msg) {
         ToastAlone.showLongToast(this, msg);
         // TODO 预检ok后 调往认证 注意 此时需要清空栈内的堆积
+        startActivity(new Intent(this, AuthCenterActivity.class));
         ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
         ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
-        startActivity(new Intent(this, AuthCenterActivity.class));
     }
 
     @Override

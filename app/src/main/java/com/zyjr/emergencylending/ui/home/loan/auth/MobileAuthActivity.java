@@ -13,6 +13,8 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.PersonalInfoBean;
+import com.zyjr.emergencylending.entity.ZhimaAuthBean;
 import com.zyjr.emergencylending.ui.home.View.AuthHelperView;
 import com.zyjr.emergencylending.ui.home.presenter.AuthHelperPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -102,7 +104,29 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter,AuthHel
     }
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onSuccessGetUserInfo(String apiCode, PersonalInfoBean bean) {
 
     }
+
+    @Override
+    public void onSuccessGetZhimaAuthUrl(String apiCode, ZhimaAuthBean bean) {
+
+    }
+
+    @Override
+    public void onSuccessGetZhimaScore(String apiCode, String bean) {
+
+    }
+
+    @Override
+    public void onFail(String apiCode, String failMsg) {
+
+    }
+
+    @Override
+    public void onError(String apiCode, String errorMsg) {
+
+    }
+
+
 }

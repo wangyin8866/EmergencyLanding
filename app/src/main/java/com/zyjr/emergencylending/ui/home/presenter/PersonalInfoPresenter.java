@@ -98,7 +98,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取支持银行信息异常---->" + e.getMessage());
+                LogUtils.d("获取个人信息异常---->" + e.getMessage());
                 getView().onError(Constants.GET_PERSONAL_INFO, e.getMessage());
             }
         }, mContext));

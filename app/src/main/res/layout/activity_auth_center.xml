@@ -56,11 +56,8 @@
                     android:layout_alignLeft="@+id/tv_zhimaxinyong_auth"
                     android:layout_below="@+id/tv_zhimaxinyong_auth"
                     android:layout_marginTop="4dp"
-                    android:drawableLeft="@mipmap/icon_auth_success"
                     android:drawablePadding="5dp"
                     android:gravity="center"
-                    android:text="认证成功"
-                    android:textColor="@color/auth_success"
                     android:textSize="12sp" />
 
                 <ImageView
@@ -103,11 +100,8 @@
                     android:layout_alignLeft="@+id/tv_mobile_auth"
                     android:layout_alignStart="@+id/tv_mobile_auth"
                     android:layout_below="@+id/tv_mobile_auth"
-                    android:drawableLeft="@mipmap/icon_auth_waiting"
                     android:drawablePadding="5dp"
                     android:gravity="center"
-                    android:text="认证中"
-                    android:textColor="@color/auth_processing"
                     android:textSize="12sp" />
 
                 <ImageView
@@ -152,11 +146,8 @@
                     android:layout_alignLeft="@+id/tv_face_auth"
                     android:layout_below="@+id/tv_face_auth"
                     android:layout_marginTop="4dp"
-                    android:drawableLeft="@mipmap/icon_auth_fail"
                     android:drawablePadding="5dp"
                     android:gravity="center"
-                    android:text="认证失败"
-                    android:textColor="@color/auth_fail"
                     android:textSize="12sp" />
 
                 <ImageView

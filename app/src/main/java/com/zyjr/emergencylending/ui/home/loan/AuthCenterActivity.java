@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -35,6 +36,7 @@ import com.zyjr.emergencylending.utils.permission.ToolPermission;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -62,6 +64,12 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     RelativeLayout rlMobileAuth;
     @BindView(R.id.rl_face_auth)
     RelativeLayout rlFaceAuth;
+    @BindView(R.id.tv_zhimaxinyong_auth_status)
+    TextView tvZhimaAuthStatus; // 芝麻信用认证状态
+    @BindView(R.id.tv_mobile_auth_status)
+    TextView tvMobileAuthStatus; // 手机认证
+    @BindView(R.id.tv_face_auth_status)
+    TextView tvFaceAuthStatus; // 人脸识别认证
 
     private static final int RC_CAMERA_PERMISSION = 101; // 拍照权限请求码
     private static final int RC_PAGE_TO_LIVENESS = 102; // 活体识别请求码
@@ -69,6 +77,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     private static final int MESSAGE_LIVENESS_WARRANTY_SUCCESS = 1; // 活体授权成功
     private static final int MESSAGE_LIVENESS_WARRANTY_FAIL = 2; // 活体授权失败
     private MediaPlayer mMediaPlayer = null;
+    private List<AuthInfoBean> authInfoBeanList = null;
 
     Handler mHandler = new Handler() {
         @Override
@@ -170,8 +179,8 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         });
     }
 
-    private void loadingAuthStatus(){
-        Map<String,String>  params = new HashMap<>();
+    private void loadingAuthStatus() {
+        Map<String, String> params = new HashMap<>();
         mPresenter.getCurrentAuthInfo(params);
     }
 
@@ -187,7 +196,6 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
             startActivityForResult(new Intent(this, LivenessActivity.class), RC_PAGE_TO_LIVENESS);
         }
     }
-
 
 
     /**
@@ -303,7 +311,67 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
 
     @Override
     public void onSuccessGet(String returnCode, List<AuthInfoBean> beanList) {
+        authInfoBeanList = beanList;
+        for (int i = 0; i < authInfoBeanList.size(); i++) {
+            AuthInfoBean item = authInfoBeanList.get(i);
+            if (item.getAuthType().equals("a")) {
+                showAuthStatusInfo(tvZhimaAuthStatus, "a", item.getAuthStatus());
+            } else if (item.getAuthType().equals("b")) {
+                showAuthStatusInfo(tvMobileAuthStatus, "b", item.getAuthStatus());
+            } else if (item.getAuthType().equals("c")) {
+                showAuthStatusInfo(tvFaceAuthStatus, "c", item.getAuthStatus());
+            }
+        }
+    }
 
+    private void showAuthStatusInfo(TextView tvStatus, String flag, String authStatus) {
+        if (flag.equals("a")) {
+            // 芝麻信息认证 2:成功;3:采集失败
+            if (authStatus.equals("2")) {
+                tvStatus.setText("认证成功");
+                tvStatus.setTextColor(R.color.auth_success);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_success), null, null, null);
+            } else if (authStatus.equals("3")) {
+                tvStatus.setText("认证失败");
+                tvStatus.setTextColor(R.color.auth_fail);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_fail), null, null, null);
+            } else {
+                tvStatus.setText("未认证");
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_notcertified), null, null, null);
+            }
+        } else if (flag.equals("b")) {
+            // 运营商认证 4:成功;5:采集中;6:采集失败
+            if (authStatus.equals("4")) {
+                tvStatus.setText("认证成功");
+                tvStatus.setTextColor(R.color.auth_success);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_success), null, null, null);
+            } else if (authStatus.equals("5")) {
+                tvStatus.setText("认证中");
+                tvStatus.setTextColor(R.color.auth_processing);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_waiting), null, null, null);
+            } else if (authStatus.equals("6")) {
+                tvStatus.setText("认证失败");
+                tvStatus.setTextColor(R.color.auth_fail);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_fail), null, null, null);
+            } else {
+                tvStatus.setText("未认证");
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_notcertified), null, null, null);
+            }
+        } else if (flag.equals("c")) {
+            // 人脸识别 7:成功;8:失败
+            if (authStatus.equals("7")) {
+                tvStatus.setText("认证成功");
+                tvStatus.setTextColor(R.color.auth_success);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_success), null, null, null);
+            } else if (authStatus.equals("8")) {
+                tvStatus.setText("认证失败");
+                tvStatus.setTextColor(R.color.auth_fail);
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_fail), null, null, null);
+            } else {
+                tvStatus.setText("未认证");
+                tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_notcertified), null, null, null);
+            }
+        }
     }
 
     @Override
@@ -312,12 +380,19 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     }
 
     @Override
-    public void onFail(String errorMessage) {
+    public void onFail(String apiCode, String failMsg) {
 
     }
 
     @Override
+    public void onError(String apiCode, String errorMsg) {
+
+    }
+
+
+    @Override
     protected void onResume() {
         super.onResume();
+        loadingAuthStatus();
     }
 }

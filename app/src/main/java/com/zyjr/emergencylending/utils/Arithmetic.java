@@ -94,7 +94,7 @@ public class Arithmetic {
     }
 
     public static int progressToWeek11(int progress, int min, int max) {
-        LogUtils.e("借款周期滑动进度:----------->" + progress);
+//        LogUtils.e("借款周期滑动进度:----------->" + progress);
         int week = 0;
         if (progress <= 0) {
             return min;
@@ -121,7 +121,7 @@ public class Arithmetic {
      * @return
      */
     public static String  progressToWeek(int progress, int min, int max, int minType) {
-        LogUtils.e("借款周期滑动进度:----------->" + progress);
+//        LogUtils.e("借款周期滑动进度:----------->" + progress);
         int week = 0;
         if (progress <= 0) {
             if (minType == 1) {

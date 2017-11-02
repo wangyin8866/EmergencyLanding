@@ -10,10 +10,12 @@ import java.util.List;
  */
 public interface AuthInfoView {
 
-    void onSuccessGet(String returnCode, List<AuthInfoBean> beanList);
+    void onSuccessGet(String apiCode, List<AuthInfoBean> beanList);
 
-    void onSuccessSubmit(String returnCode, AuthInfoBean bean);
+    void onSuccessSubmit(String apiCode, AuthInfoBean bean);
 
-    void onFail(String errorMessage);
+    void onFail(String apiCode, String failMsg);
+
+    void onError(String apiCode, String errorMsg);
 
 }

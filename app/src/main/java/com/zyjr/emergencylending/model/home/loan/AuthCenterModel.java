@@ -4,6 +4,7 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.AuthResult;
 import com.zyjr.emergencylending.service.home.loan.AuthInfoService;
 
 import java.util.List;
@@ -32,9 +33,10 @@ public class AuthCenterModel extends BaseModel {
         return SingletonHolder.authCenterModel;
     }
 
-    public Observable<ApiResult<List<AuthInfoBean>>> getCurrentAuthInfo(Map<String,String> params){
+    public Observable<ApiResult<AuthResult>> getCurrentAuthInfo(Map<String,String> params){
         params.put("router", NetConstantValues.ROUTER_GET_AUTH_STATUS);
         return authInfoService.getCurrentAuthInfo(params);
     }
+
 
 }

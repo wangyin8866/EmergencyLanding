@@ -2,7 +2,9 @@ package com.zyjr.emergencylending.model.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.ZhimaAuthBean;
 import com.zyjr.emergencylending.service.home.loan.AuthInfoService;
 
 import java.util.Map;
@@ -31,7 +33,18 @@ public class AuthHelperModel extends BaseModel {
     }
 
     public Observable<ApiResult<AuthInfoBean>> submitAuthInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_SUBMIT_AUTH_INFO);
         return authInfoService.submitAuthInfo(params);
+    }
+
+    public Observable<ApiResult<ZhimaAuthBean>> getZhimaAuthUrl(Map<String,String> params){
+        params.put("router", NetConstantValues.ROUTER_GET_ZHIMA_AUTH_URL);
+        return authInfoService.getZhimaAuthUrl(params);
+    }
+
+    public  Observable<ApiResult<String>> getZhimaScore(Map<String,String> params){
+        params.put("router", NetConstantValues.ROUTER_GET_ZHIMA_SCORE);
+        return authInfoService.getZhimaScore(params);
     }
 
 }

@@ -112,4 +112,10 @@ public class Constants {
     public static final String GET_CURRENT_LOAN_ORDER_INFO = "38";
     // 获取当前领取金额信息
     public static final String GET_RECEIVE_MONEY_INFO = "39";
+    // 获取认证状态
+    public static final String GET_AUTH_STATUS_INFO = "40";
+    // 获取芝麻信用地址
+    public static final String GET_ZHIMA_AUTH_URL = "41";
+    // 获取芝麻信用分
+    public static final String GET_ZHIMA_AUTH_SCORE = "42";
 }
