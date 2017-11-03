@@ -6,10 +6,10 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.CustomerBean;
+import com.zyjr.emergencylending.entity.RankBean;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
-import com.zyjr.emergencylending.ui.salesman.model.CustomerModel;
+import com.zyjr.emergencylending.ui.salesman.model.SalesmanModel;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
@@ -25,7 +25,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
     }
 
     public void myPerformance(String router,String type) {
-        invoke(CustomerModel.getInstance().myPerformance(router,type), new ProgressSubscriber<CustomerBean>(new SubscriberOnNextListener<CustomerBean>() {
+        invoke(SalesmanModel.getInstance().myPerformance(router,type), new ProgressSubscriber<CustomerBean>(new SubscriberOnNextListener<CustomerBean>() {
             @Override
             public void onNext(CustomerBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
@@ -43,11 +43,11 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
 
     }
     public void rankList(String router) {
-        invoke(CustomerModel.getInstance().rankList(router), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+        invoke(SalesmanModel.getInstance().rankList(router), new ProgressSubscriber<RankBean>(new SubscriberOnNextListener<RankBean>() {
             @Override
-            public void onNext(BaseBean baseBean) {
+            public void onNext(RankBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-
+                    getView().rankList(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }
@@ -61,7 +61,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
 
     }
     public void waitApply(String router,String type) {
-        invoke(CustomerModel.getInstance().waitApply(router,type), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
+        invoke(SalesmanModel.getInstance().waitApply(router,type), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
             @Override
             public void onNext(WaitApplyBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {

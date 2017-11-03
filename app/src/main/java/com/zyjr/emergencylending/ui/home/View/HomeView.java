@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.home.View;
 
 import com.zyjr.emergencylending.entity.Banner;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 
 /**
@@ -10,4 +11,5 @@ import com.zyjr.emergencylending.entity.UserInfo;
 public interface HomeView {
     void getBanner(Banner banner);
     void getBasicInfo(UserInfo userInfo);
+    void isEffectiveOrder(EffectiveOrderBean baseBean);
 }

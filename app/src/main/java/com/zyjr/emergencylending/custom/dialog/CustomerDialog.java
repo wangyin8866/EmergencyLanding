@@ -175,6 +175,23 @@ public class CustomerDialog extends Dialog {
     }
 
     /**
+     * 借款不能流转
+     *
+     * @param listener
+     * @return
+     */
+    public CustomerDialog borrowSkip2(View.OnClickListener listener) {
+        setContentView(R.layout.dialog_borrow_error2);
+        ImageView close = findViewById(R.id.iv_close);
+        Button submit = findViewById(R.id.btn_confirm_submit);
+        window.setGravity(Gravity.CENTER);
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        close.setOnClickListener(listener);
+        submit.setOnClickListener(listener);
+        return instance;
+    }
+
+    /**
      * 手持证件照 拍照提示
      */
     public CustomerDialog holdIdcardNotice(View.OnClickListener listener) {

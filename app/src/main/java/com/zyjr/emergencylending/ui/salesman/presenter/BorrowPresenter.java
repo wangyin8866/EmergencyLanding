@@ -9,7 +9,7 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.model.home.MessageModel;
-import com.zyjr.emergencylending.ui.salesman.model.HomeModel;
+import com.zyjr.emergencylending.ui.salesman.model.SalesmanModel;
 import com.zyjr.emergencylending.ui.salesman.view.BorrowView;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
@@ -25,7 +25,7 @@ public class BorrowPresenter extends BasePresenter<BorrowView> {
     }
 
     public void getNoticeList(String router, final String get_num) {
-        invoke(HomeModel.getInstance().getNoticeList(router, get_num), new ProgressSubscriber<NoticeBean>(new SubscriberOnNextListener<NoticeBean>() {
+        invoke(SalesmanModel.getInstance().getNoticeList(router, get_num), new ProgressSubscriber<NoticeBean>(new SubscriberOnNextListener<NoticeBean>() {
             @Override
             public void onNext(NoticeBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {

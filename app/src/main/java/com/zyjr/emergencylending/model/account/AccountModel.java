@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.model.account;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.entity.UserStatus;
@@ -123,5 +124,13 @@ public class AccountModel extends BaseModel {
         Map<String, String> map = new HashMap<String, String>(1);
         map.put("router", router);
         return mApi.getBasicInfo(map);
+    }
+    /**
+     * 获取用户资料
+     */
+    public Observable<EffectiveOrderBean> isEffectiveOrder(String router) {
+        Map<String, String> map = new HashMap<String, String>(1);
+        map.put("router", router);
+        return mApi.isEffectiveOrder(map);
     }
 }

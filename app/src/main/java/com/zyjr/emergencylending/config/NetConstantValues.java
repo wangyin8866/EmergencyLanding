@@ -242,5 +242,11 @@ public interface NetConstantValues {
      * 获取所在城市支持门店
      */
     String ROUTER_GET_LOCAL_STORE_LIST = "zyUserService.getStoreList";
-
+    /**
+     * 录件预检
+     */
+    String PRE_CHECK_BOOK = "zySalesmanService.preCheckBook"; /**
+     * 录件预检
+     */
+    String ONLINE_TO_OFFLINE = "zySalesmanService.onlineToOffline";
 }

@@ -10,7 +10,7 @@ import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.model.account.AccountModel;
 import com.zyjr.emergencylending.ui.my.View.MyView;
-import com.zyjr.emergencylending.ui.salesman.model.MineModel;
+import com.zyjr.emergencylending.ui.salesman.model.SalesmanModel;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
@@ -26,7 +26,7 @@ public class MyPresenter extends BasePresenter<MyView> {
     }
 
     public void uploadFile(String router, String fileName, String fileExtName, String fileContext, String fileType) {
-        invoke(MineModel.getInstance().updatePic(router, fileName, fileExtName, fileContext, fileType), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+        invoke(SalesmanModel.getInstance().updatePic(router, fileName, fileExtName, fileContext, fileType), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean result) {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {

@@ -16,8 +16,8 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.CircleView;
 import com.zyjr.emergencylending.custom.XListView;
-import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.CustomerBean;
+import com.zyjr.emergencylending.entity.RankBean;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
@@ -54,6 +54,13 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     TextView type2;
     @BindView(R.id.type3)
     TextView type3;
+    @BindView(R.id.now_month)
+    TextView nowMonth;
+    @BindView(R.id.ran_list)
+    TextView ranList;
+    @BindView(R.id.amount)
+    TextView amount;
+    private int currentTv;
 
     @Nullable
     @Override
@@ -63,8 +70,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         LogUtils.e("onCreateView", "onCreateView");
         init();
         xlv.setXListViewListener(this);
-        xlv.setPullRefreshEnable(true);
-
+        xlv.setPullLoadEnable(false);
         return view;
     }
 
@@ -130,6 +136,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     public void selectTv(int currentTv) {
         initTextView();
+        this.currentTv = currentTv;
         switch (currentTv) {
             case 1:
                 type1.setBackgroundResource(R.drawable.tv_type_shape_gradient_mine_select);
@@ -151,7 +158,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     @Override
     public void onRefresh() {
-
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
     }
 
     @Override
@@ -167,8 +174,11 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     }
 
     @Override
-    public void rankList(BaseBean baseBean) {
-
+    public void rankList(RankBean rankBean) {
+        RankBean.ResultBean.SelfMapBean.NowMonthBean nowMonthBean = rankBean.getResult().getSelfMap().getNowMonth();
+        nowMonth.setText(nowMonthBean.getMon()+"月");
+        ranList.setText(nowMonthBean.getRank_num());
+        amount.setText(nowMonthBean.getLend_total_amount());
     }
 
     @Override

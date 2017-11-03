@@ -5,10 +5,13 @@ import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.CardBean;
 import com.zyjr.emergencylending.entity.CustomerBean;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
+import com.zyjr.emergencylending.entity.ImmediateBean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.entity.QrBean;
+import com.zyjr.emergencylending.entity.RankBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.entity.UserStatus;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
@@ -205,7 +208,7 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> rankList(@FieldMap Map<String, String> params);
+    Observable<RankBean> rankList(@FieldMap Map<String, String> params);
 
     /**
      * 等待申请
@@ -230,10 +233,32 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<UserStatus> getUserInfoStatus(@FieldMap Map<String, String> params);
+
     /**
      * 获取用户资料
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<UserInfo> getBasicInfo(@FieldMap Map<String, String> params);
+
+    /**
+     * 业务员录件
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ImmediateBean> preCheckBook(@FieldMap Map<String, String> params);
+
+    /**
+     * 流转
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> onlineToOffline(@FieldMap Map<String, String> params);
+
+    /**
+     * 确认有效订单
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<EffectiveOrderBean> isEffectiveOrder(@FieldMap Map<String, String> params);
 }

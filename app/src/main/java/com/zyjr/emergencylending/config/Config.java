@@ -48,10 +48,12 @@ public interface Config {
     /**
      * 客户Id
      */
-    String CUST_JUID = "cust_juid";
-
+    String KEY_CUST_ID = "cust_juid";
+    /**
+     * 是否登录
+     */
     String KEY_LOGIN = "is_login";
-
+    String KEY_PHONE = "phone";
     /**
      * h5 Key
      */
@@ -127,12 +129,10 @@ public interface Config {
      * //意见反馈
      */
     String H5_URL_FEEDBACK = "H5_URL_FEEDBACK";
-    /**
-     * 手机号
-     */
-    String KEY_PHONE = "phone";
+   
+
     String TRUE = "1";
     String FALSE = "0";
 
-    String KEY_USER_PIC = "user_pic";
+
 }

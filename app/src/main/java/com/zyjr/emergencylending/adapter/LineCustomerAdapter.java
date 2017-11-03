@@ -33,15 +33,15 @@ public class LineCustomerAdapter extends WyBaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.name.setText(resultBean.getCust_name()+"");
+        viewHolder.name.setText(resultBean.getCust_name() + "");
         viewHolder.amount.setText(resultBean.getLoan_amount());
-        viewHolder.deadline.setText(resultBean.getLoan_period()+"周");
-        viewHolder.status.setText(WYUtils.getOrderStatus(Integer.valueOf(resultBean.getOrder_status()),Integer.valueOf(resultBean.getStep_status())));
+        viewHolder.deadline.setText(resultBean.getLoan_period() + "周");
+        viewHolder.status.setText(WYUtils.getOrderStatus(Integer.valueOf(resultBean.getStep_status()), Integer.valueOf(resultBean.getOrder_status())));
         return convertView;
     }
 
     private static class ViewHolder {
-        TextView name, amount, deadline,status;
+        TextView name, amount, deadline, status;
 
         ViewHolder(View view) {
             name = view.findViewById(R.id.name);

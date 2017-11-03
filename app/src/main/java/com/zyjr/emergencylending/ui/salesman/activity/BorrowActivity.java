@@ -21,7 +21,8 @@ import butterknife.OnClick;
 
 
 /**
- * Created by wangyin on 2017/10/18.
+ * @author wangyin
+ * @date 2017/10/18
  * 立即借款页面
  */
 
@@ -137,6 +138,7 @@ public class BorrowActivity extends BaseActivity {
 
     public void initSeekWeek(int progress, int minWeek, int maxWeek, int minUnit) {
         seekbarWeek.setType(1);
+        seekbarWeek.setPERIOD_MIN_UNIT(2);
         seekbarWeek.setPERIOD_MIN(minWeek);
         seekbarWeek.setPERIOD_MAX(maxWeek);
         if (seekbarWeek != null) {
@@ -150,9 +152,14 @@ public class BorrowActivity extends BaseActivity {
 
     @OnClick(R.id.btn_apply_quickly)
     public void onViewClicked() {
+        String str = week.substring(0, week.length() - 1);
         Intent intent = new Intent(this, WriteInfoMainActivity.class);
-        intent.putExtra("loanMoney", money);
-        intent.putExtra("loanWeek", week);
+        intent.putExtra("apply_amount", money);
+        intent.putExtra("apply_periods", str);
+        intent.putExtra("apply_zq", "1");
+        intent.putExtra("apply_periods_unit", "2");
+        intent.putExtra("online_type", "1");
+        intent.putExtra("product_id", "1");
         startActivity(intent);
     }
 }

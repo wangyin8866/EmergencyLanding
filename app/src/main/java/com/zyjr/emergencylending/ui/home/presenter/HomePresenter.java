@@ -7,6 +7,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.Banner;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.model.account.AccountModel;
 import com.zyjr.emergencylending.model.home.HomeModel;
@@ -36,7 +37,7 @@ public class HomePresenter extends BasePresenter<HomeView>{
 
             @Override
             public void onError(Throwable e) {
-                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+//                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         },mContext));
     }
@@ -46,6 +47,23 @@ public class HomePresenter extends BasePresenter<HomeView>{
             public void onNext(UserInfo baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getBasicInfo(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }, mContext));
+    }
+    public void isEffectiveOrder(String router) {
+        invoke(AccountModel.getInstance().isEffectiveOrder(router), new ProgressSubscriber<EffectiveOrderBean>(new SubscriberOnNextListener<EffectiveOrderBean>() {
+            @Override
+            public void onNext(EffectiveOrderBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().isEffectiveOrder(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }

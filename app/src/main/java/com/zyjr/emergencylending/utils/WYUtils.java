@@ -686,6 +686,8 @@ public class WYUtils {
                     result = "推送拒件";
                 }
                 break;
+            default:
+                result = "推送拒件";
         }
         return result;
     }

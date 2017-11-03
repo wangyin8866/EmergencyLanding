@@ -7,7 +7,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.CardBean;
-import com.zyjr.emergencylending.ui.salesman.model.MineModel;
+import com.zyjr.emergencylending.ui.salesman.model.SalesmanModel;
 import com.zyjr.emergencylending.ui.salesman.view.MineView;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
@@ -23,7 +23,7 @@ public class MinePresenter extends BasePresenter<MineView> {
     }
 
     public void myCard(String router) {
-        invoke(MineModel.getInstance().myCard(router),new ProgressSubscriber<CardBean>(new SubscriberOnNextListener<CardBean>() {
+        invoke(SalesmanModel.getInstance().myCard(router),new ProgressSubscriber<CardBean>(new SubscriberOnNextListener<CardBean>() {
             @Override
             public void onNext(CardBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {

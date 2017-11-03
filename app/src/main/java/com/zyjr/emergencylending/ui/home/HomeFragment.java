@@ -20,6 +20,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderView;
 import com.zyjr.emergencylending.entity.Banner;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
@@ -57,6 +58,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     private int autoRollIndex;
     private List<String> auto_roll_data;
     private ArrayList<String> images;
+    private String is_effective_order;
 
     @Nullable
     @Override
@@ -74,8 +76,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
         //是否有消息
-        if (Config.TRUE.equals(SPUtils.getString(mContext, Config.KEY_LOGIN, ""))) {
+        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
+            mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
         }
     }
 
@@ -139,14 +142,22 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.pro1_btn:
-                Intent intent = new Intent(getActivity(), LoanMainActivity.class);
-                intent.putExtra("flag", "online");
-                startActivity(intent);
+                if (Config.TRUE.equals(is_effective_order)) {
+                    startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
+                } else {
+                    Intent intent = new Intent(getActivity(), LoanMainActivity.class);
+                    intent.putExtra("flag", "online");
+                    startActivity(intent);
+                }
                 break;
             case R.id.pro2_btn:
-                Intent intent1 = new Intent(getActivity(), LoanOrderStatusActivity.class);
-                intent1.putExtra("flag", "offline");
-                startActivity(intent1);
+                if (Config.TRUE.equals(is_effective_order)) {
+                    startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
+                } else {
+                    Intent intent1 = new Intent(getActivity(), LoanOrderStatusActivity.class);
+                    intent1.putExtra("flag", "offline");
+                    startActivity(intent1);
+                }
                 break;
         }
     }
@@ -189,5 +200,11 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         } else {
             messageCenter.setImageResource(R.mipmap.icon_message);
         }
+    }
+
+    @Override
+    public void isEffectiveOrder(EffectiveOrderBean baseBean) {
+        is_effective_order = baseBean.getResult().getIs_effective_order();
+
     }
 }
