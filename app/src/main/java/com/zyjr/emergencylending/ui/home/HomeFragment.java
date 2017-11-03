@@ -22,6 +22,7 @@ import com.zyjr.emergencylending.custom.LocalImageHolderView;
 import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.UserInfo;
+import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
@@ -142,7 +143,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.pro1_btn:
-                if (Config.TRUE.equals(is_effective_order)) {
+                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
                 } else {
                     Intent intent = new Intent(getActivity(), LoanMainActivity.class);
@@ -151,7 +154,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 }
                 break;
             case R.id.pro2_btn:
-                if (Config.TRUE.equals(is_effective_order)) {
+                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                    startActivity(new Intent(mContext, LoginActivity.class));
+                } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
                 } else {
                     Intent intent1 = new Intent(getActivity(), LoanOrderStatusActivity.class);
