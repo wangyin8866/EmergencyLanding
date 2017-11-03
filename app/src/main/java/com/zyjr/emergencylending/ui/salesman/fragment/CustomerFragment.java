@@ -23,9 +23,6 @@ import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
 import com.zyjr.emergencylending.utils.LogUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -67,15 +64,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         init();
         xlv.setXListViewListener(this);
         xlv.setPullRefreshEnable(true);
-        List list = new ArrayList();
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        list.add(1);
-        xlv.setAdapter(new LineCustomerAdapter(list, mContext));
+
         return view;
     }
 
@@ -155,9 +144,9 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 type3.setTextColor(Color.parseColor("#FFA200"));
                 break;
         }
-        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
+//        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
         mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
-        mPresenter.rankList(NetConstantValues.RANKING_LIST);
+//        mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
@@ -172,7 +161,6 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     @Override
     public void myPerformance(CustomerBean baseBean) {
-        LogUtils.e("myPerformance",baseBean.getResult().getCust_num()+"");
         circleClient.setmCircleText(String.valueOf(baseBean.getResult().getCust_num()));
         circleApplyFor.setmCircleText(String.valueOf(baseBean.getResult().getOrder_num()));
         circleSuccess.setmCircleText(String.valueOf(baseBean.getResult().getLend_num()));
@@ -186,6 +174,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     @Override
     public void waitApply(WaitApplyBean baseBean) {
 
+        xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult(), mContext));
     }
 
 }

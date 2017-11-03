@@ -5,6 +5,7 @@ import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.service.Api;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import rx.Observable;
@@ -32,11 +33,12 @@ public class MessageModel extends BaseModel {
 
     /**
      * 获取消息
-     * @param map
      * @return
      */
-    public Observable<MessageBean> getMessage(Map<String, String> map) {
-
+    public Observable<MessageBean> getMessage(String router,String pageNum) {
+        Map<String, String> map = new HashMap<String, String>(2);
+        map.put("router", router);
+        map.put("pageNo", pageNum);
         return api.getUserNews(map);
     }
     /**

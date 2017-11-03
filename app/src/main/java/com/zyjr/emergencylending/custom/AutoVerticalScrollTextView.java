@@ -60,7 +60,12 @@ public class AutoVerticalScrollTextView extends TextSwitcher implements ViewSwit
         t.setTextColor(Color.parseColor("#B9B9B9"));
         showNext();
     }
-
+    public void setTText2(CharSequence text){
+        final TextView t = (TextView) getNextView();
+        t.setText(text);
+        t.setTextColor(Color.parseColor("#FF9000"));
+        showNext();
+    }
     private Rotate3dAnimation createAnim(boolean turnIn, boolean turnUp){
 
         Rotate3dAnimation rotation = new Rotate3dAnimation(turnIn, turnUp);

@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.salesman.view;
 
 import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 
 /**
@@ -10,4 +11,5 @@ import com.zyjr.emergencylending.entity.NoticeBean;
  */
 
 public interface BorrowView extends BaseView<NoticeBean> {
+    void getMessage(MessageBean messageBean);
 }

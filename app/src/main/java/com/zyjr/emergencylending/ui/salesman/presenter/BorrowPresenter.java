@@ -6,7 +6,9 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
+import com.zyjr.emergencylending.model.home.MessageModel;
 import com.zyjr.emergencylending.ui.salesman.model.HomeModel;
 import com.zyjr.emergencylending.ui.salesman.view.BorrowView;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -39,5 +41,19 @@ public class BorrowPresenter extends BasePresenter<BorrowView> {
             }
         }, mContext));
 
+    }
+    public void getMessage(String router,String pageNum) {
+        invoke(MessageModel.getInstance().getMessage(router,pageNum),new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
+            @Override
+            public void onNext(MessageBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().getMessage(baseBean);
+                }
+            }
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        },mContext));
     }
 }

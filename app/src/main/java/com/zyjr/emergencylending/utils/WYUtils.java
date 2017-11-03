@@ -637,4 +637,34 @@ public class WYUtils {
         String end = s.substring(s.length() - 4, s.length());
         return head + "****" + end;
     }
+
+    /**
+     * 获取订单状态
+     */
+    public static String getOrderStatus(String status) {
+        String result = null;
+        switch (status) {
+            case "2":
+                result = "认证中";
+                break;
+            case "3":
+                result = "审核中";
+                break;
+            case "4":
+                result = "领取金额";
+                break;
+            case "5":
+                result = "放款中";
+                break;
+            case "6":
+                result = "还款中";
+                break;
+            case "7":
+                result = "受理中";
+                break;
+            default:
+                result = "受理中";
+        }
+        return result;
+    }
 }

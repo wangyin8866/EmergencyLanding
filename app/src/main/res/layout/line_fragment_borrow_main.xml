@@ -209,15 +209,14 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <TextView
+            <com.zyjr.emergencylending.custom.AutoVerticalScrollTextView
+                android:id="@+id/message_auto_roll"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="客户张XX成功借款10000元"
-                android:textColor="#FF9000"
-                android:textSize="14sp" />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1" />
 
             <ImageView
                 android:layout_width="wrap_content"

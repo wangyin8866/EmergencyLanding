@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.entity.WaitApplyBean;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class LineCustomerAdapter extends WyBaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        WaitApplyBean.ResultBean resultBean = (WaitApplyBean.ResultBean) mList.get(position);
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_customer, null);
             viewHolder = new ViewHolder(convertView);
@@ -30,6 +33,10 @@ public class LineCustomerAdapter extends WyBaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.name.setText(resultBean.getCust_name());
+        viewHolder.amount.setText(resultBean.getLoan_amount());
+        viewHolder.deadline.setText(resultBean.getLoan_period()+"周");
+        viewHolder.status.setText(WYUtils.getOrderStatus(resultBean.getOrder_status()));
         return convertView;
     }
 

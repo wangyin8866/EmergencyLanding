@@ -71,10 +71,8 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     @Override
     protected void onResume() {
         super.onResume();
-        Map<String, String> map = new HashMap<String, String>(2);
-        map.put("router", NetConstantValues.USER_NEWS);
-        map.put("pageNo", "1");
-        mPresenter.getMessage(map);
+
+        mPresenter.getMessage(NetConstantValues.USER_NEWS,"1");
     }
 
     private void init() {
@@ -133,19 +131,15 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     @Override
     public void onLoadMore() {
         pageNum += 1;
-        Map<String, String> map = new HashMap<String, String>(2);
-        map.put("router", NetConstantValues.USER_NEWS);
-        map.put("pageNo", pageNum + "");
-        mPresenter.getMessageMore(map);
+
+        mPresenter.getMessageMore(NetConstantValues.USER_NEWS,pageNum+"");
 
     }
 
     @Override
     public void onRefreshing() {
-        Map<String, String> map = new HashMap<String, String>(2);
-        map.put("router", NetConstantValues.USER_NEWS);
-        map.put("pageNo", "1");
-        mPresenter.getMessage(map);
+
+        mPresenter.getMessage(NetConstantValues.USER_NEWS,"1");
 
     }
 

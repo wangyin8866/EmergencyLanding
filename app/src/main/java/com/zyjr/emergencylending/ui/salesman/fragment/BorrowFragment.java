@@ -17,6 +17,7 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
@@ -62,8 +63,12 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
     LinearLayout moreDynamic;
     @BindView(R.id.ll_notice)
     LinearLayout llNotice;
+    @BindView(R.id.message_auto_roll)
+    AutoVerticalScrollTextView messageAutoRoll;
     private int autoRollIndex;
+    private int autoRollIndex2;
     private List<String> auto_roll_data;
+    private List<String> auto_roll_data2;
 
     @Nullable
     @Override
@@ -77,16 +82,21 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
     protected void init() {
 
         mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
-
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
 
     }
 
     private void showAutoRollStrings() {
-        noticeAutoRoll.setText(auto_roll_data.get(0));
+        noticeAutoRoll.setTText(auto_roll_data.get(0));
         handler.sendEmptyMessage(199);
 
     }
 
+    private void showAutoRollStrings2() {
+        messageAutoRoll.setTText2(auto_roll_data2.get(0));
+        handler.sendEmptyMessage(200);
+
+    }
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -94,7 +104,12 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
                 noticeAutoRoll.next();
                 autoRollIndex++;
                 noticeAutoRoll.setTText(auto_roll_data.get(autoRollIndex % auto_roll_data.size()));
-                handler.sendEmptyMessageDelayed(199, 3000);
+                handler.sendEmptyMessageDelayed(199, 2000);
+            } else if (msg.what == 200) {
+                messageAutoRoll.next();
+                autoRollIndex2++;
+                messageAutoRoll.setTText2(auto_roll_data2.get(autoRollIndex2 % auto_roll_data2.size()));
+                handler.sendEmptyMessageDelayed(200, 2000);
             }
         }
     };
@@ -130,7 +145,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
                 mPresenter.getH5Url(Config.H5_URL_INVITE, "邀请");
                 break;
             case R.id.more_dynamic:
-                startActivity(new Intent(mContext,MessageActivity.class));
+                startActivity(new Intent(mContext, MessageActivity.class));
                 break;
             case R.id.handle:
                 startActivity(new Intent(mContext, ImmediatelyBorrowActivity.class));
@@ -149,4 +164,15 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
         showAutoRollStrings();
     }
 
+    @Override
+    public void getMessage(MessageBean messageBean) {
+        auto_roll_data2 = new ArrayList<>();
+        for (int i = 0; i < messageBean.getResult().getResultList().size(); i++) {
+            auto_roll_data2.add(messageBean.getResult().getResultList().get(i).getNews_title());
+        }
+        if (auto_roll_data2.size() == 0) {
+            auto_roll_data2.add("没有最新动态");
+        }
+        showAutoRollStrings2();
+    }
 }
