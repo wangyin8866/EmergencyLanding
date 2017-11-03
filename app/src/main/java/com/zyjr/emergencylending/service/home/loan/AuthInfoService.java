@@ -4,6 +4,7 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
 import com.zyjr.emergencylending.entity.AuthResult;
+import com.zyjr.emergencylending.entity.MobileBean;
 import com.zyjr.emergencylending.entity.ZhimaAuthBean;
 
 import java.util.List;
@@ -42,10 +43,24 @@ public interface AuthInfoService {
     Observable<ApiResult<AuthResult>> getCurrentAuthInfo(@FieldMap Map<String,String> params);
 
     /**
-     * 提交认证信息
+     * 运营商认证采集
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<AuthInfoBean>> submitAuthInfo(@FieldMap Map<String,String> params);
+    Observable<ApiResult<AuthInfoBean>> submitMobileAuthInfo(@FieldMap Map<String,String> params);
+
+    /**
+     * 人脸识别通过后提交
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<String>> submitFaceAuthInfo(@FieldMap Map<String,String> params);
+
+    /**
+     * 运营商验证码是否有效
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<MobileBean>> judgeMobileCodeValide(@FieldMap Map<String,String> params);
 
 }

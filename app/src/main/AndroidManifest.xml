@@ -286,6 +286,12 @@
             android:process=":pushservice">
         </service>
         <service android:name=".service.DemoIntentService" />
+
+        <!-- 线下件确认 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.offline.ApplyConfirmActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

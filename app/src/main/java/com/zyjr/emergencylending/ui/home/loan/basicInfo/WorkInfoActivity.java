@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -75,6 +76,9 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
     ScrollView root;
     @BindView(R.id.ll_cover)
     LinearLayout llCover;
+    @BindView(R.id.btn_submit)
+    Button btnSubmit;
+
     private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
 
     @Override
@@ -378,6 +382,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         }
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
+            btnSubmit.setEnabled(false);
         }
     }
 

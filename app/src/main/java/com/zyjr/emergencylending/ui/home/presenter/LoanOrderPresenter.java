@@ -44,4 +44,26 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
             }
         }, mContext));
     }
+
+
+    public void getCurrentEffectiveLoanOrder(Map<String, String> params) {
+        invoke(LoanOrderModel.getInstance().getEffectiveLoanOrder(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+            @Override
+            public void onNext(ApiResult<String> result) {
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("查询当前用户有效订单成功---->" + result.getResult().toString());
+                    getView().onSuccessGetEffectiveOrder(Constants.GET_CURRENT_EFFECTIVE_LOAN_ORDER, result.getResult());
+                } else {
+                    LogUtils.d("查询当前用户有效订单失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_CURRENT_EFFECTIVE_LOAN_ORDER, result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("查询当前用户有效订单异常---->" + e.getMessage());
+                getView().onError(Constants.GET_CURRENT_EFFECTIVE_LOAN_ORDER, e.getMessage());
+            }
+        }, mContext));
+    }
 }

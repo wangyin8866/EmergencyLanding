@@ -388,7 +388,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:background="@color/mine_center_bg"
+            android:background="@drawable/bg_operate_status"
+            android:enabled="true"
             android:text="提交"
             android:textColor="@color/white"
             android:textSize="17sp" />

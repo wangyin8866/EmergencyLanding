@@ -47,7 +47,7 @@ public class ApplyConfirmActivity extends BaseActivity {
     @BindView(R.id.tv_offline_borrow_money)
     TextView tvOfflineBorrowMoney; // 申请金额
     @BindView(R.id.tv_offline_borrow_week)
-    TextView tvOfflineBorrowWeek ; // 周期
+    TextView tvOfflineBorrowPeriod ; // 周期
 
     @Override
     protected BasePresenter createPresenter() {
@@ -83,13 +83,6 @@ public class ApplyConfirmActivity extends BaseActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter baseQuickAdapter, View view, int position) {
-//                for (int i = 0; i < storeBeanList.size(); i++) {
-//                    SelectorImageView v = (SelectorImageView) adapter.getViewByPosition(i, R.id.iv_item_store_selected);
-//                    v.toggle(false);
-//                }
-//                storeBean = (StoreBean) adapter.getItem(position);
-//                SelectorImageView v = (SelectorImageView) adapter.getViewByPosition(position, R.id.iv_item_store_selected);
-//                v.toggle(true);
                 adapter.setSelected(position,true);
                 storeBean = adapter.getSelected(position);
             }

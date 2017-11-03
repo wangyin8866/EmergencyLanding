@@ -38,5 +38,10 @@ public class AuthCenterModel extends BaseModel {
         return authInfoService.getCurrentAuthInfo(params);
     }
 
+    public Observable<ApiResult<String>> submitFaceAuthInfo(Map<String,String> params){
+        params.put("router", NetConstantValues.ROUTER_SUBMIT_FACE_AUTH);
+        return authInfoService.submitFaceAuthInfo(params);
+    }
+
 
 }

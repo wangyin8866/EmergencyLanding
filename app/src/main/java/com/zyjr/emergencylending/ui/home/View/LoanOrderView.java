@@ -10,6 +10,8 @@ public interface LoanOrderView {
 
     void onSuccessGet(String apiCode, LoanOrderBean bean);
 
+    void onSuccessGetEffectiveOrder(String api, String result);
+
     void onFail(String apiCode, String failMsg);
 
     void onError(String apiCode, String errorMsg);

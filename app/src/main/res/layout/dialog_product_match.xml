@@ -57,7 +57,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="10000元"
                 android:textColor="#525252"
                 android:textSize="16sp" />
 
@@ -91,7 +90,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="36周"
                 android:textColor="#525252"
                 android:textSize="16sp" />
 

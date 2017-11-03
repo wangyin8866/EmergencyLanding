@@ -9,12 +9,12 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-//    String HOST_URL = "http://192.168.6.107:8086/";
+    String HOST_URL = "http://192.168.6.107:8086/";
 //    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
-    String HOST_URL = "http://192.168.9.152:8086/";
+//    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 二级地址
@@ -211,9 +211,9 @@ public interface NetConstantValues {
      */
     String RANKING_LIST = "zyUserService.getUserBillBoard";
     /**
-     * 提交认证信息
+     * 运营商认证采集
      */
-    String ROUTER_SUBMIT_AUTH_INFO = "operatorService.verifyPhoneApprove";
+    String ROUTER_SUBMIT_MOBILE_AUTH_INFO = "operatorService.verifyPhoneApprove";
     /**
      * 获取芝麻信用授权地址
      */
@@ -222,5 +222,25 @@ public interface NetConstantValues {
      * 获取芝麻信用分
      */
     String ROUTER_GET_ZHIMA_SCORE = "customerService.zmxyScoreGet";
+    /**
+     * 获取可申请产品类型
+     */
+    String ROUTER_GET_MAYAPPLY_PRODUCT_TYPE = "zyUserService.isViewRecommendProduct";
+    /**
+     * 提交人脸认证
+     */
+    String ROUTER_SUBMIT_FACE_AUTH = "customerService.saveFaceInfo";
+    /**
+     * 校验运营商验证码是否有效
+     */
+    String ROUTER_JUDGE_MOBILE_CODE_VALIDATE = "customerService.yysIsVaild";
+    /**
+     * 获取当前有效订单
+     */
+    String ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER = "userBorrowService.isEffectiveOrder";
+    /**
+     * 获取所在城市支持门店
+     */
+    String ROUTER_GET_LOCAL_STORE_LIST = "zyUserService.getStoreList";
 
 }

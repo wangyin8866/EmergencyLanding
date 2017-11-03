@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.home.loan.auth;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.http.SslError;
 import android.os.Build;
@@ -23,6 +24,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.MobileBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ZhimaAuthBean;
 import com.zyjr.emergencylending.ui.home.View.AuthHelperView;
@@ -159,23 +161,11 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
                     LogUtils.d("芝麻信用分:" + "applyId:" + applyId + ",state:" + state + ",success:" + success);
                     if (success.equals("true")) {
                         // 获取信用积分
-                        getZhimaScore(applyId,state);
+                        getZhimaScore(applyId, state);
                     } else {
                         view.loadUrl(baseUrl);
                     }
                 }
-
-//                String applyId = StringUtil.getUrlValueByName(url, "applyId");
-//                String state = StringUtil.getUrlValueByName(url, "state");
-//                String success = StringUtil.getUrlValueByName(url, "success");
-//                LogUtils.d("芝麻信用分:" + "applyId:" + applyId + ",state:" + state + ",success:" + success);
-//                if (success.equals("true")) {
-//                    // 获取信用积分
-//                    getZhimaScore(applyId);
-//                }
-//                else {
-//                    view.loadUrl(baseUrl);
-//                }
                 return true;
             }
 
@@ -186,7 +176,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         });
     }
 
-    private void getZhimaScore(String applyId,String state) {
+    private void getZhimaScore(String applyId, String state) {
         Map<String, String> params = new HashMap<>();
         params.put("applyId", applyId);
         params.put("state", state);
@@ -211,8 +201,15 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
     @Override
     public void onSuccessGetZhimaScore(String apiCode, String msg) {
-        ToastAlone.showLongToast(this,msg);
+        ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
+    }
+
+    @Override
+    public void onSuccessJudgeMobileValide(String apiCode, MobileBean bean) {
+
     }
 
     @Override

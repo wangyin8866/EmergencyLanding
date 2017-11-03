@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.service.home.loan;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
+import com.zyjr.emergencylending.service.Api;
 
 import java.util.Map;
 
@@ -24,5 +25,14 @@ public interface LoanOrderService {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<ApiResult<LoanOrderBean>> getCurrentOrderDetail(@FieldMap Map<String, String> params);
+
+    /**
+     * 获取当前有效借款订单
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<String>> getEffectiveLoanOrder(@FieldMap Map<String, String> params);
 
 }

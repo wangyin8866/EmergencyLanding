@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.widget.CustomSeekBar;
 
 import butterknife.BindView;
 
@@ -19,6 +20,10 @@ public class NoStoreApplyConfirmActivity extends BaseActivity{
     TextView tvLoanMoney; // 借款金额
     @BindView(R.id.tv_loan_period)
     TextView tvLoanPeriod; // 借款周期
+    @BindView(R.id.seekbar_loan_money)
+    CustomSeekBar seekbarMoney;
+    @BindView(R.id.seekbar_loan_week)
+    CustomSeekBar seekbarPeriod;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -29,5 +34,13 @@ public class NoStoreApplyConfirmActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offline_no_store_apply_confirm);
+
+        initGetData();
     }
+
+    private void initGetData() {
+
+    }
+
+
 }

@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.ui.home.loan;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.media.MediaPlayer;
@@ -9,22 +10,29 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.megvii.licensemanager.Manager;
 import com.megvii.livenessdetection.LivenessLicenseManager;
 import com.megvii.livenesslib.LivenessActivity;
+import com.xfqz.xjd.mylibrary.CustomProgressDialog;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.ui.home.View.AuthInfoView;
 import com.zyjr.emergencylending.ui.home.loan.auth.MobileAuthActivity;
 import com.zyjr.emergencylending.ui.home.loan.auth.ZhimaAuthActivity;
@@ -70,6 +78,13 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     TextView tvMobileAuthStatus; // 手机认证
     @BindView(R.id.tv_face_auth_status)
     TextView tvFaceAuthStatus; // 人脸识别认证
+    @BindView(R.id.btn_submit)
+    Button btnSubmit;
+    @BindView(R.id.root_refreshview)
+    PullToRefreshScrollView pullToRefreshScrollView;
+
+    private static final int INTENT_ZHIMA_CODE = 10010; // 芝麻认证跳转
+    private static final int INTENT_MOBILE_CODE = 10010; // 芝麻认证跳转
 
     private static final int RC_CAMERA_PERMISSION = 101; // 拍照权限请求码
     private static final int RC_PAGE_TO_LIVENESS = 102; // 活体识别请求码
@@ -78,6 +93,13 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     private static final int MESSAGE_LIVENESS_WARRANTY_FAIL = 2; // 活体授权失败
     private MediaPlayer mMediaPlayer = null;
     private List<AuthInfoBean> authInfoBeanList = null;
+    private String userName = "";
+    private String idCardNumber = "";
+    private boolean zhimaAuthFlag = false;
+    private boolean mobileAuthFlag = false;
+    private boolean faceAuthFlag = false;
+    private PersonalInfoBean personalInfoBean = null;
+    private CustomProgressDialog loadingDialog = null;
 
     Handler mHandler = new Handler() {
         @Override
@@ -110,16 +132,28 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         netWorkWarranty(); // 联网授权
     }
 
-    @OnClick({R.id.rl_zhimaxinyong_auth, R.id.rl_mobile_auth, R.id.rl_face_auth})
+    @OnClick({R.id.rl_zhimaxinyong_auth, R.id.rl_mobile_auth, R.id.rl_face_auth, R.id.btn_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_zhimaxinyong_auth:  // 芝麻认证
-                startActivity(new Intent(this, ZhimaAuthActivity.class));
+                if (zhimaAuthFlag) {
+                    ToastAlone.showLongToast(this, "已认证成功");
+                    return;
+                }
+                startActivityForResult(new Intent(this, ZhimaAuthActivity.class), INTENT_ZHIMA_CODE);
                 break;
             case R.id.rl_mobile_auth:  // 手机运营商认证
-                startActivity(new Intent(this, MobileAuthActivity.class));
+                if (mobileAuthFlag) {
+                    ToastAlone.showLongToast(this, "已认证成功");
+                    return;
+                }
+                startActivityForResult(new Intent(this, MobileAuthActivity.class), INTENT_MOBILE_CODE);
                 break;
             case R.id.rl_face_auth:  // 人脸认证
+                if (faceAuthFlag) {
+                    ToastAlone.showLongToast(this, "已认证成功");
+                    return;
+                }
                 jumpToFaceAuth(RC_CAMERA_PERMISSION);
                 break;
         }
@@ -130,7 +164,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == RC_CAMERA_PERMISSION) {  // 相机权限
             if (ToolPermission.checkPermission(permissions, grantResults)) {
-                startActivity(new Intent(this, LivenessActivity.class));
+                jumpToFaceAuth(RC_CAMERA_PERMISSION);
             } else {
                 AppToast.makeToast(AuthCenterActivity.this, "相机权限被拒绝");
             }
@@ -151,17 +185,21 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 if (isSuccess) {
                     String delta = bundle.getString("delta");
                     Map<String, byte[]> images = (Map<String, byte[]>) bundle.getSerializable("images");
-                    // TODO  图片和信息进行比对(缓存中获取姓名 和身份证号)
-                    String name = "虞进";
-                    String idcardNum = "421182199204043732";
+                    String name = personalInfoBean.getUsername();
+//                    String name = "虞进";
+                    String idcardNum = personalInfoBean.getIdCard();
+//                    String idcardNum = "421182199204043732";
                     imageVerify(images, delta, name, idcardNum);
-//                    mPresenter.validateFaceAuth(requestParams);
                 } else {
                     ToastAlone.showLongToast(this, "人脸识别失败，请重新识别");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+        } else if (requestCode == INTENT_ZHIMA_CODE && resultCode == RESULT_OK) {
+            loadingAuthStatus();
+        } else if (requestCode == INTENT_MOBILE_CODE && resultCode == RESULT_OK) {
+            loadingAuthStatus();
         }
     }
 
@@ -177,9 +215,20 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
 
             }
         });
+
+        pullToRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                loadingAuthStatus();
+            }
+        });
     }
 
     private void loadingAuthStatus() {
+        loadingDialog = CustomProgressDialog.createDialog(this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
         Map<String, String> params = new HashMap<>();
         mPresenter.getCurrentAuthInfo(params);
     }
@@ -193,6 +242,10 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 "请允许开启相机权限",
                 requestCode)) {
+            if (personalInfoBean == null) {
+                ToastAlone.showLongToast(this, "资料有误");
+                return;
+            }
             startActivityForResult(new Intent(this, LivenessActivity.class), RC_PAGE_TO_LIVENESS);
         }
     }
@@ -261,7 +314,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                             if (confidence > tenThreshold) {
                                 ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别通过");
                                 // TODO 识别通过后,做一些业务操作
-                                // 提交请求到服务端
+                                submitFaceAuth();
                             } else {
                                 ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别未通过,请本人再次尝试");
                             }
@@ -308,26 +361,11 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         }
     }
 
-
-    @Override
-    public void onSuccessGet(String returnCode, List<AuthInfoBean> beanList) {
-        authInfoBeanList = beanList;
-        for (int i = 0; i < authInfoBeanList.size(); i++) {
-            AuthInfoBean item = authInfoBeanList.get(i);
-            if (item.getAuthType().equals("a")) {
-                showAuthStatusInfo(tvZhimaAuthStatus, "a", item.getAuthStatus());
-            } else if (item.getAuthType().equals("b")) {
-                showAuthStatusInfo(tvMobileAuthStatus, "b", item.getAuthStatus());
-            } else if (item.getAuthType().equals("c")) {
-                showAuthStatusInfo(tvFaceAuthStatus, "c", item.getAuthStatus());
-            }
-        }
-    }
-
     private void showAuthStatusInfo(TextView tvStatus, String flag, String authStatus) {
         if (flag.equals("a")) {
             // 芝麻信息认证 2:成功;3:采集失败
             if (authStatus.equals("2")) {
+                zhimaAuthFlag = true;
                 tvStatus.setText("认证成功");
                 tvStatus.setTextColor(R.color.auth_success);
                 tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_success), null, null, null);
@@ -342,6 +380,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         } else if (flag.equals("b")) {
             // 运营商认证 4:成功;5:采集中;6:采集失败
             if (authStatus.equals("4")) {
+                mobileAuthFlag = true;
                 tvStatus.setText("认证成功");
                 tvStatus.setTextColor(R.color.auth_success);
                 tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_success), null, null, null);
@@ -360,6 +399,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         } else if (flag.equals("c")) {
             // 人脸识别 7:成功;8:失败
             if (authStatus.equals("7")) {
+                faceAuthFlag = true;
                 tvStatus.setText("认证成功");
                 tvStatus.setTextColor(R.color.auth_success);
                 tvStatus.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.mipmap.icon_auth_success), null, null, null);
@@ -374,25 +414,65 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
         }
     }
 
-    @Override
-    public void onSuccessSubmit(String returnCode, AuthInfoBean bean) {
+    private void submitFaceAuth() {
+        Map<String, String> params = new HashMap<>();
+        params.put("auth_type", "2");
+        params.put("user_face_status", "1");
+        params.put("form_token", "1");
+        mPresenter.submitFaceAuth(params);
+    }
 
+    private void loadingPersonInfo() {
+        Map<String, String> paramMaps = new HashMap<>();
+        mPresenter.getPersonalInfo(paramMaps);
+    }
+
+    @Override
+    public void onSuccessGet(String returnCode, List<AuthInfoBean> beanList) {
+        loadingDialog.dismiss();
+        pullToRefreshScrollView.onRefreshComplete();
+        authInfoBeanList = beanList;
+        zhimaAuthFlag = false;
+        mobileAuthFlag = false;
+        faceAuthFlag = false;
+        for (int i = 0; i < authInfoBeanList.size(); i++) {
+            AuthInfoBean item = authInfoBeanList.get(i);
+            if (item.getAuthType().equals("a")) {
+                showAuthStatusInfo(tvZhimaAuthStatus, "a", item.getAuthStatus());
+            } else if (item.getAuthType().equals("b")) {
+                showAuthStatusInfo(tvMobileAuthStatus, "b", item.getAuthStatus());
+            } else if (item.getAuthType().equals("c")) {
+                showAuthStatusInfo(tvFaceAuthStatus, "c", item.getAuthStatus());
+            }
+        }
+        loadingPersonInfo();
+    }
+
+    @Override
+    public void onSuccessSubmit(String apiCode, String msg) {
+        if (apiCode.equals(Constants.SUBMIT_FACE_AUTH)) {
+            ToastAlone.showLongToast(this, msg);
+            loadingAuthStatus();
+        }
+    }
+
+    @Override
+    public void onSuccessGetUserInfo(String apiCode, PersonalInfoBean bean) {
+        personalInfoBean = bean;
     }
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-
+        loadingDialog.dismiss();
+        pullToRefreshScrollView.onRefreshComplete();
+        ToastAlone.showLongToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-
+        loadingDialog.dismiss();
+        pullToRefreshScrollView.onRefreshComplete();
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        loadingAuthStatus();
-    }
 }

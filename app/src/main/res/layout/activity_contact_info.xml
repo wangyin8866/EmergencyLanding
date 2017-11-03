@@ -303,14 +303,17 @@
         android:id="@+id/layout_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/btn_submit"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="bottom"
-            android:background="@color/mine_center_bg"
+            android:background="@drawable/bg_operate_status"
+            android:enabled="true"
             android:text="提交"
             android:textColor="@color/white"
             android:textSize="17sp" />

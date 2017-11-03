@@ -1,6 +1,5 @@
 package com.zyjr.emergencylending.ui.home.View;
 
-import com.zyjr.emergencylending.entity.ProIntroduceBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 
 import java.util.List;

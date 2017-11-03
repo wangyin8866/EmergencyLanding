@@ -9,10 +9,11 @@ import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseApplication;
+import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
-import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
 import com.zyjr.emergencylending.ui.home.presenter.LoanOrderPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -29,6 +30,17 @@ import butterknife.OnClick;
  * 备注: 借款订单状态
  * 线上急速借款(填写资料:1、认证中:2、审核中:3、领取金额:4、放款中:5、还款中:6)
  * 传统借款(填写资料:1、认证中:2、受理中:3、领取金额:4、放款中:5、还款中:6)
+ * step_status                                         |    order_status
+ * 1.填写资料                                               4.录件暂存
+ * 2.认证                                                   0.初审通过
+ * 3.审核中(线下:初审通过,已拒绝;线上:步骤状态控制)           2.终审通过
+ * 4.领取金额(终审通过)                                      3.面签通过
+ * 5.放款中(面签通过)                                        9.已拒绝
+ * 6.还款中(已放款)                                          1.已放款
+ * 7.受理中(对应线下录件暂存)                                 6.结清
+ * *                                                         7.放款失败
+ * *                                                         10.订单待提交
+ * <p>
  */
 public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, LoanOrderView> implements LoanOrderView {
     @BindView(R.id.top_bar)
@@ -101,6 +113,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     private void loadingLoanOrder() {
         Map<String, String> map = new HashMap<>();
         mPresenter.getCurrentOrderDetail(map);
+    }
+
+    private void getCurrentEffectiveOrder(){
+        Map<String, String> map = new HashMap<>();
+        mPresenter.getCurrentEffectiveLoanOrder(map);
     }
 
     private void setOrderStatusInfo(int flag, int status) {
@@ -184,6 +201,16 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     @Override
     public void onSuccessGet(String returnCode, LoanOrderBean model) {
         loanOrderBean = model;
+        if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+            //业务员
+        } else {
+
+        }
+
+    }
+
+    @Override
+    public void onSuccessGetEffectiveOrder(String api, String result) {
 
     }
 

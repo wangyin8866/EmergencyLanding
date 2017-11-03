@@ -16,27 +16,9 @@ import rx.Subscriber;
 public abstract class HttpSubscriber<T> extends Subscriber<T> {
 
 
-
     @Override
     public void onCompleted() {
         LogUtils.e("HttpSubscriber----onCompleted");
-    }
-
-    @Override
-    public void onError(Throwable e) {
-        if (e instanceof SocketTimeoutException) {
-            ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
-            return;
-        }
-        if (e instanceof HttpException) {
-            String message = ((HttpException) e).message();
-            if (StringUtil.isEmpty(message)) {
-                ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
-            } else {
-                LogUtils.e("请求返回信息处理失败:---->" + e.getMessage());
-                ToastAlone.showShortToast(BaseApplication.getContext(), e.getMessage());
-            }
-        }
     }
 
     @Override
@@ -45,5 +27,27 @@ public abstract class HttpSubscriber<T> extends Subscriber<T> {
     }
 
 
+    @Override
+    public void onError(Throwable e) {
+        onRequestError(e);
+//        if (e instanceof SocketTimeoutException) {
+//            ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
+//            return;
+//        }
+//        if (e instanceof HttpException) {
+//            String message = ((HttpException) e).message();
+//            if (StringUtil.isEmpty(message)) {
+//                ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
+//            } else {
+//                LogUtils.e("请求返回信息处理失败:---->" + e.getMessage());
+//                ToastAlone.showShortToast(BaseApplication.getContext(), e.getMessage());
+//            }
+//        }
+    }
+
+
+
     public abstract void onSuccess(T t);
+
+    public abstract void onRequestError(Throwable e);
 }

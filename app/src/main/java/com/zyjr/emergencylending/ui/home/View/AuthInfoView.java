@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.home.View;
 
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.PersonalInfoBean;
 
 import java.util.List;
 
@@ -12,7 +13,9 @@ public interface AuthInfoView {
 
     void onSuccessGet(String apiCode, List<AuthInfoBean> beanList);
 
-    void onSuccessSubmit(String apiCode, AuthInfoBean bean);
+    void onSuccessSubmit(String apiCode, String msg);
+
+    void onSuccessGetUserInfo(String apiCode, PersonalInfoBean bean);
 
     void onFail(String apiCode, String failMsg);
 

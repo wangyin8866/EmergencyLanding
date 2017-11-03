@@ -145,8 +145,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             minLoanPeriodUint = 1;
             minLoanMoney = 500;
             maxLoanMoney = 5000;
-            initSeekMoney(10, minLoanMoney, maxLoanMoney);
-            initSeekPeriod(1, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
+            initSeekMoney(20, minLoanMoney, maxLoanMoney);
+            initSeekPeriod(34, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
             llOnlineSupCities.setVisibility(View.VISIBLE);
             llOfflineSupCities.setVisibility(View.GONE);
             loadingProIntroduce("0");
@@ -159,8 +159,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             minLoanPeriodUint = 2;
             minLoanMoney = 5000;
             maxLoanMoney = 30000;
-            initSeekMoney(10, minLoanMoney, maxLoanMoney);
-            initSeekPeriod(1, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
+            initSeekMoney(16, minLoanMoney, maxLoanMoney);
+            initSeekPeriod(8, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
             llOnlineSupCities.setVisibility(View.GONE);
             llOfflineSupCities.setVisibility(View.VISIBLE);
             loadingProIntroduce("1");

@@ -66,7 +66,7 @@ public class Arithmetic {
 
 
     public static int progressToMoney(int progress, int min, int max) {
-        LogUtils.e("借款金额滑动进度:----------->" + progress);
+//        LogUtils.e("借款金额滑动进度:----------->" + progress);
         int money = 0;
         if (progress <= 0) {
             return min;

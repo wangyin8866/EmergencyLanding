@@ -145,8 +145,8 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity {
         loanPeriodUnit = "2";
         minLoanMoney = 5000;
         maxLoanMoney = 30000;
-        initSeekMoney(5, minLoanMoney, maxLoanMoney);
-        initSeekPeriod(5, minLoanPeriod, maxLoanPeriod, 2);
+        initSeekMoney(16, minLoanMoney, maxLoanMoney);
+        initSeekPeriod(8, minLoanPeriod, maxLoanPeriod, 2);
     }
 
     private void initListener() {

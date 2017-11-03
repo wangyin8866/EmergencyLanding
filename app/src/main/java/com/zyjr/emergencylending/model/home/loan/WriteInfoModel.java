@@ -5,6 +5,8 @@ import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.StoreBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.service.home.loan.WriteInfoService;
 import com.zyjr.emergencylending.utils.SPUtils;
@@ -43,6 +45,16 @@ public class WriteInfoModel extends BaseModel {
         params.put("router", NetConstantValues.ROUTER_SUBMIT_LOAN_INFORMATION);
         params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
         return writeInfoService.submitLoanInformation(params);
+    }
+
+    public Observable<ApiResult<MayApplyProBean>> getMayApplayProductType(Map<String, String> params){
+        params.put("router", NetConstantValues.ROUTER_GET_MAYAPPLY_PRODUCT_TYPE);
+        return writeInfoService.getMayApplyProductType(params);
+    }
+
+    public Observable<ApiResult<StoreBean>> getLocalStoreList(Map<String, String> params){
+        params.put("router", NetConstantValues.ROUTER_GET_LOCAL_STORE_LIST);
+        return writeInfoService.getLocalStoreList(params);
     }
 
 }

@@ -8,6 +8,7 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.MobileBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ZhimaAuthBean;
 import com.zyjr.emergencylending.model.home.loan.AuthHelperModel;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * 提交认证信息
  * Created by neil on 2017/10/25
+ *
  */
 public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
 
@@ -69,16 +71,26 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
         }, mContext));
     }
 
-    public void submitAuthInfo(Map<String, String> params) {
-        invoke(AuthHelperModel.getInstance().submitAuthInfo(params), new ProgressSubscriber<ApiResult<AuthInfoBean>>(new SubscriberOnNextListener<ApiResult<AuthInfoBean>>() {
+    public void submitMobileAuthInfo(Map<String, String> params) {
+        invoke(AuthHelperModel.getInstance().submitMobileAuthInfo(params), new ProgressSubscriber<ApiResult<AuthInfoBean>>(new SubscriberOnNextListener<ApiResult<AuthInfoBean>>() {
             @Override
             public void onNext(ApiResult<AuthInfoBean> result) {
                 LogUtils.d("提交认证信息成功---->" + result.getResult());
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("运营商采集认证成功---->" + result.getResult());
+//                        getView().onSuccessSubmit(Constants.GET_PERSONAL_INFO, result.getResult());
+                    }
+                } else {
+                    LogUtils.d("运营商采集认证失败---->" + result.getFlag() + "," + result.getMsg());
+//                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getMsg());
+                }
+
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("运营商采集认证异常--->" + e.getMessage());
             }
         }, mContext));
     }
@@ -105,5 +117,30 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             }
         }, mContext));
     }
+
+    public void judgeMobileCodeValide(Map<String, String> params) {
+        invoke(AuthHelperModel.getInstance().judgeMobileCodeValide(params), new ProgressSubscriber<ApiResult<MobileBean>>(new SubscriberOnNextListener<ApiResult<MobileBean>>() {
+            @Override
+            public void onNext(ApiResult<MobileBean> result) {
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("校验运营商验证是否有效成功---->" + result.getResult());
+                        getView().onSuccessJudgeMobileValide(Constants.JUDGE_MOBILE_CODE_VALIDE, result.getResult());
+                    }
+                } else {
+                    LogUtils.d("校验运营商验证是否有效失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.JUDGE_MOBILE_CODE_VALIDE, result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("校验运营商验证是否有效异常---->" + e.getMessage());
+                getView().onError(Constants.JUDGE_MOBILE_CODE_VALIDE, e.getMessage());
+            }
+        }, mContext));
+    }
+
+
 
 }

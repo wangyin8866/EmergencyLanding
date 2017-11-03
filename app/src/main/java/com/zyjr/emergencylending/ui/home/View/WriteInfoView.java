@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.View;
 
+import com.zyjr.emergencylending.entity.MayApplyProBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 
 /**
@@ -11,6 +12,8 @@ public interface WriteInfoView {
     void onSuccessGet(String apiCode, WriteInfoBean bean);
 
     void onSuccessSubmit(String apiCode, String msg);
+
+    void onSuccessGetMayApplyPro(String apiCode, MayApplyProBean bean);
 
     void onFail(String apiCode, String flag, String errorMsg);
 

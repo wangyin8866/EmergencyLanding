@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.home.View;
 
 import com.zyjr.emergencylending.entity.AuthInfoBean;
+import com.zyjr.emergencylending.entity.MobileBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ZhimaAuthBean;
 
@@ -16,7 +17,9 @@ public interface AuthHelperView {
 
     void onSuccessGetZhimaAuthUrl(String apiCode, ZhimaAuthBean bean);
 
-    void onSuccessGetZhimaScore(String apiCode, String bean);
+    void onSuccessGetZhimaScore(String apiCode, String msg);
+
+    void onSuccessJudgeMobileValide(String apiCode, MobileBean bean);
 
     void onFail(String apiCode, String failMsg);
 

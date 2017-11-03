@@ -8,6 +8,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.base.CustomApiResult;
+import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
@@ -56,9 +57,9 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
     }
 
     public void getBindBankcardInfo(Map<String, String> params) {
-        invoke(BankcardInfoModel.getInstance().getBankcardInfo(params), new ProgressSubscriber<CustomApiResult<BankcardInfo, BankcardInfo>>(new SubscriberOnNextListener<CustomApiResult<BankcardInfo, BankcardInfo>>() {
+        invoke(BankcardInfoModel.getInstance().getBankcardInfo(params), new HttpSubscriber<CustomApiResult<BankcardInfo, BankcardInfo>>() {
             @Override
-            public void onNext(CustomApiResult<BankcardInfo, BankcardInfo> result) {
+            public void onSuccess(CustomApiResult<BankcardInfo, BankcardInfo> result) {
                 if (result.getFlag().equals("API0000")) {
                     if (result.getResult() != null) {
                         LogUtils.d("获取绑定银行卡信息成功(存在银行卡)---->" + result.getResult().toString());
@@ -74,11 +75,12 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
             }
 
             @Override
-            public void onError(Throwable e) {
-                LogUtils.d("获取银行卡信息异常---->" + e.getMessage());
+            public void onRequestError(Throwable e) {
+                LogUtils.d("获取绑定银行卡信息异常---->" + e.getMessage());
                 getView().onError(Constants.GET_BIND_BANKCARD_INFO, e.getMessage());
             }
-        }, mContext));
+        });
+
     }
 
     public void addBindBankcardInfo(Map<String, String> params) {

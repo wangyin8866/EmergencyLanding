@@ -36,4 +36,9 @@ public class LoanOrderModel extends BaseModel {
         return loanOrderService.getCurrentOrderDetail(params);
     }
 
+    public Observable<ApiResult<String>> getEffectiveLoanOrder(Map<String, String> params){
+        params.put("router", NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
+        return loanOrderService.getEffectiveLoanOrder(params);
+    }
+
 }

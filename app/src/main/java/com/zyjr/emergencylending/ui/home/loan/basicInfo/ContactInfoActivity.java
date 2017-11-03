@@ -11,6 +11,7 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,6 +73,8 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     TextView tvRelation2; // 关系2
     @BindView(R.id.ll_cover)
     LinearLayout llCover;
+    @BindView(R.id.btn_submit)
+    Button btnSubmit;
 
     List<CodeBean> selectList; // 初始化选择列表
     List<CodeBean> selectList1 = new ArrayList<>(); // 联系人1可选择的
@@ -247,11 +250,13 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         contactBean1.setContact_name(contactName1.trim());
         contactBean1.setContact_phone(contactPhone1.trim());
         contactBean1.setRelation(relationCodeBean1.getCode());
+        contactBean1.setFill_location("1");
         contactsList.add(contactBean1);
         ContactInfoBean contactBean2 = new ContactInfoBean();
         contactBean2.setContact_name(contactName2.trim());
         contactBean2.setContact_phone(contactPhone2.trim());
         contactBean2.setRelation(relationCodeBean2.getCode());
+        contactBean2.setFill_location("2");
         contactsList.add(contactBean2);
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("contactList", new Gson().toJson(contactsList));
@@ -262,52 +267,61 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     private void showContactInfo(List<ContactInfoBean> contactInfoBeanList) {
         if (contactInfoBeanList != null && contactInfoBeanList.size() > 0) {
-            /**
-             * 联系人1
-             */
-            ContactInfoBean contactBean1 = contactInfoBeanList.get(0);
-            if (StringUtil.isNotEmpty(contactBean1.getContact_name())) {
-                // 姓名1
-                etContactName1.setText(contactBean1.getContact_name());
-            }
-            if (StringUtil.isNotEmpty(contactBean1.getContact_phone())) {
-                // 手机号1
-                etContactPhone1.setText(contactBean1.getContact_phone());
-            }
-            if (StringUtil.isNotEmpty(contactBean1.getRelation())) {
-                // 关系1
-                int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
-                if (index != -1) {
-                    relationCodeBean1 = AppConfig.contactRelation().get(index);
-                    tvRelation1.setText(relationCodeBean1.getName());
-                    selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
-                    LogUtils.d("获取填写关系1信息:" + relationCodeBean1.toString());
-                } else {
-                    tvRelation1.setText("");
-                }
-            }
-            /**
-             * 联系人2
-             */
-            ContactInfoBean contactBean2 = contactInfoBeanList.get(1);
-            if (StringUtil.isNotEmpty(contactBean2.getContact_name())) {
-                // 姓名2
-                etContactName2.setText(contactBean2.getContact_name());
-            }
-            if (StringUtil.isNotEmpty(contactBean2.getContact_phone())) {
-                // 手机号2
-                etContactPhone2.setText(contactBean2.getContact_phone());
-            }
-            if (StringUtil.isNotEmpty(contactBean2.getRelation())) {
-                // 关系2
-                int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
-                if (index != -1) {
-                    relationCodeBean2 = AppConfig.contactRelation().get(index);
-                    tvRelation2.setText(relationCodeBean2.getName());
-                    selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
-                    LogUtils.d("获取填写关系2信息:" + relationCodeBean2.toString());
-                } else {
-                    tvRelation2.setText("");
+            for (int i = 0; i < contactInfoBeanList.size(); i++) {
+                switch (contactInfoBeanList.get(i).getFill_location()) {
+                    case "1":
+                        /**
+                         * 联系人1
+                         */
+                        ContactInfoBean contactBean1 = contactInfoBeanList.get(i);
+                        if (StringUtil.isNotEmpty(contactBean1.getContact_name())) {
+                            // 姓名1
+                            etContactName1.setText(contactBean1.getContact_name());
+                        }
+                        if (StringUtil.isNotEmpty(contactBean1.getContact_phone())) {
+                            // 手机号1
+                            etContactPhone1.setText(contactBean1.getContact_phone());
+                        }
+                        if (StringUtil.isNotEmpty(contactBean1.getRelation())) {
+                            // 关系1
+                            int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
+                            if (index != -1) {
+                                relationCodeBean1 = AppConfig.contactRelation().get(index);
+                                tvRelation1.setText(relationCodeBean1.getName());
+                                selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
+                                LogUtils.d("获取填写关系1信息:" + relationCodeBean1.toString());
+                            } else {
+                                tvRelation1.setText("");
+                            }
+                        }
+                        break;
+
+                    case "2":
+                        /**
+                         * 联系人2
+                         */
+                        ContactInfoBean contactBean2 = contactInfoBeanList.get(i);
+                        if (StringUtil.isNotEmpty(contactBean2.getContact_name())) {
+                            // 姓名2
+                            etContactName2.setText(contactBean2.getContact_name());
+                        }
+                        if (StringUtil.isNotEmpty(contactBean2.getContact_phone())) {
+                            // 手机号2
+                            etContactPhone2.setText(contactBean2.getContact_phone());
+                        }
+                        if (StringUtil.isNotEmpty(contactBean2.getRelation())) {
+                            // 关系2
+                            int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
+                            if (index != -1) {
+                                relationCodeBean2 = AppConfig.contactRelation().get(index);
+                                tvRelation2.setText(relationCodeBean2.getName());
+                                selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
+                                LogUtils.d("获取填写关系2信息:" + relationCodeBean2.toString());
+                            } else {
+                                tvRelation2.setText("");
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -339,6 +353,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         }
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
+            btnSubmit.setEnabled(false);
         }
     }
 

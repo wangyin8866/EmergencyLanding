@@ -78,24 +78,33 @@ public class CustomerDialog extends Dialog {
     /**
      * 借款 信息确认弹出框
      *
-     * @param listener 事件回调
-     * @param userFlag 用户标识
-     * @param second   是否续贷
-     * @param money    借款金额
-     * @param week     借款周期
+     * @param listener       事件回调
+     * @param userFlag       用户标识
+     * @param isFirst        是否首贷
+     * @param money          借款金额
+     * @param period         借款周期
+     * @param periodDistance 期数间隔
+     * @param periodUnit     借款周期单位 1:天;2:周
      * @return
      */
-    public CustomerDialog loanProductMatchInfo(View.OnClickListener listener, String userFlag, boolean second, String money, String week) {
+    public CustomerDialog loanProductMatchInfo(View.OnClickListener listener, String userFlag, boolean isFirst, String money, String period, String periodDistance, String periodUnit) {
         setContentView(R.layout.dialog_product_match);
         TextView tvDesc = findViewById(R.id.tv_title1);
-        if (second) {
+        if (!isFirst) {
             tvDesc.setVisibility(View.INVISIBLE);
         }
         Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
         TextView tvLoadMoney = findViewById(R.id.tv_loan_money);
-        tvLoadMoney.setText(money);
+        tvLoadMoney.setText(money + "元");
         TextView tvLoadWeek = findViewById(R.id.tv_loan_week);
-        tvLoadWeek.setText(week);
+        if (periodUnit.equals("1")) {
+            // 天 作为期
+            tvLoadWeek.setText(periodDistance + "天");
+        } else if (periodUnit.equals("2")) {
+            tvLoadWeek.setText(period + "周");
+        } else {
+            tvLoadWeek.setText(period);
+        }
         ImageView ivClose = findViewById(R.id.iv_close);
         window.setGravity(Gravity.CENTER);
         ivClose.setOnClickListener(listener);

@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -105,6 +106,8 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     ClearEditText etLiveDetailAddress; // 居住详细地址
     @BindView(R.id.ll_cover)
     LinearLayout llCover;
+    @BindView(R.id.btn_submit)
+    Button btnSubmit;
 
     private File idcardFile;
     private File holdCardFile;
@@ -310,6 +313,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         }
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
+            btnSubmit.setEnabled(false);
         }
     }
 

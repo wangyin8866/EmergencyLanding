@@ -6,7 +6,9 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.entity.MayApplyProBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.model.home.loan.WriteInfoModel;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
@@ -25,9 +27,9 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
     }
 
     public void getWriteInfo(Map<String, String> params) {
-        invoke(WriteInfoModel.getInstance().getWriteInfo(params), new ProgressSubscriber<ApiResult<WriteInfoBean>>(new SubscriberOnNextListener<ApiResult<WriteInfoBean>>() {
+        invoke(WriteInfoModel.getInstance().getWriteInfo(params), new HttpSubscriber<ApiResult<WriteInfoBean>>() {
             @Override
-            public void onNext(ApiResult<WriteInfoBean> result) {
+            public void onSuccess(ApiResult<WriteInfoBean> result) {
                 if (result.getFlag().equals("API0000")) {
                     if (result.getResult() != null) {
                         LogUtils.d("获取填写信息(资料完成情况)成功---->" + result.getResult().toString());
@@ -37,15 +39,36 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
                     LogUtils.d("获取填写信息(资料完成情况)失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.GET_WRITE_INFO, result.getFlag(), result.getMsg());
                 }
-
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onRequestError(Throwable e) {
                 LogUtils.d("获取填写信息(资料完成情况)异常---->" + e.getMessage());
                 getView().onError(Constants.GET_WRITE_INFO, e.getMessage());
             }
-        }, mContext));
+        });
+
+//        invoke(WriteInfoModel.getInstance().getWriteInfo(params), new ProgressSubscriber<ApiResult<WriteInfoBean>>(new SubscriberOnNextListener<ApiResult<WriteInfoBean>>() {
+//            @Override
+//            public void onNext(ApiResult<WriteInfoBean> result) {
+//                if (result.getFlag().equals("API0000")) {
+//                    if (result.getResult() != null) {
+//                        LogUtils.d("获取填写信息(资料完成情况)成功---->" + result.getResult().toString());
+//                        getView().onSuccessGet(Constants.GET_WRITE_INFO, result.getResult());
+//                    }
+//                } else {
+//                    LogUtils.d("获取填写信息(资料完成情况)失败---->" + result.getFlag() + "," + result.getMsg());
+//                    getView().onFail(Constants.GET_WRITE_INFO, result.getFlag(), result.getMsg());
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                LogUtils.d("获取填写信息(资料完成情况)异常---->" + e.getMessage());
+//                getView().onError(Constants.GET_WRITE_INFO, e.getMessage());
+//            }
+//        }, mContext));
     }
 
     public void submitLoanInformation(Map<String, String> params) {
@@ -70,5 +93,29 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             }
         }, mContext));
     }
+
+    public void getMayApplyProductType(Map<String, String> params) {
+        invoke(WriteInfoModel.getInstance().getMayApplayProductType(params), new ProgressSubscriber<ApiResult<MayApplyProBean>>(new SubscriberOnNextListener<ApiResult<MayApplyProBean>>() {
+            @Override
+            public void onNext(ApiResult<MayApplyProBean> result) {
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取可申请产品类型成功---->" + result.getResult().toString());
+                        getView().onSuccessGetMayApplyPro(Constants.GET_MAYAPPLY_PRODUCT_TYPE, result.getResult());
+                    }
+                } else {
+                    LogUtils.d("获取可申请产品类型失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_MAYAPPLY_PRODUCT_TYPE, result.getFlag(), result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("获取可申请产品类型异常---->" + e.getMessage());
+                getView().onError(Constants.GET_MAYAPPLY_PRODUCT_TYPE, e.getMessage());
+            }
+        }, mContext));
+    }
+
 
 }

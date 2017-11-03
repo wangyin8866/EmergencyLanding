@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 import com.google.gson.Gson;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
+import com.xfqz.xjd.mylibrary.CustomProgressDialog;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -20,12 +21,15 @@ import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.MayApplyProBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
+import com.zyjr.emergencylending.ui.home.loan.offline.ApplyConfirmActivity;
+import com.zyjr.emergencylending.ui.home.loan.offline.NoStoreApplyConfirmActivity;
 import com.zyjr.emergencylending.ui.home.loan.online.ApplyToOfflineConfirmActivity;
 import com.zyjr.emergencylending.ui.home.presenter.WriteInfoPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
@@ -59,8 +63,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     SettingItemView layoutBankInfo; // 银行卡信息
     @BindView(R.id.btn_submit)
     Button btnSubmit; // 提交信息
-    @BindView(R.id.rl_no_salesman)
-    RelativeLayout rlNoSalesman;
+    @BindView(R.id.rl_recommend_product)
+    RelativeLayout rlRecommend;
     @BindView(R.id.root_refreshview)
     PullToRefreshScrollView pullToRefreshScrollView;
 
@@ -69,10 +73,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     private String apply_periods = ""; // 申请借款周期
     private String apply_zq = ""; // 申请期数间隔
     private String apply_periods_unit = ""; // 借款周期单位
-    private String online_type = ""; // 产品类型
+    private String online_type = ""; // 产品类型 0:线上;1:线下
     private String product_id = ""; // 产品id
     private WriteInfoBean writeInfoBean = null;
     private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
+    private CustomProgressDialog loadingDialog = null;
+    private boolean isFirst = false; // 是否是首贷
+    private String is_view = ""; // 是否显示推荐产品 1:是  0：否
 
     @Override
     protected WriteInfoPresenter createPresenter() {
@@ -100,7 +107,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (CODE_PERMISSION_CONTANCT_LIST == requestCode) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
-                judgeMatchProInfo("", false, apply_amount, apply_zq);
+                judgeMatchProInfo("", isFirst, apply_amount, apply_periods, apply_zq, apply_periods_unit);
             } else {
 //                CommonUtils.jumpAppInfoSetting(WriteInfoMainActivity.this, "请允许读取权限!");
                 ToastAlone.showLongToast(WriteInfoMainActivity.this, "请允许通讯录权限!");
@@ -181,7 +188,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 }
                 // TODO 获取通讯资料
                 if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
-                    judgeMatchProInfo("", false, apply_amount, apply_zq);
+                    judgeMatchProInfo("", isFirst, apply_amount, apply_periods, apply_zq, apply_periods_unit);
                 }
                 break;
         }
@@ -259,19 +266,21 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         }
         if (personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")) {
             // TODO 根据状态,获取可申请产品
-            rlNoSalesman.setVisibility(View.VISIBLE);
+            getMayApplyProductType();
         }
     }
 
     /**
      * 匹配金额 pop
      *
-     * @param userFlag
-     * @param second
-     * @param money
-     * @param week
+     * @param userFlag       用户标识
+     * @param isFirst        是否首贷
+     * @param money          借款金额
+     * @param period         借款周期
+     * @param periodDistance 期数间隔
+     * @param periodUnit     周期单位
      */
-    private void judgeMatchProInfo(String userFlag, boolean second, String money, String week) {
+    private void judgeMatchProInfo(String userFlag, final boolean isFirst, String money, String period, String periodDistance, String periodUnit) {
 
         final CustomerDialog customerDialog = new CustomerDialog(this);
         customerDialog.loanProductMatchInfo(new View.OnClickListener() {
@@ -284,18 +293,52 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
                     case R.id.btn_comfirm_submit:
                         customerDialog.dismiss();
-                        submitLoanInfo();
+                        if (product_id.equals("1")) {
+                            // 线下件
+                            if (is_view.equals("1")) {
+                                // 如果有门店
+                                Intent intent = new Intent(WriteInfoMainActivity.this, ApplyConfirmActivity.class);
+                                intent.putExtra("online_type", online_type); // 产品类型
+                                intent.putExtra("product_id", product_id); // 产品ID
+                                intent.putExtra("apply_amount", apply_amount); // 申请金额
+                                intent.putExtra("apply_periods", apply_periods); // 申请期数
+                                intent.putExtra("apply_zq", apply_zq); // 申请期数间隔
+                                intent.putExtra("apply_periods_unit", apply_periods_unit); // 申请周期单位
+                                startActivity(intent);
+                            } else if (is_view.equals("0")) {
+                                Intent intent = new Intent(WriteInfoMainActivity.this, NoStoreApplyConfirmActivity.class);
+                                intent.putExtra("online_type", online_type); // 产品类型
+                                intent.putExtra("product_id", product_id); // 产品ID
+                                intent.putExtra("apply_amount", apply_amount); // 申请金额
+                                intent.putExtra("apply_periods", apply_periods); // 申请期数
+                                intent.putExtra("apply_zq", apply_zq); // 申请期数间隔
+                                intent.putExtra("apply_periods_unit", apply_periods_unit); // 申请周期单位
+                                // 如果没有门店
+                                if (isFirst) {
+                                    intent.putExtra("renew_loan_flag", "1");  // 1.首贷
+                                } else {
+                                    intent.putExtra("renew_loan_flag", "0"); // 0.续贷
+                                }
+                                startActivity(intent);
+                            }
+                        } else if (product_id.equals("0")) {
+                            // 线上件
+                            submitLoanInfo();
+                        }
 //                        startActivity(new Intent(WriteInfoMainActivity.this, AuthCenterActivity.class));
 //                        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
 //                        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
                         break;
                 }
             }
-        }, userFlag, second, money, week).show();
+        }, userFlag, isFirst, money, period, periodDistance, periodUnit).show();
     }
 
 
     private void loadingWriteInfoStatus() {
+        loadingDialog = CustomProgressDialog.createDialog(this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
         Map<String, String> paramsMap = new HashMap<>();
         mPresenter.getWriteInfo(paramsMap);
     }
@@ -311,12 +354,20 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
         }
+        paramsMap.put("store", ""); // 门店iD
+        paramsMap.put("store_name", "");  // 门店名称
         mPresenter.submitLoanInformation(paramsMap);
     }
 
+    private void getMayApplyProductType() {
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("product_id", product_id); // 产品ID
+        mPresenter.getMayApplyProductType(paramsMap);
+    }
 
     @Override
     public void onSuccessGet(String returnCode, WriteInfoBean bean) {
+        loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         writeInfoBean = bean;
         infoFinishStatus(
@@ -330,21 +381,51 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
         ToastAlone.showLongToast(this, msg);
-        // TODO 预检ok后 调往认证 注意 此时需要清空栈内的堆积
-        startActivity(new Intent(this, AuthCenterActivity.class));
-        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
-        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
+        if (online_type.equals("0")) {
+            // 线上件
+            // TODO 预检ok后 调往认证 注意 此时需要清空栈内的堆积
+            startActivity(new Intent(this, AuthCenterActivity.class));
+            ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
+            ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
+        } else if (online_type.equals("1")) {
+            // 线下件
+
+
+        }
+
+
+    }
+
+    @Override
+    public void onSuccessGetMayApplyPro(String apiCode, MayApplyProBean bean) {
+        is_view = bean.getIs_view();
+        if (bean.getRenew_loan_flag().equals("1")) {
+            isFirst = true;
+            // 首贷
+//            apply_amount = bean.getLoan_amount();
+//            apply_periods = bean.getLoan_periods();
+//            apply_zq = bean.getLoan_zq();
+//            apply_periods_unit = bean.getLoan_unit();
+            apply_amount = "1000";
+            apply_periods = "1";
+            apply_zq = "14";
+            apply_periods_unit = "1";
+        } else {
+            isFirst = false;
+        }
     }
 
     @Override
     public void onFail(String returnCode, String flag, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
+        loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
+        loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
     }
 

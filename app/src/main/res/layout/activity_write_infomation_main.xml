@@ -114,10 +114,11 @@
 
                 <!-- 传统借款 线下隐藏 -->
                 <RelativeLayout
-                    android:id="@+id/rl_no_salesman"
+                    android:id="@+id/rl_recommend_product"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_alignParentBottom="true"
+                    android:visibility="gone"
                     android:layout_marginTop="62dp">
 
                     <TextView

@@ -17,6 +17,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.TakePhotoOptions;
+import com.xfqz.xjd.mylibrary.CustomProgressDialog;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
@@ -74,6 +75,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
     private String bank_username = ""; // 银行卡户主
     private String id_card = "";// 身份证号
+    private CustomProgressDialog loadingDialog = null;
 
     @Override
     protected BankcardInfoPresenter createPresenter() {
@@ -98,11 +100,6 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
     }
 
-    @OnLongClick(R.id.rl_edit_bankcard)
-    boolean onLongClickBindButton() {
-        showEditDialog();
-        return true;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -168,7 +165,6 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
                 loadingBindBankcardInfo();
             }
         });
-        topBar.setRightButtonVisible(View.INVISIBLE);
     }
 
     private void initGetData() {
@@ -181,6 +177,8 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
         if (isEdit.equals("0")) { // 不可编辑
             topBar.setRightButtonVisible(View.INVISIBLE);
+        } else {
+            topBar.setRightButtonVisible(View.VISIBLE);
         }
     }
 
@@ -188,7 +186,11 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         bankcardInfo = bankcard;
         rlEditBankcard.setVisibility(View.VISIBLE);
         rlAddBankcard.setVisibility(View.GONE);
-        topBar.setRightButtonVisible(View.VISIBLE);
+        if (isEdit.equals("0")) { // 不可编辑
+            topBar.setRightButtonVisible(View.INVISIBLE);
+        } else {
+            topBar.setRightButtonVisible(View.VISIBLE);
+        }
         setBankIcon(bankcardInfo);
         tvBankcardName.setText(bankcardInfo.getBank_name());
         tvBankcardType.setText(""); // 此处没有字段返回
@@ -200,6 +202,9 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
 
     private void loadingBindBankcardInfo() {
+        loadingDialog = CustomProgressDialog.createDialog(this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.show();
         Map<String, String> paramsMap = new HashMap<>();
         mPresenter.getBindBankcardInfo(paramsMap);
     }
@@ -258,6 +263,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
+        loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         judgeBankcardInfo(bean);
     }
@@ -273,12 +279,14 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onFail(String apiCode, String errorMsg) {
+        loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+        loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showLongToast(this, errorMsg);
     }

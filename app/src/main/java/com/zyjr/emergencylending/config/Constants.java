@@ -118,4 +118,12 @@ public class Constants {
     public static final String GET_ZHIMA_AUTH_URL = "41";
     // 获取芝麻信用分
     public static final String GET_ZHIMA_AUTH_SCORE = "42";
+    // 获取可申请产品类型
+    public static final String GET_MAYAPPLY_PRODUCT_TYPE = "43";
+    // 提交人脸认证
+    public static final String SUBMIT_FACE_AUTH = "44";
+    // 校验运营商验证码是否有效
+    public static final String JUDGE_MOBILE_CODE_VALIDE = "45";
+    // 获取当前用户有效借款订单
+    public static final String GET_CURRENT_EFFECTIVE_LOAN_ORDER = "46";
 }
