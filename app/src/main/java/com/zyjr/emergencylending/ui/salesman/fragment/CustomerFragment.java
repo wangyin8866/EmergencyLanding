@@ -144,9 +144,9 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 type3.setTextColor(Color.parseColor("#FFA200"));
                 break;
         }
-//        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
+        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
         mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
-//        mPresenter.rankList(NetConstantValues.RANKING_LIST);
+        mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
@@ -174,7 +174,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     @Override
     public void waitApply(WaitApplyBean baseBean) {
 
-        xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult(), mContext));
+        xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult().getClerkRecordList(), mContext));
     }
 
 }

@@ -25,7 +25,7 @@ public class LineCustomerAdapter extends WyBaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        WaitApplyBean.ResultBean resultBean = (WaitApplyBean.ResultBean) mList.get(position);
+        WaitApplyBean.ResultBean.ClerkRecordListBean resultBean = (WaitApplyBean.ResultBean.ClerkRecordListBean) mList.get(position);
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_customer, null);
             viewHolder = new ViewHolder(convertView);
@@ -33,10 +33,10 @@ public class LineCustomerAdapter extends WyBaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.name.setText(resultBean.getCust_name());
+        viewHolder.name.setText(resultBean.getCust_name()+"");
         viewHolder.amount.setText(resultBean.getLoan_amount());
         viewHolder.deadline.setText(resultBean.getLoan_period()+"周");
-        viewHolder.status.setText(WYUtils.getOrderStatus(resultBean.getOrder_status()));
+        viewHolder.status.setText(WYUtils.getOrderStatus(Integer.valueOf(resultBean.getOrder_status()),Integer.valueOf(resultBean.getStep_status())));
         return convertView;
     }
 

@@ -641,29 +641,51 @@ public class WYUtils {
     /**
      * 获取订单状态
      */
-    public static String getOrderStatus(String status) {
+    public static String getOrderStatus(int step, int status) {
         String result = null;
-        switch (status) {
-            case "2":
-                result = "认证中";
+        switch (step) {
+            case 2:
+                if (status == 10) {
+                    result = "认证中";
+                }
                 break;
-            case "3":
-                result = "审核中";
+            case 3:
+                if (status == 10 || status == 0 || status == 2) {
+                    result = "审核中";
+                } else if (status == 9) {
+                    result = "审核拒绝";
+                }
                 break;
-            case "4":
-                result = "领取金额";
+            case 4:
+                if (status == 2) {
+                    result = "领取金额";
+                } else if (status == 11) {
+                    result = "领取超时";
+                } else if (status == 9) {
+                    result = "领取拒件";
+                }
                 break;
-            case "5":
-                result = "放款中";
+            case 5:
+                if (status == 2 || status == 3) {
+                    result = "放款中";
+                } else if (status == 7) {
+                    result = "放款失败";
+                } else if (status == 9) {
+                    result = "放款拒绝";
+                }
                 break;
-            case "6":
-                result = "还款中";
+            case 6:
+                if (status == 1) {
+                    result = "放款成功";
+                }
                 break;
-            case "7":
-                result = "受理中";
+            case 7:
+                if (status == 10 || status == 4) {
+                    result = "受理中";
+                } else if (status == 9) {
+                    result = "推送拒件";
+                }
                 break;
-            default:
-                result = "受理中";
         }
         return result;
     }

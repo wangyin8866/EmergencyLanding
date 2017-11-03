@@ -25,6 +25,7 @@ import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
+import com.zyjr.emergencylending.utils.SPUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
         //是否有消息
-        mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
+        if (Config.TRUE.equals(SPUtils.getString(mContext, Config.KEY_LOGIN, ""))) {
+            mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
+        }
     }
 
     protected void init() {
