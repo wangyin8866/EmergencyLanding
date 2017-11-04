@@ -196,9 +196,8 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        } else if (requestCode == INTENT_ZHIMA_CODE && resultCode == RESULT_OK) {
-            loadingAuthStatus();
-        } else if (requestCode == INTENT_MOBILE_CODE && resultCode == RESULT_OK) {
+        } else if ((requestCode == INTENT_ZHIMA_CODE
+                || requestCode == INTENT_MOBILE_CODE) && resultCode == RESULT_OK) {
             loadingAuthStatus();
         }
     }

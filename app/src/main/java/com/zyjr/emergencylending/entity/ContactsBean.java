@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author neil
  * Created on 2017/10/24
  */
+@Deprecated
 public class ContactsBean implements Serializable{
 
     private static final long serialVersionUID = -1234450754576205050L;

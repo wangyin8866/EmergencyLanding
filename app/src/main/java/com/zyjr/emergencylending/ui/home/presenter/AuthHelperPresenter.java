@@ -21,7 +21,6 @@ import java.util.Map;
 /**
  * 提交认证信息
  * Created by neil on 2017/10/25
- *
  */
 public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
 
@@ -75,15 +74,15 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
         invoke(AuthHelperModel.getInstance().submitMobileAuthInfo(params), new ProgressSubscriber<ApiResult<AuthInfoBean>>(new SubscriberOnNextListener<ApiResult<AuthInfoBean>>() {
             @Override
             public void onNext(ApiResult<AuthInfoBean> result) {
-                LogUtils.d("提交认证信息成功---->" + result.getResult());
-                if (result.getFlag().equals("API0000")) {
-                    if (result.getResult() != null) {
-                        LogUtils.d("运营商采集认证成功---->" + result.getResult());
-//                        getView().onSuccessSubmit(Constants.GET_PERSONAL_INFO, result.getResult());
-                    }
+                if (result.getFlag().equals("00040004")) {
+                    LogUtils.d("运营商采集认证,获取短信验证码成功---->" + result.getMsg());
+                    getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getMsg());
+                } else if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("运营商采集认证成功---->" + result.getMsg());
+                    getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), "已完成提交");
                 } else {
                     LogUtils.d("运营商采集认证失败---->" + result.getFlag() + "," + result.getMsg());
-//                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getMsg());
+                    getView().onFail(Constants.MOBILE_COLLECT_AUTH, result.getMsg());
                 }
 
             }
@@ -91,6 +90,7 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("运营商采集认证异常--->" + e.getMessage());
+                getView().onError(Constants.MOBILE_COLLECT_AUTH, e.getMessage());
             }
         }, mContext));
     }
@@ -140,7 +140,6 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             }
         }, mContext));
     }
-
 
 
 }

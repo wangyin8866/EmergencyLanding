@@ -76,7 +76,7 @@
             android:layout_marginLeft="14.5dp"
             android:layout_marginTop="8.5dp"
             android:layout_toRightOf="@+id/tv_order_status4"
-            android:text="领取金额"
+            android:text="放款中"
             android:textSize="12sp" />
 
         <TextView

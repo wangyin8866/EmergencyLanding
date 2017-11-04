@@ -126,4 +126,6 @@ public class Constants {
     public static final String JUDGE_MOBILE_CODE_VALIDE = "45";
     // 获取当前用户有效借款订单
     public static final String GET_CURRENT_EFFECTIVE_LOAN_ORDER = "46";
+    // 运营商采集认证
+    public static final String MOBILE_COLLECT_AUTH = "47";
 }

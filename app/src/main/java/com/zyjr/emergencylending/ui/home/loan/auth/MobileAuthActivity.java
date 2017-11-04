@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.loan.auth;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -155,26 +156,38 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
         params.put("account", account);
         params.put("type", type);
         params.put("password", password);
-        params.put("captcha", password);
+        params.put("captcha", captcha);
         mPresenter.submitMobileAuthInfo(params);
     }
 
     @Override
-    public void onSuccessSubmit(String returnCode, AuthInfoBean bean) {
-
+    public void onSuccessSubmit(String apiCode, String returnCode, String msg) {
+        if (returnCode.equals("00040004")) {
+            // 短信发送成功
+            llMobileValidateCode.setVisibility(View.VISIBLE);
+            flag = "2";
+            etMobileValidateCode.setText("");
+        } else if (returnCode.equals("API0000")) {
+            // 提交成功
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        } else {
+            ToastAlone.showLongToast(this, msg);
+        }
     }
 
     @Override
     public void onSuccessJudgeMobileValide(String apiCode, MobileBean bean) {
         mobileBean = bean;
-        if (mobileBean.getStatus().equals("0")) {
-            llMobileValidateCode.setVisibility(View.GONE);
-            flag = "1";
-        } else if (mobileBean.getStatus().equals("1")) {
-            llMobileValidateCode.setVisibility(View.VISIBLE);
-            flag = "2";
-            etMobileValidateCode.setText("");
-        }
+//        if (mobileBean.getStatus().equals("0")) {
+//            llMobileValidateCode.setVisibility(View.GONE);
+//            flag = "1";
+//        } else if (mobileBean.getStatus().equals("1")) {
+//            llMobileValidateCode.setVisibility(View.VISIBLE);
+//            flag = "2";
+//            etMobileValidateCode.setText("");
+//        }
     }
 
     @Override

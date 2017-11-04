@@ -6,7 +6,7 @@ import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
-import com.zyjr.emergencylending.entity.StoreBean;
+import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.service.home.loan.WriteInfoService;
 import com.zyjr.emergencylending.utils.SPUtils;
@@ -52,7 +52,7 @@ public class WriteInfoModel extends BaseModel {
         return writeInfoService.getMayApplyProductType(params);
     }
 
-    public Observable<ApiResult<StoreBean>> getLocalStoreList(Map<String, String> params){
+    public Observable<ApiResult<StoreResultBean>> getLocalStoreList(Map<String, String> params){
         params.put("router", NetConstantValues.ROUTER_GET_LOCAL_STORE_LIST);
         return writeInfoService.getLocalStoreList(params);
     }

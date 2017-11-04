@@ -159,7 +159,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
                 } else {
-                    Intent intent1 = new Intent(getActivity(), LoanOrderStatusActivity.class);
+                    Intent intent1 = new Intent(getActivity(), LoanMainActivity.class);
                     intent1.putExtra("flag", "offline");
                     startActivity(intent1);
                 }

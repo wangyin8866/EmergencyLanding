@@ -7,7 +7,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Constants;
-import com.zyjr.emergencylending.entity.StoreBean;
+import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.model.home.loan.WriteInfoModel;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -27,15 +27,24 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
     }
 
     public void getLocalStoreList(Map<String, String> params) {
-        invoke(WriteInfoModel.getInstance().getLocalStoreList(params), new ProgressSubscriber<ApiResult<StoreBean>>(new SubscriberOnNextListener<ApiResult<StoreBean>>() {
+        invoke(WriteInfoModel.getInstance().getLocalStoreList(params), new ProgressSubscriber<ApiResult<StoreResultBean>>(new SubscriberOnNextListener<ApiResult<StoreResultBean>>() {
             @Override
-            public void onNext(ApiResult<StoreBean> storeBeanApiResult) {
-
+            public void onNext(ApiResult<StoreResultBean> result) {
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取支持门店信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGetLocalStoreList(Constants.SUBMIT_LOAN_INFORMATION, result.getResult().getStorePoList());
+                    }
+                } else {
+                    LogUtils.d("获取支持门店信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
+                }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                LogUtils.d("获取支持门店信息异常---->" + e.getMessage());
+                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, e.getMessage());
             }
         }, mContext));
     }

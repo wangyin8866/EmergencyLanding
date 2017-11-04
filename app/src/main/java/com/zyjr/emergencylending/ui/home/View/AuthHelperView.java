@@ -1,6 +1,5 @@
 package com.zyjr.emergencylending.ui.home.View;
 
-import com.zyjr.emergencylending.entity.AuthInfoBean;
 import com.zyjr.emergencylending.entity.MobileBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ZhimaAuthBean;
@@ -11,7 +10,7 @@ import com.zyjr.emergencylending.entity.ZhimaAuthBean;
  */
 public interface AuthHelperView {
 
-    void onSuccessSubmit(String apiCode, AuthInfoBean bean);
+    void onSuccessSubmit(String apiCode, String code, String result);
 
     void onSuccessGetUserInfo(String apiCode, PersonalInfoBean bean);
 

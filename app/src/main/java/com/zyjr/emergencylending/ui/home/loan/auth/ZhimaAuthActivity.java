@@ -89,6 +89,9 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
             @Override
             public void OnLeftButtonClicked() {
                 finish();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
             @Override
@@ -184,7 +187,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
     }
 
     @Override
-    public void onSuccessSubmit(String returnCode, AuthInfoBean bean) {
+    public void onSuccessSubmit(String apiCode, String returnCode, String msg) {
 
     }
 

@@ -292,6 +292,11 @@
             android:name="com.zyjr.emergencylending.ui.home.loan.offline.ApplyConfirmActivity"
             android:screenOrientation="portrait" />
 
+        <!-- 借款提交成功页面 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

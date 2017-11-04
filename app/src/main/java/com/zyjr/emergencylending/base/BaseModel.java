@@ -33,7 +33,7 @@ import rx.schedulers.Schedulers;
 
 public class BaseModel {
 
-    private static final int DEFAULT_TIMEOUT = 15;
+    private static final int DEFAULT_TIMEOUT = 60;
     protected Retrofit retrofit;
     private OkHttpClient.Builder httpClientBuilder;
 

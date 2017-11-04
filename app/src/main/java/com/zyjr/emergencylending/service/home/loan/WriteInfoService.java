@@ -3,7 +3,7 @@ package com.zyjr.emergencylending.service.home.loan;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
-import com.zyjr.emergencylending.entity.StoreBean;
+import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 
 import java.util.Map;
@@ -46,7 +46,7 @@ public interface WriteInfoService {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<StoreBean>> getLocalStoreList(@FieldMap Map<String,String> map);
+    Observable<ApiResult<StoreResultBean>> getLocalStoreList(@FieldMap Map<String,String> map);
 
 }
 

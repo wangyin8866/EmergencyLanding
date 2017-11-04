@@ -33,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="10000元"
                 android:textColor="#525252"
                 android:textSize="16sp" />
 
@@ -62,18 +61,17 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/tv_offline_borrow_week"
+                android:id="@+id/tv_offline_borrow_period"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="36周"
                 android:textColor="#525252"
                 android:textSize="16sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_offline_borrow_week"
+                android:layout_below="@+id/tv_offline_borrow_period"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="借款周期"

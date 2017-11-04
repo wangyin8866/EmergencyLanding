@@ -60,6 +60,7 @@
     <View
         style="@style/horizontal_line_style"
         android:layout_height="1dp"
+        android:visibility="gone"
         android:layout_gravity="bottom" />
 
 </LinearLayout>

@@ -203,7 +203,6 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private void loadingBindBankcardInfo() {
         loadingDialog = CustomProgressDialog.createDialog(this);
-        loadingDialog.setCancelable(false);
         loadingDialog.show();
         Map<String, String> paramsMap = new HashMap<>();
         mPresenter.getBindBankcardInfo(paramsMap);
@@ -270,6 +269,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
+        loadingDialog.dismiss();
         rlAddBankcard.setVisibility(View.VISIBLE);
         rlEditBankcard.setVisibility(View.GONE);
         topBar.setRightButtonVisible(View.INVISIBLE);

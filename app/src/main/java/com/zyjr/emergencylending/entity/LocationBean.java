@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.entity;
 /**
  * 用户归属区域信息
  */
+@Deprecated
 public class LocationBean {
     public String mCurrentProvince;
     public String mCurrentDistrict;

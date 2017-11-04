@@ -151,8 +151,6 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
             ToastAlone.showLongToast(this, "请重新获取信息");
             return;
         }
-        bankcardInfo.setBank_username(userName);
-        bankcardInfo.setId_card(idcardNumber);
         bankcardInfo.setBankcard_no(bankcardNumber);
         bankcardInfo.setBank_name(openBank);
         bankcardInfo.setBank_phone(reservedPhone);
@@ -163,7 +161,7 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private void showBankcardInfo(BankcardInfo bankcard) {
         tvUserName.setText(bankcard.getBank_username());
         tvIdcardNumer.setText(StringUtil.hideIDcard(bankcard.getId_card()));
-        etBankcardNumber.setText(StringUtil.hideBankCard(bankcard.getBankcard_no()));
+        etBankcardNumber.setText(bankcard.getBankcard_no());
         tvOpenbank.setText(bankcard.getBank_name());
     }
 
@@ -215,7 +213,6 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
                             if (StringUtil.isNotEmpty(bankDbBean.getBank_name())) {
                                 bankcardInfo.setBank_name(bankDbBean.getBank_name());
                                 tvOpenbank.setText(bankDbBean.getBank_name().trim());
-                                ToastAlone.showShortToast(EditBankcardActivity.this, bankDbBean.getBank_name());
                             }
                         }
                     }

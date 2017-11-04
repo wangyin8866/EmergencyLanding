@@ -61,8 +61,8 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     TextView tvOrderStatus6; // 订单状态6 还款中
     @BindView(R.id.tv_loan_money)
     TextView tvLoadMoney; // 借款申请金额
-    @BindView(R.id.tv_loan_week)
-    TextView tvLoadWeek; // 借款申请周期
+    @BindView(R.id.tv_loan_period)
+    TextView tvLoadPeriod; // 借款申请周期
 
     @BindView(R.id.iv_order_status_icon)
     ImageView ivOrderStatusIcon;
@@ -93,19 +93,19 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             case R.id.tv_order_status2:  // 认证中 | 受理中 2
 
 
-                setOrderStatusInfo(1, 2);
+//                setOrderStatusInfo(1, 2);
                 break;
             case R.id.tv_order_status3:  // 审核中
-                setOrderStatusInfo(1, 3);
+//                setOrderStatusInfo(1, 3);
                 break;
             case R.id.tv_order_status4:  // 领取金额
-                setOrderStatusInfo(1, 4);
+//                setOrderStatusInfo(1, 4);
                 break;
             case R.id.tv_order_status5:  // 放款中
-                setOrderStatusInfo(1, 5);
+//                setOrderStatusInfo(1, 5);
                 break;
             case R.id.tv_order_status6:  // 还款中
-                setOrderStatusInfo(1, 6);
+//                setOrderStatusInfo(1, 6);
                 break;
         }
     }
@@ -115,13 +115,9 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         mPresenter.getCurrentOrderDetail(map);
     }
 
-    private void getCurrentEffectiveOrder(){
+    private void getCurrentEffectiveOrder() {
         Map<String, String> map = new HashMap<>();
         mPresenter.getCurrentEffectiveLoanOrder(map);
-    }
-
-    private void setOrderStatusInfo(int flag, int status) {
-        setOrderStatus(flag, status);
     }
 
 
@@ -132,13 +128,15 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     /**
      * 订单状态
      *
-     * @param flag   普通用户|业务员
-     * @param status 订单状态
+     * @param flag        普通用户|业务员
+     * @param stepStatus  步骤码
+     * @param orderStatus 订单状态
      */
-    private void setOrderStatus(int flag, int status) {
+    private void setOrderStatusInfo(String flag, String stepStatus, String orderStatus, String msg) {
         Drawable drawable = null;
         int orderStatusIocn = 0;
-        if (status == 2 || status == 1) {
+        if (stepStatus.equals("2") && orderStatus.equals("10")) {
+            // 认证中
             drawable = getResources().getDrawable(R.mipmap.orderprocess_a);
             orderStatusIocn = R.mipmap.emptypage_authentication;
             setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
@@ -148,37 +146,78 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
             btnOrderOperate.setText("前往认证");
             btnOrderOperate.setEnabled(true);
-        } else if (status == 3) {
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_b);
+        } else if (stepStatus.equals("7")) {
+            // 受理中
+            if (orderStatus.equals("10") || orderStatus.equals("4")) {
+                btnOrderOperate.setText("受理中");
+                btnOrderOperate.setEnabled(false);
+            } else if (orderStatus.equals("9")) {
+                btnOrderOperate.setText("重新申请");
+                ToastAlone.showLongToast(this, msg);
+            }
+            drawable = getResources().getDrawable(R.mipmap.orderprocess_a);
             orderStatusIocn = R.mipmap.emptypage_examine;
+            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus3, "受理中", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+        } else if (stepStatus.equals("3")) {
+            // 审核中
+            if (orderStatus.equals("10") || orderStatus.equals("0") || orderStatus.equals("2")) {
+                btnOrderOperate.setText("审核中");
+            } else if (orderStatus.equals("9")) {
+                btnOrderOperate.setText("审核拒绝");
+                ToastAlone.showLongToast(this, msg);
+            }
+            btnOrderOperate.setEnabled(false);
+            drawable = getResources().getDrawable(R.mipmap.orderprocess_b);
+            orderStatusIocn = R.mipmap.emptypage_getthemoney;
             setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.order_uncomplected_color));
             setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.order_uncomplected_color));
             setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
-            btnOrderOperate.setText("审核中");
-            btnOrderOperate.setEnabled(false);
-        } else if (status == 4) {
+        } else if (stepStatus.equals("4")) {
+            // 领取金额
+            if (orderStatus.equals("2")) {
+                ToastAlone.showLongToast(this, "请尽快领取金额");
+                btnOrderOperate.setText("验证问题");
+                btnOrderOperate.setEnabled(true);
+            } else if (orderStatus.equals("11")) {
+                ToastAlone.showLongToast(this, "领取金额超时");
+                btnOrderOperate.setText("重新申请");
+            } else if (orderStatus.equals("9")) {
+                btnOrderOperate.setText("领取拒绝");
+                ToastAlone.showLongToast(this, msg);
+            }
             drawable = getResources().getDrawable(R.mipmap.orderprocess_c);
-            orderStatusIocn = R.mipmap.emptypage_getthemoney;
-            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
-            btnOrderOperate.setText("领取金额");
-            btnOrderOperate.setEnabled(true);
-        } else if (status == 5) {
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_d);
             orderStatusIocn = R.mipmap.emptypage_loan;
             setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
-            btnOrderOperate.setText("放款中");
-            btnOrderOperate.setEnabled(false);
-        } else if (status == 6) {
+        } else if (stepStatus.equals("5")) {
+            if (orderStatus.equals("2") || orderStatus.equals("3")) {
+                btnOrderOperate.setText("放款中");
+                btnOrderOperate.setEnabled(false);
+            } else if (orderStatus.equals("7")) {
+                btnOrderOperate.setText("前往修改");
+                ToastAlone.showLongToast(this, "核实并修改银行卡,等待系统自动放款");
+            }
+            drawable = getResources().getDrawable(R.mipmap.orderprocess_d);
+            orderStatusIocn = R.mipmap.emptypage_repayment;
+            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+        } else if (stepStatus.equals("6")) {
+            if (orderStatus.equals("1")) {
+                btnOrderOperate.setText("放款成功");
+                btnOrderOperate.setEnabled(true);
+            }
             drawable = getResources().getDrawable(R.mipmap.orderprocess_e);
             orderStatusIocn = R.mipmap.emptypage_repayment;
             setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
@@ -186,8 +225,6 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.white));
             setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.white));
-            btnOrderOperate.setText("立即还款");
-            btnOrderOperate.setEnabled(true);
         }
         ivOrderStatusIcon.setImageResource(orderStatusIocn);
         ivOrderStatus.setBackgroundDrawable(drawable);
@@ -201,6 +238,14 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     @Override
     public void onSuccessGet(String returnCode, LoanOrderBean model) {
         loanOrderBean = model;
+        tvLoadPeriod.setText(loanOrderBean.getLoan_amount() + "元");
+        if (loanOrderBean.getZq_unit().equals("1")) {
+            tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "天");
+        } else if(loanOrderBean.getZq_unit().equals("2")){
+            tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "周");
+        }
+        setOrderStatusInfo("", loanOrderBean.getStep_status(), loanOrderBean.getOrder_status(), "");
+
         if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             //业务员
         } else {

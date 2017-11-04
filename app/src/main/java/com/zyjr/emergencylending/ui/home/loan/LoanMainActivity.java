@@ -20,6 +20,7 @@ import com.zyjr.emergencylending.ui.home.View.ProductInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.ProductInfoPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
 
 import java.util.HashMap;
@@ -67,8 +68,6 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     private String online_type = ""; // 产品类型
     private String product_id = ""; // 产品id
     // 急速贷款
-    private int moneyProgress = 1; // 金额进度
-    private int periodProgress = 1; // 借款周期进度
     private int minLoanPeriod = 0; // 最低借款期限
     private int minLoanPeriodUint = 0; // 最低借款期限
     private int maxLoanPeriod = 0; // 最高借款期限
@@ -109,6 +108,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                 intent.putExtra("online_type", online_type);
                 intent.putExtra("product_id", product_id);
                 intent.putExtra("apply_amount", loanMoney + ""); // 借款金额
+                intent.putExtra("periodProgress", seekbarPeriod.getProgress() + ""); // 周期进度值
+                intent.putExtra("moneyProgress", seekbarMoney.getProgress() + ""); // 金额
                 if (loanPeriod.contains("天")) {
                     int indexEnd = loanPeriod.indexOf("天");
                     loanPeriod = loanPeriod.substring(0, indexEnd);
@@ -116,6 +117,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                     intent.putExtra("apply_periods", "1"); // 申请期数 ps:14天，14天为1期,共1期,所以期数间隔为14天
                     intent.putExtra("apply_zq", "14"); // 申请期数间隔
                     intent.putExtra("apply_periods_unit", loanPeriodUnit); // 申请周期单位
+
                 } else if (loanPeriod.contains("周")) {
                     int indexEnd = loanPeriod.indexOf("周");
                     loanPeriod = loanPeriod.substring(0, indexEnd);
@@ -124,7 +126,8 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                     intent.putExtra("apply_zq", "1");
                     intent.putExtra("apply_periods_unit", loanPeriodUnit);
                 }
-                LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",apply_amount:" + loanMoney + ",apply_periods:" + loanPeriod + ",apply_periods_unit:" + loanPeriodUnit + ",product_id:" + product_id);
+                LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",apply_amount:" + loanMoney + ",apply_periods:" + loanPeriod + ",apply_periods_unit:" + loanPeriodUnit
+                        + ",product_id:" + product_id + ",periodProgress:" + seekbarPeriod.getProgress() + ",moneyProgress:" + seekbarMoney.getProgress());
                 startActivity(intent);
                 break;
             case R.id.layout_online_support_cities:
@@ -172,8 +175,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         seekbarMoney.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                moneyProgress = progress;
-                loanMoney = Arithmetic.progressToMoney(moneyProgress, minLoanMoney, maxLoanMoney);
+                loanMoney = Arithmetic.progressToMoney(progress, minLoanMoney, maxLoanMoney);
                 LogUtils.e("借款金额:" + loanMoney);
             }
 
@@ -189,8 +191,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         seekbarPeriod.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                periodProgress = progress;
-                loanPeriod = Arithmetic.progressToWeek(periodProgress, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
+                loanPeriod = Arithmetic.progressToWeek(progress, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
                 LogUtils.e("借款周期:" + loanPeriod);
             }
 
@@ -292,9 +293,9 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     @Override
     public void onError(String returnCode, String errorMsg) {
         if (returnCode.equals(Constants.GET_SUPPORT_CITIES_LIST)) {
-
+            ToastAlone.showLongToast(this, errorMsg);
         } else if (returnCode.equals(Constants.GET_PRODUCT_INTRODUCE)) {
-
+            ToastAlone.showLongToast(this, errorMsg);
         }
     }
 
