@@ -54,10 +54,8 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (result.getFlag().equals("API0000")) {
-                    if (result.getResult() != null) {
-                        LogUtils.d("提交借款资料成功---->" + result.getResult().toString());
-                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
-                    }
+                    LogUtils.d("提交借款资料成功---->" + result.getResult().toString());
+                    getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
                 } else {
                     LogUtils.d("提交借款资料失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());

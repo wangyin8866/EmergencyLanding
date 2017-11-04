@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
  * 备注: 放款中
  */
 
-public class SendLoanProcessingActivity extends BaseActivity{
+public class SendLoanProcessingActivity extends BaseActivity {
     @BindView(R.id.top_bar)
     TopBar topBar;
 
@@ -29,6 +29,12 @@ public class SendLoanProcessingActivity extends BaseActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_loan_processing);
         ButterKnife.bind(this);
+        init();
+
+    }
+
+
+    private void init() {
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {

@@ -1,7 +1,9 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -41,6 +43,8 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     TextView tvLoanAgreement3; // 账户管理与数据管理协议
     @BindView(R.id.tv_loan_agreement_4)
     TextView tvLoanAgreement4; // 还款明细说明
+    @BindView(R.id.btn_receive_quickly)
+    Button btnReceiveQuickly;
     private ReceiveMoneyBean receiveMoneyBean = null;
 
     @Override
@@ -58,7 +62,7 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         loadingReceiveMoneyInfo();
     }
 
-    @OnClick({R.id.tv_loan_agreement_1, R.id.tv_loan_agreement_2, R.id.tv_loan_agreement_3, R.id.tv_loan_agreement_4})
+    @OnClick({R.id.tv_loan_agreement_1, R.id.tv_loan_agreement_2, R.id.tv_loan_agreement_3, R.id.tv_loan_agreement_4, R.id.btn_receive_quickly})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_loan_agreement_1:
@@ -71,6 +75,12 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
                 break;
 
             case R.id.tv_loan_agreement_4:
+                break;
+
+            case R.id.btn_receive_quickly:
+                Intent intent = new Intent(this, SendLoanProcessingActivity.class);
+                startActivity(intent);
+                finish();
                 break;
         }
     }

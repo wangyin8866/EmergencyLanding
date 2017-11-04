@@ -8,7 +8,9 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
+import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.model.home.loan.ContactInfoModel;
+import com.zyjr.emergencylending.model.home.loan.PersonalInfoModel;
 import com.zyjr.emergencylending.ui.home.View.ContactInfoView;
 import com.zyjr.emergencylending.utils.LogUtils;
 
@@ -84,6 +86,29 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
             public void onError(Throwable e) {
                 LogUtils.d("修改联系人信息异常---->" + e.getMessage());
                 getView().onError(Constants.EDIT_CONTACT_INFO, e.getMessage());
+            }
+        }, mContext));
+    }
+
+    public void getPersonalInfo(Map<String, String> params) {
+        invoke(PersonalInfoModel.getInstance().getPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
+            @Override
+            public void onNext(ApiResult<PersonalInfoBean> result) {
+                if (result.getFlag().equals("API0000")) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取个人信息成功---->" + result.getResult());
+                        getView().onSuccessGetPersonInfo(Constants.GET_PERSONAL_INFO, result.getResult());
+                    }
+                } else {
+                    LogUtils.d("获取个人信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("获取个人信息异常---->" + e.getMessage());
+                getView().onError(Constants.GET_PERSONAL_INFO, e.getMessage());
             }
         }, mContext));
     }

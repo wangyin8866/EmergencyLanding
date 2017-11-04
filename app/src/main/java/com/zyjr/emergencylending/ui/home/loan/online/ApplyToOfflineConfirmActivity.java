@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.loan.online;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
+import com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity;
 import com.zyjr.emergencylending.ui.home.presenter.OfflineApplyPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.CommonUtils;
@@ -94,7 +96,7 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
 
         initData();
         initListener();
-
+        getLocalStoreList();
     }
 
     @OnClick({R.id.btn_submit_apply})
@@ -234,6 +236,7 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
         }
         paramsMap.put("store", storeBean.getStoreId()); // 门店iD
         paramsMap.put("store_name", storeBean.getStoreName());  // 门店名称
+        mPresenter.submitLoanInformation(paramsMap);
     }
 
     @Override
@@ -258,16 +261,20 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
 
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
-
+        ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent(this, LoanApplyResultActivity.class);
+        intent.putExtra("online_type", online_type);
+        intent.putExtra("product_id", product_id);
+        startActivity(intent);
     }
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-
+        ToastAlone.showLongToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 }

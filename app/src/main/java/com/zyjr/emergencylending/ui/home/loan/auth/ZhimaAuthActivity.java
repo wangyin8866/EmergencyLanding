@@ -88,7 +88,6 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
-                finish();
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();

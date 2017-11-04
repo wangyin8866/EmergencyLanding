@@ -44,12 +44,11 @@
                     android:src="@mipmap/emptypage_loan" />
 
                 <TextView
-                    android:id="@+id/tv_checking"
+                    android:id="@+id/tv_status_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
-                    android:text="审核中"
                     android:textColor="@color/mine_center_bg"
                     android:textSize="14sp" />
 
@@ -62,13 +61,13 @@
                     <ImageView
                         android:id="@+id/iv_order_status"
                         android:layout_width="16dp"
-                        android:layout_height="180dp"
-                        android:background="@mipmap/audit_process" />
+                        android:layout_height="180dp" />
 
                     <TextView
                         android:id="@+id/tv_step_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="-4dp"
                         android:layout_marginLeft="9dp"
                         android:layout_toRightOf="@+id/iv_order_status"
                         android:text="完善信息"
@@ -81,7 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/tv_step_one"
                         android:layout_below="@+id/tv_step_one"
-                        android:layout_marginTop="39dp"
+                        android:layout_marginTop="37dp"
                         android:text="认证信息"
                         android:textColor="@color/input_text_color"
                         android:textSize="14sp" />
@@ -92,7 +91,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@+id/tv_step_one"
                         android:layout_below="@+id/tv_step_two"
-                        android:layout_marginTop="38dp"
+                        android:layout_marginTop="36dp"
                         android:text="审核中"
                         android:textColor="@color/input_text_color"
                         android:textSize="14sp" />

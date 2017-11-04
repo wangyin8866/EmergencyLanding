@@ -17,10 +17,12 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
+import com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity;
 import com.zyjr.emergencylending.ui.home.presenter.OfflineApplyPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
 
 import java.util.HashMap;
@@ -260,16 +262,20 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
 
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
-
+        ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent(this, LoanApplyResultActivity.class);
+        intent.putExtra("online_type", online_type);
+        intent.putExtra("product_id", product_id);
+        startActivity(intent);
     }
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-
+        ToastAlone.showLongToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-
+        ToastAlone.showLongToast(this, errorMsg);
     }
 }

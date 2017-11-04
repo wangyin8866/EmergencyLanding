@@ -317,12 +317,12 @@ public class AppConfig {
     }
 
     /**
-     * 第一个联系人选择
+     * 第一联系人选择
      *
      * @param code
      * @return
      */
-    public static List<CodeBean> getOneContacts(String code) {
+    public static List<CodeBean> getFirstContacts(String code) {
         List<CodeBean> liveStatu = new ArrayList();
         switch (code) {
             case "802"://已婚
@@ -347,12 +347,12 @@ public class AppConfig {
     }
 
     /**
-     * 第二个选择
+     * 第二联系人选择
      *
      * @param code
      * @return
      */
-    public static List<CodeBean> getTowContacts(String code) {
+    public static List<CodeBean> getSecondContacts(String code) {
         List<CodeBean> liveStatu = new ArrayList();
         switch (code) {
             case "802"://已婚
@@ -394,7 +394,7 @@ public class AppConfig {
      *
      * @param conName
      */
-    public static String getContCode(String conName) {
+    public static String getContactCode(String conName) {
         if (TextUtils.isEmpty(conName)) {
             return "";
         }
@@ -427,59 +427,22 @@ public class AppConfig {
     }
 
     /**
-     * 根据名称获取联系人关系name
-     *
-     * @param conCode
-     */
-    public static String getContNmae(String conCode) {
-        if (TextUtils.isEmpty(conCode)) {
-            return "";
-        }
-        String conde = "";
-        switch (conCode) {
-            case "2201":
-                conde = "父子（女）";
-                break;
-            case "2202":
-                conde = "母子（女）";
-                break;
-            case "2203":
-                conde = "配偶";
-                break;
-            case "2204":
-                conde = "子女";
-                break;
-            case "2206":
-                conde = "同事";
-                break;
-            case "2207":
-                conde = "朋友";
-                break;
-            case "2208":
-                conde = "兄弟姐妹";
-                break;
-
-        }
-        return conde;
-    }
-
-    /**
-     * @param cont      联系人1还是联系人2
-     * @param code      联系人CODE
-     * @param contStaes 婚姻状态
+     * @param cont           联系人1还是联系人2
+     * @param code           联系人CODE
+     * @param marriageStatus 婚姻状态
      * @return
      */
-    public static String getCodeName(int cont, String code, String contStaes) {
+    public static String getCodeName(int cont, String code, String marriageStatus) {
         String conName = "";
-        //没有穿联系人，或者没有穿联系人CODE 获取没穿婚姻状态都返回空
-        if (cont == 0 || TextUtils.isEmpty(code) || TextUtils.isEmpty(contStaes)) {
+        //没有传联系人，或者没有传联系人CODE 获取没穿婚姻状态都返回空
+        if (cont == 0 || TextUtils.isEmpty(code) || TextUtils.isEmpty(marriageStatus)) {
             return conName;
         }
         List<CodeBean> mLists = null;
         if (cont == 1) {
-            mLists = getOneContacts(contStaes);
+            mLists = getFirstContacts(marriageStatus);
         } else if (cont == 2) {
-            mLists = getTowContacts(contStaes);
+            mLists = getSecondContacts(marriageStatus);
 
         }
         if (mLists == null || mLists.size() < 1) {
@@ -492,5 +455,21 @@ public class AppConfig {
             }
         }
         return conName;
+    }
+
+    /**
+     * 所有关系bean
+     * @return
+     */
+    public static List<CodeBean> allContactRelation() {
+        List<CodeBean> contactRelation = new ArrayList();
+        contactRelation.add(new CodeBean(0, "2201", "父子（女）"));
+        contactRelation.add(new CodeBean(1, "2202", "母子（女）"));
+        contactRelation.add(new CodeBean(2, "2203", "配偶"));
+        contactRelation.add(new CodeBean(3, "2204", "子女"));
+        contactRelation.add(new CodeBean(5,"2206","同事"));
+        contactRelation.add(new CodeBean(6,"2207","朋友"));
+        contactRelation.add(new CodeBean(7,"2208","兄弟姐妹"));
+        return contactRelation;
     }
 }

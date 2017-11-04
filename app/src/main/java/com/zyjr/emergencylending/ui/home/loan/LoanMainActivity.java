@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;

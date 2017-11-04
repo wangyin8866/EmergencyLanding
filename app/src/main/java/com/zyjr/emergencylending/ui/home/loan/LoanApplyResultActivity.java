@@ -34,6 +34,8 @@ public class LoanApplyResultActivity extends BaseActivity {
     TextView tvStepTwo;
     @BindView(R.id.tv_step_three)
     TextView tvStepThree;
+    @BindView(R.id.tv_status_desc)
+    TextView tvStatusDesc;
 
 
     @Override
@@ -72,10 +74,11 @@ public class LoanApplyResultActivity extends BaseActivity {
         Intent intent = getIntent();
         String online_type = intent.getStringExtra("online_type");
         String product_id = intent.getStringExtra("product_id");
-        if (online_type.equals("1")) {
+        if (online_type.equals("0")) {
             // 线上
-            ivOrderStatus.setImageResource(R.mipmap.audit_process);
+            ivOrderStatus.setBackgroundResource(R.mipmap.audit_process);
             tvStepTwo.setText("认证信息");
+            tvStatusDesc.setText("审核中");
             // 出站管理
             ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
             ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
@@ -83,8 +86,10 @@ public class LoanApplyResultActivity extends BaseActivity {
             ActivityCollector.getInstance().popActivity(NoStoreApplyConfirmActivity.class);
         } else {
             // 线下
-            ivOrderStatus.setImageResource(R.mipmap.audit_process_a);
-            tvStepTwo.setText("审核中");
+            ivOrderStatus.setBackgroundResource(R.mipmap.audit_process_a);
+            tvStatusDesc.setText("受理中");
+            tvStepTwo.setText("受理中");
+            tvStepThree.setText("审核中");
             tvStepThree.setTextColor(getResources().getColor(R.color.front_text_color_hint));
             // 出站管理
             ActivityCollector.getInstance().popActivity(LoanMainActivity.class);

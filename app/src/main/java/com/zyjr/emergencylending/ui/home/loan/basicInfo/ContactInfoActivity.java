@@ -27,6 +27,7 @@ import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CodeBean;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
+import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.ui.home.View.ContactInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.ContactInfoPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
@@ -86,6 +87,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
     private ContactInfoBean contactInfoBean = null;
     private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String marriageCode = ""; // 结婚状态 801:未婚; 802:已婚; 806:离婚; 805:丧偶
 
     @Override
     protected ContactInfoPresenter createPresenter() {
@@ -105,28 +107,30 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_relation1:  // 关系1
-                SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, selectList1.size() > 0 ? selectList1 : selectList);
+//                SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, selectList1.size() > 0 ? selectList1 : selectList);
+                SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, removeSlectCodeBean(AppConfig.getFirstContacts(marriageCode), tvRelation2.getText().toString().trim()));
                 popRelationSelect1.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
                     public void onSelectClick(int index, CodeBean select1) {
                         relationCodeBean1 = select1;
-                        LogUtils.d("选择的关系信息1:" + select1.toString());
-                        tvRelation1.setText(select1.getName());
-                        selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
+                        LogUtils.d("选择的关系信息1:" + relationCodeBean1.toString());
+                        tvRelation1.setText(relationCodeBean1.getName());
+//                        selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
                     }
                 });
                 popRelationSelect1.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
 
             case R.id.ll_contact_relation2:  // 关系2
-                SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, selectList2.size() > 0 ? selectList2 : selectList);
+//                SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, selectList2.size() > 0 ? selectList2 : selectList);
+                SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, removeSlectCodeBean(AppConfig.getSecondContacts(marriageCode), tvRelation1.getText().toString().trim()));
                 popRelationSelect2.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
                     public void onSelectClick(int index, CodeBean select2) {
                         relationCodeBean2 = select2;
-                        LogUtils.d("选择的关系信息2:" + select2.toString());
-                        tvRelation2.setText(select2.getName());
-                        selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
+                        LogUtils.d("选择的关系信息2:" + relationCodeBean2.toString());
+                        tvRelation2.setText(relationCodeBean2.getName());
+//                        selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
                     }
                 });
                 popRelationSelect2.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -222,7 +226,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             ToastAlone.showLongToast(this, "请选择联系人电话!");
             return;
         }
-        if (StringUtil.isEmpty(relation1) && relationCodeBean1 == null) {
+        if (StringUtil.isEmpty(relation1) || relationCodeBean1 == null) {
             ToastAlone.showLongToast(this, "请选择“关系1”联系人!");
             return;
         }
@@ -234,7 +238,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             ToastAlone.showLongToast(this, "请选择联系人电话!");
             return;
         }
-        if (StringUtil.isEmpty(relation2) && relationCodeBean2 == null) {
+        if (StringUtil.isEmpty(relation2) || relationCodeBean2 == null) {
             ToastAlone.showLongToast(this, "请选择“关系2”联系人!");
             return;
         }
@@ -283,15 +287,21 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                             etContactPhone1.setText(contactBean1.getContact_phone());
                         }
                         if (StringUtil.isNotEmpty(contactBean1.getRelation())) {
-                            // 关系1
-                            int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
-                            if (index != -1) {
-                                relationCodeBean1 = AppConfig.contactRelation().get(index);
-                                tvRelation1.setText(relationCodeBean1.getName());
-                                selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
-                                LogUtils.d("获取填写关系1信息:" + relationCodeBean1.toString());
+                            if (StringUtil.isEmpty(marriageCode)) {
+                                tvRelation1.setText(contactBean1.getRelation());
                             } else {
-                                tvRelation1.setText("");
+                                String cont1 = AppConfig.getCodeName(1, contactBean1.getRelation(), marriageCode);
+                                if (StringUtil.isEmpty(cont1)) {
+                                    tvRelation1.setText("");
+                                } else {
+                                    tvRelation1.setText(cont1);
+                                    // 关系1
+                                    int index = AppConfig.allContactRelation().indexOf(new CodeBean(0, contactBean1.getRelation(), ""));
+                                    if (index != -1) {
+                                        relationCodeBean1 = AppConfig.allContactRelation().get(index);
+                                        LogUtils.d("获取填写关系1信息:" + relationCodeBean1.toString());
+                                    }
+                                }
                             }
                         }
                         break;
@@ -310,15 +320,21 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                             etContactPhone2.setText(contactBean2.getContact_phone());
                         }
                         if (StringUtil.isNotEmpty(contactBean2.getRelation())) {
-                            // 关系2
-                            int index = AppConfig.contactRelation().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
-                            if (index != -1) {
-                                relationCodeBean2 = AppConfig.contactRelation().get(index);
-                                tvRelation2.setText(relationCodeBean2.getName());
-                                selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
-                                LogUtils.d("获取填写关系2信息:" + relationCodeBean2.toString());
+                            if (StringUtil.isEmpty(marriageCode)) {
+                                tvRelation2.setText(contactBean2.getRelation());
                             } else {
-                                tvRelation2.setText("");
+                                String cont1 = AppConfig.getCodeName(2, contactBean2.getRelation(), marriageCode);
+                                if (StringUtil.isEmpty(cont1)) {
+                                    tvRelation2.setText("");
+                                } else {
+                                    tvRelation2.setText(cont1);
+                                    // 关系2
+                                    int index = AppConfig.allContactRelation().indexOf(new CodeBean(0, contactBean2.getRelation(), ""));
+                                    if (index != -1) {
+                                        relationCodeBean2 = AppConfig.allContactRelation().get(index);
+                                        LogUtils.d("获取填写关系2信息:" + relationCodeBean2.toString());
+                                    }
+                                }
                             }
                         }
                         break;
@@ -329,7 +345,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
 
     private void init() {
-        selectList = AppConfig.contactRelation(); // 初始化联系人关系选择
+//        selectList = AppConfig.contactRelation(); // 初始化联系人关系选择
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -341,19 +357,27 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
             }
         });
+
+        // 添加联系人资料
+
     }
 
     private void initGetData() {
         Intent intent = getIntent();
         isEdit = intent.getStringExtra("isEdit");
         String status = intent.getStringExtra("status");
-        // 已完成状态获取资料信息
-        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            loadingContactInfo();
-        }
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
+            loadingContactInfo();
+        } else {
+            // 已完成状态获取资料信息
+            if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+                // 已完成资料时,先获取用户信息(获取婚姻状态),在获取联系人资料
+                getPersonInfo();
+            } else {
+                getPersonInfo();
+            }
         }
     }
 
@@ -405,9 +429,32 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         }
     }
 
+    /**
+     * 清除选择的
+     */
+    private List<CodeBean> removeSlectCodeBean(List<CodeBean> list, String msg) {
+        List<CodeBean> empCodeBeans = new ArrayList<>();
+        for (CodeBean mCodeBean : list) {
+            if (!mCodeBean.getName().equals(msg)) {
+                empCodeBeans.add(mCodeBean);
+            }
+        }
+        return empCodeBeans;
+    }
+
+
+    private void getPersonInfo() {
+        Map<String, String> paramMaps = new HashMap<>();
+        mPresenter.getPersonalInfo(paramMaps);
+    }
+
     @Override
     public void onSuccessGet(String returnCode, List<ContactInfoBean> beanList) {
         showContactInfo(beanList);
+//        if (isEdit.equals("1")) {
+//            // 如果是可编辑状态,查询用户婚姻状态
+//            getPersonInfo();
+//        }
     }
 
     @Override
@@ -436,4 +483,10 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         ToastAlone.showLongToast(this, errorMsg);
     }
 
+    @Override
+    public void onSuccessGetPersonInfo(String apiCode, PersonalInfoBean bean) {
+        marriageCode = bean.getMarriage();
+        // 已完成资料时,
+        loadingContactInfo();
+    }
 }
