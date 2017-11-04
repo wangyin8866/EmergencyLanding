@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
+import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
@@ -143,7 +144,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.pro1_btn:
-                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
@@ -154,7 +155,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 }
                 break;
             case R.id.pro2_btn:
-                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
@@ -211,5 +212,10 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     public void isEffectiveOrder(EffectiveOrderBean baseBean) {
         is_effective_order = baseBean.getResult().getIs_effective_order();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

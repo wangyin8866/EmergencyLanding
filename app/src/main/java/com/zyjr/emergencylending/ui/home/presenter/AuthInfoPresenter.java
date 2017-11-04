@@ -31,7 +31,6 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
     }
 
 
-
     public void getCurrentAuthInfo(Map<String, String> params) {
 
         invoke(AuthCenterModel.getInstance().getCurrentAuthInfo(params), new HttpSubscriber<ApiResult<AuthResult>>() {
@@ -45,7 +44,7 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
             public void onSuccess(ApiResult<AuthResult> result) {
                 if (result.getFlag().equals("API0000")) {
                     LogUtils.d("获取用户认证信息明细成功---->" + result.getResult().getAuth_result());
-                    getView().onSuccessGet(Constants.GET_AUTH_STATUS_INFO, result.getResult().getAuth_result());
+                    getView().onSuccessGet(Constants.GET_AUTH_STATUS_INFO, result.getResult().getAuth_result(), result.getResult().getUserName(), result.getResult().getIdcard());
                 } else {
                     LogUtils.d("获取用户认证信息明细失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.GET_AUTH_STATUS_INFO, result.getMsg());
@@ -103,10 +102,8 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (result.getFlag().equals("API0000")) {
-                    if (result.getResult() != null) {
-                        LogUtils.d("提交人脸认证信息成功---->" + result.getMsg());
-                        getView().onSuccessSubmit(Constants.SUBMIT_FACE_AUTH, result.getMsg());
-                    }
+                    LogUtils.d("提交人脸认证信息成功---->" + result.getMsg());
+                    getView().onSuccessSubmit(Constants.SUBMIT_FACE_AUTH, result.getMsg());
                 } else {
                     LogUtils.d("提交人脸认证信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.SUBMIT_FACE_AUTH, result.getMsg());

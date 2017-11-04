@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,9 @@ import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
 import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
+import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.LoanOrderPresenter;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.HashMap;
@@ -82,12 +85,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         ButterKnife.bind(this);
 
         init();
-        loadingLoanOrder();
         initData();
     }
 
 
-    @OnClick({R.id.tv_order_status1, R.id.tv_order_status2, R.id.tv_order_status3, R.id.tv_order_status4, R.id.tv_order_status5, R.id.tv_order_status6})
+    @OnClick({R.id.tv_order_status1, R.id.tv_order_status2, R.id.tv_order_status3, R.id.tv_order_status4, R.id.tv_order_status5, R.id.tv_order_status6, R.id.btn_status_operate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_order_status2:  // 认证中 | 受理中 2
@@ -107,6 +109,10 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             case R.id.tv_order_status6:  // 还款中
 //                setOrderStatusInfo(1, 6);
                 break;
+
+            case R.id.btn_status_operate:
+                jumpToNextPage(loanOrderBean);
+                break;
         }
     }
 
@@ -120,6 +126,49 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         mPresenter.getCurrentEffectiveLoanOrder(map);
     }
 
+
+    private void jumpToNextPage(LoanOrderBean loanOrderBean) {
+        if (loanOrderBean == null) {
+            ToastAlone.showLongToast(this, "获取订单信息失败,请重试");
+            return;
+        } else {
+            String stepStatus = loanOrderBean.getStep_status();
+            String orderStatus = loanOrderBean.getOrder_status();
+            if (stepStatus.equals("2") && orderStatus.equals("10")) {
+                // 前往认证
+                Intent intent = new Intent(this, AuthCenterActivity.class);
+                startActivity(intent);
+            } else if (stepStatus.equals("2") && orderStatus.equals("9")) {
+                // 推送拒件 重新申请
+
+            } else if (stepStatus.equals("4") && orderStatus.equals("4")) {
+                // 验证问题
+
+            } else if (stepStatus.equals("4") && orderStatus.equals("4")) {
+                // 领取金额
+                LogUtils.d("领取金额,stepStatus:" + stepStatus + ",orderStatus:" + orderStatus);
+                Intent intent = new Intent(this, ReceiveMoneyActivity.class);
+                startActivity(intent);
+            } else if (stepStatus.equals("4") && orderStatus.equals("11")) {
+                // 领取超时 重新申请
+                //TODO 此处需要发送请求至服务端 将件作废处理
+                finish();
+            } else if (stepStatus.equals("5") && orderStatus.equals("7")) {
+                // 前往修改 银行卡修改页面
+                LogUtils.d("放款失败---前往修改,stepStatus:" + stepStatus + ",orderStatus:" + orderStatus);
+                Intent intent = new Intent(this, BankcardInfoActivity.class);
+                intent.putExtra("isEdit", "1");
+                intent.putExtra("status", "1");
+                startActivity(intent);
+            } else if (stepStatus.equals("6") && orderStatus.equals("1")) {
+                // 放款成功,立即还款
+                LogUtils.d("放款成功,立即还款,stepStatus:" + stepStatus + ",orderStatus:" + orderStatus);
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        }
+    }
 
     private void initData() {
 
@@ -235,13 +284,33 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         tv.setTextColor(color);
     }
 
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
+    }
+
     @Override
-    public void onSuccessGet(String returnCode, LoanOrderBean model) {
-        loanOrderBean = model;
-        tvLoadPeriod.setText(loanOrderBean.getLoan_amount() + "元");
+    protected void onResume() {
+        super.onResume();
+        loadingLoanOrder();
+    }
+
+    @Override
+    public void onSuccessGet(String returnCode, LoanOrderBean bean) {
+        loanOrderBean = bean;
+        tvLoadMoney.setText(loanOrderBean.getLoan_amount() + "元");
         if (loanOrderBean.getZq_unit().equals("1")) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "天");
-        } else if(loanOrderBean.getZq_unit().equals("2")){
+        } else if (loanOrderBean.getZq_unit().equals("2")) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "周");
         }
         setOrderStatusInfo("", loanOrderBean.getStep_status(), loanOrderBean.getOrder_status(), "");
@@ -269,17 +338,5 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         ToastAlone.showLongToast(this, errorMsg);
     }
 
-    private void init() {
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
 
-            @Override
-            public void OnRightButtonClicked() {
-
-            }
-        });
-    }
 }

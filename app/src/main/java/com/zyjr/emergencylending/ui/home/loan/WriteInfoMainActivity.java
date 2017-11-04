@@ -141,7 +141,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent = new Intent(this, PersonalInfoActivity.class);
                 intent.putExtra("isEdit", writeInfoBean.getUser_data_edit());
                 intent.putExtra("status", writeInfoBean.getUser_data_status());
-                startActivity(intent);
+                startActivityForResult(intent, INTENT_PERSONAL_INFO_CODE);
                 break;
             case R.id.layout_work_info:
                 if (writeInfoBean == null) {
@@ -150,7 +150,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent = new Intent(this, WorkInfoActivity.class);
                 intent.putExtra("isEdit", writeInfoBean.getUser_job_edit());
                 intent.putExtra("status", writeInfoBean.getUser_job_status());
-                startActivity(intent);
+                startActivityForResult(intent, INTENT_WORK_INFO_CODE);
                 break;
             case R.id.layout_contact_info:
                 if (writeInfoBean == null) {
@@ -159,7 +159,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent = new Intent(this, ContactInfoActivity.class);
                 intent.putExtra("isEdit", writeInfoBean.getUser_contact_edit());
                 intent.putExtra("status", writeInfoBean.getUser_contact_status());
-                startActivity(intent);
+                startActivityForResult(intent, INTENT_CONTACT_INFO_CODE);
                 break;
             case R.id.layout_bank_info:
                 if (writeInfoBean == null) {
@@ -175,7 +175,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent = new Intent(this, BankcardInfoActivity.class);
                 intent.putExtra("isEdit", writeInfoBean.getUser_contact_edit());
                 intent.putExtra("status", writeInfoBean.getUser_contact_status());
-                startActivity(intent);
+                startActivityForResult(intent, INTENT_BANKCARD_CODE);
                 break;
             case R.id.btn_apply_quickly:
                 intent = new Intent(WriteInfoMainActivity.this, ApplyToOfflineConfirmActivity.class);
@@ -205,9 +205,6 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
 
     private void initGetData() {
-
-
-
         intent = getIntent();
         apply_amount = intent.getStringExtra("apply_amount"); // 申请金额
         apply_periods = intent.getStringExtra("apply_periods"); // 申请期数 天|周
@@ -406,7 +403,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @Override
     public void onSuccessGetMayApplyPro(String apiCode, MayApplyProBean bean) {
         is_view = bean.getIs_view();
-        if(online_type.equals("0")){
+        if (online_type.equals("0")) {
             if (is_view.equals("1")) {
                 rlRecommend.setVisibility(View.VISIBLE);
             } else {

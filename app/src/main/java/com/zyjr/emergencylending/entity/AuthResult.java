@@ -12,10 +12,30 @@ public class AuthResult implements Serializable {
 
     private static final long serialVersionUID = -2369550830576205050L;
 
-    private List<AuthInfoBean> auth_result;
+    private String userName;  // 用户姓名
+
+    private String idcard;  // 身份证
+
+    private List<AuthInfoBean> auth_result;  // 认证结果集
 
     public List<AuthInfoBean> getAuth_result() {
         return auth_result;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getIdcard() {
+        return idcard;
+    }
+
+    public void setIdcard(String idcard) {
+        this.idcard = idcard;
     }
 
     public void setAuth_result(List<AuthInfoBean> auth_result) {

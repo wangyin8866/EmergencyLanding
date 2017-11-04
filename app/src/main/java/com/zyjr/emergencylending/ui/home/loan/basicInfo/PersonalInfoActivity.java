@@ -327,10 +327,10 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         String hujiDetailAddress = tvHujiDetailAddress.getText().toString().trim(); // 户籍详细地址(根据证件上地址来的,不可更改)
         String liveAddress = tvLiveAddress.getText().toString().trim(); // 居住地址
         String liveDetailAddress = etLiveDetailAddress.getText().toString().trim(); // 居住详细地址
-//        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress)) {
-//            ToastAlone.showLongToast(this, "请拍照扫描身份证!");
-//            return;
-//        }
+        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress)) {
+            ToastAlone.showLongToast(this, "请拍照扫描身份证!");
+            return;
+        }
         if (StringUtil.isEmpty(marriageStatus) && marriageCodeBean == null) {
             ToastAlone.showLongToast(this, "请选择婚姻关系!");
             return;
@@ -361,10 +361,10 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 return;
             }
         }
-//        if (StringUtil.isEmpty(liveDetailAddress)) {
-//            ToastAlone.showLongToast(this, "请填写现居住详细地址!");
-//            return;
-//        }
+        if (StringUtil.isEmpty(liveDetailAddress)) {
+            ToastAlone.showLongToast(this, "请填写现居住详细地址!");
+            return;
+        }
         if (personalInfoBean == null) {
             personalInfoBean = new PersonalInfoBean();
         }
@@ -758,12 +758,16 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
         ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
         ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 

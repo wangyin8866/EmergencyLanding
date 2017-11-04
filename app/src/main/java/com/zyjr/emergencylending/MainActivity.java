@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    private void setTabSelection(int currentPage) {
+    public void setTabSelection(int currentPage) {
 
         //选中前清除状态
         restView();

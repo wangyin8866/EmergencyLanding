@@ -150,6 +150,8 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
                 finish();
             }
 
@@ -270,6 +272,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @Override
     public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
         loadingDialog.dismiss();
+        pullToRefreshScrollView.onRefreshComplete();
         rlAddBankcard.setVisibility(View.VISIBLE);
         rlEditBankcard.setVisibility(View.GONE);
         topBar.setRightButtonVisible(View.INVISIBLE);

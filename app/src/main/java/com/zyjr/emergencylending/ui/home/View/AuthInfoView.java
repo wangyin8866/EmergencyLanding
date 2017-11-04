@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface AuthInfoView {
 
-    void onSuccessGet(String apiCode, List<AuthInfoBean> beanList);
+    void onSuccessGet(String apiCode, List<AuthInfoBean> beanList, String userName, String idcard);
 
     void onSuccessSubmit(String apiCode, String msg);
 

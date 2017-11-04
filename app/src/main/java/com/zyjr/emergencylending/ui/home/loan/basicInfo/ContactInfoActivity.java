@@ -413,12 +413,16 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
         ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
         ToastAlone.showLongToast(this, msg);
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
         finish();
     }
 
