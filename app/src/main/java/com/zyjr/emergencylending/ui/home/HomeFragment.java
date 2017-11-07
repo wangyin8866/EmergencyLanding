@@ -4,16 +4,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.bigkoo.convenientbanner.ConvenientBanner;
 import com.bigkoo.convenientbanner.holder.CBViewHolderCreator;
 import com.bigkoo.convenientbanner.listener.OnItemClickListener;
-import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
@@ -44,7 +46,7 @@ import butterknife.Unbinder;
  * @date 2017/8/9
  */
 
-public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implements HomeView {
+public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implements HomeView, EasyRefreshLayout.EasyEvent {
     @BindView(R.id.banner)
     ConvenientBanner banner;
     @BindView(R.id.QR_code)
@@ -56,6 +58,8 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @BindView(R.id.notice_auto_roll)
     AutoVerticalScrollTextView noticeAutoRoll;
     Unbinder unbinder;
+    @BindView(R.id.swipe_container)
+    EasyRefreshLayout easyRefreshLayout;
     private View view;
     private int autoRollIndex;
     private List<String> auto_roll_data;
@@ -64,10 +68,15 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_home_main, container, false);
         unbinder = ButterKnife.bind(this, view);
         init();
+
+
+        easyRefreshLayout.addEasyEvent(this);
+        //隐藏上拉加载
+        easyRefreshLayout.setLoadMoreModel(LoadModel.NONE);
         return view;
     }
 
@@ -117,6 +126,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
 
 
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             if (msg.what == 199) {
                 noticeAutoRoll.next();
@@ -138,10 +148,19 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.QR_code:
-                startActivity(new Intent(getActivity(), QrCodeActivity.class));
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    startActivity(new Intent(getActivity(), QrCodeActivity.class));
+                }
                 break;
             case R.id.message_center:
-                startActivity(new Intent(getActivity(), MessageActivity.class));
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+
+                    startActivity(new Intent(getActivity(), MessageActivity.class));
+                }
                 break;
             case R.id.pro1_btn:
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
@@ -217,5 +236,23 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        easyRefreshLayout.refreshComplete();
+        //banner
+        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
+
+        //是否有消息
+        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+            mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
+            mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
+        }
     }
 }

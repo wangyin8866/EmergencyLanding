@@ -245,8 +245,13 @@ public interface NetConstantValues {
     /**
      * 录件预检
      */
-    String PRE_CHECK_BOOK = "zySalesmanService.preCheckBook"; /**
+    String PRE_CHECK_BOOK = "zySalesmanService.preCheckBook";
+    /**
      * 录件预检
      */
     String ONLINE_TO_OFFLINE = "zySalesmanService.onlineToOffline";
+    /**
+     * 我的借款
+     */
+    String MY_LOAN = "zyUserBorrowService.getCardBinInfor";
 }

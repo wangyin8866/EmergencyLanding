@@ -2,13 +2,14 @@ package com.zyjr.emergencylending.utils.third;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.zyjr.emergencylending.GlideApp;
 import com.zyjr.emergencylending.utils.ImageUtils;
 
 
@@ -50,13 +51,13 @@ public class GlideUtils {
                 }
             } else {
                 if (resId == -1) {
-                    if (preResourceId != -1) {
-                        Glide.with(context).load(uri).placeholder(preResourceId).into(imageView);
-                    } else {
+                    if (preResourceId != -1)
+                        GlideApp.with(context).load(uri).placeholder(preResourceId).into(imageView);
+                    else {
                         Glide.with(context).load(uri).into(imageView);
                     }
                 } else {
-                    Glide.with(context).load(uri).placeholder(resId).into(imageView);
+                    GlideApp.with(context).load(uri).placeholder(resId).into(imageView);
                 }
             }
         }
@@ -87,18 +88,17 @@ public class GlideUtils {
      * 根据
      */
     public static void displayImageWithFixedSize(Context context, String url, int preResourceId, final ImageView imageView, final int fixedWidth, final int fixedHeight) {
-        Glide.with(context).load(url).placeholder(preResourceId)
-                .override(fixedWidth, fixedHeight)
-                .into(new SimpleTarget<GlideDrawable>() {
-                    @Override
-                    public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        Bitmap bmp = ImageUtils.drawableToBitmap(resource);
-                        Bitmap mBitmapIDcardBack = Bitmap.createScaledBitmap(bmp, fixedWidth, fixedHeight, true);
-                        bmp.recycle();
-                        System.gc();
-                        imageView.setImageBitmap(mBitmapIDcardBack);
-                    }
-                });
+        GlideApp.with(context).load(url).placeholder(preResourceId)
+                .override(fixedWidth, fixedHeight).into(new SimpleTarget<Drawable>() {
+            @Override
+            public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                Bitmap bmp = ImageUtils.drawableToBitmap(resource);
+                Bitmap mBitmapIDcardBack = Bitmap.createScaledBitmap(bmp, fixedWidth, fixedHeight, true);
+                bmp.recycle();
+                System.gc();
+                imageView.setImageBitmap(mBitmapIDcardBack);
+            }
+        });
 
     }
 

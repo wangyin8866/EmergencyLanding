@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.zyjr.emergencylending.GlideApp;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
@@ -144,7 +144,7 @@ public class MineFragment extends BaseFragment<MinePresenter, MineView> implemen
     @Override
     public void myCard(CardBean baseBean) {
         resultBean = baseBean.getResult();
-        Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
+        GlideApp.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
         if (!TextUtils.isEmpty(resultBean.getName())) {
             userNamePhone.setText(WYUtils.nameSecret(resultBean.getName()) + " " + WYUtils.phoneSecret(resultBean.getPhone()));
         } else {

@@ -22,7 +22,6 @@ import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.home.HomeFragment;
 import com.zyjr.emergencylending.ui.my.MyFragment;
 import com.zyjr.emergencylending.ui.repayment.RepaymentFragment;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -118,8 +117,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(currentPage);
                 break;
             case R.id.id_tab_ll_02:
-                currentPage = 1;
-                setTabSelection(currentPage);
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                } else {
+                    currentPage = 1;
+                    setTabSelection(currentPage);
+                }
                 break;
             case R.id.id_tab_ll_03:
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
@@ -203,8 +206,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Bundle bundle = intent.getExtras();
-        int index = bundle.getInt("index");
-        setTabSelection(index);
+        try {
+            Bundle bundle = intent.getExtras();
+            int index = bundle.getInt("index");
+
+            setTabSelection(index);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

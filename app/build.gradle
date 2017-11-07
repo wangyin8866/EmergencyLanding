@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.zyjr.emergencylending"
         minSdkVersion 15
@@ -42,6 +42,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -61,8 +65,8 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
     compile 'tech.michaelx.authcode:authcode:1.0.0'
-    compile 'jp.wasabeef:glide-transformations:2.0.2'
-    
+    compile 'com.github.bumptech.glide:glide:4.3.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
     compile 'com.github.liuguangqiang.swipeback:library:1.0.2@aar'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //沉浸式
@@ -95,4 +99,8 @@ dependencies {
     //个推
     compile 'com.getui:sdk:2.11.1.0'
     compile 'com.android.support:support-v4:+'
+
+
+
+
 }

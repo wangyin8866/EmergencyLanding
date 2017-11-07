@@ -57,7 +57,7 @@ import static com.zyjr.emergencylending.utils.UIUtils.getResources;
 public class WYUtils {
 
     //手机号码正则0
-    private static String phoneRex = "^1\\d{10}";
+    private static String phoneRex = "^1[3,4,5,6,7,8]\\d{9}$";
     //密码正则
     private static String passRex = "^(?!^\\d+$)(?!^[a-zA-Z]+$)(?!^[\\-\\/:;()$&@\"\\.,\\?\\!'\\[\\]#%\\^\\*\\+=_\\\\\\|~<>€£¥•：；（）¥@“”。，、？！【】｛｝—《》\\·]+$)[\\da-zA-Z\\-\\/:;()$&@\"\\.,\\?\\!'\\[\\]#%\\^\\*\\+=_\\\\\\|~<>€£¥•：；（）¥@“”。，、？！【】｛｝—《》\\·]{6,20}$";
     //身份证正则

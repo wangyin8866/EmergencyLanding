@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.repayment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +12,9 @@ import com.zyjr.emergencylending.R;
 
 
 /**
- * Created by wangyin on 2017/8/9.
+ *
+ * @author wangyin
+ * @date 2017/8/9
  */
 
 public class RepaymentFragment extends Fragment {
@@ -19,7 +22,7 @@ public class RepaymentFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_product_main,container,false);
         return view;
     }

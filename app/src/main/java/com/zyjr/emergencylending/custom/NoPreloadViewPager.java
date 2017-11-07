@@ -15,7 +15,6 @@ import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.v4.os.ParcelableCompat;
 import android.support.v4.os.ParcelableCompatCreatorCallbacks;
-import android.support.v4.view.KeyEventCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.VelocityTrackerCompat;
@@ -1522,15 +1521,23 @@ public class NoPreloadViewPager extends ViewGroup {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (event.getKeyCode()) {
                 case KeyEvent.KEYCODE_DPAD_LEFT:
-                    handled = arrowScroll(FOCUS_LEFT);
+                    if (event.hasModifiers(KeyEvent.META_ALT_ON)) {
+                        handled = pageLeft();
+                    } else {
+                        handled = arrowScroll(FOCUS_LEFT);
+                    }
                     break;
                 case KeyEvent.KEYCODE_DPAD_RIGHT:
-                    handled = arrowScroll(FOCUS_RIGHT);
+                    if (event.hasModifiers(KeyEvent.META_ALT_ON)) {
+                        handled = pageRight();
+                    } else {
+                        handled = arrowScroll(FOCUS_RIGHT);
+                    }
                     break;
                 case KeyEvent.KEYCODE_TAB:
-                    if (KeyEventCompat.hasNoModifiers(event)) {
+                    if (event.hasNoModifiers()) {
                         handled = arrowScroll(FOCUS_FORWARD);
-                    } else if (KeyEventCompat.hasModifiers(event, KeyEvent.META_SHIFT_ON)) {
+                    } else if (event.hasModifiers(KeyEvent.META_SHIFT_ON)) {
                         handled = arrowScroll(FOCUS_BACKWARD);
                     }
                     break;

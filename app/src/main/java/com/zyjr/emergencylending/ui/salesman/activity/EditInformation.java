@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -16,6 +15,7 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.zyjr.emergencylending.GlideApp;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseView;
@@ -107,7 +107,7 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
         userPosition.setText(resultBean.getPosition());
         userPhone.setText(resultBean.getPhone());
 
-        Glide.with(this).load(resultBean.getHead_url()).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        GlideApp.with(this).load(resultBean.getHead_url()).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -166,6 +166,6 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
 
-        Glide.with(this).load(mBitmap).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        GlideApp.with(this).load(mBitmap).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 }

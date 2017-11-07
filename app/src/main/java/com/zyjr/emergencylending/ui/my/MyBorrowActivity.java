@@ -10,9 +10,11 @@ import com.ajguan.library.LoadModel;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BorrowLogAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.BorrowLog;
+import com.zyjr.emergencylending.ui.my.presenter.MyBorrowPresenter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +29,7 @@ import butterknife.ButterKnife;
  * 我的借款
  */
 
-public class MyBorrowActivity extends BaseActivity {
+public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<BaseBean>> implements BaseView<BaseBean> {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.borrow_type)
@@ -47,8 +49,8 @@ public class MyBorrowActivity extends BaseActivity {
     private List<BorrowLog> borrowLogs;
 
     @Override
-    protected BasePresenter createPresenter() {
-        return null;
+    protected MyBorrowPresenter createPresenter() {
+        return new MyBorrowPresenter(mContext);
     }
 
     @Override
@@ -60,6 +62,9 @@ public class MyBorrowActivity extends BaseActivity {
     }
 
     private void init() {
+//        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+
+
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -93,5 +98,10 @@ public class MyBorrowActivity extends BaseActivity {
                 easylayout.refreshComplete();
             }
         });
+    }
+
+    @Override
+    public void callBack(BaseBean baseBean) {
+
     }
 }

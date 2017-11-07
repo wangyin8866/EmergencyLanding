@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -21,6 +21,7 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
+import com.zyjr.emergencylending.GlideApp;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
@@ -120,7 +121,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_main, container, false);
         unbinder = ButterKnife.bind(this, view);
         init();
@@ -209,9 +210,12 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
 
     @Override
     public void getUserInfo(UserInfo userInfo) {
+
+
         resultBean = userInfo.getResult();
         LogUtils.e("myCard", resultBean.toString());
-        Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
+
+        GlideApp.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
         if (!TextUtils.isEmpty(resultBean.getUser_name())) {
             userNamePhone.setText(WYUtils.nameSecret(resultBean.getUser_name()) + " " + WYUtils.phoneSecret(resultBean.getTel()));
         } else {
@@ -230,6 +234,6 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
-        Glide.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        GlideApp.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 }

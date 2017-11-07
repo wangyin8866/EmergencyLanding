@@ -261,4 +261,11 @@ public interface Api {
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
     Observable<EffectiveOrderBean> isEffectiveOrder(@FieldMap Map<String, String> params);
+
+    /**
+     * 我的借款接口
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<BaseBean> myBorrow(@FieldMap Map<String, String> params);
 }
