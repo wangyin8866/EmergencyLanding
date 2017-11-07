@@ -254,4 +254,13 @@ public interface NetConstantValues {
      * 我的借款
      */
     String MY_LOAN = "zyUserBorrowService.getCardBinInfor";
+    /**
+     * 保存通讯录(问题验证通过后)
+     */
+    String ROUTER_SAVE_CONTACTS_LIST = "zyUserService.saveUserMobileContacts";
+    /**
+     * 提交认证
+     */
+    String ROUTER_SUBMIT_ALL_AUTH_INFO = "customerService.authSubmit";
+
 }

@@ -154,7 +154,7 @@ public class BorrowActivity extends BaseActivity {
     public void onViewClicked() {
         String str = week.substring(0, week.length() - 1);
         Intent intent = new Intent(this, WriteInfoMainActivity.class);
-        intent.putExtra("apply_amount", money);
+        intent.putExtra("apply_amount", money + "");
         intent.putExtra("apply_periods", str);
         intent.putExtra("apply_zq", "1");
         intent.putExtra("apply_periods_unit", "2");

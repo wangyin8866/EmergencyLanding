@@ -37,21 +37,21 @@ public class PersonalInfoModel extends BaseModel {
 
     public Observable<ApiResult<PersonalInfoBean>> getPersonalInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_PERSONAL_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
         return personalInfoService.getPersonInfo(params);
     }
 
 
     public Observable<ApiResult<PersonalInfoBean>> addPersonalInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_ADD_PERSONAL_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
         return personalInfoService.addPersonInfo(params);
     }
 
 
     public Observable<ApiResult<PersonalInfoBean>> editPersonalInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_EDIT_PERSONAL_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
         return personalInfoService.editPersonInfo(params);
     }
 

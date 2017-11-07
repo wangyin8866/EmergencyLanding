@@ -18,10 +18,25 @@ public interface Config {
      * 每页数据
      */
     int PAGE_SIZE = 15;
+
     /**
      * 请求成功
      */
     String CODE_SUCCESS = "API0000";
+    /**
+     * 系统错误
+     */
+    String CODE_SYS_ERROR= "API9999";
+    /**
+     * 缺少参数或格式不正确
+     */
+    String CODE_ARGUMENT_ERROR= "API9999";
+    /**
+     * 业务异常
+     */
+    String CODE_BUSINESS_EXCEPTION= "API0004";
+
+
     /**
      * 用户ID
      */
@@ -129,10 +144,14 @@ public interface Config {
      * //意见反馈
      */
     String H5_URL_FEEDBACK = "H5_URL_FEEDBACK";
-   
+
 
     String TRUE = "1";
     String FALSE = "0";
 
+
+    /**
+     * 业务员门店信息 API2022
+     */
 
 }

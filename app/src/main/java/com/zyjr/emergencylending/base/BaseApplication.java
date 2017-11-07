@@ -61,7 +61,7 @@ public class BaseApplication extends Application {
         mMainLooper = getMainLooper();
         mInstance = this;
         //获取版本号
-        SupportCityConfig.getInstance().initCitys(); // 加载城市数据
+//        SupportCityConfig.getInstance().initCitys(); // 加载城市数据
         //是否打印日志
         LogUtils.isDebug = true;
         //友盟日志

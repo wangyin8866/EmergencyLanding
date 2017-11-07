@@ -63,4 +63,11 @@ public interface AuthInfoService {
     @POST(NetConstantValues.LOAN)
     Observable<ApiResult<MobileBean>> judgeMobileCodeValide(@FieldMap Map<String,String> params);
 
+
+    /**
+     * 提交认证(最后一步,都认证完成后提交)
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<String>> submitAllAuthInfo(@FieldMap Map<String,String> params);
 }

@@ -7,8 +7,10 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.base.HttpSubscriber;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.model.home.loan.WriteInfoModel;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
@@ -115,5 +117,30 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
         }, mContext));
     }
 
+    public void getClerkStoreInfo(Map<String, String> params) {
+        invoke(WriteInfoModel.getInstance().getLocalStoreList(params), new ProgressSubscriber<ApiResult<StoreResultBean>>(new SubscriberOnNextListener<ApiResult<StoreResultBean>>() {
+            @Override
+            public void onNext(ApiResult<StoreResultBean> result) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    if (result.getResult() != null) {
+                        LogUtils.d("获取业务员门店信息成功---->" + result.getResult().toString());
+                        getView().onSuccessGetClerkStore(Constants.GET_LOCAL_STORE_INFO, result.getResult().getStorePoList());
+                    }
+                } else if (result.getFlag().equals("API2022")) {
+                    LogUtils.d("获取业务员门店信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getMsg());
+                } else {
+                    LogUtils.d("获取业务员门店信息失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("获取业务员门店信息异常---->" + e.getMessage());
+                getView().onError(Constants.GET_LOCAL_STORE_INFO, e.getMessage());
+            }
+        }, mContext));
+    }
 
 }

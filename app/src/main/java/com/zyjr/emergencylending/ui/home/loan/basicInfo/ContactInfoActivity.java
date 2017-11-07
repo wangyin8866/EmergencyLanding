@@ -77,16 +77,14 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @BindView(R.id.btn_submit)
     Button btnSubmit;
 
-    List<CodeBean> selectList; // 初始化选择列表
-    List<CodeBean> selectList1 = new ArrayList<>(); // 联系人1可选择的
     CodeBean relationCodeBean1 = null; // 关系1
-    List<CodeBean> selectList2 = new ArrayList<>(); // 联系人2可选择的
     CodeBean relationCodeBean2 = null; // 关系2
     private int selectPhoneType = 0; // 选择号码标识
     private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
     private ContactInfoBean contactInfoBean = null;
     private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String status = ""; // 1,完成;0,未完成
     private String marriageCode = ""; // 结婚状态 801:未婚; 802:已婚; 806:离婚; 805:丧偶
 
     @Override
@@ -107,7 +105,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_relation1:  // 关系1
-//                SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, selectList1.size() > 0 ? selectList1 : selectList);
                 SingleSelectPop popRelationSelect1 = new SingleSelectPop(this, removeSlectCodeBean(AppConfig.getFirstContacts(marriageCode), tvRelation2.getText().toString().trim()));
                 popRelationSelect1.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
@@ -115,14 +112,12 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                         relationCodeBean1 = select1;
                         LogUtils.d("选择的关系信息1:" + relationCodeBean1.toString());
                         tvRelation1.setText(relationCodeBean1.getName());
-//                        selectList2 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean1.getCode());
                     }
                 });
                 popRelationSelect1.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
 
             case R.id.ll_contact_relation2:  // 关系2
-//                SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, selectList2.size() > 0 ? selectList2 : selectList);
                 SingleSelectPop popRelationSelect2 = new SingleSelectPop(this, removeSlectCodeBean(AppConfig.getSecondContacts(marriageCode), tvRelation1.getText().toString().trim()));
                 popRelationSelect2.setOnSelectPopupWindow(new SingleSelectPop.onSelectPopupWindow() {
                     @Override
@@ -130,7 +125,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                         relationCodeBean2 = select2;
                         LogUtils.d("选择的关系信息2:" + relationCodeBean2.toString());
                         tvRelation2.setText(relationCodeBean2.getName());
-//                        selectList1 = AppConfig.removeSlectCodeBean(selectList, relationCodeBean2.getCode());
                     }
                 });
                 popRelationSelect2.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
@@ -365,19 +359,13 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     private void initGetData() {
         Intent intent = getIntent();
         isEdit = intent.getStringExtra("isEdit");
-        String status = intent.getStringExtra("status");
+        status = intent.getStringExtra("status");
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
             loadingContactInfo();
         } else {
-            // 已完成状态获取资料信息
-            if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-                // 已完成资料时,先获取用户信息(获取婚姻状态),在获取联系人资料
-                getPersonInfo();
-            } else {
-                getPersonInfo();
-            }
+            getPersonInfo();
         }
     }
 
@@ -451,10 +439,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     public void onSuccessGet(String returnCode, List<ContactInfoBean> beanList) {
         showContactInfo(beanList);
-//        if (isEdit.equals("1")) {
-//            // 如果是可编辑状态,查询用户婚姻状态
-//            getPersonInfo();
-//        }
     }
 
     @Override
@@ -486,7 +470,9 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     public void onSuccessGetPersonInfo(String apiCode, PersonalInfoBean bean) {
         marriageCode = bean.getMarriage();
-        // 已完成资料时,
-        loadingContactInfo();
+        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+            // 已完成资料时,先获取用户信息(获取婚姻状态),在获取联系人资料
+            loadingContactInfo();
+        }
     }
 }

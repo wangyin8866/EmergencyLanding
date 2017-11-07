@@ -291,10 +291,17 @@
         <activity
             android:name="com.zyjr.emergencylending.ui.home.loan.offline.ApplyConfirmActivity"
             android:screenOrientation="portrait" />
-
         <!-- 借款提交成功页面 -->
         <activity
             android:name="com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity"
+            android:screenOrientation="portrait" />
+        <!-- 问题验证 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.QuestionValidateActivity"
+            android:screenOrientation="portrait" />
+        <!-- 业务员录件结果 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.ClerkApplyResultActivity"
             android:screenOrientation="portrait" />
 
     </application>
