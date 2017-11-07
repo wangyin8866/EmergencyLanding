@@ -10,7 +10,6 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -51,6 +50,8 @@ public class H5WebView extends BaseActivity {
         ButterKnife.bind(this);
         init();
     }
+
+
 
     private void init() {
         String title = getIntent().getStringExtra("title");
