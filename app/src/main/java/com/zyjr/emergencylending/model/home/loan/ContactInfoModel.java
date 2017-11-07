@@ -38,21 +38,21 @@ public class ContactInfoModel extends BaseModel {
 
     public Observable<ApiResult<List<ContactInfoBean>>> getContactInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_CONTACT_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
         return contactInfoService.getContactInfo(params);
     }
 
 
     public Observable<ApiResult<List<ContactInfoBean>>> addContactInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_ADD_CONTACT_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
         return contactInfoService.addContactInfo(params);
     }
 
 
     public Observable<ApiResult<List<ContactInfoBean>>> editContactInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_EDIT_CONTACT_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, Config.KEY_JUID));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
         return contactInfoService.editContactInfo(params);
     }
 

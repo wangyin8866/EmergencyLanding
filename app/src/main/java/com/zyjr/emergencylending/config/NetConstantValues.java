@@ -9,12 +9,12 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
+//    String HOST_URL = "http://192.168.6.107:8086/";
 //    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
-//    String HOST_URL = "http://192.168.9.152:8086/";
+    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 二级地址
@@ -249,4 +249,13 @@ public interface NetConstantValues {
      * 录件预检
      */
     String ONLINE_TO_OFFLINE = "zySalesmanService.onlineToOffline";
+    /**
+     * 保存通讯录(问题验证通过后)
+     */
+    String ROUTER_SAVE_CONTACTS_LIST = "zyUserService.saveUserMobileContacts";
+    /**
+     * 提交认证
+     */
+    String ROUTER_SUBMIT_ALL_AUTH_INFO = "customerService.authSubmit";
+
 }

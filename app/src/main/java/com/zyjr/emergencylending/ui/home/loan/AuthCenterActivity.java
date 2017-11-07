@@ -141,6 +141,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 }
                 startActivityForResult(new Intent(this, ZhimaAuthActivity.class), INTENT_ZHIMA_CODE);
                 break;
+
             case R.id.rl_mobile_auth:  // 手机运营商认证  4:成功;5:采集中;6:采集失败
                 if (mobileAuthFlag.equals("4")) {
                     ToastAlone.showLongToast(this, "已认证成功");
@@ -151,6 +152,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 }
                 startActivityForResult(new Intent(this, MobileAuthActivity.class), INTENT_MOBILE_CODE);
                 break;
+
             case R.id.rl_face_auth:  // 人脸认证 7:成功;8:失败
                 if (faceAuthFlag.equals("7")) {
                     ToastAlone.showLongToast(this, "已认证成功");
@@ -158,6 +160,16 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 }
                 jumpToFaceAuth(RC_PAGE_TO_LIVENESS);
                 break;
+
+            case R.id.btn_submit:
+                if (zhimaAuthFlag.equals("2") && mobileAuthFlag.equals("4") && faceAuthFlag.equals("7")) {
+                    // 提交认证
+                    submitAllAuth();
+                } else {
+                    ToastAlone.showLongToast(this, "请完成所有认证");
+                }
+                break;
+
         }
     }
 
@@ -227,6 +239,11 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     private void loadingAuthStatus() {
         loadingDialog = CustomProgressDialog.createDialog(this);
         loadingDialog.show();
+        Map<String, String> params = new HashMap<>();
+        mPresenter.getCurrentAuthInfo(params);
+    }
+
+    private void submitAllAuth() {
         Map<String, String> params = new HashMap<>();
         mPresenter.getCurrentAuthInfo(params);
     }

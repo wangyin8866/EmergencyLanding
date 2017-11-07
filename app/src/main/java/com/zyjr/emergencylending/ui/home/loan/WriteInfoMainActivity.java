@@ -17,9 +17,11 @@ import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
@@ -38,6 +40,7 @@ import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.widget.SettingItemView;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -195,9 +198,14 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                         return;
                     }
                 }
-                // TODO 获取通讯资料
-                if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
-                    judgeMatchProInfo("", isFirst, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+                    LogUtils.d("当前是业务员----走业务员");
+                    getClerkStoreInfo();
+                } else {
+                    // TODO 获取通讯资料
+                    if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
+                        judgeMatchProInfo("", isFirst, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                    }
                 }
                 break;
         }
@@ -279,8 +287,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             layoutBankInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
         if (personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")) {
-            // TODO 根据状态,获取可申请产品
-            getMayApplyProductType();
+            if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+                // TODO 不是业务员,获取可申请产品
+                getMayApplyProductType();
+            }
         }
     }
 
@@ -308,7 +318,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                     case R.id.btn_comfirm_submit:
                         customerDialog.dismiss();
                         if (product_id.equals("1")) {
-                            // 线下件
+                            LogUtils.d("当前是普通商户");
                             if (is_view.equals("1")) {
                                 // 如果有门店
                                 Intent intent = new Intent(WriteInfoMainActivity.this, ApplyConfirmActivity.class);
@@ -377,6 +387,11 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         mPresenter.getMayApplyProductType(paramsMap);
     }
 
+    private void getClerkStoreInfo() {
+        Map<String, String> params = new HashMap<>();
+        mPresenter.getClerkStoreInfo(params);
+    }
+
     @Override
     public void onSuccessGet(String returnCode, WriteInfoBean bean) {
         loadingDialog.dismiss();
@@ -423,10 +438,17 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     }
 
     @Override
-    public void onFail(String returnCode, String flag, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
-        loadingDialog.dismiss();
-        pullToRefreshScrollView.onRefreshComplete();
+    public void onFail(String apiCode, String flag, String errorMsg) {
+        if ("API2022".equals(flag)) {
+            Intent intent = new Intent(this, ClerkApplyResultActivity.class);
+            intent.putExtra("flag", flag);
+            intent.putExtra("msg", errorMsg);
+            startActivity(intent);
+        } else {
+            ToastAlone.showLongToast(this, errorMsg);
+            loadingDialog.dismiss();
+            pullToRefreshScrollView.onRefreshComplete();
+        }
     }
 
     @Override
@@ -434,6 +456,14 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         ToastAlone.showLongToast(this, errorMsg);
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
+    }
+
+    /**
+     * 当时业务员录件时,回调
+     */
+    @Override
+    public void onSuccessGetClerkStore(String apiCode, List<StoreResultBean.StoreBean> beanList) {
+
     }
 
 

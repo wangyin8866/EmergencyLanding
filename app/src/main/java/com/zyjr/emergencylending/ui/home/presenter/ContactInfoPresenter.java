@@ -31,19 +31,21 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().getContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
+                LogUtils.d("获取联系人信息成功---->" + result.getResult());
                 if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("获取联系人信息成功---->" + result.getResult().toString());
-                    getView().onSuccessGet(Constants.GET_CONTACT_INFO, result.getResult());
+                    if (result.getResult() != null) {
+                        getView().onSuccessGet(Constants.GET_CONTACT_INFO, result.getResult());
+                    }
                 } else {
                     LogUtils.d("获取联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_WORK_INFO, result.getMsg());
+                    getView().onFail(Constants.GET_CONTACT_INFO, result.getMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("获取联系人信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_WORK_INFO, e.getMessage());
+                getView().onError(Constants.GET_CONTACT_INFO, e.getMessage());
             }
         }, mContext));
     }

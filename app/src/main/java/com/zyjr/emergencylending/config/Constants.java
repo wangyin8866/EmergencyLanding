@@ -128,4 +128,10 @@ public class Constants {
     public static final String GET_CURRENT_EFFECTIVE_LOAN_ORDER = "46";
     // 运营商采集认证
     public static final String MOBILE_COLLECT_AUTH = "47";
+    // 问题验证,保存通讯录信息
+    public static final String SAVE_CONTACTS_LIST = "48";
+    // 提交所有认证信息
+    public static final String SUBMIT_ALL_AUTH_INFO = "49";
+    // 获取门店信息
+    public static final String GET_LOCAL_STORE_INFO = "50";
 }

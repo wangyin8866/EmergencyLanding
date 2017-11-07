@@ -204,7 +204,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Bundle bundle = intent.getExtras();
-        int index = bundle.getInt("index");
-        setTabSelection(index);
+        if (bundle != null) {
+            int index = bundle.getInt("index");
+            setTabSelection(index);
+        }
     }
 }

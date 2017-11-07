@@ -93,7 +93,7 @@
                         android:layout_height="40dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginTop="15dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/logo_quna" />
 
                     <TextView
                         android:id="@+id/tv_qunadai_name"
