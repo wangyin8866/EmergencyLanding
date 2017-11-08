@@ -1,8 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
+    repositories {
+        jcenter()
+    }
     defaultConfig {
         applicationId "com.zyjr.emergencylending"
         minSdkVersion 15
@@ -22,6 +26,7 @@ android {
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "x86_64"
         }
+
     }
     dexOptions {
         dexInProcess true
@@ -99,8 +104,5 @@ dependencies {
     //个推
     compile 'com.getui:sdk:2.11.1.0'
     compile 'com.android.support:support-v4:+'
-
-
-
 
 }

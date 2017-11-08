@@ -69,7 +69,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
     private String apply_periods = "";
     private String apply_zq = "";
     private String apply_periods_unit = "";
-    private String renew_loan_flag = "";
+    private String renew_loan_type = "";
     private String moneyProgress = "";
     private String periodProgress = "";
     // 急速贷款
@@ -115,18 +115,18 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
         apply_periods = intent.getStringExtra("apply_periods"); // 申请期数
         apply_zq = intent.getStringExtra("apply_zq"); // 申请期数间隔
         apply_periods_unit = intent.getStringExtra("apply_periods_unit"); // 申请周期单位
-        renew_loan_flag = intent.getStringExtra("renew_loan_flag"); // 1.首贷;0.续贷
+        renew_loan_type = intent.getStringExtra("renew_loan_type"); // 0.首贷;3.续贷
         moneyProgress = intent.getStringExtra("moneyProgress"); // 金额进度
         periodProgress = intent.getStringExtra("periodProgress"); // 周期进度
         LogUtils.d("【接收数据】:" +
-                "\n贷款标识renew_loan_flag:" + renew_loan_flag +
                 "\n申请金额apply_amount:" + apply_amount +
                 "\n申请期数apply_periods:" + apply_periods +
                 "\n申请期数间隔apply_zq:" + apply_zq +
                 "\n申请周期单位apply_periods_unit:" + apply_periods_unit +
                 "\n产品id:" + product_id +
+                "\n首续贷标识renew_loan_type:" + renew_loan_type +
                 "\n产品类型online_type:" + online_type);
-        if (renew_loan_flag.equals("1")) {
+        if (renew_loan_type.equals("0")) {
             // 首贷
             llFirstFinance.setVisibility(View.VISIBLE);
             llRefinance.setVisibility(View.GONE);
@@ -137,7 +137,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
                 tvLoanPeriod.setText(apply_periods + "周");
             }
             tvLoanMoney.setText(apply_amount + "元");
-        } else {
+        } else if (renew_loan_type.equals("3")) {
             // 续贷
             llRefinance.setVisibility(View.VISIBLE);
             llFirstFinance.setVisibility(View.GONE);
@@ -224,13 +224,14 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("online_type", "0"); // 产品类型
         paramsMap.put("product_id", "0"); // 产品ID
-        if (renew_loan_flag.equals("1")) {
+        if (renew_loan_type.equals("0")) {
             // 首贷
             paramsMap.put("apply_amount", apply_amount); // 申请金额
             paramsMap.put("apply_periods", apply_periods); // 申请期数
             paramsMap.put("apply_zq", apply_zq); // 申请期数间隔
             paramsMap.put("apply_periods_unit", apply_periods_unit); // 申请周期单位
-        } else if (renew_loan_flag.equals("0")) {
+            paramsMap.put("renew_loan_type", renew_loan_type);  // 首贷标识
+        } else if (renew_loan_type.equals("3")) {
             // 续贷
             paramsMap.put("apply_amount", Arithmetic.progressToMoney(seekbarMoney.getProgress(), minLoanMoney, maxLoanMoney) + ""); // 申请金额
             loanPeriod = Arithmetic.progressToWeek(seekbarPeriod.getProgress(), minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
@@ -247,6 +248,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
                 paramsMap.put("apply_zq", "1"); // 申请期数间隔
                 paramsMap.put("apply_periods_unit", "2"); // 申请周期单位
             }
+            paramsMap.put("renew_loan_type", renew_loan_type);  // 续贷标识
         }
         if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合

@@ -1307,7 +1307,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout imp
         CUSTOM;
 
         static AnimationStyle getDefault() {
-            return ROTATE;
+            return FLIP;
         }
 
         /**

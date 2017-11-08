@@ -80,10 +80,9 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
     };
 
     private void init() {
-        mTextPaint = new TextPaint();
         mTextPaint = new TextPaint(Paint.FAKE_BOLD_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setColor(Color.parseColor("#333333"));
-        mTextPaint.setTextSize(UIUtils.sp2px(14, mContext));
+        mTextPaint.setTextSize(UIUtils.sp2px(12, mContext));
         mTextBound = new Rect();
 
     }
@@ -112,8 +111,10 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
         }
         mTextPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
         Rect bounds = this.getProgressDrawable().getBounds();
+//        LogUtils.e("矩形:", bounds.left + "---" + bounds.top + "\n" + bounds.right + "---" + bounds.bottom);
+//        LogUtils.e("宽度:", bounds.width() + "");
         float xText = bounds.width() * getProgress() / getMax() - mTextBound.width() / 2 + getPaddingLeft() - 2;
-        LogUtils.e("xText", xText + "");
+//        LogUtils.e("xText", xText + "");
         canvas.drawText(mText, xText, mHeight / 2 + mTextBound.height() / 3, mTextPaint);
     }
 

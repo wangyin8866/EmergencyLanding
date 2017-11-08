@@ -71,7 +71,7 @@ public class ImmediateBean {
 
         private String is_exists;
         private String is_lz;
-        private String cust_id;
+        private String cust_juid;
 
         public String getIs_exists() {
             return is_exists;
@@ -89,12 +89,12 @@ public class ImmediateBean {
             this.is_lz = is_lz;
         }
 
-        public String getCust_id() {
-            return cust_id;
+        public String getCust_juid() {
+            return cust_juid;
         }
 
-        public void setCust_id(String cust_id) {
-            this.cust_id = cust_id;
+        public void setCust_juid(String cust_juid) {
+            this.cust_juid = cust_juid;
         }
     }
 }

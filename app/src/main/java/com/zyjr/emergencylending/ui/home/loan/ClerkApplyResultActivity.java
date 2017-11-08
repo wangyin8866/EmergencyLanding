@@ -23,7 +23,7 @@ public class ClerkApplyResultActivity extends BaseActivity {
 
     @BindView(R.id.top_bar)
     TopBar topBar;
-    @BindView(R.id.iv_apply_status_icon)
+    @BindView(R.id.iv_apply_result_icon)
     ImageView ivApplyResultIcon;
     @BindView(R.id.tv_apply_result)
     TextView tvApplyResult;

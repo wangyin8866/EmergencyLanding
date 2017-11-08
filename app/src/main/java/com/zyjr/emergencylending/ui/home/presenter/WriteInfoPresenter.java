@@ -15,6 +15,7 @@ import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.model.home.loan.WriteInfoModel;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
 
 import java.util.Map;
 
@@ -73,13 +74,17 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
 //        }, mContext));
     }
 
-    public void submitLoanInformation(Map<String, String> params) {
+    public void submitLoanInformation(final Map<String, String> params) {
         invoke(WriteInfoModel.getInstance().submitLoanInformation(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("提交借款资料成功---->" + result.getResult().toString());
-                    getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
+                    if (StringUtil.isEmpty(params.get("store"))) {
+                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.ONLINE, result.getMsg());
+                    } else {
+                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.OFFLINE_CLERK, result.getMsg());
+                    }
                 } else {
                     LogUtils.d("提交借款资料失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getMsg());

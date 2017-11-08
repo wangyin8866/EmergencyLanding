@@ -80,17 +80,17 @@ public class CustomerDialog extends Dialog {
      *
      * @param listener       事件回调
      * @param userFlag       用户标识
-     * @param isFirst        是否首贷
+     * @param renewLoanType  是否首贷 0:首贷;3:续贷
      * @param money          借款金额
      * @param period         借款周期
      * @param periodDistance 期数间隔
      * @param periodUnit     借款周期单位 1:天;2:周
      * @return
      */
-    public CustomerDialog loanProductMatchInfo(View.OnClickListener listener, String userFlag, boolean isFirst, String money, String period, String periodDistance, String periodUnit) {
+    public CustomerDialog loanProductMatchInfo(View.OnClickListener listener, String userFlag, String renewLoanType, String money, String period, String periodDistance, String periodUnit) {
         setContentView(R.layout.dialog_product_match);
         TextView tvDesc = findViewById(R.id.tv_title1);
-        if (!isFirst) {
+        if (renewLoanType.equals("3")) {
             tvDesc.setVisibility(View.INVISIBLE);
         }
         Button btnSumbit = findViewById(R.id.btn_comfirm_submit);

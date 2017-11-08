@@ -119,7 +119,7 @@ public class ImmediatelyBorrowActivity extends BaseActivity<ImmediatelyPresenter
 
         ImmediateBean.ResultBean resultBean = baseBean.getResult();
 
-        SPUtils.saveString(mContext, Config.KEY_CUST_ID, resultBean.getCust_id());
+        SPUtils.saveString(mContext, Config.KEY_CUST_JUID, resultBean.getCust_juid());
         if (Config.TRUE.equals(resultBean.getIs_exists())) {
             if (Config.TRUE.equals(resultBean.getIs_lz())) {
                 final CustomerDialog customerDialog = new CustomerDialog(mContext);
@@ -131,7 +131,8 @@ public class ImmediatelyBorrowActivity extends BaseActivity<ImmediatelyPresenter
                                 customerDialog.dismiss();
                                 break;
                             case R.id.btn_confirm_submit:
-                                mPresenter.borrowSkip(NetConstantValues.ONLINE_TO_OFFLINE, SPUtils.getString(mContext, Config.KEY_CUST_ID, ""));
+                                customerDialog.dismiss();
+                                mPresenter.borrowSkip(NetConstantValues.ONLINE_TO_OFFLINE, SPUtils.getString(mContext, Config.KEY_CUST_JUID, ""));
                                 break;
                         }
                     }

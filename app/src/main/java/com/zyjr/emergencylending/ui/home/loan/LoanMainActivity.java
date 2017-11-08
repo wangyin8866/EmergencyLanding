@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -64,6 +66,12 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     LinearLayout llOfflineSupCities; // 传统借款支持城市
     @BindView(R.id.tv_offline_support_cities_desc)
     TextView tvOfflineSupCities; // 线下支持城市
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;  // 底部布局
 
     private String flag = "";
     private String online_type = ""; // 产品类型
@@ -98,7 +106,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     }
 
 
-    @OnClick({R.id.btn_apply_quickly, R.id.layout_online_support_cities})
+    @OnClick({R.id.btn_apply_quickly, R.id.layout_online_support_cities, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_quickly:
@@ -134,6 +142,10 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             case R.id.layout_online_support_cities:
                 startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));
                 break;
+
+            case R.id.btn_retry:
+                loadingProIntroduce(product_id);
+                break;
         }
     }
 
@@ -153,7 +165,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             initSeekPeriod(34, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
             llOnlineSupCities.setVisibility(View.VISIBLE);
             llOfflineSupCities.setVisibility(View.GONE);
-            loadingProIntroduce("0");
+            loadingProIntroduce(product_id);
         } else if (flag.equals("offline")) {
             topBar.setTitle("传统借款");
             online_type = "1";
@@ -167,7 +179,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
             initSeekPeriod(8, minLoanPeriod, maxLoanPeriod, minLoanPeriodUint);
             llOnlineSupCities.setVisibility(View.GONE);
             llOfflineSupCities.setVisibility(View.VISIBLE);
-            loadingProIntroduce("1");
+            loadingProIntroduce(product_id);
         }
     }
 
@@ -274,6 +286,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onSuccessGetIntro(String returnCode, List<String> result) {
+//        showSuccess();
         proIntroduceList = result;
         ProIntroduceAdapter adapter = new ProIntroduceAdapter(R.layout.rv_item_pro_introduce, proIntroduceList);
         rvProductIntroduce.setLayoutManager(new LinearLayoutManager(this));
@@ -288,16 +301,29 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onFail(String returnCode, String errorMessage) {
-
+        ToastAlone.showLongToast(this, errorMessage);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+//        showError();
         if (returnCode.equals(Constants.GET_SUPPORT_CITIES_LIST)) {
             ToastAlone.showLongToast(this, errorMsg);
         } else if (returnCode.equals(Constants.GET_PRODUCT_INTRODUCE)) {
             ToastAlone.showLongToast(this, errorMsg);
         }
+    }
+
+    private void showError(){
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+        layoutBottom.setVisibility(View.GONE);
+    }
+
+    private void showSuccess(){
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.VISIBLE);
     }
 
 }

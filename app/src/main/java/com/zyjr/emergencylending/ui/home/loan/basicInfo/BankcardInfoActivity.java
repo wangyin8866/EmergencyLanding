@@ -29,6 +29,7 @@ import com.zyjr.emergencylending.ui.home.loan.AddBankcardActivity;
 import com.zyjr.emergencylending.ui.home.loan.EditBankcardActivity;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
@@ -186,6 +187,8 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     private void judgeBankcardInfo(BankcardInfo bankcard) {
         bankcardInfo = bankcard;
+        bank_username = bankcardInfo.getBank_username();
+        id_card = bankcardInfo.getId_card();
         rlEditBankcard.setVisibility(View.VISIBLE);
         rlAddBankcard.setVisibility(View.GONE);
         if (isEdit.equals("0")) { // 不可编辑
@@ -278,6 +281,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         topBar.setRightButtonVisible(View.INVISIBLE);
         bank_username = bankUsername;
         id_card = idCard;
+        LogUtils.d("银行卡信息:" +bank_username +"[][][]" );
     }
 
     @Override

@@ -26,15 +26,15 @@ public interface Config {
     /**
      * 系统错误
      */
-    String CODE_SYS_ERROR= "API9999";
+    String CODE_SYS_ERROR = "API9999";
     /**
      * 缺少参数或格式不正确
      */
-    String CODE_ARGUMENT_ERROR= "API9999";
+    String CODE_ARGUMENT_ERROR = "API9999";
     /**
      * 业务异常
      */
-    String CODE_BUSINESS_EXCEPTION= "API0004";
+    String CODE_BUSINESS_EXCEPTION = "API0004";
 
 
     /**
@@ -63,7 +63,7 @@ public interface Config {
     /**
      * 客户Id
      */
-    String KEY_CUST_ID = "cust_juid";
+    String KEY_CUST_JUID = "cust_juid";
     /**
      * 是否登录
      */
@@ -149,9 +149,14 @@ public interface Config {
     String TRUE = "1";
     String FALSE = "0";
 
+    /**
+     * 线上
+     */
+    String ONLINE = "ONLINE";
 
     /**
-     * 业务员门店信息 API2022
+     * 线下业务员录件
      */
+    String OFFLINE_CLERK = "OFFLINE_CLERK";
 
 }

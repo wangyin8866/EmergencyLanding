@@ -37,12 +37,12 @@
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/tv_loan_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_loan_money"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:text="借款金额"
                 android:textColor="#999999"
                 android:textSize="12sp" />
 

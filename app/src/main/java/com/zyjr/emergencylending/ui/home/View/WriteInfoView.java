@@ -14,7 +14,7 @@ public interface WriteInfoView {
 
     void onSuccessGet(String apiCode, WriteInfoBean bean);
 
-    void onSuccessSubmit(String apiCode, String msg);
+    void onSuccessSubmit(String apiCode, String flag, String msg);
 
     void onSuccessGetMayApplyPro(String apiCode, MayApplyProBean bean);
 

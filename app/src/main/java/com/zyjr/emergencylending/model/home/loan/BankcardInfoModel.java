@@ -44,21 +44,21 @@ public class BankcardInfoModel extends BaseModel {
 
     public Observable<CustomApiResult<BankcardInfo, BankcardInfo>> getBankcardInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_BIND_BANK_CARD);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, "1"));
         return bankcardInfoService.getBankcardInfo(params);
     }
 
 
     public Observable<ApiResult<BankcardInfo>> addBankcardInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_ADD_BIND_BANK_CARD);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, "1"));
         return bankcardInfoService.addBankcardInfo(params);
     }
 
 
     public Observable<ApiResult<BankcardInfo>> editBankcardInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_EDIT_BIND_BANK_CARD);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_ID, ""));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, "1"));
         return bankcardInfoService.editBankcardInfo(params);
     }
 

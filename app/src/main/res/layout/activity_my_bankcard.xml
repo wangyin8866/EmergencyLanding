@@ -43,9 +43,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="8dp"
-                android:visibility="gone"
                 android:background="@drawable/layout_bankcard_shape"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_bankcard_icon"

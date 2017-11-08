@@ -9,8 +9,8 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
-//    String HOST_URL = "http://192.168.10.12:8080/";
+//    String HOST_URL = "http://192.168.6.107:8086/";
+    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
