@@ -27,7 +27,7 @@ public class MyBorrowPresenter extends BasePresenter<BaseView<BaseBean>> {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
-
+                            getView().callBack(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }

@@ -9,12 +9,12 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
+//    String HOST_URL = "http://192.168.6.107:8086/";
 //    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
-//    String HOST_URL = "http://192.168.9.152:8086/";
+    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 二级地址
@@ -253,7 +253,7 @@ public interface NetConstantValues {
     /**
      * 我的借款
      */
-    String MY_LOAN = "zyUserBorrowService.getCardBinInfor";
+    String MY_LOAN = "customerService.getBorrowInfoByUserId";
     /**
      * 保存通讯录(问题验证通过后)
      */

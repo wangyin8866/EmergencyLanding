@@ -1,23 +1,21 @@
 package com.zyjr.emergencylending.ui.my;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ajguan.library.EasyRefreshLayout;
-import com.ajguan.library.LoadModel;
 import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.adapter.BorrowLogAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.BorrowLog;
 import com.zyjr.emergencylending.ui.my.presenter.MyBorrowPresenter;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,6 +44,10 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<B
     RecyclerView rvMain;
     @BindView(R.id.easylayout)
     EasyRefreshLayout easylayout;
+    @BindView(R.id.ll_data)
+    LinearLayout llData;
+    @BindView(R.id.ll_empty)
+    LinearLayout llEmpty;
     private List<BorrowLog> borrowLogs;
 
     @Override
@@ -62,8 +64,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<B
     }
 
     private void init() {
-//        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
-
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
 
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
@@ -76,32 +77,35 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<B
 
             }
         });
-        borrowLogs = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            BorrowLog borrowLog = new BorrowLog(1000 * i + "", i + "周", new Date().toString(), "已结清");
-            borrowLogs.add(borrowLog);
-        }
-        rvMain.setLayoutManager(new LinearLayoutManager(this));
-        BorrowLogAdapter adapter = new BorrowLogAdapter(R.layout.item_borrow_log, borrowLogs);
-        rvMain.setAdapter(adapter);
-        if (borrowLogs.size() < 10) {
-            easylayout.setLoadMoreModel(LoadModel.NONE);//取消加载更多
-        }
-        easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
-            @Override
-            public void onLoadMore() {
-                easylayout.loadMoreComplete();
-            }
 
-            @Override
-            public void onRefreshing() {
-                easylayout.refreshComplete();
-            }
-        });
     }
 
     @Override
     public void callBack(BaseBean baseBean) {
+        llData.setVisibility(View.GONE);
+        llEmpty.setVisibility(View.VISIBLE);
 
+//        borrowLogs = new ArrayList<>();
+//        for (int i = 1; i < 10; i++) {
+//            BorrowLog borrowLog = new BorrowLog(1000 * i + "", i + "周", new Date().toString(), "已结清");
+//            borrowLogs.add(borrowLog);
+//        }
+//        rvMain.setLayoutManager(new LinearLayoutManager(this));
+//        BorrowLogAdapter adapter = new BorrowLogAdapter(R.layout.item_borrow_log, borrowLogs);
+//        rvMain.setAdapter(adapter);
+//        if (borrowLogs.size() < 10) {
+//            easylayout.setLoadMoreModel(LoadModel.NONE);//取消加载更多
+//        }
+//        easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
+//            @Override
+//            public void onLoadMore() {
+//                easylayout.loadMoreComplete();
+//            }
+//
+//            @Override
+//            public void onRefreshing() {
+//                easylayout.refreshComplete();
+//            }
+//        });
     }
 }
