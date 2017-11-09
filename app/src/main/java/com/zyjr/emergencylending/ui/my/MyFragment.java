@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -21,21 +23,26 @@ import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.permission.InvokeListener;
 import com.jph.takephoto.permission.PermissionManager;
 import com.jph.takephoto.permission.TakePhotoInvocationHandler;
-import com.zyjr.emergencylending.GlideApp;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.GlideCircleTransform;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.MyBorrow;
+import com.zyjr.emergencylending.entity.RepaymentLogin;
+import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.my.View.MyView;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
+import com.zyjr.emergencylending.utils.HDes3;
 import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -45,6 +52,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 
 /**
@@ -76,6 +85,8 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     private InvokeParam invokeParam;
     private UserInfo.ResultBean resultBean;
     private Bitmap mBitmap;
+    private String phone;
+    private String idCard;
 
     @Override
     protected MyPresenter createPresenter() {
@@ -162,6 +173,8 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
                 startActivity(new Intent(mContext, MyBorrowActivity.class));
                 break;
             case R.id.my_repayment:
+                //是否有还款
+                mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
                 break;
             case R.id.help:
                 mPresenter.getH5Url(Config.H5_URL_HELP, "帮助说明");
@@ -213,9 +226,14 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
 
 
         resultBean = userInfo.getResult();
-        LogUtils.e("myCard", resultBean.toString());
 
-        GlideApp.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
+        //手机号
+        phone = resultBean.getTel();
+        //身份证
+        idCard = resultBean.getIdcard();
+
+
+        Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
         if (!TextUtils.isEmpty(resultBean.getUser_name())) {
             userNamePhone.setText(WYUtils.nameSecret(resultBean.getUser_name()) + " " + WYUtils.phoneSecret(resultBean.getTel()));
         } else {
@@ -234,6 +252,46 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
-        GlideApp.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+
+        Glide.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+    }
+
+    @Override
+    public void getBorrowInfoByUserId(MyBorrow baseBean) {
+        if (baseBean.getResult().getCurrent_borrow() != null) {
+
+            if (Config.TRUE.equals(baseBean.getResult().getCurrent_borrow().getIsRepaymentFlag())) {
+                try {
+                    RepaymentLogin repaymentLogin = new RepaymentLogin();
+
+                    RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(idCard, phone, "android", "jjtapp");
+                    String json = new Gson().toJson(recordBean);
+                    String des3 = HDes3.encode(json);
+                    repaymentLogin.setRecord(des3);
+
+
+                    LogUtils.e("repaymentLogin", des3);
+                    RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(repaymentLogin));
+
+                    //获取token
+                    mPresenter.repaymentLogin(body);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
+            }
+        } else {
+            H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
+        }
+    }
+
+    @Override
+    public void getRepaymentLogin(RepaymentSuccess baseBean) {
+        String token = baseBean.getToken();
+
+        SPUtils.saveString(mContext, Config.KEY_REPAYMENT_TOKEN, token);
+        // 调还款的接口
+        mPresenter.getH5Url(Config.H5_URL_REPAYMENT,"还款");
     }
 }

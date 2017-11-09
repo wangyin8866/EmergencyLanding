@@ -40,6 +40,7 @@ public class SalesmanModel extends BaseModel{
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("type", type);
+
         return api.myPerformance(map);
     }
     public Observable<RankBean> rankList(String router) {
@@ -47,10 +48,11 @@ public class SalesmanModel extends BaseModel{
         map.put("router", router);
         return api.rankList(map);
     }
-    public Observable<WaitApplyBean> waitApply(String router, String type) {
-        Map<String, String> map = new HashMap<String, String>(2);
+    public Observable<WaitApplyBean> waitApply(String router, String type,String isHome) {
+        Map<String, String> map = new HashMap<String, String>(3);
         map.put("router", router);
         map.put("type", type);
+        map.put("isHome", isHome);
         return api.waitApply(map);
     }
     public Observable<NoticeBean> getNoticeList(String router, String get_num) {

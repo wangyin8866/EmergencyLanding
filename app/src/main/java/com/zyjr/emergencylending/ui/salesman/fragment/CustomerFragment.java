@@ -152,13 +152,13 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 break;
         }
         mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "", "1");
         mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "", "1");
     }
 
     @Override
@@ -176,7 +176,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     @Override
     public void rankList(RankBean rankBean) {
         RankBean.ResultBean.SelfMapBean.NowMonthBean nowMonthBean = rankBean.getResult().getSelfMap().getNowMonth();
-        nowMonth.setText(nowMonthBean.getMon()+"月");
+        nowMonth.setText(nowMonthBean.getMon() + "月");
         ranList.setText(nowMonthBean.getRank_num());
         amount.setText(nowMonthBean.getLend_total_amount());
     }

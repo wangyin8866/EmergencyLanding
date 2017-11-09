@@ -9,9 +9,11 @@ import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.ImmediateBean;
 import com.zyjr.emergencylending.entity.MessageBean;
+import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.entity.RankBean;
+import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.entity.UserStatus;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
@@ -20,6 +22,8 @@ import com.zyjr.emergencylending.entity.account.RegisterBean;
 
 import java.util.Map;
 
+import okhttp3.RequestBody;
+import retrofit2.http.Body;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
@@ -267,5 +271,11 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<BaseBean> myBorrow(@FieldMap Map<String, String> params);
+    Observable<MyBorrow> myBorrow(@FieldMap Map<String, String> params);
+
+    /**
+     * 我的借款登陆
+     */
+    @POST(NetConstantValues.REPAYMENT_LOGIN)
+    Observable<RepaymentSuccess> repaymentLogin(@Body RequestBody jsonBody);
 }

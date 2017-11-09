@@ -230,7 +230,6 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void isEffectiveOrder(EffectiveOrderBean baseBean) {
         is_effective_order = baseBean.getResult().getIs_effective_order();
-
     }
 
     @Override

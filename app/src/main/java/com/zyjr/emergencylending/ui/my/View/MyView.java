@@ -1,6 +1,8 @@
 package com.zyjr.emergencylending.ui.my.View;
 
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.MyBorrow;
+import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
 
 /**
@@ -12,4 +14,7 @@ import com.zyjr.emergencylending.entity.UserInfo;
 public interface MyView {
     void getUserInfo(UserInfo userInfo);
     void update(BaseBean baseBean);
+    void getBorrowInfoByUserId(MyBorrow baseBean);
+
+    void getRepaymentLogin(RepaymentSuccess baseBean);
 }

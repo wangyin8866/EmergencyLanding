@@ -16,6 +16,11 @@ public interface NetConstantValues {
      */
     String HOST_URL = "http://192.168.9.152:8086/";
 
+
+    /**
+     * 我的还款登陆
+     */
+    String REPAYMENT_LOGIN_BASE= "http://192.168.5.185/cffgloan/";
     /**
      * 二级地址
      */
@@ -267,4 +272,8 @@ public interface NetConstantValues {
      */
     String ROUTER_CONFIRM_RECEIVE_INFO = "contractSignService.confirmGetAmount";
 
+    /**
+     * 借款登陆
+     */
+    String REPAYMENT_LOGIN = "appJJTHttpService/login";
 }

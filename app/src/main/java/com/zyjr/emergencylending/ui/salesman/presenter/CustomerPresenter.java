@@ -60,8 +60,8 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
         }, mContext));
 
     }
-    public void waitApply(String router,String type) {
-        invoke(SalesmanModel.getInstance().waitApply(router,type), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
+    public void waitApply(String router,String type,String isHome) {
+        invoke(SalesmanModel.getInstance().waitApply(router,type,isHome), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
             @Override
             public void onNext(WaitApplyBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {

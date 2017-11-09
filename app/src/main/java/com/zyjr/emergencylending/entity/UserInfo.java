@@ -8,11 +8,12 @@ package com.zyjr.emergencylending.entity;
 
 public class UserInfo {
 
+
     /**
      * flag : API0000
      * msg : 操作成功
      * ext : null
-     * result : {"head_url":"","user_name":null,"tel":"17621573868","news_status":"0"}
+     * result : {"head_url":"","user_name":"张超锋","tel":"18217117889","idcard":"411425199105276618","news_status":"0"}
      * lockerFlag : false
      */
 
@@ -65,14 +66,16 @@ public class UserInfo {
     public static class ResultBean {
         /**
          * head_url :
-         * user_name : null
-         * tel : 17621573868
+         * user_name : 张超锋
+         * tel : 18217117889
+         * idcard : 411425199105276618
          * news_status : 0
          */
 
         private String head_url;
         private String user_name;
         private String tel;
+        private String idcard;
         private String news_status;
 
         public String getHead_url() {
@@ -97,6 +100,14 @@ public class UserInfo {
 
         public void setTel(String tel) {
             this.tel = tel;
+        }
+
+        public String getIdcard() {
+            return idcard;
+        }
+
+        public void setIdcard(String idcard) {
+            this.idcard = idcard;
         }
 
         public String getNews_status() {

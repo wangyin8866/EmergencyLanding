@@ -14,6 +14,7 @@ public class CardBean implements Serializable{
      * flag : API0000
      * msg : 操作成功
      * ext : null
+     * {"result":{"head_url":"http://192.168.5.26/fxd//M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg","position":"客户经理","phone":"13050311105","rq_code":"http://192.168.5.26/fxd//M00/09/9E/wKgFGlnwWUqEGTSbAAAAANV9p8U329.png","product_img_url":"","company":"丹东分公司","name":"丁晓宇"},"lockerFlag":false}
      * result : {"head_url":"","position":"客户经理","phone":"13050311105","rq_code":"M00/09/9E/wKgFGlnwWUqEGTSbAAAAANV9p8U329.png","product_img_url":"","company":"丹东分公司","name":"丁晓宇"}
      * lockerFlag : false
      */

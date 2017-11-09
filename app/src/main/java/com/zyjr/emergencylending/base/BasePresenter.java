@@ -105,15 +105,18 @@ public class BasePresenter<T> {
     /**
      * h5
      */
-    public void getH5Url( String url_type, final String title
+    public void getH5Url(final String url_type, final String title
     ) {
-
         invoke(AccountModel.getInstance().getH5Url(url_type), new ProgressSubscriber<H5Bean>(new SubscriberOnNextListener<H5Bean>() {
             @Override
             public void onNext(H5Bean baseBean) {
                 if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
-                    H5WebView.skipH5WebView(mContext,title,baseBean.getResult().getH5_url()+"?login_token="+ SPUtils.getString(mContext,Config.KEY_TOKEN,"")
-                            +"&juid="+SPUtils.getString(mContext,Config.KEY_JUID,""));
+                    if (url_type.equals(Config.H5_URL_REPAYMENT)) {
+                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_REPAYMENT_TOKEN, "")+"&page=1");
+                    } else {
+                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, ""));
+                    }
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }

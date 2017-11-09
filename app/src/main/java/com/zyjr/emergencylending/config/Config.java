@@ -49,6 +49,11 @@ public interface Config {
      * 用户token
      */
     String KEY_TOKEN = "token";
+
+    /**
+     * 还款登陆token
+     */
+    String KEY_REPAYMENT_TOKEN = "repayment_token";
     /**
      * 用户标识  1：业务员；0：普通客户
      */
@@ -105,6 +110,10 @@ public interface Config {
      */
     String H5_URL_INVITE = "H5_URL_INVITE";
     /**
+     * 我要还款
+     */
+    String H5_URL_REPAYMENT = "H5_URL_REPAYMENT";
+    /**
      * //业务员首页(更多动态)
      */
     String H5_URL_CLERKHOMEPAGE = "H5_URL_CLERKHOMEPAGE";
@@ -158,5 +167,10 @@ public interface Config {
      * 线下业务员录件
      */
     String OFFLINE_CLERK = "OFFLINE_CLERK";
+
+    /**
+     * 不需要还款
+     */
+    String NO_REPAY = "http://192.168.6.107:8086/jjth5/noRepay.html";
 
 }

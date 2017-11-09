@@ -60,8 +60,21 @@ public class LogUtils
 
 	public static void e(String tag, String msg)
 	{
-		if (isDebug)
-			Log.e(tag, msg);
+		if (isDebug) {
+			if (msg.length() > 3000) {//信息量大，分段打印
+				for (int i = 0; i < msg.length(); i += 3000) {
+					if (i + 3000 < msg.length()) {
+
+						Log.e(tag + i, msg.substring(i, i + 3000));
+					} else {
+						Log.e(tag + i, msg.substring(i, msg.length()));
+					}
+				}
+			} else {
+
+				Log.e(tag, msg);
+			}
+		}
 	}
 
 	public static void v(String tag, String msg)

@@ -5,6 +5,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
+import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.entity.UserStatus;
 import com.zyjr.emergencylending.entity.account.LoginBean;
@@ -139,11 +140,12 @@ public class AccountModel extends BaseModel {
     /**
      * 我的借款
      */
-    public Observable<BaseBean> myBorrow(String router, String pageNo, String pageSize) {
+    public Observable<MyBorrow> myBorrow(String router, String pageNo, String pageSize) {
         Map<String, String> map = new HashMap<String, String>(3);
         map.put("router", router);
         map.put("pageNo", pageNo);
         map.put("pageSize", pageSize);
         return mApi.myBorrow(map);
     }
+
 }

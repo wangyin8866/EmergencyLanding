@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 26
@@ -48,8 +47,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -70,8 +69,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding:rxbinding-design:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-recyclerview-v7:0.3.0'
     compile 'tech.michaelx.authcode:authcode:1.0.0'
-    compile 'com.github.bumptech.glide:glide:4.3.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'com.github.liuguangqiang.swipeback:library:1.0.2@aar'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //沉浸式
@@ -106,5 +104,4 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     //打开pdf
     compile 'com.lidong.pdf:android_pdf:1.0.1'
-
 }
