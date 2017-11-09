@@ -28,7 +28,7 @@ public class VerticalStepView extends LinearLayout implements VerticalStepViewIn
     private VerticalStepViewIndicator mStepsViewIndicator;
     private List<String> mTexts;
     private int mComplectingPosition;
-    private int mUnComplectedTextColor = ContextCompat.getColor(getContext(), R.color.order_uncomplected_color);//定义默认未完成文字的颜色;
+    private int mUnComplectedTextColor = ContextCompat.getColor(getContext(), R.color.order_uncompleted_color);//定义默认未完成文字的颜色;
     private int mComplectedTextColor = ContextCompat.getColor(getContext(), android.R.color.white);//定义默认完成文字的颜色;
 
     private int mTextSize = 14;//default textSize

@@ -26,7 +26,7 @@ public class HorizontalStepView extends LinearLayout implements HorizontalStepsV
     private HorizontalStepsViewIndicator mStepsViewIndicator;
     private List<StepBean> mStepBeanList;
     private int mComplectingPosition;
-    private int mUnComplectedTextColor = getResources().getColor(R.color.order_uncomplected_color);//定义默认未完成文字的颜色;
+    private int mUnComplectedTextColor = getResources().getColor(R.color.order_uncompleted_color);//定义默认未完成文字的颜色;
     private int mComplectedTextColor = getResources().getColor(R.color.white);//定义默认完成文字的颜色;
     private int mTextSize = 14;//default textSize
     private TextView mTextView;

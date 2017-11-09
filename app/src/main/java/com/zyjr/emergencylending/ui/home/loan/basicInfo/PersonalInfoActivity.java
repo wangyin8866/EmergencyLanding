@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -108,6 +109,12 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     LinearLayout llCover;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;  // 底部布局
 
     private File idcardFile;
     private File holdCardFile;

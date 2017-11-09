@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
@@ -59,6 +60,11 @@ public class QuestionValidateActivity extends BaseActivity<QuestValidatePresente
     ImageView ivContactListChoose; // 通讯录号码选择
     @BindView(R.id.et_contact_phone)
     EditText etContactPhone;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+
     private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
     private ContactInfoBean contactBean1 = null; // 联系人1
@@ -115,7 +121,7 @@ public class QuestionValidateActivity extends BaseActivity<QuestValidatePresente
         }
     }
 
-    @OnClick({R.id.btn_contact1, R.id.btn_contact2, R.id.iv_contact_phone, R.id.btn_validate_quickly})
+    @OnClick({R.id.btn_contact1, R.id.btn_contact2, R.id.iv_contact_phone, R.id.btn_validate_quickly, R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_contact1:
@@ -140,6 +146,10 @@ public class QuestionValidateActivity extends BaseActivity<QuestValidatePresente
 
             case R.id.btn_validate_quickly:
                 validateData();
+                break;
+
+            case R.id.btn_retry:
+                loadingContactInfo();
                 break;
         }
     }
@@ -259,8 +269,19 @@ public class QuestionValidateActivity extends BaseActivity<QuestValidatePresente
         mPresenter.saveContactsList(paramsMap);
     }
 
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+    }
+
     @Override
     public void onSuccessGetContactInfo(String apiCode, List<ContactInfoBean> contactInfoList) {
+        showSuccess();
         llContact.setVisibility(View.VISIBLE);
         showContactInfo(contactInfoList);
     }
@@ -279,6 +300,6 @@ public class QuestionValidateActivity extends BaseActivity<QuestValidatePresente
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        showError();
     }
 }

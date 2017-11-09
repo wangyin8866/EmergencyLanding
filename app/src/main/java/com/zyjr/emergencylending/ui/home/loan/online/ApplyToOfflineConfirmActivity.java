@@ -6,7 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -66,6 +69,13 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
     ProgressBar pbLoadingStore;
     @BindView(R.id.btn_submit_apply)
     Button btnSubmitApply;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;  // 底部布局
+
     private List<StoreResultBean.StoreBean> storeBeanList = null;
     private SupportStoreAdapter adapter = null;
     private StoreResultBean.StoreBean storeBean = null;
@@ -82,6 +92,7 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
     private int loanMoney = 0; // 借款金额
     private String loanPeriod = ""; // 借款周期
     private String loanPeriodUnit = "2"; // 周期单位 1:天;2:周
+    private String renew_loan_type = "";
 
     @Override
     protected OfflineApplyPresenter createPresenter() {
@@ -95,16 +106,21 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
         ButterKnife.bind(this);
 
         initData();
+        initGetData();
         initListener();
         getLocalStoreList();
     }
 
-    @OnClick({R.id.btn_submit_apply})
+    @OnClick({R.id.btn_submit_apply, R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit_apply:
                 validateData();
 
+                break;
+
+            case R.id.btn_retry:
+                getLocalStoreList();
                 break;
         }
     }
@@ -138,6 +154,13 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
         maxLoanMoney = 30000;
         initSeekMoney(16, minLoanMoney, maxLoanMoney);
         initSeekPeriod(8, minLoanPeriod, maxLoanPeriod, 2);
+    }
+
+    private void initGetData(){
+        Intent intent = getIntent();
+        renew_loan_type = intent.getStringExtra("renew_loan_type");
+        LogUtils.d("【接收数据】:" +
+                "\n首续贷renew_loan_type:" + renew_loan_type );
     }
 
     private void initListener() {
@@ -236,11 +259,25 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
         }
         paramsMap.put("store", storeBean.getStoreId()); // 门店iD
         paramsMap.put("store_name", storeBean.getStoreName());  // 门店名称
+        paramsMap.put("renew_loan_type", renew_loan_type);  // 首续贷
         mPresenter.submitLoanInformation(paramsMap);
+    }
+
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+        layoutBottom.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onSuccessGetLocalStoreList(String apiCode, List<StoreResultBean.StoreBean> beanList) {
+        showSuccess();
         storeBeanList = beanList;
         adapter = new SupportStoreAdapter(R.layout.rv_item_store_info, storeBeanList);
         rvStoreSupported.setLayoutManager(new LinearLayoutManager(this));
@@ -275,6 +312,6 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        showError();
     }
 }

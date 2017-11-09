@@ -6,7 +6,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -49,13 +52,20 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
     ProgressBar pbLoadingStore;
     @BindView(R.id.btn_submit_apply)
     Button btnSubmitApply;
-    private List<StoreResultBean.StoreBean> storeBeanList = new ArrayList<>();
-    private SupportStoreAdapter adapter = null;
-    private StoreResultBean.StoreBean storeBean = null;
     @BindView(R.id.tv_offline_borrow_money)
     TextView tvOfflineBorrowMoney; // 申请金额
     @BindView(R.id.tv_offline_borrow_period)
     TextView tvOfflineBorrowPeriod; // 周期
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;  // 底部布局
+
+    private List<StoreResultBean.StoreBean> storeBeanList = new ArrayList<>();
+    private SupportStoreAdapter adapter = null;
+    private StoreResultBean.StoreBean storeBean = null;
     private String online_type = "";
     private String product_id = "";
     private String apply_amount = "";
@@ -79,11 +89,15 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         initGetData();
     }
 
-    @OnClick({R.id.btn_submit_apply})
+    @OnClick({R.id.btn_submit_apply,R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit_apply:
                 validate();
+                break;
+
+            case R.id.btn_retry:
+                getLocalStoreList();
                 break;
         }
     }
@@ -160,9 +174,21 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         mPresenter.submitLoanInformation(paramsMap);
     }
 
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+        layoutBottom.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.VISIBLE);
+    }
 
     @Override
     public void onSuccessGetLocalStoreList(String apiCode, List<StoreResultBean.StoreBean> beanList) {
+        showSuccess();
         storeBeanList = beanList;
         adapter = new SupportStoreAdapter(R.layout.rv_item_store_info, storeBeanList);
         rvStoreSupported.setLayoutManager(new LinearLayoutManager(this));
@@ -197,6 +223,6 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        showError();
     }
 }

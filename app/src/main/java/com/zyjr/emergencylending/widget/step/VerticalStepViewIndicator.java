@@ -48,7 +48,7 @@ public class VerticalStepViewIndicator extends View {
     private List<Float> mCircleCenterPointPositionList;//定义所有圆的圆心点位置的集合 definition all of circles center point list
     private Paint mUnCompletedPaint;//未完成Paint  definition mUnCompletedPaint
     private Paint mCompletedPaint;//完成paint      definition mCompletedPaint
-    private int mUnCompletedLineColor = ContextCompat.getColor(getContext(), R.color.order_uncomplected_color);//定义默认未完成线的颜色  definition mUnCompletedLineColor
+    private int mUnCompletedLineColor = ContextCompat.getColor(getContext(), R.color.order_uncompleted_color);//定义默认未完成线的颜色  definition mUnCompletedLineColor
     private int mCompletedLineColor = Color.WHITE;//定义默认完成线的颜色      definition mCompletedLineColor
     private PathEffect mEffects;
 

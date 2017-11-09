@@ -184,6 +184,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 break;
             case R.id.btn_apply_quickly:
                 intent = new Intent(WriteInfoMainActivity.this, ApplyToOfflineConfirmActivity.class);
+                intent.putExtra("renew_loan_type", renew_loan_type);  // 首续贷
                 startActivity(intent);
                 break;
             case R.id.btn_submit:
@@ -339,7 +340,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                             intent.putExtra("apply_periods_unit", apply_periods_unit); // 申请周期单位
                             // 首续贷
                             if (renewLoanType.equals("0")) {
-                                intent.putExtra("renew_loan_type", "0");  // 1.首贷
+                                intent.putExtra("renew_loan_type", "0");  // 0.首贷
                             } else {
                                 intent.putExtra("renew_loan_type", "3"); // 0.续贷
                             }

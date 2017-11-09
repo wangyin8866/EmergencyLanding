@@ -41,15 +41,12 @@ public class SupportCitiesActivity extends BaseActivity<ProductInfoPresenter, Pr
     @BindView(R.id.lv_support_cities)
     ListView sortListView;
 
-    //    private List<CityBean> cityList;
     private SortAdapter adapter;
-
-
     /**
      * 汉字转换成拼音的类
      */
     private CharacterParser characterParser;
-    private List<SupportCityBean> sourceDateList;
+    private List<SupportCityBean> sourceDateList = null;
 
     /**
      * 根据拼音来排列ListView里面的数据类

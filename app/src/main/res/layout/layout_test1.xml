@@ -11,106 +11,300 @@
         android:background="@drawable/bg_home_notice"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tv_support_cities"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="15dp"
-            android:text="请选择您所在的城市"
-            android:textColor="@color/input_text_color"
-            android:textSize="14sp" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="183dp">
+            android:layout_height="wrap_content"
+            android:background="@mipmap/orderprocess_bg"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <!-- 步骤1 -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/orderprocess_bg">
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_order_status"
-                    android:layout_width="315dp"
-                    android:layout_height="12dp"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="22dp"
-                    android:background="@mipmap/orderprocess_a"
-                    android:scaleType="fitXY" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/iv_order_status1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/orderprocess_oval_a" />
+
+                    <View
+                        android:id="@+id/view_line_status1_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_order_status1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/iv_order_status"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginTop="8.5dp"
                     android:text="填写资料"
+                    android:textColor="#494949"
                     android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 步骤2 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_line_status2_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/iv_order_status2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/orderprocess_oval_a" />
+
+                    <View
+                        android:id="@+id/view_line_status2_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_order_status2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_order_status1"
-                    android:layout_below="@+id/iv_order_status"
-                    android:layout_marginLeft="18dp"
-                    android:layout_marginTop="8.5dp"
-                    android:layout_toRightOf="@+id/tv_order_status1"
+                    android:singleLine="true"
                     android:text="认证中"
+                    android:textColor="#494949"
                     android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 步骤3 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_line_status3_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/iv_order_status3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/orderprocess_oval_a" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/line_color" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_order_status3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_order_status1"
-                    android:layout_below="@+id/iv_order_status"
-                    android:layout_marginLeft="22dp"
-                    android:layout_marginTop="8.5dp"
-                    android:layout_toRightOf="@+id/tv_order_status2"
+                    android:singleLine="true"
                     android:text="审核中"
+                    android:textColor="#494949"
                     android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 步骤4 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_line_status4_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/iv_order_status4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/orderprocess_oval_a" />
+
+                    <View
+                        android:id="@+id/view_line_status4_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_order_status4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_order_status1"
-                    android:layout_below="@+id/iv_order_status"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="8.5dp"
-                    android:layout_toRightOf="@+id/tv_order_status3"
+                    android:singleLine="true"
                     android:text="领取金额"
+                    android:textColor="#494949"
                     android:textSize="12sp" />
+
+            </LinearLayout>
+
+
+            <!-- 步骤5 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_line_status5_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                    <ImageView
+                        android:id="@+id/iv_order_status5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/orderprocess_oval_c" />
+
+                    <View
+                        android:id="@+id/view_line_status5_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/white" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_order_status5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_order_status1"
-                    android:layout_below="@+id/iv_order_status"
-                    android:layout_marginLeft="14.5dp"
-                    android:layout_marginTop="8.5dp"
-                    android:layout_toRightOf="@+id/tv_order_status4"
-                    android:text="领取金额"
+                    android:singleLine="true"
+                    android:text="放款中"
+                    android:textColor="#494949"
                     android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <!-- 步骤6 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <View
+                        android:id="@+id/view_line_status6_left"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1"
+                        android:background="@color/order_uncompleted_color" />
+
+                    <ImageView
+                        android:id="@+id/iv_order_status6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/orderprocess_oval_c" />
+
+                    <View
+                        android:id="@+id/view_line_status6_right"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_order_status6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/tv_order_status1"
-                    android:layout_below="@+id/iv_order_status"
-                    android:layout_marginLeft="13.5dp"
-                    android:layout_marginTop="8.5dp"
-                    android:layout_toRightOf="@+id/tv_order_status5"
                     android:text="还款中"
+                    android:textColor="#494949"
                     android:textSize="12sp" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
         </LinearLayout>
 

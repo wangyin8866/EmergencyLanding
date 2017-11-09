@@ -1,5 +1,8 @@
 package com.zyjr.emergencylending.base;
 
+import android.widget.Toast;
+
+import com.xfqz.xjd.mylibrary.NetworkUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -15,6 +18,15 @@ import rx.Subscriber;
  */
 public abstract class HttpSubscriber<T> extends Subscriber<T> {
 
+    @Override
+    public void onStart() {
+        if (!NetworkUtils.isNetAvailable(BaseApplication.getContext())) {
+            ToastAlone.showLongToast(BaseApplication.getContext(), "当前网络不可用，请检查网络情况！");
+            // 一定好主动调用下面这一句
+            onCompleted();
+            return;
+        }
+    }
 
     @Override
     public void onCompleted() {
@@ -29,6 +41,7 @@ public abstract class HttpSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
+        ToastAlone.showShortToast(BaseApplication.getContext(), e.getMessage());
         onRequestError(e);
 //        if (e instanceof SocketTimeoutException) {
 //            ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
@@ -44,7 +57,6 @@ public abstract class HttpSubscriber<T> extends Subscriber<T> {
 //            }
 //        }
     }
-
 
 
     public abstract void onSuccess(T t);

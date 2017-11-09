@@ -17,7 +17,7 @@
         app:titleTextSize="16sp" />
 
     <ScrollView
-        android:id="@+id/root"
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_bottom"
@@ -169,5 +169,9 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <include
+        android:visibility="gone"
+        layout="@layout/layout_net_loading_error"/>
 
 </RelativeLayout>

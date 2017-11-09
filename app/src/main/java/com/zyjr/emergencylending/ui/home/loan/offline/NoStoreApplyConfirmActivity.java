@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
@@ -17,7 +18,10 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
+import com.zyjr.emergencylending.ui.home.loan.AuthCenterActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity;
+import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
+import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.OfflineApplyPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.CommonUtils;
@@ -265,7 +269,9 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
         ToastAlone.showLongToast(this, msg);
-        Intent intent = new Intent(this, LoanApplyResultActivity.class);
+        ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
+        ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
+        Intent intent = new Intent(this, AuthCenterActivity.class);
         intent.putExtra("online_type", online_type);
         intent.putExtra("product_id", product_id);
         startActivity(intent);

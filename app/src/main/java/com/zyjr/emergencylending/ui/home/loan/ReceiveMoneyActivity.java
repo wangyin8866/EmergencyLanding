@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Switch;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
-import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.ui.home.presenter.ReceiveMoneyPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -50,6 +50,11 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     Button btnReceiveQuickly;
     @BindView(R.id.cb_check)
     CheckBox cbxAgree;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+
     private ReceiveMoneyBean receiveMoneyBean = null;
     private ReceiveMoneyBean.Contract jiekuanContract = null;
     private ReceiveMoneyBean.Contract xinyongContract = null;
@@ -71,7 +76,7 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         loadingReceiveMoneyInfo();
     }
 
-    @OnClick({R.id.tv_loan_agreement_1, R.id.tv_loan_agreement_2, R.id.tv_loan_agreement_3, R.id.tv_loan_agreement_4, R.id.btn_receive_quickly, R.id.cb_check})
+    @OnClick({R.id.tv_loan_agreement_1, R.id.tv_loan_agreement_2, R.id.tv_loan_agreement_3, R.id.tv_loan_agreement_4, R.id.btn_receive_quickly, R.id.cb_check, R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_loan_agreement_1: // 借款协议
@@ -109,6 +114,10 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
             case R.id.btn_receive_quickly:
                 validateData();
 
+                break;
+
+            case R.id.btn_retry:
+                loadingReceiveMoneyInfo();
                 break;
         }
     }
@@ -185,9 +194,20 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         mPresenter.confirmReceiveInfo(map);
     }
 
-    @Override
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+    }
 
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+    }
+
+
+    @Override
     public void onSuccessGet(String apiCode, ReceiveMoneyBean bean) {
+        showSuccess();
         receiveMoneyBean = bean;
         showReceiveMoneyInfo(receiveMoneyBean);
     }
@@ -199,7 +219,7 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        showError();
     }
 
     @Override

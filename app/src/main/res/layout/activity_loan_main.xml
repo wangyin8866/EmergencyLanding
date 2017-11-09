@@ -243,7 +243,6 @@
             android:id="@+id/btn_apply_quickly"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="10dp"
             android:background="@color/mine_center_bg"
             android:text="立即申请"
             android:textColor="@color/white"

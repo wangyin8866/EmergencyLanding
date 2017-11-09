@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -67,13 +68,16 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @BindView(R.id.tv_bankcard_number)
     TextView tvBankcardNumber; // 银行卡号码
     @BindView(R.id.root_refreshview)
-    PullToRefreshScrollView pullToRefreshScrollView;
-    private BankcardInfo bankcardInfo = null; // 银行卡bean
+    PullToRefreshScrollView pullToRefreshScrollView; // 主布局
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
 
+    private BankcardInfo bankcardInfo = null; // 银行卡bean
     private static final int INTENT_CODE_ADD_BANKCARD = 1; // 添加银行卡 请求码
     private static final int INTENT_CODE_EDIT_BANKCARD = 2; // 编辑银行卡 请求码
     private static final int PERMISSION_CODE_STORAGE = 10005; // 存储权限
     private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String status = ""; // 完成状况
     private String bank_username = ""; // 银行卡户主
     private String id_card = "";// 身份证号
     private CustomProgressDialog loadingDialog = null;
@@ -92,11 +96,15 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         initGetData();
     }
 
-    @OnClick({R.id.rl_add_bankcard})
+    @OnClick({R.id.rl_add_bankcard,R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_add_bankcard:
                 jumpToNext(PERMISSION_CODE_STORAGE, "add");
+                break;
+
+            case R.id.btn_retry:
+                getBindBankcardInfo();
                 break;
         }
     }
@@ -173,15 +181,21 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private void initGetData() {
         Intent intent = getIntent();
         isEdit = intent.getStringExtra("isEdit");
-        String status = intent.getStringExtra("status");
-        // 已完成状态获取资料信息
-        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            loadingBindBankcardInfo();
-        }
+        status = intent.getStringExtra("status");
+        getBindBankcardInfo();
         if (isEdit.equals("0")) { // 不可编辑
             topBar.setRightButtonVisible(View.INVISIBLE);
         } else {
             topBar.setRightButtonVisible(View.VISIBLE);
+        }
+    }
+
+    /**
+     * 已完成状态获取资料信息
+     */
+    private void getBindBankcardInfo(){
+        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+            loadingBindBankcardInfo();
         }
     }
 
@@ -267,6 +281,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
+        showSuccess();
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         judgeBankcardInfo(bean);
@@ -274,6 +289,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessGetNoCard(String returnCode, String bankUsername, String idCard) {
+        showSuccess();
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         rlAddBankcard.setVisibility(View.VISIBLE);
@@ -281,7 +297,17 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         topBar.setRightButtonVisible(View.INVISIBLE);
         bank_username = bankUsername;
         id_card = idCard;
-        LogUtils.d("银行卡信息:" +bank_username +"[][][]" );
+    }
+
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        pullToRefreshScrollView.setVisibility(View.GONE);
+        topBar.setRightButtonVisible(View.INVISIBLE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        pullToRefreshScrollView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -293,9 +319,9 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+        showError();
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, errorMsg);
     }
 
     @Override

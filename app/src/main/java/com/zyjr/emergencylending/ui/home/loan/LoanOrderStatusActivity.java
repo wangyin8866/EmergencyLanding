@@ -52,8 +52,6 @@ import butterknife.OnClick;
 public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, LoanOrderView> implements LoanOrderView {
     @BindView(R.id.top_bar)
     TopBar topBar;
-    @BindView(R.id.iv_order_status)
-    ImageView ivOrderStatus;  // 订单状态图
     @BindView(R.id.tv_order_status1)
     TextView tvOrderStatus1; // 订单状态1 填写资料
     @BindView(R.id.tv_order_status2)
@@ -85,6 +83,37 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     LinearLayout llRetry; // 网络加载失败时重试
     @BindView(R.id.sv_main)
     ScrollView svMain;  // 主布局
+    // 订单状态线
+    @BindView(R.id.view_line_status1_right)
+    View viewLineStatus1Right; // 状态1右侧色
+    @BindView(R.id.iv_order_status2)
+    ImageView ivOrderStatus2; // 状态2
+    @BindView(R.id.view_line_status2_left)
+    View viewLineStatus2Left; // 状态2左侧色
+    @BindView(R.id.view_line_status2_right)
+    View viewLineStatus2Right; // 状态2右侧色
+    @BindView(R.id.iv_order_status3)
+    ImageView ivOrderStatus3; // 状态3
+    @BindView(R.id.view_line_status3_left)
+    View viewLineStatus3Left; // 状态3左侧色
+    @BindView(R.id.view_line_status3_right)
+    View viewLineStatus3Right; // 状态3右侧色
+    @BindView(R.id.iv_order_status4)
+    ImageView ivOrderStatus4; // 状态4
+    @BindView(R.id.view_line_status4_left)
+    View viewLineStatus4Left; // 状态4左侧色
+    @BindView(R.id.view_line_status4_right)
+    View viewLineStatus4Right; // 状态4右侧色
+    @BindView(R.id.iv_order_status5)
+    ImageView ivOrderStatus5; // 状态5
+    @BindView(R.id.view_line_status5_left)
+    View viewLineStatus5Left; // 状态5左侧色
+    @BindView(R.id.view_line_status5_right)
+    View viewLineStatus5Right; // 状态5右侧色
+    @BindView(R.id.iv_order_status6)
+    ImageView ivOrderStatus6; // 状态6
+    @BindView(R.id.view_line_status6_left)
+    View viewLineStatus6Left; // 状态6左侧色
 
     private LoanOrderBean loanOrderBean = null;
 
@@ -185,17 +214,15 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
      * @param orderStatus 订单状态
      */
     private void setOrderStatusInfo(String flag, String stepStatus, String orderStatus, String msg) {
-        Drawable drawable = null;
         int orderStatusIocn = 0;
         if (stepStatus.equals("2") && orderStatus.equals("10")) {
             // 认证中
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_a);
             orderStatusIocn = R.mipmap.emptypage_authentication;
-            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus2, "认证中", R.color.white);
+            setTextView(tvOrderStatus3, "审核中", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus4, "领取金额", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus5, "放款中", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
             tvLoanDesc.setText("申请金额");
             btnOrderOperate.setText("前往认证");
             btnOrderOperate.setEnabled(true);
@@ -209,13 +236,12 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 btnOrderOperate.setText("重新申请");
                 ToastAlone.showLongToast(this, msg);
             }
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_a);
             orderStatusIocn = R.mipmap.emptypage_examine;
-            setTextView(tvOrderStatus2, "受理中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus2, "受理中", R.color.white);
+            setTextView(tvOrderStatus3, "审核中", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus4, "领取金额", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus5, "放款中", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("3")) {
             // 审核中
             if (orderStatus.equals("10") || orderStatus.equals("0") || orderStatus.equals("2")) {
@@ -229,12 +255,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 tvOrderDesc1.setText(msg);
             }
             btnOrderOperate.setEnabled(false);
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_b);
-            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.order_uncomplected_color));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus2, "认证中", R.color.white);
+            setTextView(tvOrderStatus3, "审核中", R.color.white);
+            setTextView(tvOrderStatus4, "领取金额", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus5, "放款中", R.color.order_uncompleted_color);
+            setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("4")) {
             // 领取金额
             tvLoanDesc.setText("审批额度");
@@ -252,12 +277,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 orderStatusIocn = R.mipmap.emptypage_fail;
                 tvOrderDesc1.setText(msg);
             }
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_c);
-            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus2, "认证中", R.color.white);
+            setTextView(tvOrderStatus3, "审核中", R.color.white);
+            setTextView(tvOrderStatus4, "领取金额", R.color.white);
+            setTextView(tvOrderStatus5, "放款中", R.color.white);
+            setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("5")) {
             // 放款中
             tvLoanDesc.setText("审批额度");
@@ -276,12 +300,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 btnOrderOperate.setText("放款拒绝");
                 tvOrderDesc1.setText(msg);
             }
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_d);
-            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.order_uncomplected_color));
+            setTextView(tvOrderStatus2, "认证中", R.color.white);
+            setTextView(tvOrderStatus3, "审核中", R.color.white);
+            setTextView(tvOrderStatus4, "领取金额", R.color.white);
+            setTextView(tvOrderStatus5, "放款中", R.color.white);
+            setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("6")) {
             // 立即还款
             tvLoanDesc.setText("审批额度");
@@ -289,21 +312,98 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 btnOrderOperate.setText("立即还款");
                 btnOrderOperate.setEnabled(true);
             }
-            drawable = getResources().getDrawable(R.mipmap.orderprocess_e);
             orderStatusIocn = R.mipmap.emptypage_repayment;
-            setTextView(tvOrderStatus2, "认证中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus3, "审核中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus4, "领取金额", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus5, "放款中", getResources().getColor(R.color.white));
-            setTextView(tvOrderStatus6, "还款中", getResources().getColor(R.color.white));
+            setTextView(tvOrderStatus2, "认证中", R.color.white);
+            setTextView(tvOrderStatus3, "审核中", R.color.white);
+            setTextView(tvOrderStatus4, "领取金额", R.color.white);
+            setTextView(tvOrderStatus5, "放款中", R.color.white);
+            setTextView(tvOrderStatus6, "还款中", R.color.white);
         }
         ivOrderStatusIcon.setImageResource(orderStatusIocn);
-        ivOrderStatus.setBackgroundDrawable(drawable);
+        setLineColor(stepStatus);
     }
 
     private void setTextView(TextView tv, String content, int color) {
         tv.setText(content);
-        tv.setTextColor(color);
+        tv.setTextColor(getResources().getColor(color));
+    }
+
+    private void setLineColor(String stepCode) {
+        if (stepCode.equals("2") || stepCode.equals("7")) {
+            // 2认证中 ; 7受理中
+            ivOrderStatus3.setImageResource(R.mipmap.orderprocess_oval_c);
+            ivOrderStatus4.setImageResource(R.mipmap.orderprocess_oval_c);
+            ivOrderStatus5.setImageResource(R.mipmap.orderprocess_oval_c);
+            ivOrderStatus6.setImageResource(R.mipmap.orderprocess_oval_c);
+            viewLineStatus2Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus3Left.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus3Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus4Left.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus4Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus5Left.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus5Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus6Left.setBackgroundResource(R.color.order_uncompleted_color);
+        } else if (stepCode.equals("3")) {
+            // 审核中
+            ivOrderStatus2.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus3.setImageResource(R.mipmap.orderprocess_oval_b);
+            ivOrderStatus4.setImageResource(R.mipmap.orderprocess_oval_c);
+            ivOrderStatus5.setImageResource(R.mipmap.orderprocess_oval_c);
+            ivOrderStatus6.setImageResource(R.mipmap.orderprocess_oval_c);
+            viewLineStatus2Right.setBackgroundResource(R.color.white);
+            viewLineStatus3Left.setBackgroundResource(R.color.white);
+            viewLineStatus3Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus4Left.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus4Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus5Left.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus5Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus6Left.setBackgroundResource(R.color.order_uncompleted_color);
+        } else if (stepCode.equals("4")) {
+            // 领取金额
+            ivOrderStatus2.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus3.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus4.setImageResource(R.mipmap.orderprocess_oval_b);
+            ivOrderStatus5.setImageResource(R.mipmap.orderprocess_oval_c);
+            ivOrderStatus6.setImageResource(R.mipmap.orderprocess_oval_c);
+            viewLineStatus2Right.setBackgroundResource(R.color.white);
+            viewLineStatus3Left.setBackgroundResource(R.color.white);
+            viewLineStatus3Right.setBackgroundResource(R.color.white);
+            viewLineStatus4Left.setBackgroundResource(R.color.white);
+            viewLineStatus4Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus5Left.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus5Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus6Left.setBackgroundResource(R.color.order_uncompleted_color);
+        } else if (stepCode.equals("5")) {
+            // 放款中
+            ivOrderStatus2.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus3.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus4.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus5.setImageResource(R.mipmap.orderprocess_oval_b);
+            ivOrderStatus6.setImageResource(R.mipmap.orderprocess_oval_c);
+            viewLineStatus2Right.setBackgroundResource(R.color.white);
+            viewLineStatus3Left.setBackgroundResource(R.color.white);
+            viewLineStatus3Right.setBackgroundResource(R.color.white);
+            viewLineStatus4Left.setBackgroundResource(R.color.white);
+            viewLineStatus4Right.setBackgroundResource(R.color.white);
+            viewLineStatus5Left.setBackgroundResource(R.color.white);
+            viewLineStatus5Right.setBackgroundResource(R.color.order_uncompleted_color);
+            viewLineStatus6Left.setBackgroundResource(R.color.order_uncompleted_color);
+        } else if (stepCode.equals("6")) {
+            // 还款中
+            ivOrderStatus2.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus3.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus4.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus5.setImageResource(R.mipmap.orderprocess_oval_a);
+            ivOrderStatus6.setImageResource(R.mipmap.orderprocess_oval_b);
+            viewLineStatus2Right.setBackgroundResource(R.color.white);
+            viewLineStatus3Left.setBackgroundResource(R.color.white);
+            viewLineStatus3Right.setBackgroundResource(R.color.white);
+            viewLineStatus4Left.setBackgroundResource(R.color.white);
+            viewLineStatus4Right.setBackgroundResource(R.color.white);
+            viewLineStatus5Left.setBackgroundResource(R.color.white);
+            viewLineStatus5Right.setBackgroundResource(R.color.white);
+            viewLineStatus6Left.setBackgroundResource(R.color.white);
+        }
     }
 
     private void init() {

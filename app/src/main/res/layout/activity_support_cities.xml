@@ -17,8 +17,8 @@
         app:titleTextSize="16sp" />
 
     <LinearLayout
-        android:layout_width="0px"
-        android:layout_height="0px"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:focusable="true"
         android:focusableInTouchMode="true" />
 
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:divider="@color/material_blue_grey_950"
+            android:divider="@color/line_color"
             android:dividerHeight="1px" />
 
         <TextView
@@ -43,7 +43,7 @@
             android:gravity="center"
             android:textColor="@color/auth_success"
             android:textSize="30dp"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <com.zyjr.emergencylending.widget.SideBar
             android:id="@+id/sidebar"
