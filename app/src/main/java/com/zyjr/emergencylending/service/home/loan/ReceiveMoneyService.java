@@ -4,6 +4,7 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.http.FieldMap;
@@ -24,4 +25,11 @@ public interface ReceiveMoneyService {
     @POST(NetConstantValues.LOAN)
     Observable<ApiResult<ReceiveMoneyBean>> getReceiveMoneyInfo(@FieldMap Map<String, String> params);
 
+
+    /**
+     * 确认领取信息
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<String>> confirmReceiveInfo(@FieldMap Map<String, String> params);
 }

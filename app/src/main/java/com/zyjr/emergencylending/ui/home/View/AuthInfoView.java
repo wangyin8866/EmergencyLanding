@@ -13,7 +13,9 @@ public interface AuthInfoView {
 
     void onSuccessGet(String apiCode, List<AuthInfoBean> beanList, String userName, String idcard);
 
-    void onSuccessSubmit(String apiCode, String msg);
+    void onSuccessSubmitFace(String apiCode, String msg);
+
+    void onSuccessSubmitAll(String apiCode, String msg);
 
     void onSuccessGetUserInfo(String apiCode, PersonalInfoBean bean);
 

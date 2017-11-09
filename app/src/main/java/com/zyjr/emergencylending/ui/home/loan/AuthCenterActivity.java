@@ -139,7 +139,10 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                     ToastAlone.showLongToast(this, "已认证成功");
                     return;
                 }
-                startActivityForResult(new Intent(this, ZhimaAuthActivity.class), INTENT_ZHIMA_CODE);
+                Intent intent = new Intent(this, ZhimaAuthActivity.class);
+                intent.putExtra("userName", userName);
+                intent.putExtra("idCardNumber", idCardNumber);
+                startActivityForResult(intent, INTENT_ZHIMA_CODE);
                 break;
 
             case R.id.rl_mobile_auth:  // 手机运营商认证  4:成功;5:采集中;6:采集失败
@@ -245,7 +248,8 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
 
     private void submitAllAuth() {
         Map<String, String> params = new HashMap<>();
-        mPresenter.getCurrentAuthInfo(params);
+        params.put("form_token", "1");
+        mPresenter.submitAllAuthInfo(params);
     }
 
 
@@ -460,7 +464,16 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     }
 
     @Override
-    public void onSuccessSubmit(String apiCode, String msg) {
+    public void onSuccessSubmitAll(String apiCode, String msg) {
+        Intent intent = new Intent(this, LoanApplyResultActivity.class);
+        intent.putExtra("online_type", "0");
+        intent.putExtra("product_id", "0");
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onSuccessSubmitFace(String apiCode, String msg) {
         if (apiCode.equals(Constants.SUBMIT_FACE_AUTH)) {
             ToastAlone.showLongToast(this, msg);
             loadingAuthStatus();

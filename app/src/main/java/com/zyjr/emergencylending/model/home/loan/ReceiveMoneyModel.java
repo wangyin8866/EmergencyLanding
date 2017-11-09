@@ -6,6 +6,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
 import com.zyjr.emergencylending.service.home.loan.ReceiveMoneyService;
 
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -34,6 +35,11 @@ public class ReceiveMoneyModel extends BaseModel {
     public Observable<ApiResult<ReceiveMoneyBean>> getReceiveMoneyInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.RONTER_GET_RECEIVE_MONEY);
         return receiveMoneyService.getReceiveMoneyInfo(params);
+    }
+
+    public Observable<ApiResult<String>> confirmReceiveInfo(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_CONFIRM_RECEIVE_INFO);
+        return receiveMoneyService.confirmReceiveInfo(params);
     }
 
 

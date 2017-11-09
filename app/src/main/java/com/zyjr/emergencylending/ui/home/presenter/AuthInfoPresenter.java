@@ -103,7 +103,7 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
             public void onNext(ApiResult<String> result) {
                 if (result.getFlag().equals("API0000")) {
                     LogUtils.d("提交人脸认证信息成功---->" + result.getMsg());
-                    getView().onSuccessSubmit(Constants.SUBMIT_FACE_AUTH, result.getMsg());
+                    getView().onSuccessSubmitFace(Constants.SUBMIT_FACE_AUTH, result.getMsg());
                 } else {
                     LogUtils.d("提交人脸认证信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.SUBMIT_FACE_AUTH, result.getMsg());
@@ -119,12 +119,12 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
     }
 
     public void submitAllAuthInfo(Map<String, String> params) {
-        invoke(AuthCenterModel.getInstance().submitFaceAuthInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+        invoke(AuthCenterModel.getInstance().submitAllAuthInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (result.getFlag().equals("API0000")) {
                     LogUtils.d("提交所有认证信息成功---->" + result.getMsg());
-                    getView().onSuccessSubmit(Constants.SUBMIT_ALL_AUTH_INFO, result.getMsg());
+                    getView().onSuccessSubmitAll(Constants.SUBMIT_ALL_AUTH_INFO, result.getMsg());
                 } else {
                     LogUtils.d("提交所有认证信息失败---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.SUBMIT_ALL_AUTH_INFO, result.getMsg());

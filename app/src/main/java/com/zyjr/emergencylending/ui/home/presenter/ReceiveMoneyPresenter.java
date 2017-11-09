@@ -12,6 +12,7 @@ import com.zyjr.emergencylending.model.home.loan.ReceiveMoneyModel;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.utils.LogUtils;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -42,6 +43,28 @@ public class ReceiveMoneyPresenter extends BasePresenter<ReceiveMoneyView> {
             public void onError(Throwable e) {
                 LogUtils.d("获取领取金额信息异常---->" + e.getMessage());
                 getView().onError(Constants.GET_RECEIVE_MONEY_INFO, e.getMessage());
+            }
+        }, mContext));
+    }
+
+    public void confirmReceiveInfo(Map<String, String> params) {
+        invoke(ReceiveMoneyModel.getInstance().confirmReceiveInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+            @Override
+            public void onNext(ApiResult<String> result) {
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("确认领取金额成功---->" + result.getMsg());
+                    getView().onSuccessConfirmReceive(Constants.CONFIRM_RECEIVE_INFO, result.getMsg());
+                } else {
+                    LogUtils.d("确认领取金额失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.CONFIRM_RECEIVE_INFO, result.getMsg());
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("确认领取金额异常---->" + e.getMessage());
+                getView().onError(Constants.CONFIRM_RECEIVE_INFO, e.getMessage());
             }
         }, mContext));
     }

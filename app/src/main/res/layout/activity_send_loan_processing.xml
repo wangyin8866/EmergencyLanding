@@ -67,19 +67,19 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
                     android:text="温馨提示"
-                    android:textColor="@color/front_text_color_hint"
-                    android:textSize="13sp" />
+                    android:textColor="@color/auth_fail"
+                    android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_warm_notice_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="23dp"
-                    android:layout_marginTop="4dp"
                     android:layout_marginRight="23dp"
+                    android:layout_marginTop="4dp"
                     android:text="1.本次借款成功后收取200元账户管理费与一期履约保证金"
                     android:textColor="@color/front_text_color_hint"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_warm_notice_2"
@@ -90,7 +90,7 @@
                     android:layout_marginTop="4dp"
                     android:text="2.还款日当日正常还款不出现逾期，保证金将自动抵扣最后 一期还款，逾期将概不退还"
                     android:textColor="@color/front_text_color_hint"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/tv_warm_notice_3"
@@ -101,8 +101,7 @@
                     android:layout_marginTop="4dp"
                     android:text="3.保持良好信用，再次申请会有更多提额惊喜哦"
                     android:textColor="@color/front_text_color_hint"
-                    android:textSize="12sp" />
-
+                    android:textSize="13sp" />
 
             </LinearLayout>
 

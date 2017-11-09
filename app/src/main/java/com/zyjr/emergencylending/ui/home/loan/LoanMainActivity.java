@@ -12,7 +12,6 @@ import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -106,7 +105,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
     }
 
 
-    @OnClick({R.id.btn_apply_quickly, R.id.layout_online_support_cities, R.id.btn_retry})
+    @OnClick({R.id.btn_apply_quickly, R.id.layout_offline_support_cities, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_quickly:
@@ -139,7 +138,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                         + ",product_id:" + product_id + ",periodProgress:" + seekbarPeriod.getProgress() + ",moneyProgress:" + seekbarMoney.getProgress());
                 startActivity(intent);
                 break;
-            case R.id.layout_online_support_cities:
+            case R.id.layout_offline_support_cities:
                 startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));
                 break;
 
@@ -286,7 +285,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onSuccessGetIntro(String returnCode, List<String> result) {
-//        showSuccess();
+        showSuccess();
         proIntroduceList = result;
         ProIntroduceAdapter adapter = new ProIntroduceAdapter(R.layout.rv_item_pro_introduce, proIntroduceList);
         rvProductIntroduce.setLayoutManager(new LinearLayoutManager(this));
@@ -306,21 +305,16 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-//        showError();
-        if (returnCode.equals(Constants.GET_SUPPORT_CITIES_LIST)) {
-            ToastAlone.showLongToast(this, errorMsg);
-        } else if (returnCode.equals(Constants.GET_PRODUCT_INTRODUCE)) {
-            ToastAlone.showLongToast(this, errorMsg);
-        }
+        showError();
     }
 
-    private void showError(){
+    private void showError() {
         llRetry.setVisibility(View.VISIBLE);
         svMain.setVisibility(View.GONE);
         layoutBottom.setVisibility(View.GONE);
     }
 
-    private void showSuccess(){
+    private void showSuccess() {
         llRetry.setVisibility(View.GONE);
         svMain.setVisibility(View.VISIBLE);
         layoutBottom.setVisibility(View.VISIBLE);

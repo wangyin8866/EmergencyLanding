@@ -62,11 +62,11 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 		//如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
 		if(position == getPositionForSection(section)){
 			viewHolder.tvLetter.setVisibility(View.VISIBLE);
-			viewHolder.tvLetter.setText(mContent.getFirstName());
+			viewHolder.tvLetter.setText(mContent.getPinyin());
 		}else{
 			viewHolder.tvLetter.setVisibility(View.GONE);
 		}
-		viewHolder.tvTitle.setText(this.list.get(position).getName());
+		viewHolder.tvTitle.setText(this.list.get(position).getCity_name());
 		return view;
 	}
 
@@ -79,7 +79,8 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 	 * 根据ListView的当前位置获取分类的首字母的Char ascii值
 	 */
 	public int getSectionForPosition(int position) {
-		return list.get(position).getFirstName().charAt(0);
+//		return list.get(position).getFirstName().charAt(0);
+		return list.get(position).getPinyin().charAt(0);
 	}
 
 	/**
@@ -87,13 +88,13 @@ public class SortAdapter extends BaseAdapter implements SectionIndexer {
 	 */
 	public int getPositionForSection(int section) {
 		for (int i = 0; i < getCount(); i++) {
-			String sortStr = list.get(i).getFirstName();
+			String sortStr = list.get(i).getPinyin();
 			char firstChar = sortStr.toUpperCase().charAt(0);
 			if (firstChar == section) {
 				return i;
 			}
 		}
-		
+
 		return -1;
 	}
 	

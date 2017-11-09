@@ -134,4 +134,6 @@ public class Constants {
     public static final String SUBMIT_ALL_AUTH_INFO = "49";
     // 获取门店信息
     public static final String GET_LOCAL_STORE_INFO = "50";
+    // 确认领取金额
+    public static final String CONFIRM_RECEIVE_INFO = "51";
 }

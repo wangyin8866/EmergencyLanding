@@ -9,8 +9,8 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-//    String HOST_URL = "http://192.168.6.107:8086/";
-    String HOST_URL = "http://192.168.10.12:8080/";
+    String HOST_URL = "http://192.168.6.107:8086/";
+//    String HOST_URL = "http://192.168.10.12:8080/";
     /**
      * 杨存本地
      */
@@ -262,5 +262,9 @@ public interface NetConstantValues {
      * 提交认证
      */
     String ROUTER_SUBMIT_ALL_AUTH_INFO = "customerService.authSubmit";
+    /**
+     * 确认领取金额信息
+     */
+    String ROUTER_CONFIRM_RECEIVE_INFO = "contractSignService.confirmGetAmount";
 
 }

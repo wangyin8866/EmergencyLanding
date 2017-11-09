@@ -14,4 +14,6 @@ public interface ReceiveMoneyView {
 
     void onError(String apiCode, String errorMsg);
 
+    void onSuccessConfirmReceive(String apiCode, String msg);
+
 }

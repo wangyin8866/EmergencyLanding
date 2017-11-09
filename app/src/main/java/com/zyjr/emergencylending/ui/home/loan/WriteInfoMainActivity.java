@@ -433,7 +433,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 rlRecommend.setVisibility(View.GONE);
             }
         }
-        if (bean.getRenew_loan_flag().equals("1")) {
+        if (bean.getRenew_loan_flag().equals("0")) {
             renew_loan_type = "0";
             // 首贷
             apply_amount = bean.getLoan_amount();

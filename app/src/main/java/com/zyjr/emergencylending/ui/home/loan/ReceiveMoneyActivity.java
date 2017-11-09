@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -11,11 +12,13 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.ui.home.presenter.ReceiveMoneyPresenter;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -45,7 +48,13 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     TextView tvLoanAgreement4; // 还款明细说明
     @BindView(R.id.btn_receive_quickly)
     Button btnReceiveQuickly;
+    @BindView(R.id.cb_check)
+    CheckBox cbxAgree;
     private ReceiveMoneyBean receiveMoneyBean = null;
+    private ReceiveMoneyBean.Contract jiekuanContract = null;
+    private ReceiveMoneyBean.Contract xinyongContract = null;
+    private ReceiveMoneyBean.Contract zhanghuContract = null;
+    private ReceiveMoneyBean.Contract huankuanContract = null;
 
     @Override
     protected ReceiveMoneyPresenter createPresenter() {
@@ -62,27 +71,59 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         loadingReceiveMoneyInfo();
     }
 
-    @OnClick({R.id.tv_loan_agreement_1, R.id.tv_loan_agreement_2, R.id.tv_loan_agreement_3, R.id.tv_loan_agreement_4, R.id.btn_receive_quickly})
+    @OnClick({R.id.tv_loan_agreement_1, R.id.tv_loan_agreement_2, R.id.tv_loan_agreement_3, R.id.tv_loan_agreement_4, R.id.btn_receive_quickly, R.id.cb_check})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tv_loan_agreement_1:
+            case R.id.tv_loan_agreement_1: // 借款协议
+                if (jiekuanContract == null) {
+                    return;
+                }
+                PdfViewerActivity.jumpToPdfView(ReceiveMoneyActivity.this, jiekuanContract.getContract_name(), jiekuanContract.getContract_url());
                 break;
 
-            case R.id.tv_loan_agreement_2:
+            case R.id.tv_loan_agreement_2: // 信用管理服务协议
+                if (xinyongContract == null) {
+                    return;
+                }
+                PdfViewerActivity.jumpToPdfView(ReceiveMoneyActivity.this, xinyongContract.getContract_name(), xinyongContract.getContract_url());
                 break;
 
-            case R.id.tv_loan_agreement_3:
+            case R.id.tv_loan_agreement_3: // 账户管理与数据服务协议
+                if (zhanghuContract == null) {
+                    return;
+                }
+                PdfViewerActivity.jumpToPdfView(ReceiveMoneyActivity.this, zhanghuContract.getContract_name(), zhanghuContract.getContract_url());
                 break;
 
-            case R.id.tv_loan_agreement_4:
+            case R.id.tv_loan_agreement_4: // 还款明细说明
+                if (huankuanContract == null) {
+                    return;
+                }
+                PdfViewerActivity.jumpToPdfView(ReceiveMoneyActivity.this, huankuanContract.getContract_name(), huankuanContract.getContract_url());
+                break;
+
+            case R.id.cb_check:
+
                 break;
 
             case R.id.btn_receive_quickly:
-                Intent intent = new Intent(this, SendLoanProcessingActivity.class);
-                startActivity(intent);
-                finish();
+                validateData();
+
                 break;
         }
+    }
+
+    private void validateData() {
+        if (receiveMoneyBean == null) {
+            ToastAlone.showLongToast(this, "获取信息失败,请重试");
+            return;
+        }
+        if (!cbxAgree.isChecked()) {
+            ToastAlone.showLongToast(this, "请阅读并同意签约上述合同");
+            return;
+        }
+        confirmReceiveInfo();
+
     }
 
 
@@ -100,19 +141,52 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         });
     }
 
+    private void showReceiveMoneyInfo(ReceiveMoneyBean bean) {
+        tvLoanMoney.setText(bean.getLoan_amount()); // 借款金额
+        // 区分 天/周
+        if (bean.getLoan_unit().equals("1")) {
+            tvLoanPeriod.setText(bean.getLoan_period() + "天"); // 借款周期 (天)
+            tvPeriodAmount.setText(bean.getPeriod_amount() + "元/期");  // 期还款额  元/期
+        } else if (bean.getLoan_unit().equals("2")) {
+            tvLoanPeriod.setText(bean.getLoan_period() + "周"); // 借款周期 (周)
+            tvPeriodAmount.setText(bean.getPeriod_amount() + "元/周");  // 期还款额 元/周
+        }
+        List<ReceiveMoneyBean.Contract> contractList = bean.getLoan_contract();
+        for (int i = 0; i < contractList.size(); i++) {
+            ReceiveMoneyBean.Contract contract = contractList.get(i);
+            switch (contract.getContract_no()) {
+                case "loanAgreement": // 借款协议
+                    jiekuanContract = contract;
+                    break;
+
+                case "creditManagement":  // 信用管理
+                    xinyongContract = contract;
+                    break;
+
+                case "accountManagement": // 账户管理与服务
+                    zhanghuContract = contract;
+                    break;
+
+                case "reimbursementDetail": // 还款说明协议
+                    huankuanContract = contract;
+                    break;
+            }
+        }
+
+    }
+
     private void loadingReceiveMoneyInfo() {
         Map<String, String> map = new HashMap<>();
         mPresenter.getReceiveMoneyInfo(map);
     }
 
-    private void showReceiveMoneyInfo(ReceiveMoneyBean bean) {
-        tvLoanMoney.setText(bean.getLoan_amount()); // 借款金额
-        tvLoanPeriod.setText(bean.getLoan_period() + bean.getLoan_unit()); // 借款周期 (天|周)
-        tvPeriodAmount.setText(bean.getPeriod_amount());  // 期还款额
-
+    private void confirmReceiveInfo() {
+        Map<String, String> map = new HashMap<>();
+        mPresenter.confirmReceiveInfo(map);
     }
 
     @Override
+
     public void onSuccessGet(String apiCode, ReceiveMoneyBean bean) {
         receiveMoneyBean = bean;
         showReceiveMoneyInfo(receiveMoneyBean);
@@ -126,6 +200,13 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     @Override
     public void onError(String apiCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
+    }
+
+    @Override
+    public void onSuccessConfirmReceive(String apiCode, String msg) {
+        Intent intent = new Intent(this, SendLoanProcessingActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 

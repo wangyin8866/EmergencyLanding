@@ -58,6 +58,8 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
     ScrollView layoutContentView;
     @BindView(R.id.webView)
     WebView webView;
+    private String userName = "";
+    private String idCardNumber = "";
 
     @Override
     protected AuthHelperPresenter createPresenter() {
@@ -70,8 +72,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         setContentView(R.layout.activity_zhima_auth);
         ButterKnife.bind(this);
         init();
-
-        loadingPersonInfo();
+        initGetData();
     }
 
     @OnClick({R.id.btn_authorise})
@@ -98,6 +99,14 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
             }
         });
+    }
+
+    private void initGetData() {
+        Intent intent = getIntent();
+        userName = intent.getStringExtra("userName");
+        idCardNumber = intent.getStringExtra("idCardNumber");
+        tvName.setText(userName);
+        tvIdcardNumber.setText(idCardNumber);
     }
 
 

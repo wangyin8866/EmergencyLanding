@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.MainActivity;
@@ -73,11 +76,16 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     TextView tvOrderDesc2;  // 订单描述2
     @BindView(R.id.tv_loan_desc)
     TextView tvLoanDesc; // 借款金额描述
-
     @BindView(R.id.iv_order_status_icon)
     ImageView ivOrderStatusIcon;
     @BindView(R.id.btn_status_operate)
     Button btnOrderOperate;
+
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+
     private LoanOrderBean loanOrderBean = null;
 
     @Override
@@ -96,29 +104,15 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     }
 
 
-    @OnClick({R.id.tv_order_status1, R.id.tv_order_status2, R.id.tv_order_status3, R.id.tv_order_status4, R.id.tv_order_status5, R.id.tv_order_status6, R.id.btn_status_operate})
+    @OnClick({R.id.btn_retry, R.id.btn_status_operate})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_order_status2:  // 认证中 | 受理中 2
-
-
-//                setOrderStatusInfo(1, 2);
-                break;
-            case R.id.tv_order_status3:  // 审核中
-//                setOrderStatusInfo(1, 3);
-                break;
-            case R.id.tv_order_status4:  // 领取金额
-//                setOrderStatusInfo(1, 4);
-                break;
-            case R.id.tv_order_status5:  // 放款中
-//                setOrderStatusInfo(1, 5);
-                break;
-            case R.id.tv_order_status6:  // 还款中
-//                setOrderStatusInfo(1, 6);
-                break;
-
             case R.id.btn_status_operate:
                 jumpToNextPage(loanOrderBean);
+                break;
+
+            case R.id.btn_retry:
+                loadingLoanOrder();
                 break;
         }
     }
@@ -269,6 +263,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             tvLoanDesc.setText("审批额度");
             if (orderStatus.equals("2") || orderStatus.equals("3")) {
                 btnOrderOperate.setText("放款中");
+                tvOrderDesc1.setText("");
                 orderStatusIocn = R.mipmap.emptypage_loan;
                 btnOrderOperate.setEnabled(false);
             } else if (orderStatus.equals("7")) {
@@ -325,6 +320,17 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         });
     }
 
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -334,6 +340,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     @Override
     public void onSuccessGet(String returnCode, LoanOrderBean bean) {
         loanOrderBean = bean;
+        showSuccess();
         tvLoadMoney.setText(loanOrderBean.getLoan_amount() + "元");
         if (loanOrderBean.getZq_unit().equals("1")) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "天");
@@ -341,13 +348,6 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "周");
         }
         setOrderStatusInfo("", loanOrderBean.getStep_status(), loanOrderBean.getOrder_status(), "");
-
-        if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
-            //业务员
-        } else {
-
-        }
-
     }
 
     @Override
@@ -362,7 +362,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        showError();
     }
 
 

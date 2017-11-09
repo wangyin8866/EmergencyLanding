@@ -197,4 +197,7 @@
         </LinearLayout>
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
+    <include
+        android:visibility="gone"
+        layout="@layout/layout_net_loading_error"/>
 </LinearLayout>
