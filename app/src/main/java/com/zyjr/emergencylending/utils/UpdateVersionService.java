@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.utils;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.Context;
@@ -19,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.BaseApplication;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.VersionBean;
 import com.zyjr.emergencylending.model.VersionUpdateModel;
 
 import java.io.File;
@@ -53,9 +57,8 @@ public class UpdateVersionService {
     private TextView tv_progress;
     private Dialog downLoadDialog;
     private String display;
-    private int versionCode;
-    private int serverCode;
-    private int isMust;
+    private String flag;
+    @SuppressLint("HandlerLeak")
     private Handler handler = new Handler() {// 跟心ui
 
         @Override
@@ -85,7 +88,7 @@ public class UpdateVersionService {
      * @param updateVersionXMLPath 比较版本的xml文件地址(服务器上的)
      * @param context              上下文
      */
-    public UpdateVersionService(String updateVersionXMLPath, Context context) {
+    UpdateVersionService(String updateVersionXMLPath, Context context) {
         super();
         this.updateVersionXMLPath = updateVersionXMLPath;
         this.context = context;
@@ -93,11 +96,9 @@ public class UpdateVersionService {
 
     /**
      * 检测是否可更新
-     *
-     * @return
      */
-    public void checkUpdate() {
-        Update();
+    void checkUpdate() {
+        update();
     }
 
     /**
@@ -123,7 +124,7 @@ public class UpdateVersionService {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
                 Constants.update = false;
-                if (isMust == 1) {
+                if ("0001".equals(flag)) {
                     System.exit(1);
                 }
             }
@@ -147,7 +148,7 @@ public class UpdateVersionService {
                 switch (view.getId()) {
                     case R.id.cancel:
                         Constants.update = false;
-                        if (isMust == 1) {
+                        if ("0001".equals(flag)) {
                             System.exit(1);
                         }
                         break;
@@ -163,7 +164,7 @@ public class UpdateVersionService {
     /**
      * 下载的提示框
      */
-    protected void showDownloadDialog() {
+    private void showDownloadDialog() {
         {
             // 构造软件下载对话框
             Builder builder = new Builder(context);
@@ -182,7 +183,7 @@ public class UpdateVersionService {
                     // 设置取消状态
                     cancelUpdate = true;
                     Constants.update = false;
-                    if (isMust == 1) {
+                    if ("0001".equals(flag)) {
                         System.exit(1);
                     }
                 }
@@ -208,14 +209,14 @@ public class UpdateVersionService {
 
     /**
      * 判断是否可更新
-     *
-     * @return
      */
-    private void Update() {
-        versionCode = getVersionCode(context);
-        VersionUpdateModel.getInstance().update(NetConstantValues.VERSION_UPDATE, "", "", "", "", "").subscribeOn(Schedulers.io())
+    private void update() {
+
+        VersionUpdateModel.getInstance(NetConstantValues.HOST_URL).update(updateVersionXMLPath, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "")
+                , SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""),
+                Constants.getVersionCode(BaseApplication.getContext())).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<String>() {
+                .subscribe(new Subscriber<VersionBean>() {
                     @Override
                     public void onCompleted() {
 
@@ -226,7 +227,14 @@ public class UpdateVersionService {
                     }
 
                     @Override
-                    public void onNext(String o) {
+                    public void onNext(VersionBean o) {
+                        urlApk = o.getResult().getUrl();
+                        display = o.getResult().getContent();
+                        flag = o.getResult().getFlag();
+                        if ("0001".equals(flag) || "0012".equals(flag)) {
+                            showUpdateVersionDialog();
+                        }
+
 //
 //                        // 创建一个新的字符串
 //                        StringReader read = new StringReader(o);
@@ -254,8 +262,6 @@ public class UpdateVersionService {
 
     /**
      * 获取当前版本和服务器版本.如果服务器版本高于本地安装的版本.就更新
-     *
-     * @return
      */
     private int getVersionCode(Context context) {
         int versionCode = 0;

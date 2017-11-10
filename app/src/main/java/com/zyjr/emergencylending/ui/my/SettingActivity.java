@@ -11,6 +11,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.ui.account.ForgetPasswordActivity;
@@ -22,7 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- *
  * @author wangyin
  * @date 2017/10/13
  */
@@ -86,10 +86,10 @@ public class SettingActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.about_us:
-                mPresenter.getH5Url(Config.H5_URL_ABOUTUS,"关于我们");
+                mPresenter.getH5Url(Config.H5_URL_ABOUTUS, "关于我们");
                 break;
             case R.id.advice_feedback:
-                mPresenter.getH5Url(Config.H5_URL_FEEDBACK,"意见反馈");
+                mPresenter.getH5Url(Config.H5_URL_FEEDBACK, "意见反馈");
                 break;
             case R.id.service_call:
                 phoneDialog();
@@ -108,6 +108,7 @@ public class SettingActivity extends BaseActivity {
                                 break;
                             case R.id.update:
                                 dialog.dismiss();
+                                WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE);
                                 break;
                         }
                     }

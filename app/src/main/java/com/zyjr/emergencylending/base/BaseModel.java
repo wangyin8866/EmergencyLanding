@@ -37,6 +37,9 @@ public class BaseModel {
     protected Retrofit retrofit;
     private OkHttpClient.Builder httpClientBuilder;
 
+    /**
+     * 有公共参数
+     */
     protected BaseModel() {
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
@@ -51,6 +54,29 @@ public class BaseModel {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .baseUrl(NetConstantValues.HOST_URL)
+                .build();
+
+    }
+
+    /**
+     * 无公共参数
+     *
+     * @param url
+     */
+    public BaseModel(String url) {
+        //手动创建一个OkHttpClient并设置超时时间
+        httpClientBuilder = new OkHttpClient.Builder();
+        if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        } else {
+            httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        }
+        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        retrofit = new Retrofit.Builder()
+                .client(httpClientBuilder.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .baseUrl(url)
                 .build();
 
     }
@@ -97,26 +123,6 @@ public class BaseModel {
             return chain.proceed(request);
         }
     }
-
-    public BaseModel(String url) {
-
-        //手动创建一个OkHttpClient并设置超时时间
-        httpClientBuilder = new OkHttpClient.Builder();
-        if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        } else {
-            httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        }
-        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        retrofit = new Retrofit.Builder()
-                .client(httpClientBuilder.build())
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .baseUrl(url)
-                .build();
-
-    }
-
 
     public static <T> void invoke(LifeSubscription lifeSubscription, Observable<T> observable, Subscriber<T> subscriber) {
         Subscription subscription = observable.subscribeOn(Schedulers.io())

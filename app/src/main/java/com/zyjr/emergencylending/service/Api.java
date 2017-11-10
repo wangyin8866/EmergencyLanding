@@ -16,6 +16,7 @@ import com.zyjr.emergencylending.entity.RankBean;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.entity.UserStatus;
+import com.zyjr.emergencylending.entity.VersionBean;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
@@ -72,7 +73,7 @@ public interface Api {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<String> versionUpdate(@FieldMap Map<String, String> params);
+    Observable<VersionBean> versionUpdate(@FieldMap Map<String, String> params);
 
     /**
      * 发送验证码

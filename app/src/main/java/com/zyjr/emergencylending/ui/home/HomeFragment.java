@@ -86,6 +86,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         //banner
         mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
+
         //是否有消息
         if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
