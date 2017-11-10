@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide;
  */
 
 
-public class LocalImageHolderViewNative implements Holder<Integer> {
+public class LocalImageHolderViewNative implements Holder<String> {
     private ImageView imageView;
 
     @Override
@@ -23,7 +23,7 @@ public class LocalImageHolderViewNative implements Holder<Integer> {
     }
 
     @Override
-    public void UpdateUI(Context context, int position, Integer data) {
+    public void UpdateUI(Context context, int position, String data) {
         Glide.with(context).load(data).into(imageView);
     }
 }

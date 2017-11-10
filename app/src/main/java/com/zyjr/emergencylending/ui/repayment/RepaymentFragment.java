@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
@@ -28,6 +30,7 @@ import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -44,6 +47,12 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
     Unbinder unbinder;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
+    @BindView(R.id.btn_retry)
+    Button btnRetry;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry;
     private View view;
 
     @Nullable
@@ -57,7 +66,6 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     }
 
     private void init() {
-
         //是否有还款
         mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
     }
@@ -123,5 +131,27 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void getCommonData(Object o) {
+
+    }
+
+    @Override
+    public void requestError() {
+        WYUtils.showRequestError(llMain,llRetry);
+    }
+
+    @Override
+    public void requestSuccess() {
+        WYUtils.showRequestSuccess(llMain,llRetry);
+
+    }
+
+    @OnClick(R.id.btn_retry)
+    public void onViewClicked() {
+        //是否有还款
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
     }
 }

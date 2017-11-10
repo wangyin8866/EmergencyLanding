@@ -160,13 +160,23 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
     }
 
     @Override
-    public void callBack(BaseBean baseBean) {
+    public void getCommonData(BaseBean baseBean) {
         if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
             ToastAlone.showShortToast(mContext, "找回密码成功");
             startActivity(new Intent(mContext, LoginActivity.class));
         } else {
             ToastAlone.showShortToast(mContext, baseBean.getMsg());
         }
+    }
+
+    @Override
+    public void requestError() {
+
+    }
+
+    @Override
+    public void requestSuccess() {
+
     }
 
     @Override

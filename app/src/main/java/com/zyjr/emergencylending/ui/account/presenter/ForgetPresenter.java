@@ -30,7 +30,7 @@ public class ForgetPresenter extends BasePresenter<BaseView<BaseBean>> {
         invoke(AccountModel.getInstance().forgetPassword(router, phone, verify_code, password), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean baseBean) {
-                getView().callBack(baseBean);
+                getView().getCommonData(baseBean);
             }
             @Override
             public void onError(Throwable e) {

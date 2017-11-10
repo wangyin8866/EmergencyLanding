@@ -24,11 +24,12 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
         super(context);
     }
 
-    public void myPerformance(String router,String type) {
-        invoke(SalesmanModel.getInstance().myPerformance(router,type), new ProgressSubscriber<CustomerBean>(new SubscriberOnNextListener<CustomerBean>() {
+    public void myPerformance(String router, String type) {
+        invoke(SalesmanModel.getInstance().myPerformance(router, type), new ProgressSubscriber<CustomerBean>(new SubscriberOnNextListener<CustomerBean>() {
             @Override
             public void onNext(CustomerBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().requestSuccess();
                     getView().myPerformance(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
@@ -37,16 +38,18 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
 
             @Override
             public void onError(Throwable e) {
-
+                getView().requestError();
             }
         }, mContext));
 
     }
+
     public void rankList(String router) {
         invoke(SalesmanModel.getInstance().rankList(router), new ProgressSubscriber<RankBean>(new SubscriberOnNextListener<RankBean>() {
             @Override
             public void onNext(RankBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().requestSuccess();
                     getView().rankList(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
@@ -55,16 +58,18 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
 
             @Override
             public void onError(Throwable e) {
-
+                getView().requestError();
             }
         }, mContext));
 
     }
-    public void waitApply(String router,String type,String isHome) {
-        invoke(SalesmanModel.getInstance().waitApply(router,type,isHome), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
+
+    public void waitApply(String router, String type, String isHome) {
+        invoke(SalesmanModel.getInstance().waitApply(router, type, isHome), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
             @Override
             public void onNext(WaitApplyBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().requestSuccess();
                     getView().waitApply(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
@@ -73,7 +78,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
 
             @Override
             public void onError(Throwable e) {
-
+                getView().requestError();
             }
         }, mContext));
 

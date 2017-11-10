@@ -29,7 +29,7 @@ public class BorrowPresenter extends BasePresenter<BorrowView> {
             @Override
             public void onNext(NoticeBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-                    getView().callBack(baseBean);
+                    getView().getCommonData(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }

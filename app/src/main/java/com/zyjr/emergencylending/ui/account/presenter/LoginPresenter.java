@@ -26,7 +26,7 @@ public class LoginPresenter extends BasePresenter<BaseView<LoginBean>> {
         invoke(AccountModel.getInstance().login(router,phone,password,clientid,login_ip,login_platform,login_device_no), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
             @Override
             public void onNext(LoginBean loginBean) {
-                getView().callBack(loginBean);
+                getView().getCommonData(loginBean);
             }
 
             @Override

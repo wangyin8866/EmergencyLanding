@@ -237,7 +237,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
     };
 
     @Override
-    public void callBack(QrBean baseBean) {
+    public void getCommonData(QrBean baseBean) {
 //        Glide.with(mContext).load(baseBean.getResult().getUrl()).into(ivQr);
         String code = baseBean.getResult().getRecommendcode();
         List<TextView> textViews = new ArrayList<>();
@@ -251,5 +251,15 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
         for (int i = 0; i < code.length(); i++) {
             textViews.get(i).setText(String.valueOf(code.charAt(i)));
         }
+    }
+
+    @Override
+    public void requestError() {
+
+    }
+
+    @Override
+    public void requestSuccess() {
+
     }
 }

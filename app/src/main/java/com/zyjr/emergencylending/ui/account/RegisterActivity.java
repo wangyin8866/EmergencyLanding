@@ -164,7 +164,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
     }
 
     @Override
-    public void callBack(RegisterBean registerBean) {
+    public void getCommonData(RegisterBean registerBean) {
         if (Config.CODE_SUCCESS.equals(registerBean.getFlag())) {
             SPUtils.saveString(mContext, Config.KEY_JUID, registerBean.getResult().getJuid());
             ToastAlone.showShortToast(mContext, "注册成功");
@@ -172,5 +172,15 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
         } else {
             ToastAlone.showShortToast(mContext, registerBean.getMsg());
         }
+    }
+
+    @Override
+    public void requestError() {
+
+    }
+
+    @Override
+    public void requestSuccess() {
+
     }
 }

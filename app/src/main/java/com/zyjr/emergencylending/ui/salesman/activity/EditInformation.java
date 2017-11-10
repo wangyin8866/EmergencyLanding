@@ -161,11 +161,21 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
     }
 
     @Override
-    public void callBack(BaseBean baseBean) {
+    public void getCommonData(BaseBean baseBean) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
 
         Glide.with(this).load(mBitmap).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+    }
+
+    @Override
+    public void requestError() {
+
+    }
+
+    @Override
+    public void requestSuccess() {
+
     }
 }

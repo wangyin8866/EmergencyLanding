@@ -31,7 +31,7 @@ public class RegisterPresenter extends BasePresenter<BaseView<RegisterBean>> {
         invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_ip, register_device_no), new ProgressSubscriber<RegisterBean>(new SubscriberOnNextListener<RegisterBean>() {
             @Override
             public void onNext(RegisterBean registerBean) {
-                getView().callBack(registerBean);
+                getView().getCommonData(registerBean);
             }
 
             @Override

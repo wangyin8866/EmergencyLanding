@@ -27,7 +27,7 @@ public class EditInformationPresenter extends BasePresenter<BaseView<BaseBean>> 
             @Override
             public void onNext(BaseBean result) {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
-                    getView().callBack(result);
+                    getView().getCommonData(result);
                 } else {
                     ToastAlone.showShortToast(mContext, result.getMsg());
                 }

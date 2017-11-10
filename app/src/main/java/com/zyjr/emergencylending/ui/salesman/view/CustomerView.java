@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.salesman.view;
 
+import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.entity.CustomerBean;
 import com.zyjr.emergencylending.entity.RankBean;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
@@ -10,7 +11,7 @@ import com.zyjr.emergencylending.entity.WaitApplyBean;
  * @description :
  */
 
-public interface CustomerView {
+public interface CustomerView extends BaseView{
     /**
      * 我的业绩
      * @param baseBean

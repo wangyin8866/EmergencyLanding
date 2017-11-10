@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,12 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     TextView ranList;
     @BindView(R.id.amount)
     TextView amount;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
+    @BindView(R.id.btn_retry)
+    Button btnRetry;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry;
     private int currentTv;
 
     @Nullable
@@ -94,7 +102,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         unbinder.unbind();
     }
 
-    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success, R.id.ll_rank_list, R.id.type1, R.id.type2, R.id.type3})
+    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success, R.id.ll_rank_list, R.id.type1, R.id.type2, R.id.type3,R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.circle_client:
@@ -121,6 +129,11 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 break;
             case R.id.type3:
                 selectTv(3);
+                break;
+            case R.id.btn_retry:
+                mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
+                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "", "1");
+                mPresenter.rankList(NetConstantValues.RANKING_LIST);
                 break;
         }
     }
@@ -187,4 +200,18 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult().getClerkRecordList(), mContext));
     }
 
+    @Override
+    public void getCommonData(Object o) {
+
+    }
+
+    @Override
+    public void requestError() {
+        WYUtils.showRequestError(llMain,llRetry);
+    }
+
+    @Override
+    public void requestSuccess() {
+        WYUtils.showRequestSuccess(llMain,llRetry);
+    }
 }

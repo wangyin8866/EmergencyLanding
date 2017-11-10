@@ -105,17 +105,6 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         showAutoRollStrings();
 
 
-        //本地图片
-//        ArrayList<Integer> imgs = new ArrayList<>();
-//        imgs.add(R.mipmap.ic_launcher);
-//        imgs.add(R.mipmap.ic_launcher_round);
-//        imgs.add(R.mipmap.ic_launcher);
-//        this.banner.setPages(new CBViewHolderCreator() {
-//            @Override
-//            public Object createHolder() {
-//                return new LocalImageHolderViewNative();
-//            }
-//        }, imgs).startTurning(2000);
 
     }
 
@@ -199,7 +188,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         if (images != null) {
             images.clear();
         }
-        images = new ArrayList<String>();
+        images = new ArrayList<>();
         for (int i = 0; i < banner.getResult().getAd_list().size(); i++) {
             images.add(banner.getResult().getAd_list().get(i).getAd_pic());
         }
@@ -208,15 +197,13 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             public Object createHolder() {
                 return new LocalImageHolderView();
             }
-        }, images).startTurning(2000);
-
-        this.banner.setOnItemClickListener(new OnItemClickListener() {
+        }, images).startTurning(2000).setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
 
-
             }
         });
+
     }
 
     @Override

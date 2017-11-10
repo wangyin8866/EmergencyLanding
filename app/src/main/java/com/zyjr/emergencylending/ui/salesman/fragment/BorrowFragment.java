@@ -156,12 +156,22 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
     }
 
     @Override
-    public void callBack(NoticeBean baseBean) {
+    public void getCommonData(NoticeBean baseBean) {
         auto_roll_data = new ArrayList<>();
         for (int i = 0; i < baseBean.getResult().getResultList().size(); i++) {
             auto_roll_data.add(baseBean.getResult().getResultList().get(i).getTitle());
         }
         showAutoRollStrings();
+    }
+
+    @Override
+    public void requestError() {
+
+    }
+
+    @Override
+    public void requestSuccess() {
+
     }
 
     @Override

@@ -6,5 +6,20 @@ package com.zyjr.emergencylending.base;
  */
 
 public interface BaseView<T> {
-    void callBack(T t);
+    /**
+     * 获取通用数据
+     *
+     * @param t
+     */
+    void getCommonData(T t);
+
+    /**
+     * 网络请求失败
+     */
+    void requestError();
+
+    /**
+     * 网络请求成功
+     */
+    void requestSuccess();
 }

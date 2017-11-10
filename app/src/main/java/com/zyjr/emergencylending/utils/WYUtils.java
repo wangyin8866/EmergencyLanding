@@ -691,4 +691,14 @@ public class WYUtils {
         }
         return result;
     }
+
+    public static void showRequestError(LinearLayout llMain, LinearLayout llRetry) {
+        llMain.setVisibility(View.GONE);
+        llRetry.setVisibility(View.VISIBLE);
+    }
+
+    public static void showRequestSuccess(LinearLayout llMain, LinearLayout llRetry) {
+        llMain.setVisibility(View.VISIBLE);
+        llRetry.setVisibility(View.GONE);
+    }
 }

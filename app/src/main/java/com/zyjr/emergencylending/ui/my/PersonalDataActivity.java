@@ -3,7 +3,9 @@ package com.zyjr.emergencylending.ui.my;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -16,6 +18,7 @@ import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
 import com.zyjr.emergencylending.ui.my.presenter.PersonalDataPresenter;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +51,12 @@ public class PersonalDataActivity extends BaseActivity<PersonalDataPresenter, Ba
     ImageView picCard;
     @BindView(R.id.icon_pic_card)
     ImageView iconPicCard;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
+    @BindView(R.id.btn_retry)
+    Button btnRetry;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry;
     /**
      * 是否填写个人资料
      */
@@ -156,7 +165,7 @@ public class PersonalDataActivity extends BaseActivity<PersonalDataPresenter, Ba
     }
 
     @Override
-    public void callBack(UserStatus baseBean) {
+    public void getCommonData(UserStatus baseBean) {
         UserStatus.ResultBean resultBean = baseBean.getResult();
         personalStatus = resultBean.getUser_data_status();
         isPersonalEdit = resultBean.getUser_data_edit();
@@ -170,5 +179,20 @@ public class PersonalDataActivity extends BaseActivity<PersonalDataPresenter, Ba
         mPresenter.initStatus(personalStatus, isPersonalEdit, jobStatus, isJobEdit, contactStatus, isContactEdit, cardStatus, isCardEdit, isBankError,
                 iconPicPersonal, iconPicJob, iconPicContact, iconPicCard);
 
+    }
+
+    @Override
+    public void requestError() {
+        WYUtils.showRequestError(llMain, llRetry);
+    }
+
+    @Override
+    public void requestSuccess() {
+        WYUtils.showRequestSuccess(llMain, llRetry);
+    }
+
+    @OnClick(R.id.btn_retry)
+    public void onViewClicked() {
+        mPresenter.getUserInfoStatus(NetConstantValues.ROUTER_GET_WRITE_INFO);
     }
 }

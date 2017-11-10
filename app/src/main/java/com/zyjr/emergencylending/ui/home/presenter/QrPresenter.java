@@ -28,7 +28,7 @@ public class QrPresenter extends BasePresenter<BaseView<QrBean>> {
             @Override
             public void onNext(QrBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-                    getView().callBack(baseBean);
+                    getView().getCommonData(baseBean);
                 } else {
                     AppToast.showShortText(mContext,baseBean.getMsg());
                 }

@@ -29,6 +29,7 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
 
     /**
      * 查看是否有还款
+     *
      * @param router
      * @param pageNo
      * @param pageSize
@@ -38,6 +39,7 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
             @Override
             public void onNext(MyBorrow baseBean) {
                 if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
+                    getView().requestSuccess();
                     getView().getBorrowInfoByUserId(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
@@ -46,13 +48,14 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
 
             @Override
             public void onError(Throwable e) {
-
+                getView().requestError();
             }
         }, mContext));
     }
 
     /**
      * 获取手机号和身份证
+     *
      * @param router
      */
     public void getBasicInfo(String router) {
@@ -75,6 +78,7 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
 
     /**
      * 掉还款的登陆接口
+     *
      * @param body
      */
     public void repaymentLogin(RequestBody body) {
@@ -97,9 +101,10 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
 
     /**
      * 获取H5页面
+     *
      * @param url_type
      */
-    public void getRepaymentH5Url( String url_type
+    public void getRepaymentH5Url(String url_type
     ) {
         invoke(AccountModel.getInstance().getH5Url(url_type), new ProgressSubscriber<H5Bean>(new SubscriberOnNextListener<H5Bean>() {
             @Override

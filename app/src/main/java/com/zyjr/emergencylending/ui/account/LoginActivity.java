@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     }
 
     @Override
-    public void callBack(LoginBean loginBean) {
+    public void getCommonData(LoginBean loginBean) {
         if (Config.CODE_SUCCESS.equals(loginBean.getFlag())) {
             SPUtils.saveBoolean(mContext, Config.KEY_LOGIN, true);
             SPUtils.saveString(mContext, Config.KEY_TOKEN, loginBean.getResult().getLogin_token());
@@ -164,6 +164,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
         } else {
             ToastAlone.showShortToast(mContext, loginBean.getMsg());
         }
+    }
+
+    @Override
+    public void requestError() {
+
+    }
+
+    @Override
+    public void requestSuccess() {
+
     }
 
 

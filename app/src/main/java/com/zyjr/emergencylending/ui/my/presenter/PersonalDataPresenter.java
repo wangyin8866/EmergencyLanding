@@ -30,13 +30,14 @@ public class PersonalDataPresenter extends BasePresenter<BaseView<UserStatus>> {
             @Override
             public void onNext(UserStatus baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-                    getView().callBack(baseBean);
+                    getView().requestSuccess();
+                    getView().getCommonData(baseBean);
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                getView().requestError();
             }
         }, mContext));
 

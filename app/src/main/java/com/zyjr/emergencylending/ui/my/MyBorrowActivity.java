@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author wangyin
@@ -30,7 +32,7 @@ import butterknife.ButterKnife;
  * 我的借款
  */
 
-public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<MyBorrow>> implements BaseView<MyBorrow> {
+public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<MyBorrow>> implements BaseView<MyBorrow>, EasyRefreshLayout.EasyEvent {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.borrow_type)
@@ -53,6 +55,12 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
     LinearLayout currentBorrow;
     @BindView(R.id.history_borrow)
     LinearLayout historyBorrow;
+    @BindView(R.id.btn_retry)
+    Button btnRetry;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry;
+    @BindView(R.id.swipe_container)
+    EasyRefreshLayout swipeContainer;
     private List<MyBorrow.ResultBean.HisBorrowListBean> hisBorrowListBeans;
     private MyBorrow.ResultBean.CurrentBorrowBean currentBorrowBean;
 
@@ -70,7 +78,9 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
     }
 
     private void init() {
-        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+        swipeContainer.addEasyEvent(this);
+        //隐藏上拉加载
+        swipeContainer.setLoadMoreModel(LoadModel.NONE);
 
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
@@ -87,7 +97,13 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
     }
 
     @Override
-    public void callBack(MyBorrow baseBean) {
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+    }
+
+    @Override
+    public void getCommonData(MyBorrow baseBean) {
         currentBorrowBean = baseBean.getResult().getCurrent_borrow();
         hisBorrowListBeans = baseBean.getResult().getHis_borrow_list();
         if (currentBorrowBean == null && hisBorrowListBeans.size() == 0) {
@@ -137,5 +153,33 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
         }
 
 
+    }
+
+    @Override
+    public void requestError() {
+        swipeContainer.setVisibility(View.GONE);
+        llRetry.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void requestSuccess() {
+        swipeContainer.setVisibility(View.VISIBLE);
+        llRetry.setVisibility(View.GONE);
+    }
+
+    @OnClick(R.id.btn_retry)
+    public void onViewClicked() {
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        swipeContainer.refreshComplete();
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
     }
 }
