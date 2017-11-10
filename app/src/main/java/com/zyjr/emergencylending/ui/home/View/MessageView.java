@@ -1,6 +1,5 @@
 package com.zyjr.emergencylending.ui.home.View;
 
-import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.MessageBean;
 
 /**
@@ -12,5 +11,5 @@ import com.zyjr.emergencylending.entity.MessageBean;
 public interface MessageView  {
     void getMessage(MessageBean messageBean);
     void getMessageMore(MessageBean messageBean);
-    void updateMessage(BaseBean baseBean);
+    void updateMessage(String opr_type,int position);
 }

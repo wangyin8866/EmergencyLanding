@@ -33,21 +33,26 @@ public class MessageModel extends BaseModel {
 
     /**
      * 获取消息
+     *
      * @return
      */
-    public Observable<MessageBean> getMessage(String router,String pageNum) {
+    public Observable<MessageBean> getMessage(String router, String pageNum) {
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("pageNo", pageNum);
         return api.getUserNews(map);
     }
+
     /**
      * 消息操作
-     * @param map
+     *
      * @return
      */
-    public Observable<BaseBean> updateUserNews(Map<String, String> map) {
-
+    public Observable<BaseBean> updateUserNews(String router, String getNews_id, String opr_type) {
+        Map<String, String> map = new HashMap<String, String>(3);
+        map.put("router", router);
+        map.put("news_id", getNews_id);
+        map.put("opr_type", opr_type);
         return api.updateUserNews(map);
     }
 }

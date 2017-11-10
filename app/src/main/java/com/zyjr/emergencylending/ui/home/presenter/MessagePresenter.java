@@ -11,8 +11,6 @@ import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.model.home.MessageModel;
 import com.zyjr.emergencylending.ui.home.View.MessageView;
 
-import java.util.Map;
-
 /**
  * @author wangyin
  * @date 2017/10/27.
@@ -23,8 +21,9 @@ public class MessagePresenter extends BasePresenter<MessageView> {
     public MessagePresenter(Context context) {
         super(context);
     }
-    public void getMessage(String router,String pageNum) {
-        invoke(MessageModel.getInstance().getMessage(router,pageNum),new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
+
+    public void getMessage(String router, String pageNum) {
+        invoke(MessageModel.getInstance().getMessage(router, pageNum), new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
             @Override
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
@@ -36,10 +35,11 @@ public class MessagePresenter extends BasePresenter<MessageView> {
             public void onError(Throwable e) {
 
             }
-        },mContext));
+        }, mContext));
     }
-    public void getMessageMore(String router,String pageNum) {
-        invoke(MessageModel.getInstance().getMessage(router,pageNum),new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
+
+    public void getMessageMore(String router, String pageNum) {
+        invoke(MessageModel.getInstance().getMessage(router, pageNum), new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
             @Override
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
@@ -51,14 +51,29 @@ public class MessagePresenter extends BasePresenter<MessageView> {
             public void onError(Throwable e) {
 
             }
-        },mContext));
+        }, mContext));
     }
-    public void updateUserNews(Map<String, String> map) {
-        invoke(MessageModel.getInstance().updateUserNews(map),new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+
+    public void updateUserNews(String router, String getNews_id, final String opr_type, final int position) {
+        invoke(MessageModel.getInstance().updateUserNews(router, getNews_id, opr_type), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-                    getView().updateMessage(baseBean);
+                    switch (opr_type) {
+                        case "1":
+                            //更新
+                            getView().updateMessage(opr_type, position);
+                            break;
+                        case "2":
+                            //删去
+                            getView().updateMessage(opr_type, position);
+                            break;
+                        case "3":
+                            //清空
+                            getView().updateMessage(opr_type, position);
+                            break;
+                    }
+
                 }
             }
 
@@ -66,6 +81,6 @@ public class MessagePresenter extends BasePresenter<MessageView> {
             public void onError(Throwable e) {
 
             }
-        },mContext));
+        }, mContext));
     }
 }

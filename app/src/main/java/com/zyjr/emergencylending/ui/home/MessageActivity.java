@@ -18,15 +18,13 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.ui.home.View.MessageView;
 import com.zyjr.emergencylending.ui.home.presenter.MessagePresenter;
 import com.zyjr.emergencylending.utils.AppToast;
+import com.zyjr.emergencylending.utils.LogUtils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,7 +70,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     protected void onResume() {
         super.onResume();
 
-        mPresenter.getMessage(NetConstantValues.USER_NEWS,"1");
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
     }
 
     private void init() {
@@ -97,10 +95,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
                         switch (view.getId()) {
                             case R.id.message_left:
                                 dialog.dismiss();
-                                Map<String, String> map = new HashMap<String, String>(2);
-                                map.put("router", NetConstantValues.UPDATE_USER_NEWS);
-                                map.put("opr_type", "3");
-                                mPresenter.updateUserNews(map);
+                                mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, "", "3", 0);
                                 break;
                             case R.id.message_right:
                                 dialog.dismiss();
@@ -115,16 +110,9 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
 
     @Override
     public void onDel(int pos) {
-        myAdapter.getData().remove(pos);
-        myAdapter.notifyItemRemoved(pos);
-        if (pos != (myAdapter.getData().size())) {
-            myAdapter.notifyItemRangeChanged(pos, myAdapter.getData().size() - pos);
-        }
-        Map<String, String> map = new HashMap<String, String>(3);
-        map.put("router", NetConstantValues.UPDATE_USER_NEWS);
-        map.put("news_id", messageBeanList.get(pos).getNews_id());
-        map.put("opr_type", "2");
-        mPresenter.updateUserNews(map);
+
+
+        mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, messageBeanList.get(pos).getNews_id(), "2", pos);
 
     }
 
@@ -132,29 +120,22 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     public void onLoadMore() {
         pageNum += 1;
 
-        mPresenter.getMessageMore(NetConstantValues.USER_NEWS,pageNum+"");
+        mPresenter.getMessageMore(NetConstantValues.USER_NEWS, pageNum + "");
 
     }
 
     @Override
     public void onRefreshing() {
 
-        mPresenter.getMessage(NetConstantValues.USER_NEWS,"1");
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
 
     }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        Map<String, String> map = new HashMap<String, String>(3);
-        map.put("router", NetConstantValues.UPDATE_USER_NEWS);
-        map.put("news_id", messageBeanList.get(position).getNews_id());
-        map.put("opr_type", "1");
-        mPresenter.updateUserNews(map);
-        Intent intent = new Intent(mContext, MessageDetail.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("message",messageBeanList.get(position));
-        intent.putExtras(bundle);
-        startActivity(intent);
+
+        mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, messageBeanList.get(position).getNews_id(), "1", position);
+
     }
 
 
@@ -209,8 +190,29 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     }
 
     @Override
-    public void updateMessage(BaseBean baseBean) {
+    public void updateMessage(String opr_type, int position) {
+        switch (opr_type) {
+            case "1":
+                Intent intent = new Intent(mContext, MessageDetail.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("message", messageBeanList.get(position));
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            case "2":
+                LogUtils.e(position + "wy");
+                myAdapter.getData().remove(position);
+                myAdapter.notifyItemRemoved(position);
+                if (position != (myAdapter.getData().size())) {
+                    myAdapter.notifyItemRangeChanged(position, myAdapter.getData().size() - position);
+                }
+                break;
+            case "3":
+                myAdapter.getData().removeAll(messageBeanList);
 
+                mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
+                break;
+        }
     }
 
     /**
