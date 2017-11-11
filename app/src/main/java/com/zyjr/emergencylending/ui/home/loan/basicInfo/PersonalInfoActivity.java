@@ -126,7 +126,8 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     private static final int INTENT_IDCARD_HOLD = 10002; // 请求码 拍照
     private int mWidth;
     private int mHeight;
-    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String isEdit = ""; // 1,可编辑;0,不可编辑.(默认可编辑)
+    private String status = ""; // 1,完成;0,未完成
     private CodeBean marriageCodeBean = null; // 婚姻状态codeBean
     private CodeBean liveCodeBean = null; // 居住状态codeBean
     private LiveAddressBean liveAddressBean = null; // 居住地址bean
@@ -153,11 +154,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     public void onSaveInstanceState(Bundle outState) {
         getTakePhoto().onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -211,7 +207,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         }
     }
 
-    @OnClick({R.id.ll_idcard_front, R.id.ll_idcard_back, R.id.ll_idcard_hold, R.id.ll_marriage_status, R.id.ll_live_status, R.id.ll_huji_address, R.id.ll_live_address, R.id.btn_submit})
+    @OnClick({R.id.ll_idcard_front, R.id.ll_idcard_back, R.id.ll_idcard_hold, R.id.ll_marriage_status, R.id.ll_live_status, R.id.ll_huji_address, R.id.ll_live_address, R.id.btn_submit, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_idcard_front: // 身份证正面
@@ -304,6 +300,10 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 // TODO 信息提交
                 validateData();
                 break;
+
+            case R.id.btn_retry:
+                defaultLoading();
+                break;
         }
     }
 
@@ -313,17 +313,20 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     private void initGetData() {
         Intent intent = getIntent();
         isEdit = intent.getStringExtra("isEdit");
-        String status = intent.getStringExtra("status");
+        status = intent.getStringExtra("status");
+        defaultLoading();
+    }
+
+    private void defaultLoading() {
         // 已完成状态获取资料信息
         if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            loadingPersonInfo();
+            getPersonInfo();
         }
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
         }
     }
-
 
     private void validateData() {
         String personalName = tvPersonalName.getText().toString().trim(); // 姓名
@@ -629,7 +632,13 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         ToastAlone.showShortToast(this, getResources().getString(com.jph.takephoto.R.string.msg_operation_canceled));
     }
 
-    // 扫描证件成功
+    /**
+     * 扫描证件成功
+     *
+     * @param name
+     * @param num
+     * @param addr
+     */
     private void scanSuccessInfo(final String name, final String num, final String addr) {
         final CustomerDialog dialogCustom = new CustomerDialog(this);
         dialogCustom.scanIdcardInfo(new View.OnClickListener() {
@@ -658,7 +667,9 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         }, name, num, addr).show();
     }
 
-    // 手持证件照 提示
+    /**
+     * 手持证件照 提示
+     */
     private void takePhotoModelNotice() {
         final CustomerDialog dialogCustom = new CustomerDialog(this);
         dialogCustom.holdIdcardNotice(new View.OnClickListener() {
@@ -711,7 +722,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         mPresenter.uploadFile(params);
     }
 
-    private void loadingPersonInfo() {
+    private void getPersonInfo() {
         Map<String, String> paramMaps = new HashMap<>();
         mPresenter.getPersonalInfo(paramMaps);
     }
@@ -758,6 +769,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     @Override
     public void onSuccessGet(String returnCode, PersonalInfoBean bean) {
+        showSuccess();
         personalInfoBean = bean;
         showUserInfo(personalInfoBean);
     }
@@ -786,6 +798,19 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
+        showError();
+    }
+
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+        layoutBottom.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.VISIBLE);
     }
 
 }

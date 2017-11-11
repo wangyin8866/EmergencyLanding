@@ -151,9 +151,9 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         mPresenter.getCurrentOrderDetail(map);
     }
 
-    private void getCurrentEffectiveOrder() {
+    private void deleteLoanOrder() {
         Map<String, String> map = new HashMap<>();
-        mPresenter.getCurrentEffectiveLoanOrder(map);
+        mPresenter.deleteLoanOrder(map);
     }
 
 
@@ -234,7 +234,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 btnOrderOperate.setEnabled(false);
             } else if (orderStatus.equals("9")) {
                 btnOrderOperate.setText("重新申请");
-                ToastAlone.showLongToast(this, msg);
+                deleteLoanOrder();
             }
             orderStatusIocn = R.mipmap.emptypage_examine;
             setTextView(tvOrderStatus2, "受理中", R.color.white);
@@ -253,6 +253,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 tvLoanDesc.setText("申请金额");
                 orderStatusIocn = R.mipmap.emptypage_fail;
                 tvOrderDesc1.setText(msg);
+                deleteLoanOrder();
             }
             btnOrderOperate.setEnabled(false);
             setTextView(tvOrderStatus2, "认证中", R.color.white);
@@ -276,6 +277,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 btnOrderOperate.setText("领取拒绝");
                 orderStatusIocn = R.mipmap.emptypage_fail;
                 tvOrderDesc1.setText(msg);
+                deleteLoanOrder();
             }
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.white);
@@ -299,6 +301,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 orderStatusIocn = R.mipmap.emptypage_fail;
                 btnOrderOperate.setText("放款拒绝");
                 tvOrderDesc1.setText(msg);
+                deleteLoanOrder();
             }
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.white);
@@ -463,6 +466,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     @Override
     public void onError(String apiCode, String errorMsg) {
         showError();
+    }
+
+    @Override
+    public void onSuccessDeleteLoanOrder(String api, String result) {
+
     }
 
 

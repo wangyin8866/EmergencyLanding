@@ -88,7 +88,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     private static final int INTENT_CONTACT_INFO_CODE = 20003; // 跳往联系人
     private static final int INTENT_BANKCARD_CODE = 20004; // 跳往银行卡
     private CustomProgressDialog loadingDialog = null;
-    private String renew_loan_type = "0"; // 是否是首贷 0:首贷;3:续贷
+    private String renew_loan_type = ""; // 是否是首贷 0:首贷;3:续贷
     private String is_view = ""; // 是否显示推荐产品 1:是  0：否
 
     @Override
@@ -206,9 +206,28 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                     getClerkStoreInfo();
                 } else {
                     // TODO 获取通讯资料
-                    if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
-                        judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
-                    }
+                    // 方案一
+                    ToolPermission.checkPermission(this, new ToolPermission.PermissionCallBack() {
+                                @Override
+                                public void callBack(String requestCode, boolean isPass) {
+                                    LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
+                                    if (isPass) {
+                                        judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                                    }
+                                }
+                            },
+                            Constants.GET_MAYAPPLY_PRODUCT_TYPE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.CAMERA,
+                            Manifest.permission.READ_CONTACTS);
+
+                    // 方案二
+
+//                    if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
+//                        judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+//                    }
+
                 }
                 break;
         }
@@ -479,6 +498,5 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             submitLoanInfo(storeBean.getStoreId(), storeBean.getStoreName());
         }
     }
-
 
 }

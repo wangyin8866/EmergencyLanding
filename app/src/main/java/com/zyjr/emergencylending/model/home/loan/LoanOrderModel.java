@@ -41,4 +41,9 @@ public class LoanOrderModel extends BaseModel {
         return loanOrderService.getEffectiveLoanOrder(params);
     }
 
+    public Observable<ApiResult<String>> deleteLoanOrder(Map<String, String> params){
+        params.put("router", NetConstantValues.ROUTER_DELETE_LOAN_ORDER);
+        return loanOrderService.deleteLoanOrder(params);
+    }
+
 }

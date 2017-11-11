@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -76,6 +78,12 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     LinearLayout llCover;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;  // 主布局
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;  // 底部布局
 
     CodeBean relationCodeBean1 = null; // 关系1
     CodeBean relationCodeBean2 = null; // 关系2
@@ -83,7 +91,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     private static final int CODE_PERMISSION_CONTANCT_LIST = 20000; // 权限请求 获取通讯录
     private static final int INTENT_SELECT_PHONE = 20001; // intent请求码 获取号码
     private ContactInfoBean contactInfoBean = null;
-    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String isEdit = ""; // 1,可编辑;0,不可编辑
     private String status = ""; // 1,完成;0,未完成
     private String marriageCode = ""; // 结婚状态 801:未婚; 802:已婚; 806:离婚; 805:丧偶
 
@@ -101,7 +109,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         initGetData();
     }
 
-    @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2, R.id.btn_submit})
+    @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2, R.id.btn_submit, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_relation1:  // 关系1
@@ -140,6 +148,10 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
             case R.id.btn_submit:
                 validateData();
+                break;
+
+            case R.id.btn_retry:
+                defaultLoading();
                 break;
 
         }
@@ -360,16 +372,21 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         Intent intent = getIntent();
         isEdit = intent.getStringExtra("isEdit");
         status = intent.getStringExtra("status");
-        if (isEdit.equals("0")) { // 不可编辑
+        defaultLoading();
+    }
+
+    private void defaultLoading() {
+        if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
-            loadingContactInfo();
+            getContactInfo();
         } else {
             getPersonInfo();
         }
     }
 
-    private void loadingContactInfo() {
+
+    private void getContactInfo() {
         Map<String, String> paramMaps = new HashMap<>();
         mPresenter.getContantInfo(paramMaps);
     }
@@ -438,6 +455,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     @Override
     public void onSuccessGet(String returnCode, List<ContactInfoBean> beanList) {
+        showSuccess();
         showContactInfo(beanList);
     }
 
@@ -465,6 +483,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
+        showError();
     }
 
     @Override
@@ -472,7 +491,19 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         marriageCode = bean.getMarriage();
         if (StringUtil.isNotEmpty(status) && status.equals("1")) {
             // 已完成资料时,先获取用户信息(获取婚姻状态),在获取联系人资料
-            loadingContactInfo();
+            getContactInfo();
         }
+    }
+
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+        layoutBottom.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.VISIBLE);
     }
 }

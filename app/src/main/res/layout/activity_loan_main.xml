@@ -167,11 +167,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="15dp"
-                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawableLeft="@mipmap/yellow_dot"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="覆盖全国各个省市(暂不支持港澳台地区)"
-                    android:textColor="@color/input_text_color"
+                    android:textColor="@color/front_text_color"
                     android:textSize="13sp" />
 
             </LinearLayout>
@@ -209,7 +209,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="15dp"
-                    android:drawableLeft="@mipmap/ic_home"
+                    android:drawableLeft="@mipmap/yellow_dot"
                     android:drawablePadding="3dp"
                     android:gravity="center_vertical"
                     android:singleLine="true"

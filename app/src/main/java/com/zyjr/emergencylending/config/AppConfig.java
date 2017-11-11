@@ -41,10 +41,10 @@ public class AppConfig {
     public static List<CodeBean> marriageStatus() {
         List<CodeBean> marriageStatus = new ArrayList();
         marriageStatus.add(new CodeBean(0, "801", "未婚"));
-        marriageStatus.add(new CodeBean(1, "802", "已婚"));
 //        marriageStatus.add(new CodeBean(2, "803", "再婚"));
 //        marriageStatus.add(new CodeBean(3, "804", "复婚"));
         marriageStatus.add(new CodeBean(5, "806", "离婚"));
+        marriageStatus.add(new CodeBean(1, "802", "已婚"));
         marriageStatus.add(new CodeBean(4, "805", "丧偶"));
         return marriageStatus;
     }

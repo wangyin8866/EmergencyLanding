@@ -136,4 +136,6 @@ public class Constants {
     public static final String GET_LOCAL_STORE_INFO = "50";
     // 确认领取金额
     public static final String CONFIRM_RECEIVE_INFO = "51";
+    // 做废件处理
+    public static final String DELETE_LOAN_ORDER_INFO = "52";
 }

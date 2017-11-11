@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="7dp"
         android:gravity="center_vertical"
-        android:textColor="@color/input_text_color"
+        android:textColor="@color/front_text_color"
         android:ellipsize="end"
         android:textSize="13sp" />
 

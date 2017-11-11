@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
@@ -84,7 +85,7 @@ public class AreaSelectPop extends PopupWindow implements OnClickListener {
         this.setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0x00000000);
         this.setBackgroundDrawable(dw);
-
+        setBackgroundAlpha(0.5f);//设置屏幕透明度
         mMenuView.setOnTouchListener(new OnTouchListener() {
 
             public boolean onTouch(View v, MotionEvent event) {
@@ -105,6 +106,18 @@ public class AreaSelectPop extends PopupWindow implements OnClickListener {
 //        setWheel();
     }
 
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha 屏幕透明度0.0-1.0 1表示完全不透明
+     */
+    public void setBackgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        ((Activity) context).getWindow().setAttributes(lp);
+    }
+
+
     public void setMyOnClickListener(OnClickListener itemsOnClick) {
         //设置按钮监听
         mMenuView.setOnClickListener(itemsOnClick);
@@ -113,6 +126,7 @@ public class AreaSelectPop extends PopupWindow implements OnClickListener {
     private void selectedCallback(String privince, int privinceItem, String city, int cityItem, String district, int districtItem) {
         if (mCityPopupWindow != null) {
             mCityPopupWindow.onCityClick(privince, privinceItem, city, cityItem, district, districtItem);
+            setBackgroundAlpha(1f);//设置屏幕透明度
         }
     }
 
@@ -146,6 +160,7 @@ public class AreaSelectPop extends PopupWindow implements OnClickListener {
                     ? "" : mDistrictDatasMap.get(mCurrentCityName)[district.getCurrentItem()];
             selectedCallback(mCurrentProviceName, country.getCurrentItem(), mCurrentCityName, city.getCurrentItem(), mCurrentDistrictName, district.getCurrentItem());
         }
+        setBackgroundAlpha(1f);//设置屏幕透明度
         dismiss();
     }
 

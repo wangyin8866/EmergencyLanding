@@ -10,29 +10,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
-        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="联系人资料"
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
     <ScrollView
-        android:id="@+id/root"
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/layout_bottom"
+        android:layout_below="@+id/top_bar"
         android:background="@color/line_color"
-        android:scrollbars="none"
-        android:layout_below="@+id/top_bar">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <View
-                style="@style/horizontal_line_style"
-                android:layout_height="5dp" />
+            <View style="@style/horizontal_line_style" />
 
             <!-- 联系人 -->
             <LinearLayout
@@ -291,9 +289,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@mipmap/ic_home"
-                android:gravity="center_vertical"
+                android:drawableLeft="@mipmap/icon_prompt"
                 android:drawablePadding="5dp"
+                android:gravity="center_vertical"
                 android:text="关系选项中，仅支持下拉列表中的关系"
                 android:textColor="@color/front_text_color_hint"
                 android:textSize="13dp" />
@@ -320,5 +318,10 @@
             android:textColor="@color/white"
             android:textSize="17sp" />
     </RelativeLayout>
+
     <include layout="@layout/common_cover" />
+
+    <include
+        layout="@layout/layout_net_loading_error"
+        android:visibility="gone" />
 </RelativeLayout>

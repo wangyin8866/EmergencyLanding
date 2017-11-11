@@ -275,4 +275,9 @@ public interface NetConstantValues {
      * 借款登陆
      */
     String REPAYMENT_LOGIN = "appJJTHttpService/login";
+    /**
+     * 订单做废件处理
+     */
+    String ROUTER_DELETE_LOAN_ORDER = "userBorrowService.deleteUserBorrow";
+
 }

@@ -104,4 +104,6 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     //打开pdf
     compile 'com.lidong.pdf:android_pdf:1.0.1'
+    // 权限管控
+    compile 'com.yanzhenjie:permission:1.1.0'
 }

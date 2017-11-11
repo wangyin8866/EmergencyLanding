@@ -17,6 +17,8 @@
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
+    <View style="@style/horizontal_line_style" />
+
     <com.handmark.pulltorefresh.library.PullToRefreshScrollView
         android:id="@+id/root_refreshview"
         android:layout_width="match_parent"
@@ -116,10 +118,10 @@
                 <RelativeLayout
                     android:id="@+id/rl_recommend_product"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:visibility="gone"
-                    android:layout_marginTop="62dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginBottom="50dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_brrow_recommend"
@@ -198,6 +200,6 @@
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
     <include
-        android:visibility="gone"
-        layout="@layout/layout_net_loading_error"/>
+        layout="@layout/layout_net_loading_error"
+        android:visibility="gone" />
 </LinearLayout>

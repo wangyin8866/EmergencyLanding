@@ -35,4 +35,14 @@ public interface LoanOrderService {
     @POST(NetConstantValues.LOAN)
     Observable<ApiResult<String>> getEffectiveLoanOrder(@FieldMap Map<String, String> params);
 
+    /**
+     * 做废件处理
+     * @param params
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<String>> deleteLoanOrder(@FieldMap Map<String, String> params);
+
+
 }

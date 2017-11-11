@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
@@ -55,6 +56,7 @@ public class SingleSelectPop extends PopupWindow implements OnClickListener {
         this.setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0x00000000);
         this.setBackgroundDrawable(dw);
+        setBackgroundAlpha(0.5f);//设置屏幕透明度
 
         mMenuView.setOnTouchListener(new OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
@@ -99,6 +101,7 @@ public class SingleSelectPop extends PopupWindow implements OnClickListener {
             if (mSelectDatasName == null) return;
             selectedCallback(selector.getCurrentItem(), mAllDatas.get(selector.getCurrentItem()));
         }
+        setBackgroundAlpha(1f);//设置屏幕透明度
         dismiss();
     }
 
@@ -131,5 +134,16 @@ public class SingleSelectPop extends PopupWindow implements OnClickListener {
      */
     public interface onSelectPopupWindow {
         public void onSelectClick(int index, CodeBean select);
+    }
+
+    /**
+     * 设置添加屏幕的背景透明度
+     *
+     * @param bgAlpha 屏幕透明度0.0-1.0 1表示完全不透明
+     */
+    public void setBackgroundAlpha(float bgAlpha) {
+        WindowManager.LayoutParams lp = ((Activity) context).getWindow().getAttributes();
+        lp.alpha = bgAlpha;
+        ((Activity) context).getWindow().setAttributes(lp);
     }
 }

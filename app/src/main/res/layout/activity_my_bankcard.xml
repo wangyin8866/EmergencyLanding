@@ -52,7 +52,10 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="31dp"
-                    android:layout_marginTop="23dp" />
+                    android:layout_marginTop="23dp"
+                    android:background="@drawable/circle_white_bg"
+                    android:scaleType="centerInside" />
+
 
                 <TextView
                     android:id="@+id/tv_bankcard_name"
@@ -124,7 +127,7 @@
     </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
     <include
-        android:visibility="gone"
-        layout="@layout/layout_net_loading_error"/>
+        layout="@layout/layout_net_loading_error"
+        android:visibility="gone" />
 
 </RelativeLayout>

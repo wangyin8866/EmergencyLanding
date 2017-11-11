@@ -76,7 +76,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private static final int INTENT_CODE_ADD_BANKCARD = 1; // 添加银行卡 请求码
     private static final int INTENT_CODE_EDIT_BANKCARD = 2; // 编辑银行卡 请求码
     private static final int PERMISSION_CODE_STORAGE = 10005; // 存储权限
-    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String isEdit = ""; // 1,可编辑;0,不可编辑
     private String status = ""; // 完成状况
     private String bank_username = ""; // 银行卡户主
     private String id_card = "";// 身份证号
@@ -212,7 +212,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         }
         setBankIcon(bankcardInfo);
         tvBankcardName.setText(bankcardInfo.getBank_name());
-        tvBankcardType.setText(""); // 此处没有字段返回
+        tvBankcardType.setText("借记卡"); // 此处没有字段返回
         if (StringUtil.isNotEmpty(bankcardInfo.getBankcard_no())) {
             String bankcardNum = bankcardInfo.getBankcard_no();
             tvBankcardNumber.setText(bankcardNum.substring(0, 4) + "* * * *   * * * *" + bankcardNum.substring(bankcardNum.length() - 4, bankcardNum.length()));

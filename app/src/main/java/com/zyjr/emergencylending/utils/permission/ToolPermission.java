@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.utils.permission;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -11,7 +12,14 @@ import android.preference.PreferenceActivity;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
+import com.sina.weibo.sdk.utils.LogUtil;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.utils.LogUtils;
+
+import java.util.List;
 
 
 /**
@@ -224,5 +232,48 @@ public class ToolPermission {
             onClickListener = null;
         }
     }
+
+    public interface PermissionCallBack {
+        void callBack(String requestCode, boolean isPass);
+    }
+
+    /**
+     * 权限检查
+     *
+     * @param context
+     * @param callBack
+     * @param permissions
+     */
+    public static void checkPermission(final Activity context, final PermissionCallBack callBack, final String type, String... permissions) {
+        AndPermission.with(context)
+                .permission(
+                        permissions
+                )
+                .callback(new PermissionListener() {
+                    @Override
+                    public void onSucceed(int i, List<String> list) {
+                        for (int j = 0; j < list.size(); j++) {
+                            LogUtils.d("权限申请成功:" + list.get(j));
+                        }
+                        callBack.callBack(type, true);
+                    }
+
+                    @Override
+                    public void onFailed(int i, final List<String> list) {
+                        for (int j = 0; j < list.size(); j++) {
+                            LogUtils.d("未开启的权限:" + list.get(j));
+                        }
+                        AndPermission.defaultSettingDialog(context, 100).
+                                setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                    }
+                                }).setTitle("权限提示").show();
+                        callBack.callBack(type, false);
+                    }
+                })
+                .start();
+    }
+
 
 }

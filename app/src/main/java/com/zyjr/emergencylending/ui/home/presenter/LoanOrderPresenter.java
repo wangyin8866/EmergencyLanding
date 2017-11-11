@@ -66,4 +66,25 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
             }
         }, mContext));
     }
+
+    public void deleteLoanOrder(Map<String, String> params) {
+        invoke(LoanOrderModel.getInstance().deleteLoanOrder(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+            @Override
+            public void onNext(ApiResult<String> result) {
+                if (result.getFlag().equals("API0000")) {
+                    LogUtils.d("进件做废件处理成功---->" + result.getResult().toString());
+                    getView().onSuccessGetEffectiveOrder(Constants.DELETE_LOAN_ORDER_INFO, result.getResult());
+                } else {
+                    LogUtils.d("进件做废件处理失败---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.DELETE_LOAN_ORDER_INFO, result.getMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("进件做废件处理异常---->" + e.getMessage());
+                getView().onError(Constants.DELETE_LOAN_ORDER_INFO, e.getMessage());
+            }
+        }, mContext));
+    }
 }

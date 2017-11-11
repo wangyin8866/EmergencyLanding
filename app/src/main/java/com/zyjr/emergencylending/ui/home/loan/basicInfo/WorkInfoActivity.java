@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -72,14 +73,19 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
     private CodeBean workPositionCodebean = null; // 工作职位
     private CodeBean inComeCodebean = null; // 收入
     private WorkInfoBean workInfoBean = null; // 表单bean
-    @BindView(R.id.root)
-    ScrollView root;
-    @BindView(R.id.ll_cover)
-    LinearLayout llCover;
     @BindView(R.id.btn_submit)
     Button btnSubmit;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
+    @BindView(R.id.sv_main)
+    ScrollView svMain;
+    @BindView(R.id.ll_cover)
+    LinearLayout llCover;
+    @BindView(R.id.layout_bottom)
+    RelativeLayout layoutBottom;  // 底部布局
 
-    private String isEdit = "1"; // 1,可编辑;0,不可编辑。默认可编辑
+    private String isEdit = ""; // 1,可编辑;0,不可编辑
+    private String status = ""; // 1,完成;0,未完成
 
     @Override
     protected WorkInfoPresenter createPresenter() {
@@ -95,7 +101,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         initGetData();
     }
 
-    @OnClick({R.id.ll_unit_industry, R.id.ll_work_address, R.id.ll_work_position, R.id.ll_income, R.id.btn_submit})
+    @OnClick({R.id.ll_unit_industry, R.id.ll_work_address, R.id.ll_work_position, R.id.ll_income, R.id.btn_submit, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_unit_industry:  // 单位行业
@@ -165,6 +171,10 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
             case R.id.btn_submit:
                 // TODO 信息提交
                 validateData();
+                break;
+
+            case R.id.btn_retry:
+                defaultLoading();
                 break;
 
         }
@@ -371,14 +381,17 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         });
     }
 
-
     private void initGetData() {
         Intent intent = getIntent();
         isEdit = intent.getStringExtra("isEdit");
-        String status = intent.getStringExtra("status");
+        status = intent.getStringExtra("status");
+        defaultLoading();
+    }
+
+    private void defaultLoading() {
         // 已完成状态获取资料信息
         if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            loadingWorkInfo();
+            getWorkInfo();
         }
         if (isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
@@ -386,7 +399,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         }
     }
 
-    private void loadingWorkInfo() {
+    private void getWorkInfo() {
         Map<String, String> paramMaps = new HashMap<>();
         mPresenter.getWorkInfo(paramMaps);
     }
@@ -397,6 +410,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
 
     @Override
     public void onSuccessGet(String returnCode, WorkInfoBean bean) {
+        showSuccess();
         showWorkInfo(bean);
     }
 
@@ -424,5 +438,18 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
+        showError();
+    }
+
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        svMain.setVisibility(View.GONE);
+        layoutBottom.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        svMain.setVisibility(View.VISIBLE);
+        layoutBottom.setVisibility(View.VISIBLE);
     }
 }

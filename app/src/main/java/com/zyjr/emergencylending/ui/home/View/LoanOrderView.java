@@ -16,4 +16,6 @@ public interface LoanOrderView {
 
     void onError(String apiCode, String errorMsg);
 
+    void onSuccessDeleteLoanOrder(String api, String result);
+
 }

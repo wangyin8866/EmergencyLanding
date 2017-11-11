@@ -7,6 +7,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.base.HttpSubscriber;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
 import com.zyjr.emergencylending.entity.AuthResult;
@@ -122,7 +123,7 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
         invoke(AuthCenterModel.getInstance().submitAllAuthInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("提交所有认证信息成功---->" + result.getMsg());
                     getView().onSuccessSubmitAll(Constants.SUBMIT_ALL_AUTH_INFO, result.getMsg());
                 } else {
