@@ -94,6 +94,7 @@
                         android:drawableLeft="@mipmap/icon_lock"
                         android:hint="@string/login_password_hint"
                         android:inputType="textPassword"
+                        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:maxLength="16"
                         android:textSize="13sp" />
 

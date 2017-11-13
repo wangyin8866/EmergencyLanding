@@ -130,7 +130,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.notice_close:
-                llNotice.setVisibility(View.INVISIBLE);
+                llNotice.setVisibility(View.GONE);
                 break;
             case R.id.QR_code:
                 startActivity(new Intent(mContext, QrCodeActivity.class));

@@ -252,6 +252,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <!--新浪-->
+
         <!--h5页面-->
         <activity
             android:name=".ui.h5.H5WebView"
@@ -315,6 +317,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.zyjr.emergencylending.ui.home.loan.PdfViewerActivity"
+            android:screenOrientation="portrait" />
+        <!--我的名片-->
+        <activity
+            android:name=".ui.salesman.activity.MyCardActivity"
             android:screenOrientation="portrait" />
 
 

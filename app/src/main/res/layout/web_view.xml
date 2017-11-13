@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:paddingLeft="16dp"
-        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="标题"
         app:titleTextColor="#333333"

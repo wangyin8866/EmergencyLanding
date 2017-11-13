@@ -23,6 +23,7 @@ import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -68,7 +69,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     Button btnRetry;
     @BindView(R.id.ll_retry)
     LinearLayout llRetry;
-    private int currentTv;
+    private int type;
 
     @Nullable
     @Override
@@ -102,7 +103,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         unbinder.unbind();
     }
 
-    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success, R.id.ll_rank_list, R.id.type1, R.id.type2, R.id.type3,R.id.btn_retry})
+    @OnClick({R.id.circle_client, R.id.circle_apply_for, R.id.circle_success, R.id.ll_rank_list, R.id.type1, R.id.type2, R.id.type3, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.circle_client:
@@ -131,8 +132,8 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 selectTv(3);
                 break;
             case R.id.btn_retry:
-                mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
-                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "", "1");
+                mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
+                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1");
                 mPresenter.rankList(NetConstantValues.RANKING_LIST);
                 break;
         }
@@ -148,8 +149,9 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     }
 
     public void selectTv(int currentTv) {
+        this.type = currentTv;
         initTextView();
-        this.currentTv = currentTv;
+        SPUtils.saveInt(mContext, Config.KEY_TYPE, type);
         switch (currentTv) {
             case 1:
                 type1.setBackgroundResource(R.drawable.tv_type_shape_gradient_mine_select);
@@ -164,14 +166,14 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 type3.setTextColor(Color.parseColor("#FFA200"));
                 break;
         }
-        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, currentTv + "");
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "", "1");
+        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1");
         mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, currentTv + "", "1");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1");
     }
 
     @Override
@@ -207,11 +209,11 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     @Override
     public void requestError() {
-        WYUtils.showRequestError(llMain,llRetry);
+        WYUtils.showRequestError(llMain, llRetry);
     }
 
     @Override
     public void requestSuccess() {
-        WYUtils.showRequestSuccess(llMain,llRetry);
+        WYUtils.showRequestSuccess(llMain, llRetry);
     }
 }

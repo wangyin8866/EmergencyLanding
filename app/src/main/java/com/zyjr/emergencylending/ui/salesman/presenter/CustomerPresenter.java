@@ -29,6 +29,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
             @Override
             public void onNext(CustomerBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+
                     getView().requestSuccess();
                     getView().myPerformance(baseBean);
                 } else {

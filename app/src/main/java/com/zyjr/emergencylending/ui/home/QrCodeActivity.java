@@ -138,8 +138,12 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
                 }
                 break;
             case R.id.circle_of_friends:
-                new ShareAction(QrCodeActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.QQ)
-                        .setCallback(umShareListener).share();
+                if (UMShareAPI.get(mContext).isInstall(this, SHARE_MEDIA.WEIXIN)) {
+                    new ShareAction(QrCodeActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .setCallback(umShareListener).share();
+                } else {
+                    ToastAlone.showShortToast(mContext, "微信未安装");
+                }
                 break;
         }
     }

@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_warm_notice"
     android:layout_width="match_parent"
-    android:layout_height="70dp"
+    android:layout_height="wrap_content"
+    android:background="#FBFAFF"
     android:layout_alignParentBottom="true"
     android:layout_marginBottom="5dp"
-    android:layout_marginLeft="74dp"
-    android:layout_marginRight="73dp"
     android:gravity="center"
     android:orientation="vertical">
 
     <TextView
+        android:layout_marginTop="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -20,11 +20,19 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
-        android:text="@string/register_notice_content"
+        android:gravity="center"
+        android:text="工作人员不会以任何方式向您索要其他费用"
         android:textColor="@color/front_text_color_hint"
         android:textSize="12sp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="请到APP确认官方联系方式，谨防上当受骗"
+        android:textColor="@color/front_text_color_hint"
+        android:textSize="12sp" />
 </LinearLayout>

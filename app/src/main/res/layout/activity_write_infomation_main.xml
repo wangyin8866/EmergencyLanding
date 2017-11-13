@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
-        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="填写资料"
         app:titleTextColor="@color/input_text_color"

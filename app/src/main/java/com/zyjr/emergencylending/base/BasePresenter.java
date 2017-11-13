@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.model.account.AccountModel;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.ui.salesman.activity.MyCardActivity;
 import com.zyjr.emergencylending.utils.DateUtil;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
@@ -112,8 +113,20 @@ public class BasePresenter<T> {
             public void onNext(H5Bean baseBean) {
                 if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
                     if (url_type.equals(Config.H5_URL_REPAYMENT)) {
-                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_REPAYMENT_TOKEN, "")+"&page=1");
-                    } else {
+                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_REPAYMENT_TOKEN, "") + "&page=1");
+                    } else if (url_type.equals(Config.H5_URL_MYRESULTS_CUSTOMER)) {
+                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
+                    } else if (url_type.equals(Config.H5_URL_MYRESULTS_APPLY)) {
+                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
+                    } else if (url_type.equals(Config.H5_URL_MYRESULTS_SUCCESS)) {
+                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
+                    } else if (url_type.equals(Config.H5_URL_MYCARD)) {
+                        MyCardActivity.skipH5WebView(mContext, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") );
+                    }else {
                         H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, ""));
                     }

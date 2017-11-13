@@ -5,8 +5,8 @@
     android:layout_gravity="bottom|center_horizontal"
     android:orientation="vertical"
     android:paddingBottom="10dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
 
     <LinearLayout
@@ -52,7 +52,7 @@
             android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="取消"
             android:textColor="#6F6F6F"

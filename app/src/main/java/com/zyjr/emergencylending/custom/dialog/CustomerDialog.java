@@ -52,6 +52,36 @@ public class CustomerDialog extends Dialog {
     }
 
     /**
+     * 上传图片
+     *
+     * @param listener
+     * @return
+     */
+    public CustomerDialog cardShareDialog(View.OnClickListener listener) {
+        setContentView(R.layout.share_invite_popupmenu);
+        ImageView qr_we_chat = findViewById(R.id.qr_we_chat);
+        ImageView circle_of_friends = findViewById(R.id.circle_of_friends);
+        ImageView qq = findViewById(R.id.qq);
+        ImageView qq_zone = findViewById(R.id.qq_zone);
+        ImageView weibo = findViewById(R.id.weibo);
+        ImageView share_close = findViewById(R.id.share_close);
+
+        window.setGravity(Gravity.BOTTOM);
+        // 设置显示动画
+        window.setWindowAnimations(R.style.main_menu_animstyle);
+        window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        // 设置点击外围解散
+        CustomerDialog.this.setCanceledOnTouchOutside(false);
+        qr_we_chat.setOnClickListener(listener);
+        circle_of_friends.setOnClickListener(listener);
+        qq.setOnClickListener(listener);
+        qq_zone.setOnClickListener(listener);
+        weibo.setOnClickListener(listener);
+        share_close.setOnClickListener(listener);
+        return instance;
+    }
+
+    /**
      * 删除消息
      */
     public CustomerDialog deleteMessage(View.OnClickListener listener) {

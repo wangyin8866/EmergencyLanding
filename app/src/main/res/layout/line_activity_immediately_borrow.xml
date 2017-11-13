@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:paddingLeft="16dp"
-        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="立即借款"
         app:titleTextColor="#333333"
@@ -47,10 +47,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:background="@null"
+                android:hint="请输入客户手机号"
                 android:inputType="phone"
                 android:maxLength="11"
-                android:hint="请输入客户手机号"
-                android:textColorHint="#CCCCCC" />
+                android:textColorHint="#CCCCCC"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <include layout="@layout/bg_line_margin" />
@@ -77,10 +78,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_weight="1"
                 android:background="@null"
+                android:hint="请输入验证码"
                 android:inputType="number"
                 android:maxLength="6"
-                android:hint="请输入验证码"
-                android:textColorHint="#CCCCCC" />
+                android:textColorHint="#CCCCCC"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/get_verification_code"

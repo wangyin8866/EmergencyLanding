@@ -19,7 +19,7 @@ public interface NetConstantValues {
     /**
      * 我的还款登陆
      */
-    String REPAYMENT_LOGIN_BASE= "http://192.168.5.185/cffgloan/";
+    String REPAYMENT_LOGIN_BASE= "192.168.10.14:8080/cffg_loan";
     /**
      * 二级地址
      */

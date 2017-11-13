@@ -30,8 +30,13 @@ public class ForgetPresenter extends BasePresenter<BaseView<BaseBean>> {
         invoke(AccountModel.getInstance().forgetPassword(router, phone, verify_code, password), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean baseBean) {
-                getView().getCommonData(baseBean);
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().getCommonData(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                }
             }
+
             @Override
             public void onError(Throwable e) {
                 ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);

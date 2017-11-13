@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="20dp"
-        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="忘记密码"
         app:titleTextColor="#333333"
@@ -31,6 +31,7 @@
             android:layout_height="48dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="vertical">
+
             <EditText
                 android:id="@+id/et_mobile_number"
                 style="@style/et_input_style"
@@ -48,6 +49,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/et_sms_code"
                 style="@style/et_input_style"
@@ -77,10 +79,12 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/et_new_pwd"
                 style="@style/et_input_style"
                 android:layout_weight="1"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:drawableLeft="@mipmap/icon_lock"
                 android:hint="@string/update_login_pwd_hint"
                 android:inputType="textPassword"
@@ -97,10 +101,12 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
+
             <EditText
                 android:id="@+id/et_new_pwd_again"
                 style="@style/et_input_style"
                 android:layout_weight="1"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:drawableLeft="@mipmap/icon_lock"
                 android:hint="@string/update_login_pwd_hint_again"
                 android:inputType="textPassword"

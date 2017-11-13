@@ -31,7 +31,12 @@ public class RegisterPresenter extends BasePresenter<BaseView<RegisterBean>> {
         invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_ip, register_device_no), new ProgressSubscriber<RegisterBean>(new SubscriberOnNextListener<RegisterBean>() {
             @Override
             public void onNext(RegisterBean registerBean) {
-                getView().getCommonData(registerBean);
+                if (Config.CODE_SUCCESS.equals(registerBean.getFlag())) {
+                    getView().getCommonData(registerBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, registerBean.getMsg());
+                }
+
             }
 
             @Override

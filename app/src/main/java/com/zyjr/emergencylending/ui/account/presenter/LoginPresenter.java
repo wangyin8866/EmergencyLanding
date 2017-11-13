@@ -23,10 +23,15 @@ public class LoginPresenter extends BasePresenter<BaseView<LoginBean>> {
 
     public void login(String router, String phone, String password,
                       String clientid, String login_ip, String login_platform, String login_device_no) {
-        invoke(AccountModel.getInstance().login(router,phone,password,clientid,login_ip,login_platform,login_device_no), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
+        invoke(AccountModel.getInstance().login(router, phone, password, clientid, login_ip, login_platform, login_device_no), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
             @Override
             public void onNext(LoginBean loginBean) {
-                getView().getCommonData(loginBean);
+
+                if (Config.CODE_SUCCESS.equals(loginBean.getFlag())) {
+                    getView().getCommonData(loginBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, loginBean.getMsg());
+                }
             }
 
             @Override

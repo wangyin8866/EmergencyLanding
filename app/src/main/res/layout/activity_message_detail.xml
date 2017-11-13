@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
         android:paddingLeft="20dp"
-        app:drawableLeft="@mipmap/nav_back"
+        app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="消息详情"
         app:titleTextColor="#333333"

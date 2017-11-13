@@ -16,12 +16,12 @@
         app:top_background="#FFFFFF" />
 
     <LinearLayout
+        android:id="@+id/ll_notice"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:background="#FFFFFF">
 
         <LinearLayout
-            android:id="@+id/ll_notice"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFF5E5"
@@ -213,8 +213,8 @@
                 android:id="@+id/message_auto_roll"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
                 android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
                 android:layout_marginStart="12dp"
                 android:layout_weight="1" />
 

@@ -11,8 +11,7 @@
         android:layout_marginTop="10dp"
         android:text="登录"
         android:textColor="#474747"
-        android:textSize="18sp"
-         />
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/iv_close"
@@ -70,19 +69,20 @@
 
             <EditText
                 android:id="@+id/et_password"
-               android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@null"
-                android:singleLine="true"
-                android:textColor="@color/front_text_color"
-                android:textColorHint="@color/front_text_color_hint"
                 android:layout_marginLeft="25dp"
-                android:drawablePadding="18dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                 android:drawableLeft="@mipmap/icon_lock"
+                android:drawablePadding="18dp"
                 android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
                 android:maxLength="16"
+                android:singleLine="true"
+                android:textColor="@color/front_text_color"
+                android:textColorHint="@color/front_text_color_hint"
                 android:textSize="13sp" />
 
             <ImageView
@@ -90,9 +90,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@mipmap/eye_off"
                 android:layout_marginRight="24dp"
-               />
+                android:src="@mipmap/eye_off" />
         </LinearLayout>
 
         <Button

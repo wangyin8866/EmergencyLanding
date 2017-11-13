@@ -173,4 +173,9 @@ public interface Config {
      */
     String NO_REPAY = "http://192.168.6.107:8086/jjth5/noRepay.html";
 
+    /**
+     * 我的业绩周期类型
+     */
+    String KEY_TYPE = "type";
+
 }
