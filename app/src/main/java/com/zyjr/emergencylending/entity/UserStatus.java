@@ -15,7 +15,14 @@ public class UserStatus {
      * result : {"user_contact_status":0,"user_job_status":0,"user_contact_edit":"1","is_loan_fail":"0","user_data_edit":"1","user_bank_status":0,"user_job_edit":"1","user_data_status":0,"user_bank_edit":"1"}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

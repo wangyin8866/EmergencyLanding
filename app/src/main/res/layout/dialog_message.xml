@@ -30,8 +30,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="确定"
-            android:textColor="#FB5D5C"
+            android:text="取消"
+            android:textColor="#333333"
             android:textSize="15sp" />
 
         <View
@@ -47,8 +47,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="取消"
-            android:textColor="#333333"
+            android:text="确定"
+            android:textColor="#6F95FF"
             android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>

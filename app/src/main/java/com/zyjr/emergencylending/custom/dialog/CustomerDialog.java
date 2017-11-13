@@ -64,7 +64,7 @@ public class CustomerDialog extends Dialog {
         ImageView qq = findViewById(R.id.qq);
         ImageView qq_zone = findViewById(R.id.qq_zone);
         ImageView weibo = findViewById(R.id.weibo);
-        ImageView share_close = findViewById(R.id.share_close);
+        LinearLayout share_close = findViewById(R.id.share_close);
 
         window.setGravity(Gravity.BOTTOM);
         // 设置显示动画

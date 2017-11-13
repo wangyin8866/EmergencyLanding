@@ -16,7 +16,14 @@ public class UserInfo {
      * result : {"head_url":"","user_name":"张超锋","tel":"18217117889","idcard":"411425199105276618","news_status":"0"}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

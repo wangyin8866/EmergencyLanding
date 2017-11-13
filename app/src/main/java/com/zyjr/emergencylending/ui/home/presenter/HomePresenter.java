@@ -31,13 +31,13 @@ public class HomePresenter extends BasePresenter<HomeView>{
                 if (Config.CODE_SUCCESS.equals(banner.getFlag())) {
                     getView().getBanner(banner);
                 } else {
-                    ToastAlone.showShortToast(mContext, banner.getMsg());
+                    ToastAlone.showShortToast(mContext, banner.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-//                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         },mContext));
     }
@@ -48,13 +48,13 @@ public class HomePresenter extends BasePresenter<HomeView>{
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getBasicInfo(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -65,13 +65,13 @@ public class HomePresenter extends BasePresenter<HomeView>{
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().isEffectiveOrder(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

@@ -15,7 +15,14 @@ public class ImmediateBean {
      * result : {"is_exists":"0","is_lz":"1","cust_id":"97e123b56d2e4f0fa5eb9fc4368d9d08"}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

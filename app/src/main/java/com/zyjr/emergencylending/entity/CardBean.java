@@ -18,7 +18,14 @@ public class CardBean implements Serializable{
      * result : {"head_url":"","position":"客户经理","phone":"13050311105","rq_code":"M00/09/9E/wKgFGlnwWUqEGTSbAAAAANV9p8U329.png","product_img_url":"","company":"丹东分公司","name":"丁晓宇"}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

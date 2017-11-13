@@ -15,7 +15,14 @@ public class CustomerBean {
      * result : {"cust_num":2,"order_num":0,"lend_num":0,"lend_total_amount":0}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

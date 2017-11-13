@@ -33,7 +33,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
                     getView().requestSuccess();
                     getView().myPerformance(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
@@ -53,7 +53,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
                     getView().requestSuccess();
                     getView().rankList(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
@@ -73,7 +73,7 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
                     getView().requestSuccess();
                     getView().waitApply(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 

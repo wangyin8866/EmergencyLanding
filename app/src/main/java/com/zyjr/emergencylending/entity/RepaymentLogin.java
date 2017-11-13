@@ -10,7 +10,14 @@ public class RepaymentLogin {
     /**
      * record : {"idcard":"android","phone":"18217117889","platform":"411425199105276618","type":"jjtapp"}
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String record;
 
     public String getRecord() {

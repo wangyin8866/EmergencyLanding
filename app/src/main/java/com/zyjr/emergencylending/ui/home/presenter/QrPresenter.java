@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.model.home.QrModel;
 import com.zyjr.emergencylending.utils.AppToast;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
  * @author wangyin
@@ -30,13 +31,13 @@ public class QrPresenter extends BasePresenter<BaseView<QrBean>> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getCommonData(baseBean);
                 } else {
-                    AppToast.showShortText(mContext,baseBean.getMsg());
+                    AppToast.showShortText(mContext,baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                AppToast.showShortText(mContext, e.getMessage());
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         },mContext));
 

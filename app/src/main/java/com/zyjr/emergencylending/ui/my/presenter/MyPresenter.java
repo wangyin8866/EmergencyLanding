@@ -37,7 +37,7 @@ public class MyPresenter extends BasePresenter<MyView> {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
                     getView().update(result);
                 } else {
-                    ToastAlone.showShortToast(mContext, result.getMsg());
+                    ToastAlone.showShortToast(mContext, result.getPromptMsg());
                 }
             }
 
@@ -54,13 +54,13 @@ public class MyPresenter extends BasePresenter<MyView> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                         getView().getUserInfo(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -72,13 +72,13 @@ public class MyPresenter extends BasePresenter<MyView> {
                 if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
                     getView().getBorrowInfoByUserId(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -90,13 +90,13 @@ public class MyPresenter extends BasePresenter<MyView> {
                 if ("0000".equals(repaymentSuccess.getReturncode())) {
                     getView().getRepaymentLogin(repaymentSuccess);
                 } else {
-                    ToastAlone.showShortToast(mContext, repaymentSuccess.getErrormsg());
+                    ToastAlone.showShortToast(mContext, repaymentSuccess.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

@@ -13,6 +13,7 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.UserStatus;
 import com.zyjr.emergencylending.model.account.AccountModel;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
  * @author wangyin
@@ -32,6 +33,8 @@ public class PersonalDataPresenter extends BasePresenter<BaseView<UserStatus>> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().requestSuccess();
                     getView().getCommonData(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
@@ -84,7 +87,7 @@ public class PersonalDataPresenter extends BasePresenter<BaseView<UserStatus>> {
             iconPicCard.setVisibility(View.VISIBLE);
             iconPicCard.setImageResource(R.mipmap.data_icon_edit_complete);
         } else if (Config.FALSE.equals(cardStatus) && Config.TRUE.equals(isCardEdit)) {
-            iconPicCard.setVisibility(View.GONE);
+            iconPicCard.setImageResource(R.mipmap.data_icon_abnormal);
         } else if (Config.FALSE.equals(isCardEdit)) {
             iconPicCard.setVisibility(View.VISIBLE);
             iconPicCard.setImageResource(R.mipmap.data_icon_complete);

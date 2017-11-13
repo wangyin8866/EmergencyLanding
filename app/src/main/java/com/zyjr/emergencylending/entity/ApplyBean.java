@@ -11,7 +11,14 @@ public class ApplyBean {
     private String deadline;
     private String status;
     private String date;
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     public ApplyBean(String name, double amount, String phone, String deadline, String status, String date) {
         this.name = name;
         this.amount = amount;

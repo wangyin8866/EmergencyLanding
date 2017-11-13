@@ -16,7 +16,14 @@ public class WaitApplyBean {
      * result : {"clerkRecordList":[{"cust_name":null,"cust_phone":"17917917913","loan_amount":"5000.00","loan_period":"5","order_status":"10","order_time":"2017-10-30 14:51:16"},{"cust_name":null,"cust_phone":"17917917913","loan_amount":"5000.00","loan_period":"5","order_status":"10","order_time":"2017-10-30 15:07:00"},{"cust_name":null,"cust_phone":"17917917913","loan_amount":"5000.00","loan_period":"5","order_status":"10","order_time":"2017-10-30 15:13:32"},{"cust_name":null,"cust_phone":"17917917913","loan_amount":"5000.00","loan_period":"5","order_status":"10","order_time":"2017-10-30 15:08:04"}]}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

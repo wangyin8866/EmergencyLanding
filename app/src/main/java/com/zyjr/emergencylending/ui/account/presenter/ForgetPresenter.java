@@ -33,7 +33,7 @@ public class ForgetPresenter extends BasePresenter<BaseView<BaseBean>> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getCommonData(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 

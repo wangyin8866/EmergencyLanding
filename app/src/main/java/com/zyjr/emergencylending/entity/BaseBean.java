@@ -1,7 +1,9 @@
 package com.zyjr.emergencylending.entity;
 
 /**
- * Created by wangyin on 2017/10/16.
+ *
+ * @author wangyin
+ * @date 2017/10/16
  */
 
 public class BaseBean {
@@ -16,6 +18,14 @@ public class BaseBean {
      */
 
     private String flag;
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
+
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String msg;
     private String ext;
     private ResultBean result;
@@ -28,6 +38,8 @@ public class BaseBean {
     public void setFlag(String flag) {
         this.flag = flag;
     }
+
+
 
     public String getMsg() {
         return msg;

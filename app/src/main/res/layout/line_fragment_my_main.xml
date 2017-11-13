@@ -20,26 +20,31 @@
             android:layout_marginTop="32dp"
             android:src="@mipmap/my_icon_edit" />
 
-        <ImageView
-            android:id="@+id/user_pic"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            android:layout_gravity="center_horizontal"
-            android:src="@mipmap/head_portrait"
-             />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@mipmap/head_portrait_bg">
+
+            <ImageView
+                android:id="@+id/user_pic"
+                android:layout_width="76dp"
+                android:layout_height="76dp"
+                android:layout_gravity="center"
+                android:src="@mipmap/head_portrait" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/user_name_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
             android:text="*** ***********"
             android:textColor="#FFFFFF"
             android:textSize="15sp" />
 
         <LinearLayout
-
             android:layout_width="150dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
@@ -102,7 +107,7 @@
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
             android:drawableLeft="@mipmap/my_icon_loan"
-            android:drawablePadding="20dp"
+            android:drawablePadding="18dp"
             android:drawableRight="@mipmap/arrow_right"
             android:gravity="center_vertical"
             android:text="消息中心"
@@ -144,7 +149,7 @@
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
             android:drawableLeft="@mipmap/icon_explain"
-            android:drawablePadding="20dp"
+            android:drawablePadding="22dp"
             android:drawableRight="@mipmap/arrow_right"
             android:gravity="center_vertical"
             android:text="帮助说明"
@@ -165,7 +170,7 @@
             android:layout_marginLeft="23dp"
             android:layout_marginRight="23dp"
             android:drawableLeft="@mipmap/my_icon_set"
-            android:drawablePadding="20dp"
+            android:drawablePadding="21dp"
             android:drawableRight="@mipmap/arrow_right"
             android:gravity="center_vertical"
             android:text="设置"

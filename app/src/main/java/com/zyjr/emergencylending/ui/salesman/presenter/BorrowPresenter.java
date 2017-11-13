@@ -31,13 +31,13 @@ public class BorrowPresenter extends BasePresenter<BorrowView> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getCommonData(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
 
@@ -48,11 +48,13 @@ public class BorrowPresenter extends BasePresenter<BorrowView> {
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getMessage(baseBean);
+                }else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         },mContext));
     }

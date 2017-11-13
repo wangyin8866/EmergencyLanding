@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.model.home.MessageModel;
 import com.zyjr.emergencylending.ui.home.View.MessageView;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
  * @author wangyin
@@ -28,12 +29,14 @@ public class MessagePresenter extends BasePresenter<MessageView> {
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getMessage(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -44,12 +47,14 @@ public class MessagePresenter extends BasePresenter<MessageView> {
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getMessageMore(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -74,12 +79,16 @@ public class MessagePresenter extends BasePresenter<MessageView> {
                             break;
                     }
 
+                } else {
+
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
+
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

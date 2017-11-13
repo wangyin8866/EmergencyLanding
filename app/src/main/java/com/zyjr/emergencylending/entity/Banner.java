@@ -17,7 +17,14 @@ public class Banner {
      * result : {"ad_list":[{"title":"急借通续贷推出优惠","ad_desc":"对优质客户执行优质正常","ad_url":"www.baidu.com","ad_pic":"F:\\360Downloads"},{"title":"盈信通首贷客户优惠惊喜","ad_desc":"针对优质首贷客户","ad_url":"www.taobao.com","ad_pic":"F:\\360Downloads\\Software"}]}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

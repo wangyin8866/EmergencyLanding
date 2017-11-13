@@ -187,27 +187,10 @@
             android:background="@drawable/line_btn_shape_2"
             android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="60dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/line_ll_shape_2_2"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="客户"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="动态"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp" />
-            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_dynamic" />
 
             <com.zyjr.emergencylending.custom.AutoVerticalScrollTextView
                 android:id="@+id/message_auto_roll"

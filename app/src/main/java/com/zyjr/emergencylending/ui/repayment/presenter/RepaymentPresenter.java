@@ -42,7 +42,7 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
                     getView().requestSuccess();
                     getView().getBorrowInfoByUserId(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
@@ -65,13 +65,13 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().getUserInfo(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -88,13 +88,13 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
                 if ("0000".equals(repaymentSuccess.getReturncode())) {
                     getView().getRepaymentLogin(repaymentSuccess);
                 } else {
-                    ToastAlone.showShortToast(mContext, repaymentSuccess.getErrormsg());
+                    ToastAlone.showShortToast(mContext, repaymentSuccess.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -114,12 +114,13 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
                     getView().loadH5(baseBean);
 
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

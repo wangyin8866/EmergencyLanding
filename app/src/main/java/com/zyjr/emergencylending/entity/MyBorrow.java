@@ -16,7 +16,14 @@ public class MyBorrow {
      * result : {"his_borrow_list":[{"product_name":null,"loan_amount":null,"loan_period":null,"loan_unit":null,"loan_time":"2017-11-08 15:16:03.0","loan_status":"2","loan_msg":"终审通过","is_out_push":"0","out_push_url":"www.baidu.com","out_push_image_url":"D:\\outLine","out_push_title":"欢迎去去哪儿贷借款","step_status":"5","isRepaymentFlag":"0"},{"product_name":null,"loan_amount":null,"loan_period":null,"loan_unit":null,"loan_time":"2017-11-08 15:16:03.0","loan_status":"2","loan_msg":"终审通过","is_out_push":"0","out_push_url":"www.baidu.com","out_push_image_url":"D:\\outLine","out_push_title":"欢迎去去哪儿贷借款","step_status":"5","isRepaymentFlag":"0"}],"pageNo":1,"current_borrow":{"product_name":null,"loan_amount":null,"loan_period":null,"loan_unit":null,"loan_time":"2017-11-08 15:16:03.0","loan_status":"2","loan_msg":"终审通过","is_out_push":"0","out_push_url":"www.baidu.com","out_push_image_url":"D:\\outLine","out_push_title":"欢迎去去哪儿贷借款","step_status":"5","isRepaymentFlag":"0"},"total_count":0}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private String ext;

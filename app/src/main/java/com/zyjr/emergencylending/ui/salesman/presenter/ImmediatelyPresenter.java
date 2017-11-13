@@ -30,12 +30,12 @@ public class ImmediatelyPresenter extends BasePresenter<ImmediatelyView> {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
                     getView().preCheckBook(result);
                 } else {
-                    ToastAlone.showShortToast(mContext, result.getMsg());
+                    ToastAlone.showShortToast(mContext, result.getPromptMsg());
                 }
             }
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -47,12 +47,12 @@ public class ImmediatelyPresenter extends BasePresenter<ImmediatelyView> {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
                     getView().onlineToOffline(result);
                 } else {
-                    ToastAlone.showShortToast(mContext, result.getMsg());
+                    ToastAlone.showShortToast(mContext, result.getPromptMsg());
                 }
             }
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

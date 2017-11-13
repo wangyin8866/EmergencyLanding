@@ -17,7 +17,14 @@ public class NoticeBean {
      * result : {"resultList":[{"title":"未来公告11","infor":"title:未来公告11   ,begin_date:2017-10-18 14:07:53   ,end_date2017-10-20 14:07:58"},{"title":"展示公告01","infor":"title:展示公告01   ,begin_date:2017-10-01 14:06:49   ,end_date2017-10-18 14:06:54"},{"title":"展示公告10","infor":"title:展示公告10   ,begin_date:2017-10-04 14:06:49   ,end_date2017-10-21 14:06:54"}]}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

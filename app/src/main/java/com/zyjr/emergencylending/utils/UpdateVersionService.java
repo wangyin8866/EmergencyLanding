@@ -224,6 +224,7 @@ public class UpdateVersionService {
 
                     @Override
                     public void onError(Throwable e) {
+                        ToastAlone.showShortToast(context, Config.TIP_NET_ERROR);
                     }
 
                     @Override
@@ -233,7 +234,10 @@ public class UpdateVersionService {
                         flag = o.getResult().getFlag();
                         if ("0001".equals(flag) || "0012".equals(flag)) {
                             showUpdateVersionDialog();
+                        } else {
+                            ToastAlone.showShortToast(context, o.getPromptMsg());
                         }
+
 
 //
 //                        // 创建一个新的字符串

@@ -29,13 +29,13 @@ public class MinePresenter extends BasePresenter<MineView> {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().myCard(baseBean);
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         },mContext));
     }

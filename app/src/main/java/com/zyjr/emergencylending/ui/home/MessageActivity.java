@@ -95,10 +95,11 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
                         switch (view.getId()) {
                             case R.id.message_left:
                                 dialog.dismiss();
-                                mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, "", "3", 0);
+
                                 break;
                             case R.id.message_right:
                                 dialog.dismiss();
+                                mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, "", "3", 0);
                                 break;
                         }
                     }

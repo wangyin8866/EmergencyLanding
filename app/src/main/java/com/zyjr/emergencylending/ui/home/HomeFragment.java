@@ -105,7 +105,6 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         showAutoRollStrings();
 
 
-
     }
 
     private void showAutoRollStrings() {
@@ -192,17 +191,32 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         for (int i = 0; i < banner.getResult().getAd_list().size(); i++) {
             images.add(banner.getResult().getAd_list().get(i).getAd_pic());
         }
-        this.banner.setPages(new CBViewHolderCreator() {
-            @Override
-            public Object createHolder() {
-                return new LocalImageHolderView();
-            }
-        }, images).startTurning(2000).setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
+        if (images.size() > 1) {
+            this.banner.setPages(new CBViewHolderCreator() {
+                @Override
+                public Object createHolder() {
+                    return new LocalImageHolderView();
+                }
+            }, images).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused}).startTurning(2000).setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
 
-            }
-        });
+                }
+            });
+        } else {
+            this.banner.setPages(new CBViewHolderCreator() {
+                @Override
+                public Object createHolder() {
+                    return new LocalImageHolderView();
+                }
+            }, images).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused}).setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+
+                }
+            });
+        }
+
 
     }
 

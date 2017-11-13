@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:text="全部清除"
-            android:textColor="#666666"
+            android:textColor="#333333"
             android:textSize="14sp" />
     </RelativeLayout>
 
@@ -58,8 +58,8 @@
             android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="亲爱的用户，您目前还没有任何消息哦！"
-            android:textColor="#333333"
-            android:textSize="15sp" />
+            android:textColor="#666666"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <com.ajguan.library.EasyRefreshLayout

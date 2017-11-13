@@ -29,7 +29,7 @@ public class EditInformationPresenter extends BasePresenter<BaseView<BaseBean>> 
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
                     getView().getCommonData(result);
                 } else {
-                    ToastAlone.showShortToast(mContext, result.getMsg());
+                    ToastAlone.showShortToast(mContext, result.getPromptMsg());
                 }
             }
 

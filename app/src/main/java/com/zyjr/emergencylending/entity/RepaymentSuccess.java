@@ -14,7 +14,14 @@ public class RepaymentSuccess {
      * errormsg : 登陆成功
      * token : gyl29fUwKB3ED53UZNcCJKt+87Rz2/iPL92YytF0yF7bICpqiOllhw==
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private ResultBean result;
     private String returncode;
     private String errormsg;

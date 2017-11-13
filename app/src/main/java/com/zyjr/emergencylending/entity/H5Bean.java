@@ -21,7 +21,14 @@ public class H5Bean {
     private Object ext;
     private ResultBean result;
     private boolean lockerFlag;
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     public String getFlag() {
         return flag;
     }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.ajguan.library.EasyRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -56,7 +57,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="203dp"
+                android:layout_marginTop="303dp"
                 android:background="@drawable/bg_home_notice"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -87,7 +88,7 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/con_pro1"
                 android:layout_width="0dp"
-                android:layout_height="170dp"
+                android:layout_height="165dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_home_notice"
                 app:layout_constraintLeft_toLeftOf="@+id/con_notice"
@@ -97,12 +98,12 @@
                 <TextView
                     android:id="@+id/title_pro1"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="21dp"
                     android:layout_marginLeft="18dp"
-                    android:layout_marginStart="18dp"
                     android:layout_marginTop="10dp"
                     android:text="急速借款"
                     android:textColor="#474747"
+                    android:textStyle="bold"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -114,6 +115,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="14dp"
+
                     android:text="（网上签约，急速到账）"
                     android:textColor="#999999"
                     android:textSize="13sp"
@@ -202,7 +204,7 @@
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/con_pro2"
                 android:layout_width="0dp"
-                android:layout_height="170dp"
+                android:layout_height="165dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/bg_home_notice"
                 app:layout_constraintLeft_toLeftOf="@+id/con_notice"
@@ -210,6 +212,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/con_pro1">
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/title_pro2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -313,7 +316,17 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent" />
             </android.support.constraint.ConstraintLayout>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_home_notice"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/con_pro2"
+                >
 
+            </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 </com.ajguan.library.EasyRefreshLayout>

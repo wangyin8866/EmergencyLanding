@@ -15,7 +15,14 @@ public class QrBean {
      * result : {"recommendcode":"A000018","url":"M00/09/9F/wKgFGlnyp6uEME8tAAAAAMwHHEc982.png"}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private String ext;

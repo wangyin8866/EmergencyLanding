@@ -15,7 +15,14 @@ public class VersionBean {
      * result : {"url":"static/app/jijietong.apk","flag":"0001","content":"下载app","appVersion":"1.10"}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;

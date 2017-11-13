@@ -152,8 +152,8 @@
         android:orientation="vertical">
 
         <FrameLayout
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="190dp"
+            android:layout_height="190dp"
             android:layout_gravity="center"
             android:background="#FFFFFF">
 
@@ -168,7 +168,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="一张身份证，两分钟申请，30000元到账"
             android:textColor="#E6E6E6"
             android:textSize="13sp" />

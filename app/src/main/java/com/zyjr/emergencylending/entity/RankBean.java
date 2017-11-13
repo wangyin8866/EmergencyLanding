@@ -17,7 +17,14 @@ public class RankBean {
      * result : {"rankMap":{"nowMonth":[],"before2Month":[{"custom_id":"9","custom_name":"姓名9推荐人1","rank_num":1,"phone":"152****0389","head_url":"F:\\360Downloads\\9","lend_total_amount":31,"mon":"9","name":"姓名9推荐人1"},{"custom_id":"2","custom_name":null,"rank_num":2,"phone":null,"head_url":null,"lend_total_amount":203,"mon":"9","name":null},{"custom_id":"3","custom_name":"袁蕊","rank_num":3,"phone":"137****4663","head_url":"F:\\360Downloads","lend_total_amount":23,"mon":"9","name":"袁蕊"}],"before1Month":[{"custom_id":"9","custom_name":"姓名9推荐人1","rank_num":1,"phone":"152****0389","head_url":"F:\\360Downloads\\9","lend_total_amount":41,"mon":"10","name":"姓名9推荐人1"},{"custom_id":"3","custom_name":"袁蕊","rank_num":2,"phone":"137****4663","head_url":"F:\\360Downloads","lend_total_amount":25,"mon":"10","name":"袁蕊"},{"custom_id":null,"custom_name":null,"rank_num":3,"phone":null,"head_url":null,"lend_total_amount":281,"mon":"10","name":null},{"custom_id":"470830da3e8a45b0b42b45f8bf03d565","custom_name":null,"rank_num":4,"phone":"179****7922","head_url":null,"lend_total_amount":null,"mon":"10","name":null}]},"selfMap":{"nowMonth":{"custom_id":"9af78d0c73304808b6e8acbb8b6f0878","custom_name":"丁晓宇","rank_num":1,"phone":"130****1105","head_url":"M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg","lend_total_amount":0,"mon":"11","name":"丁晓宇"},"before2Month":{"custom_id":"9af78d0c73304808b6e8acbb8b6f0878","custom_name":"丁晓宇","rank_num":4,"phone":"130****1105","head_url":"M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg","lend_total_amount":0,"mon":"9","name":"丁晓宇"},"before1Month":{"custom_id":"9af78d0c73304808b6e8acbb8b6f0878","custom_name":"丁晓宇","rank_num":5,"phone":"130****1105","head_url":"M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg","lend_total_amount":0,"mon":"10","name":"丁晓宇"}}}
      * lockerFlag : false
      */
+    private String promptMsg;
+    public String getPromptMsg() {
+        return promptMsg;
+    }
 
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
+    }
     private String flag;
     private String msg;
     private Object ext;
