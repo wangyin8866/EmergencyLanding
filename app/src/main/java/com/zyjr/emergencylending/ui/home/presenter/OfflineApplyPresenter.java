@@ -33,19 +33,19 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
             public void onNext(ApiResult<StoreResultBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取支持门店信息成功---->" + result.getResult().toString());
+                        LogUtils.d("获取支持门店信息(成功)---->" + result.getResult().toString());
                         getView().onSuccessGetLocalStoreList(Constants.GET_LOCAL_STORE_INFO, result.getResult().getStorePoList());
                     }
                 } else {
-                    LogUtils.d("获取支持门店信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getMsg());
+                    LogUtils.d("获取支持门店信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取支持门店信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_LOCAL_STORE_INFO, e.getMessage());
+                LogUtils.d("获取支持门店信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.GET_LOCAL_STORE_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -54,19 +54,19 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
         invoke(WriteInfoModel.getInstance().submitLoanInformation(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("提交借款资料成功---->" + result.getResult().toString());
-                    getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("提交借款资料(成功)---->" + result.getResult().toString());
+                    getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getPromptMsg());
                 } else {
-                    LogUtils.d("提交借款资料失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getMsg());
+                    LogUtils.d("提交借款资料(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("提交借款资料异常---->" + e.getMessage());
-                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, e.getMessage());
+                LogUtils.d("提交借款资料(异常)---->" + e.getMessage());
+                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

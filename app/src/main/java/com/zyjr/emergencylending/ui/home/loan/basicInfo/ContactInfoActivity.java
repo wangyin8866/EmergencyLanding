@@ -109,7 +109,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         initGetData();
     }
 
-    @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2, R.id.btn_submit, R.id.btn_retry})
+    @OnClick({R.id.iv_contact_phone1, R.id.ll_contact_relation1, R.id.iv_contact_phone2, R.id.ll_contact_relation2, R.id.btn_submit, R.id.btn_retry, R.id.ll_contact_phone1, R.id.ll_contact_phone2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_contact_relation1:  // 关系1
@@ -138,10 +138,18 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                 popRelationSelect2.showAtLocation(this.getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
 
+            case R.id.ll_contact_phone1:
+                if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+                    return;
+                }
             case R.id.iv_contact_phone1: // 联系电话1(可以调往通讯录)
                 jumpToSelectPhone(1);
                 break;
 
+            case R.id.ll_contact_phone2:
+                if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+                    return;
+                }
             case R.id.iv_contact_phone2: // 联系电话2(可以调往通讯录)
                 jumpToSelectPhone(2);
                 break;

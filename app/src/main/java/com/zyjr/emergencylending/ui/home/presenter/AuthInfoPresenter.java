@@ -35,64 +35,47 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
     public void getCurrentAuthInfo(Map<String, String> params) {
 
         invoke(AuthCenterModel.getInstance().getCurrentAuthInfo(params), new HttpSubscriber<ApiResult<AuthResult>>() {
-            @Override
-            public void onRequestError(Throwable e) {
-                LogUtils.d("获取用户认证信息明细异常--->" + e.getMessage());
-                getView().onError(Constants.GET_AUTH_STATUS_INFO, e.getMessage());
-            }
 
             @Override
             public void onSuccess(ApiResult<AuthResult> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("获取用户认证信息明细成功---->" + result.getResult().getAuth_result());
                     getView().onSuccessGet(Constants.GET_AUTH_STATUS_INFO, result.getResult().getAuth_result(), result.getResult().getUserName(), result.getResult().getIdcard());
                 } else {
                     LogUtils.d("获取用户认证信息明细失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_AUTH_STATUS_INFO, result.getMsg());
+                    getView().onFail(Constants.GET_AUTH_STATUS_INFO, result.getPromptMsg());
                 }
             }
+
+            @Override
+            public void onRequestError(Throwable e) {
+                LogUtils.d("获取用户认证信息明细异常--->" + e.getMessage());
+                getView().onError(Constants.GET_AUTH_STATUS_INFO, Config.TIP_NET_ERROR);
+            }
+
         });
 
-//        invoke(AuthCenterModel.getInstance().getCurrentAuthInfo(params), new ProgressSubscriber<ApiResult<AuthResult>>(new SubscriberOnNextListener<ApiResult<AuthResult>>() {
-//            @Override
-//            public void onNext(ApiResult<AuthResult> result) {
-//                if (result.getFlag().equals("API0000")) {
-//                    LogUtils.d("获取用户认证信息明细成功---->" + result.getResult().getAuth_result());
-//                    getView().onSuccessGet(Constants.GET_AUTH_STATUS_INFO, result.getResult().getAuth_result());
-//                } else {
-//                    LogUtils.d("获取用户认证信息明细失败---->" + result.getFlag() + "," + result.getMsg());
-//                    getView().onFail(Constants.GET_AUTH_STATUS_INFO, result.getMsg());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                LogUtils.d("获取用户认证信息明细异常--->" + e.getMessage());
-//                getView().onError(Constants.GET_AUTH_STATUS_INFO, e.getMessage());
-//            }
-//        }, mContext));
     }
 
     public void getPersonalInfo(Map<String, String> params) {
         invoke(PersonalInfoModel.getInstance().getPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
                         LogUtils.d("获取个人信息成功---->" + result.getResult());
                         getView().onSuccessGetUserInfo(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {
                     LogUtils.d("获取个人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getMsg());
+                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("获取个人信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_PERSONAL_INFO, e.getMessage());
+                getView().onError(Constants.GET_PERSONAL_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -102,19 +85,19 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
         invoke(AuthCenterModel.getInstance().submitFaceAuthInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("提交人脸认证信息成功---->" + result.getMsg());
-                    getView().onSuccessSubmitFace(Constants.SUBMIT_FACE_AUTH, result.getMsg());
+                    getView().onSuccessSubmitFace(Constants.SUBMIT_FACE_AUTH, result.getPromptMsg());
                 } else {
                     LogUtils.d("提交人脸认证信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.SUBMIT_FACE_AUTH, result.getMsg());
+                    getView().onFail(Constants.SUBMIT_FACE_AUTH, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("提交人脸认证信息异常---->" + e.getMessage());
-                getView().onError(Constants.SUBMIT_FACE_AUTH, e.getMessage());
+                getView().onError(Constants.SUBMIT_FACE_AUTH, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -125,17 +108,17 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("提交所有认证信息成功---->" + result.getMsg());
-                    getView().onSuccessSubmitAll(Constants.SUBMIT_ALL_AUTH_INFO, result.getMsg());
+                    getView().onSuccessSubmitAll(Constants.SUBMIT_ALL_AUTH_INFO, result.getPromptMsg());
                 } else {
                     LogUtils.d("提交所有认证信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.SUBMIT_ALL_AUTH_INFO, result.getMsg());
+                    getView().onFail(Constants.SUBMIT_ALL_AUTH_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("提交所有认证信息异常---->" + e.getMessage());
-                getView().onError(Constants.SUBMIT_ALL_AUTH_INFO, e.getMessage());
+                getView().onError(Constants.SUBMIT_ALL_AUTH_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

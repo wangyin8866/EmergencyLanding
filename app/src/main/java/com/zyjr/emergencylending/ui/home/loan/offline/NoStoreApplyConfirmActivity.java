@@ -15,6 +15,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
@@ -43,6 +44,8 @@ import butterknife.OnClick;
  */
 public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, OfflineApplyView> implements OfflineApplyView {
 
+    @BindView(R.id.top_bar)
+    TopBar topBar;
     @BindView(R.id.tv_loan_money)
     TextView tvLoanMoney; // 借款金额
     @BindView(R.id.tv_loan_period)
@@ -97,6 +100,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
         ButterKnife.bind(this);
         btnSubmit.setText("立即申请");
 
+        init();
         initGetData();
         initListener();
     }
@@ -109,6 +113,20 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
                 submitLoanInfo();
                 break;
         }
+    }
+
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
     }
 
     private void initGetData() {

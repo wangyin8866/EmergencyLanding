@@ -3,11 +3,13 @@ package com.zyjr.emergencylending.ui.home.presenter;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.megvii.livenesslib.util.Constant;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.IDCardBackBean;
 import com.zyjr.emergencylending.entity.IDCardFrontBean;
@@ -47,7 +49,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
 
             @Override
             public void onError(Throwable e) {
-
+                ToastAlone.showShortToast(BaseApplication.getContext(), Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -64,19 +66,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
 
             @Override
             public void onError(Throwable e) {
-                if (e instanceof SocketTimeoutException) {
-                    ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
-                    return;
-                }
-                if (e instanceof HttpException) {
-                    String message = ((HttpException) e).message();
-                    if (StringUtil.isEmpty(message)) {
-                        ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
-                    } else {
-                        LogUtils.e("请求返回信息处理失败:---->" + e.getMessage());
-                        ToastAlone.showShortToast(BaseApplication.getContext(), e.getMessage());
-                    }
-                }
+                ToastAlone.showShortToast(BaseApplication.getContext(), Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -85,21 +75,21 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
         invoke(PersonalInfoModel.getInstance().getPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取个人信息成功---->" + result.getResult());
+                        LogUtils.d("获取个人信息(成功)---->" + result.getResult());
                         getView().onSuccessGet(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {
-                    LogUtils.d("获取个人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getMsg());
+                    LogUtils.d("获取个人信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取个人信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_PERSONAL_INFO, e.getMessage());
+                LogUtils.d("获取个人信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.GET_PERSONAL_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -108,41 +98,40 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
         invoke(PersonalInfoModel.getInstance().addPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
-                if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("添加个人信息成功---->" + result.getMsg());
-                    getView().onSuccessAdd(Constants.ADD_PERSONAL_INFO, result.getMsg());
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("添加个人信息(成功)---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.ADD_PERSONAL_INFO, result.getPromptMsg());
                 } else {
-                    LogUtils.d("添加个人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.ADD_PERSONAL_INFO, result.getMsg());
+                    LogUtils.d("添加个人信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.ADD_PERSONAL_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("添加个人信息异常---->" + e.getMessage());
-                getView().onError(Constants.ADD_PERSONAL_INFO, e.getMessage());
+                LogUtils.d("添加个人信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.ADD_PERSONAL_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
-
 
     public void editPersonalInfo(Map<String, String> params) {
         invoke(PersonalInfoModel.getInstance().editPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
-                if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("更新个人信息成功---->" + result.getMsg());
-                    getView().onSuccessAdd(Constants.EDIT_PERSONAL_INFO, result.getMsg());
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("更新个人信息(成功)---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.EDIT_PERSONAL_INFO, result.getPromptMsg());
                 } else {
-                    LogUtils.d("更新个人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.EDIT_PERSONAL_INFO, result.getMsg());
+                    LogUtils.d("更新个人信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.EDIT_PERSONAL_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("更新个人信息异常---->" + e.getMessage());
-                getView().onError(Constants.ADD_PERSONAL_INFO, e.getMessage());
+                LogUtils.d("更新个人信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.EDIT_PERSONAL_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -151,19 +140,19 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
         invoke(PersonalInfoModel.getInstance().uploadFile(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("上传图片成功---->" + result.getMsg());
-                    getView().onSuccessUploadPic(Constants.UPLOAD_IDCARD_FILE, params.get("fileType"), result.getMsg());
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("上传图片(成功)---->" + result.getMsg());
+                    getView().onSuccessUploadPic(Constants.UPLOAD_IDCARD_FILE, params.get("fileType"), result.getPromptMsg());
                 } else {
-                    LogUtils.d("上传图片失败---->" + result.getMsg());
-                    getView().onFail(Constants.UPLOAD_IDCARD_FILE, result.getMsg());
+                    LogUtils.d("上传图片(失败)---->" + result.getMsg());
+                    getView().onFail(Constants.UPLOAD_IDCARD_FILE, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("上传图片异常---->" + e.getMessage());
-                getView().onError(Constants.ADD_PERSONAL_INFO, e.getMessage());
+                LogUtils.d("上传图片(异常)---->" + e.getMessage());
+                getView().onError(Constants.ADD_PERSONAL_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

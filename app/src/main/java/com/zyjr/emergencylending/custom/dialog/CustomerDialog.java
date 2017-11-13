@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -175,8 +176,9 @@ public class CustomerDialog extends Dialog {
         tvIdcardName.setText(idName);
         TextView tvIdcardNumber = findViewById(R.id.tv_idcard_number);
         tvIdcardNumber.setText(idNum);
-        TextView etDetailAddress = findViewById(R.id.et_detail_address);
+        EditText etDetailAddress = findViewById(R.id.et_detail_address);
         etDetailAddress.setText(address);
+        etDetailAddress.setSelection(address.length());
         TextView tvConfirm = findViewById(R.id.tv_confirm);
         tvConfirm.setOnClickListener(listener);
         TextView tvScanAgain = findViewById(R.id.tv_scan_again);

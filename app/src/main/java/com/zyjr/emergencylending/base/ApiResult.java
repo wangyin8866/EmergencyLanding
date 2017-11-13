@@ -12,11 +12,15 @@ public class ApiResult<T> implements Serializable {
 
     private String flag;
 
-    private String msg;
+    private String msg; // 异常描述
 
     private String ext;
 
     private boolean lockerFlag;
+
+    private String errorMsg; // 错误信息,一般为程序端异常
+
+    private String promptMsg; // 外部展示
 
     private T result;
 
@@ -58,5 +62,21 @@ public class ApiResult<T> implements Serializable {
 
     public void setLockerFlag(boolean lockerFlag) {
         this.lockerFlag = lockerFlag;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getPromptMsg() {
+        return promptMsg;
+    }
+
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
     }
 }

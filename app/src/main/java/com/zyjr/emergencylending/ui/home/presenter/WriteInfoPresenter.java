@@ -33,45 +33,23 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
         invoke(WriteInfoModel.getInstance().getWriteInfo(params), new HttpSubscriber<ApiResult<WriteInfoBean>>() {
             @Override
             public void onSuccess(ApiResult<WriteInfoBean> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
                         LogUtils.d("获取填写信息(资料完成情况)成功---->" + result.getResult().toString());
                         getView().onSuccessGet(Constants.GET_WRITE_INFO, result.getResult());
                     }
                 } else {
                     LogUtils.d("获取填写信息(资料完成情况)失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_WRITE_INFO, result.getFlag(), result.getMsg());
+                    getView().onFail(Constants.GET_WRITE_INFO, result.getFlag(), result.getPromptMsg());
                 }
             }
 
             @Override
             public void onRequestError(Throwable e) {
                 LogUtils.d("获取填写信息(资料完成情况)异常---->" + e.getMessage());
-                getView().onError(Constants.GET_WRITE_INFO, e.getMessage());
+                getView().onError(Constants.GET_WRITE_INFO, Config.TIP_NET_ERROR);
             }
         });
-
-//        invoke(WriteInfoModel.getInstance().getWriteInfo(params), new ProgressSubscriber<ApiResult<WriteInfoBean>>(new SubscriberOnNextListener<ApiResult<WriteInfoBean>>() {
-//            @Override
-//            public void onNext(ApiResult<WriteInfoBean> result) {
-//                if (result.getFlag().equals("API0000")) {
-//                    if (result.getResult() != null) {
-//                        LogUtils.d("获取填写信息(资料完成情况)成功---->" + result.getResult().toString());
-//                        getView().onSuccessGet(Constants.GET_WRITE_INFO, result.getResult());
-//                    }
-//                } else {
-//                    LogUtils.d("获取填写信息(资料完成情况)失败---->" + result.getFlag() + "," + result.getMsg());
-//                    getView().onFail(Constants.GET_WRITE_INFO, result.getFlag(), result.getMsg());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                LogUtils.d("获取填写信息(资料完成情况)异常---->" + e.getMessage());
-//                getView().onError(Constants.GET_WRITE_INFO, e.getMessage());
-//            }
-//        }, mContext));
     }
 
     public void submitLoanInformation(final Map<String, String> params) {
@@ -79,22 +57,22 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("提交借款资料成功---->" + result.getResult().toString());
+                    LogUtils.d("提交借款资料(成功)---->" + result.getResult().toString());
                     if (StringUtil.isEmpty(params.get("store"))) {
-                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.ONLINE, result.getMsg());
+                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.ONLINE, result.getPromptMsg());
                     } else {
-                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.OFFLINE_CLERK, result.getMsg());
+                        getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.OFFLINE_CLERK, result.getPromptMsg());
                     }
                 } else {
-                    LogUtils.d("提交借款资料失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getMsg());
+                    LogUtils.d("提交借款资料(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("提交借款资料异常---->" + e.getMessage());
-                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, e.getMessage());
+                LogUtils.d("提交借款资料(异常)---->" + e.getMessage());
+                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -103,21 +81,21 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
         invoke(WriteInfoModel.getInstance().getMayApplayProductType(params), new ProgressSubscriber<ApiResult<MayApplyProBean>>(new SubscriberOnNextListener<ApiResult<MayApplyProBean>>() {
             @Override
             public void onNext(ApiResult<MayApplyProBean> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取可申请产品类型成功---->" + result.getResult().toString());
+                        LogUtils.d("获取可申请产品类型(成功)---->" + result.getResult().toString());
                         getView().onSuccessGetMayApplyPro(Constants.GET_MAYAPPLY_PRODUCT_TYPE, result.getResult());
                     }
                 } else {
-                    LogUtils.d("获取可申请产品类型失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_MAYAPPLY_PRODUCT_TYPE, result.getFlag(), result.getMsg());
+                    LogUtils.d("获取可申请产品类型(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_MAYAPPLY_PRODUCT_TYPE, result.getFlag(), result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取可申请产品类型异常---->" + e.getMessage());
-                getView().onError(Constants.GET_MAYAPPLY_PRODUCT_TYPE, e.getMessage());
+                LogUtils.d("获取可申请产品类型(异常)---->" + e.getMessage());
+                getView().onError(Constants.GET_MAYAPPLY_PRODUCT_TYPE, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -128,22 +106,22 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             public void onNext(ApiResult<StoreResultBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取业务员门店信息成功---->" + result.getResult().toString());
+                        LogUtils.d("获取业务员门店信息(成功)---->" + result.getResult().toString());
                         getView().onSuccessGetClerkStore(Constants.GET_LOCAL_STORE_INFO, result.getResult().getStorePoList());
                     }
                 } else if (result.getFlag().equals("API2022")) {
-                    LogUtils.d("获取业务员门店信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getMsg());
+                    LogUtils.d("获取业务员门店信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getPromptMsg());
                 } else {
-                    LogUtils.d("获取业务员门店信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getMsg());
+                    LogUtils.d("获取业务员门店信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取业务员门店信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_LOCAL_STORE_INFO, e.getMessage());
+                LogUtils.d("获取业务员门店信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.GET_LOCAL_STORE_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

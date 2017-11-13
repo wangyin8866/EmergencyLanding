@@ -30,57 +30,49 @@
             android:paddingBottom="10dp">
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_above="@+id/pop_layout"
+                android:layout_centerHorizontal="true"
                 android:background="@color/single_pop_bg"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp">
+                android:padding="10dp">
 
-                <LinearLayout
-                    android:layout_width="0dp"
+                <Button
+                    android:id="@+id/button_cancel"
+                    android:layout_width="60dp"
+                    android:layout_height="30dip"
+                    android:layout_gravity="center"
+                    android:background="@color/single_pop_bg"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="取消"
+                    android:textColor="@color/single_pop_blue"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/tv_title_name"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/front_black"
+                    android:textSize="16sp" />
 
-                    <Button
-                        android:id="@+id/button_cancel"
-                        android:layout_width="60dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/blue_corner_bg"
-                        android:gravity="center"
-                        android:text="取消"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:typeface="normal" />
-                </LinearLayout>
+                <Button
+                    android:id="@+id/button_ok"
+                    android:layout_width="60dp"
+                    android:layout_height="30dip"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@color/single_pop_bg"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/single_pop_blue"
+                    android:textSize="16sp"
+                    android:typeface="normal" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <Button
-                        android:id="@+id/button_ok"
-                        android:layout_width="60dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="5dp"
-                        android:background="@drawable/blue_corner_bg"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:singleLine="true"
-                        android:text="确定"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        android:typeface="normal" />
-                </LinearLayout>
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

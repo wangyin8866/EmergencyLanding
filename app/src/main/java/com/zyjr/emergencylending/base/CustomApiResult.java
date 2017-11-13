@@ -29,6 +29,10 @@ public class CustomApiResult<T, Q> implements Serializable {
 
     private boolean lockerFlag;
 
+    private String errorMsg; // 错误信息,一般为程序端异常
+
+    private String promptMsg; // 外部展示
+
     /**
      * 正常信息返回
      */
@@ -72,5 +76,21 @@ public class CustomApiResult<T, Q> implements Serializable {
 
     public void setResult(T result) {
         this.result = result;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
+
+    public String getPromptMsg() {
+        return promptMsg;
+    }
+
+    public void setPromptMsg(String promptMsg) {
+        this.promptMsg = promptMsg;
     }
 }

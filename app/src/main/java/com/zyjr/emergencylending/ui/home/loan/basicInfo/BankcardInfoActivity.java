@@ -96,7 +96,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
         initGetData();
     }
 
-    @OnClick({R.id.rl_add_bankcard,R.id.btn_retry})
+    @OnClick({R.id.rl_add_bankcard, R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_add_bankcard:
@@ -193,7 +193,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     /**
      * 已完成状态获取资料信息
      */
-    private void getBindBankcardInfo(){
+    private void getBindBankcardInfo() {
         if (StringUtil.isNotEmpty(status) && status.equals("1")) {
             loadingBindBankcardInfo();
         }
@@ -311,14 +311,15 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     }
 
     @Override
-    public void onFail(String apiCode, String errorMsg) {
+    public void onFail(String apiCode, String failMsg) {
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showLongToast(this, failMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+        ToastAlone.showLongToast(this, errorMsg);
         showError();
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();

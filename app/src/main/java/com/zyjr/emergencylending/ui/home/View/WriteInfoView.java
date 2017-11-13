@@ -18,7 +18,7 @@ public interface WriteInfoView {
 
     void onSuccessGetMayApplyPro(String apiCode, MayApplyProBean bean);
 
-    void onFail(String apiCode, String flag, String errorMsg);
+    void onFail(String apiCode, String flag, String failMsg);
 
     void onError(String apiCode, String errorMsg);
 

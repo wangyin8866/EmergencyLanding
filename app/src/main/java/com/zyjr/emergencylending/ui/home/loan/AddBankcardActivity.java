@@ -215,7 +215,6 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
 
-
     @Override
     public void onSuccessGet(String returnCode, BankcardInfo bean) {
 
@@ -228,7 +227,7 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, "添加成功");
+        ToastAlone.showLongToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -240,8 +239,8 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     }
 
     @Override
-    public void onFail(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+    public void onFail(String returnCode, String failMsg) {
+        ToastAlone.showLongToast(this, failMsg);
     }
 
     @Override

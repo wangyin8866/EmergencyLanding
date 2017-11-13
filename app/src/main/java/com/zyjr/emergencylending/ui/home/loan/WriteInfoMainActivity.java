@@ -160,6 +160,12 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             case R.id.layout_contact_info:
                 if (writeInfoBean == null) {
                     return;
+                } else {
+                    if (writeInfoBean.getUser_data_status().equals("0")
+                            || writeInfoBean.getUser_job_status().equals("0")) {
+                        ToastAlone.showLongToast(this, "请先完善个人信息!");
+                        return;
+                    }
                 }
                 intent = new Intent(this, ContactInfoActivity.class);
                 intent.putExtra("isEdit", writeInfoBean.getUser_contact_edit());
@@ -309,10 +315,6 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             layoutBankInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
         if (personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")) {
-//            if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
-//                // TODO 不是业务员,获取可申请产品
-//                getMayApplyProductType();
-//            }
             getMayApplyProductType();
         }
     }

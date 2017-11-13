@@ -134,6 +134,9 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     private HujiAddressBean hujiAddressBean = null; // 户籍地址bean
     private IDCardFrontBean idCardFrontBean = null; // 身份证正面bean
     private PersonalInfoBean personalInfoBean = null; // 提交表单bean
+    private String frontFlag = "0"; // 正面照片成功标识
+    private String backFlag = "0";  // 背面照片成功标识
+    private String handheldFlag = "0";  // 手持照片成功标识
 
     @Override
     protected PersonalInfoPresenter createPresenter() {
@@ -196,13 +199,13 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_FRONT, 0, false);
             } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
+                AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
             }
         } else if (requestCode == INTENT_IDCARD_BACK) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_BACK, 1, false);
             } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "拍照权限被拒绝");
+                AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
             }
         }
     }
@@ -337,8 +340,16 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         String hujiDetailAddress = tvHujiDetailAddress.getText().toString().trim(); // 户籍详细地址(根据证件上地址来的,不可更改)
         String liveAddress = tvLiveAddress.getText().toString().trim(); // 居住地址
         String liveDetailAddress = etLiveDetailAddress.getText().toString().trim(); // 居住详细地址
-        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress)) {
-            ToastAlone.showLongToast(this, "请拍照扫描身份证!");
+        if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress) || frontFlag.equals("0")) {
+            ToastAlone.showLongToast(this, "请拍照上传身份证正面!");
+            return;
+        }
+        if (backFlag.equals("0")) {
+            ToastAlone.showLongToast(this, "请拍照上传身份证反面!");
+            return;
+        }
+        if (handheldFlag.equals("0")) {
+            ToastAlone.showLongToast(this, "请手持身份证自拍!");
             return;
         }
         if (StringUtil.isEmpty(marriageStatus) && marriageCodeBean == null) {
@@ -411,14 +422,23 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         if (StringUtil.isNotEmpty(userInfo.getIdcard_z())) {
             // 身份证正面照
             GlideUtils.displayImageWithFixedSize(this, userInfo.getIdcard_z(), R.mipmap.shotcard_positive, ivIdcardFront, mWidth, mHeight);
+            frontFlag = "1";
+        } else {
+            frontFlag = "0";
         }
         if (StringUtil.isNotEmpty(userInfo.getIdcard_f())) {
             // 身份证反面照
             GlideUtils.displayImageWithFixedSize(this, userInfo.getIdcard_f(), R.mipmap.shotcard_back, ivIdcardBack, mWidth, mHeight);
+            backFlag = "1";
+        } else {
+            backFlag = "0";
         }
         if (StringUtil.isNotEmpty(userInfo.getIdcard_hand())) {
             // 手持证件照
             GlideUtils.displayImageWithFixedSize(this, userInfo.getIdcard_hand(), R.mipmap.shotcard_back, ivHoldIdcard, mWidth, mHeight);
+            handheldFlag = "1";
+        } else {
+            handheldFlag = "0";
         }
         if (StringUtil.isNotEmpty(userInfo.getUsername())) {
             // 姓名
@@ -727,6 +747,12 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         mPresenter.getPersonalInfo(paramMaps);
     }
 
+    private void defautUploadFlag() {
+        frontFlag = "0";
+        backFlag = "0";
+        handheldFlag = "0";
+    }
+
     @Override
     public void onSuccessFrontBean(String returnCode, IDCardFrontBean resultBean) {
         if ("front".equals(returnCode)) {  // 身份证正面信息
@@ -760,10 +786,13 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             tvPersonalName.setText(idCardFrontBean.getName().trim());
             tvPersonalIdcard.setText(idCardFrontBean.getId_card_number().trim());
             tvHujiDetailAddress.setText(idCardFrontBean.getAddress());
+            frontFlag = "1";
         } else if (fileFlag.equals("3")) {
             ivIdcardBack.setImageBitmap(mBitmapIDcardBack);
+            backFlag = "1";
         } else if (fileFlag.equals("4")) {
             ivHoldIdcard.setImageBitmap(mBitmapHoldIdcard);
+            handheldFlag = "1";
         }
     }
 

@@ -162,6 +162,7 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
 
     @Override
     public void onSuccessSubmit(String apiCode, String returnCode, String msg) {
+        ToastAlone.showLongToast(this, msg);
         if (returnCode.equals("00040004")) {
             // 短信发送成功
             llMobileValidateCode.setVisibility(View.VISIBLE);
@@ -172,8 +173,11 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
             finish();
-        } else {
-            ToastAlone.showLongToast(this, msg);
+        } else if (returnCode.equals("API3020")) {
+            // 需要返回第一步,重新开始操作
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
         }
     }
 

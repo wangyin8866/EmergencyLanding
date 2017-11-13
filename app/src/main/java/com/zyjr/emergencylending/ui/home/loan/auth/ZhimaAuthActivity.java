@@ -109,12 +109,6 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         tvIdcardNumber.setText(idCardNumber);
     }
 
-
-    private void loadingPersonInfo() {
-        Map<String, String> paramMaps = new HashMap<>();
-        mPresenter.getPersonalInfo(paramMaps);
-    }
-
     private void getAuthUrl() {
         Map<String, String> paramMaps = new HashMap<>();
         mPresenter.getZhimaAuthUrl(paramMaps);

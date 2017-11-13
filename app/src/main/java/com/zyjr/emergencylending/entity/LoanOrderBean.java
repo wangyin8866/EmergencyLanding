@@ -20,7 +20,7 @@ public class LoanOrderBean implements Serializable {
     private String loan_amount; // 借款金额
     private String loan_zq; // 借款周期
     private String zq_unit; // 周期单位
-    private String is_clerk_opt; // 是否业务员操作
+    private String is_clerk_opt; // 是否业务员操作 1:业务员;0:用户
     private String is_verified_contract; //是否验证过通讯录
     private String product_id; //线上线下标识
 

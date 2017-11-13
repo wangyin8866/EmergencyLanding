@@ -6,6 +6,7 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
@@ -31,21 +32,21 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().getContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
-                LogUtils.d("获取联系人信息成功---->" + result.getResult());
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("获取联系人信息(成功)---->" + result.getResult());
                     if (result.getResult() != null) {
                         getView().onSuccessGet(Constants.GET_CONTACT_INFO, result.getResult());
                     }
                 } else {
-                    LogUtils.d("获取联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_CONTACT_INFO, result.getMsg());
+                    LogUtils.d("获取联系人信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_CONTACT_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取联系人信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_CONTACT_INFO, e.getMessage());
+                LogUtils.d("获取联系人信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.GET_CONTACT_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -54,19 +55,19 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().addContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
-                if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("添加联系人信息成功---->" + result.getMsg());
-                    getView().onSuccessAdd(Constants.ADD_CONTACT_INFO, result.getMsg());
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("添加联系人信息(成功)---->" + result.getMsg());
+                    getView().onSuccessAdd(Constants.ADD_CONTACT_INFO, result.getPromptMsg());
                 } else {
-                    LogUtils.d("添加联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.ADD_CONTACT_INFO, result.getMsg());
+                    LogUtils.d("添加联系人信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.ADD_CONTACT_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("添加联系人信息异常---->" + e.getMessage());
-                getView().onError(Constants.ADD_CONTACT_INFO, e.getMessage());
+                LogUtils.d("添加联系人信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.ADD_CONTACT_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -75,19 +76,19 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(ContactInfoModel.getInstance().editContactInfo(params), new ProgressSubscriber<ApiResult<List<ContactInfoBean>>>(new SubscriberOnNextListener<ApiResult<List<ContactInfoBean>>>() {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("修改联系人信息成功---->" + result.getMsg());
-                    getView().onSuccessAdd(Constants.EDIT_CONTACT_INFO, result.getMsg());
+                    getView().onSuccessAdd(Constants.EDIT_CONTACT_INFO, result.getPromptMsg());
                 } else {
                     LogUtils.d("修改联系人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.EDIT_CONTACT_INFO, result.getMsg());
+                    getView().onFail(Constants.EDIT_CONTACT_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("修改联系人信息异常---->" + e.getMessage());
-                getView().onError(Constants.EDIT_CONTACT_INFO, e.getMessage());
+                getView().onError(Constants.EDIT_CONTACT_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
@@ -96,21 +97,21 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
         invoke(PersonalInfoModel.getInstance().getPersonalInfo(params), new ProgressSubscriber<ApiResult<PersonalInfoBean>>(new SubscriberOnNextListener<ApiResult<PersonalInfoBean>>() {
             @Override
             public void onNext(ApiResult<PersonalInfoBean> result) {
-                if (result.getFlag().equals("API0000")) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取个人信息成功---->" + result.getResult());
+                        LogUtils.d("获取个人信息(成功)---->" + result.getResult());
                         getView().onSuccessGetPersonInfo(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {
-                    LogUtils.d("获取个人信息失败---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getMsg());
+                    LogUtils.d("获取个人信息(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.GET_PERSONAL_INFO, result.getPromptMsg());
                 }
             }
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("获取个人信息异常---->" + e.getMessage());
-                getView().onError(Constants.GET_PERSONAL_INFO, e.getMessage());
+                LogUtils.d("获取个人信息(异常)---->" + e.getMessage());
+                getView().onError(Constants.GET_PERSONAL_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }
