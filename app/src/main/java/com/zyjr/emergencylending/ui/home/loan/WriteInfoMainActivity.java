@@ -23,6 +23,7 @@ import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
+import com.zyjr.emergencylending.ui.home.View.HandleFailView;
 import com.zyjr.emergencylending.ui.home.View.WriteInfoView;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
@@ -469,14 +470,21 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     }
 
     @Override
-    public void onFail(String apiCode, String flag, String errorMsg) {
+    public void onFail(String apiCode, String flag, String failMsg) {
         if ("API2022".equals(flag)) {
+            // 获取业务员门店信息(未匹配到支持城市)
             Intent intent = new Intent(this, ClerkApplyResultActivity.class);
             intent.putExtra("flag", flag);
-            intent.putExtra("msg", errorMsg);
+            intent.putExtra("msg", failMsg);
+            startActivity(intent);
+        } else if (apiCode.equals(Constants.SUBMIT_LOAN_INFORMATION) && product_id.equals("0")) {
+            // 线上存款提交 失败
+            Intent intent = new Intent(this, HandleFailActivity.class);
+            intent.putExtra("flag", flag);
+            intent.putExtra("msg", failMsg);
             startActivity(intent);
         } else {
-            ToastAlone.showLongToast(this, errorMsg);
+            ToastAlone.showLongToast(this, failMsg);
             loadingDialog.dismiss();
             pullToRefreshScrollView.onRefreshComplete();
         }

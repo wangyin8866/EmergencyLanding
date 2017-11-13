@@ -16,8 +16,8 @@
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
-    <com.ajguan.library.EasyRefreshLayout
-        android:id="@+id/easylayout"
+    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+        android:id="@+id/root_refreshview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -25,7 +25,7 @@
             android:id="@+id/rv_banklist"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.ajguan.library.EasyRefreshLayout>
+    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
 
 
 </LinearLayout>

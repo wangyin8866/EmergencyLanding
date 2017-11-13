@@ -6,11 +6,14 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BankAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -23,6 +26,7 @@ import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,8 +45,8 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
     TopBar topBar;
     @BindView(R.id.rv_banklist)
     RecyclerView rvBankList;
-    @BindView(R.id.easylayout)
-    EasyRefreshLayout easylayout;
+    @BindView(R.id.root_refreshview)
+    PullToRefreshScrollView pullToRefreshScrollView;
 
     private List<SupportBank> supportBankList = new ArrayList<>();
     private BankAdapter bankAdapter;
@@ -82,17 +86,6 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
         bankAdapter = new BankAdapter(R.layout.rv_item_bankcard, supportBankList);
         rvBankList.setLayoutManager(new LinearLayoutManager(this));
         rvBankList.setAdapter(bankAdapter);
-        easylayout.setLoadMoreModel(LoadModel.NONE);
-        easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
-            @Override
-            public void onLoadMore() {
-            }
-
-            @Override
-            public void onRefreshing() {
-                loadingSupportBanklist();
-            }
-        });
         // TODO 获取支持银行卡列表
         bankAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -105,13 +98,21 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
                 finish();
             }
         });
+
+        pullToRefreshScrollView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener<ScrollView>() {
+
+            @Override
+            public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+                loadingSupportBanklist();
+            }
+        });
     }
 
     @Override
     public void onSuccessGetSupportBanks(String returnCode, List<SupportBank> supportBanks) {
         supportBankList = supportBanks;
         bankAdapter.setNewData(supportBankList);
-        easylayout.refreshComplete();
+        pullToRefreshScrollView.onRefreshComplete();
         bankAdapter.notifyDataSetChanged();
     }
 
@@ -138,13 +139,15 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
 
     @Override
-    public void onFail(String returnCode, String errorMsg) {
-
+    public void onFail(String returnCode, String failMsg) {
+        pullToRefreshScrollView.onRefreshComplete();
+        ToastAlone.showLongToast(this, failMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-
+        pullToRefreshScrollView.onRefreshComplete();
+        ToastAlone.showLongToast(this, errorMsg);
     }
 
     private void loadingSupportBanklist() {
@@ -153,7 +156,6 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
             bankAdapter.notifyDataSetChanged();
         }
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("cust_juid", "e517fafd0d4a4034b4a88a6a1e041540");
         mPresenter.getSupportBankList(paramsMap);
     }
 }

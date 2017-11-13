@@ -14,7 +14,7 @@
         android:paddingLeft="20dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
-        app:paddingRight="10dp"
+        app:paddingRight="20dp"
         app:rightText="管理"
         app:rightTextColor="@color/input_text_color"
         app:rightTextSize="14sp"

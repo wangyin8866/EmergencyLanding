@@ -45,6 +45,8 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
     Button btnApplyQunadai;
     private String stepStatus = "";
     private String orderStatus = "";
+    private String flag = "";
+    private String msg = "";
 
     @Override
     protected HandleFailPresenter createPresenter() {
@@ -86,11 +88,18 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
 
     private void initGetData() {
         Intent intent = getIntent();
+        // 从订单页面过来的
         stepStatus = intent.getStringExtra("stepStatus");
         orderStatus = intent.getStringExtra("orderStatus");
+        // 从预检过来的
+        flag = intent.getStringExtra("flag");
+        msg = intent.getStringExtra("msg");
         if (StringUtil.isNotEmpty(stepStatus) && StringUtil.isNotEmpty(orderStatus)) {
             // 从订单页面过来的 (做废件处理)
             deleteLoanOrder();
+        } else if (StringUtil.isNotEmpty(flag) && StringUtil.isNotEmpty(msg)) {
+            // 件 提交失败
+            tvApplyResultDesc.setText(msg);
         }
     }
 
