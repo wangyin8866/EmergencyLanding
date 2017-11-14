@@ -45,13 +45,12 @@ import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ProvinceModel;
 import com.zyjr.emergencylending.ui.home.View.PersonalInfoView;
 import com.zyjr.emergencylending.ui.home.presenter.PersonalInfoPresenter;
-import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.CommonUtils;
+import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.utils.third.GlideUtils;
@@ -193,19 +192,19 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToTakePhoto(INTENT_IDCARD_HOLD);
             } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
+                ToastAlone.showLongToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
             }
         } else if (requestCode == INTENT_IDCARD_FRONT) { // 扫描正面
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_FRONT, 0, false);
             } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
+                ToastAlone.showLongToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
             }
         } else if (requestCode == INTENT_IDCARD_BACK) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_BACK, 1, false);
             } else {
-                AppToast.makeToast(PersonalInfoActivity.this, "相机权限被拒绝");
+                ToastAlone.showLongToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
             }
         }
     }
@@ -410,8 +409,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         personalInfoBean.setLive_county_name(liveAddressBean.getLive_county_name());
         personalInfoBean.setLive_adr_detail(liveDetailAddress); // 居住详细地址
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(personalInfoBean);
-        LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
-        LogUtils.d("参数数量:" + paramsMap.size());
         mPresenter.addPersonalInfo(paramsMap);
     }
 
@@ -602,7 +599,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 this,
                 null,
                 new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                "请允许权限进行扫描",
+                "请允许权限进行拍照",
                 requestCode)) {
             Intent intent = IdcardUtils.getInstance().getIdCardIntent(this, type, false);
             startActivityForResult(intent, requestCode);

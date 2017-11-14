@@ -15,9 +15,11 @@ import android.util.Log;
 import com.sina.weibo.sdk.utils.LogUtil;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
+import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.List;
 
@@ -234,7 +236,7 @@ public class ToolPermission {
     }
 
     public interface PermissionCallBack {
-        void callBack(String requestCode, boolean isPass);
+        void callBack(int requestCode, boolean isPass);
     }
 
     /**
@@ -244,7 +246,7 @@ public class ToolPermission {
      * @param callBack
      * @param permissions
      */
-    public static void checkPermission(final Activity context, final PermissionCallBack callBack, final String type, String... permissions) {
+    public static void checkPermission(final Activity context, final PermissionCallBack callBack, final int requestCode, String... permissions) {
         AndPermission.with(context)
                 .permission(
                         permissions
@@ -255,7 +257,7 @@ public class ToolPermission {
                         for (int j = 0; j < list.size(); j++) {
                             LogUtils.d("权限申请成功:" + list.get(j));
                         }
-                        callBack.callBack(type, true);
+                        callBack.callBack(requestCode, true);
                     }
 
                     @Override
@@ -263,13 +265,18 @@ public class ToolPermission {
                         for (int j = 0; j < list.size(); j++) {
                             LogUtils.d("未开启的权限:" + list.get(j));
                         }
-                        AndPermission.defaultSettingDialog(context, 100).
-                                setNegativeButton("关闭", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                    }
-                                }).setTitle("权限提示").show();
-                        callBack.callBack(type, false);
+//                        AndPermission.defaultSettingDialog(context, 100).
+//                                setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                    }
+//
+//
+//                                })
+//
+//                                .setTitle("权限提示").setMessage(R.string.permission_prompt).show();
+                        ToastAlone.showLongToast(context, context.getResources().getString(R.string.permission_prompt));
+                        callBack.callBack(requestCode, false);
                     }
                 })
                 .start();

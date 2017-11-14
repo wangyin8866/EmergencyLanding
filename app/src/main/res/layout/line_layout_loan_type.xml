@@ -32,8 +32,9 @@
                 android:layout_below="@id/icon_money"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="6dp"
+                android:textColor="@color/input_text_color"
                 android:text="借款金额"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View
@@ -121,7 +122,8 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="6dp"
                 android:text="借款期限"
-                android:textSize="14sp" />
+                android:textColor="@color/input_text_color"
+                android:textSize="13sp" />
         </RelativeLayout>
 
         <View

@@ -2,6 +2,8 @@ package com.zyjr.emergencylending.ui.home.loan;
 
 import android.Manifest;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -162,8 +164,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 if (writeInfoBean == null) {
                     return;
                 } else {
-                    if (writeInfoBean.getUser_data_status().equals("0")
-                            || writeInfoBean.getUser_job_status().equals("0")) {
+                    if (writeInfoBean.getUser_data_status().equals("0")) {
                         ToastAlone.showLongToast(this, "请先完善个人信息!");
                         return;
                     }
@@ -177,9 +178,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 if (writeInfoBean == null) {
                     return;
                 } else {
-                    if (writeInfoBean.getUser_data_status().equals("0")
-                            || writeInfoBean.getUser_job_status().equals("0")
-                            || writeInfoBean.getUser_contact_status().equals("0")) {
+                    if (writeInfoBean.getUser_data_status().equals("0")) {
                         ToastAlone.showLongToast(this, "请先完善个人信息!");
                         return;
                     }
@@ -216,21 +215,28 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                     // 方案一
                     ToolPermission.checkPermission(this, new ToolPermission.PermissionCallBack() {
                                 @Override
-                                public void callBack(String requestCode, boolean isPass) {
+                                public void callBack(int requestCode, boolean isPass) {
                                     LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
                                     if (isPass) {
                                         judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                                    }else {
+                                        Intent localIntent = new Intent();
+                                        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        if (Build.VERSION.SDK_INT >= 9) {
+                                            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
+                                            localIntent.setData(Uri.fromParts("package", getPackageName(), null));
+                                        } else if (Build.VERSION.SDK_INT <= 8) {
+                                            localIntent.setAction(Intent.ACTION_VIEW);
+                                            localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
+                                            localIntent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
+                                        }
+                                        startActivity(localIntent);
                                     }
                                 }
                             },
-                            Constants.GET_MAYAPPLY_PRODUCT_TYPE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.READ_CONTACTS);
-
-                    // 方案二
-
+                            2000,
+                            Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_STATE);
+//                    // 方案二
 //                    if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
 //                        judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
 //                    }

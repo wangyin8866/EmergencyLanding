@@ -16,127 +16,130 @@
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
-    <ScrollView
+    <LinearLayout
+        android:id="@+id/ll_center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/top_bar"
-        android:scrollbars="none">
+        android:background="@color/line_color"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/line_color"
             android:orientation="vertical">
 
-            <LinearLayout
+            <View style="@style/horizontal_line_style" />
+
+            <ImageView
+                android:id="@+id/iv_apply_status_icon"
+                android:layout_width="145dp"
+                android:layout_height="122dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="65dp"
+                android:src="@mipmap/emptypage_fail" />
+
+            <TextView
+                android:id="@+id/tv_apply_result"
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:orientation="vertical"
-                android:paddingBottom="30dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="申请失败"
+                android:textColor="@color/input_text_color"
+                android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/iv_apply_status_icon"
-                    android:layout_width="145dp"
-                    android:layout_height="122dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="65dp"
-                    android:src="@mipmap/emptypage_fail" />
-
-                <TextView
-                    android:id="@+id/tv_apply_result"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/input_text_color"
-                    android:text="申请失败" />
-
-                <TextView
-                    android:id="@+id/tv_apply_result_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center"
-                    android:textSize="13sp"
-                    android:textColor="@color/front_text_color_hint"
-                    android:text="系统审核拒绝" />
-
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:visibility="gone"
-                android:id="@+id/layout_recommend"
+            <TextView
+                android:id="@+id/tv_apply_result_desc"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="12dp">
-
-                <TextView
-                    android:id="@+id/tv_brrow_recommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="为您推荐一下产品"
-                    android:textSize="13sp" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="108dp"
-                    android:layout_below="@+id/tv_brrow_recommend"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="7dp"
-                    android:background="@color/white">
-
-                    <ImageView
-                        android:id="@+id/iv_qunadai_icon"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="20dp"
-                        android:layout_marginTop="15dp"
-                        android:src="@mipmap/logo_quna" />
-
-                    <TextView
-                        android:id="@+id/tv_qunadai_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/iv_qunadai_icon"
-                        android:text="去哪贷"
-                        android:textColor="#474747"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/tv_qunadai_desc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/tv_qunadai_name"
-                        android:layout_below="@+id/tv_qunadai_name"
-                        android:layout_marginRight="8dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_toLeftOf="@+id/btn_apply_qunadai"
-                        android:text="来去哪贷，每日前一千名用户即 有机会享秒下款福利"
-                        android:textSize="13sp" />
-
-                    <Button
-                        android:id="@+id/btn_apply_qunadai"
-                        android:layout_width="80dp"
-                        android:layout_height="26dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/btn_shape_gradient"
-                        android:text="立即申请"
-                        android:textColor="@color/white"
-                        android:textSize="12sp" />
-
-                </RelativeLayout>
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="系统审核拒绝"
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="13sp" />
 
         </LinearLayout>
-    </ScrollView>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_center"
+        android:background="@color/line_color">
+
+        <RelativeLayout
+            android:id="@+id/layout_recommend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="45dp"
+            android:visibility="gone"
+            android:background="@color/line_color">
+
+            <TextView
+                android:id="@+id/tv_brrow_recommend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="为您推荐一下产品"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="108dp"
+                android:layout_below="@+id/tv_brrow_recommend"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="7dp"
+                android:background="@color/white">
+
+                <ImageView
+                    android:id="@+id/iv_qunadai_icon"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@mipmap/logo_quna" />
+
+                <TextView
+                    android:id="@+id/tv_qunadai_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@+id/iv_qunadai_icon"
+                    android:text="去哪贷"
+                    android:textColor="#474747"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_qunadai_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_qunadai_name"
+                    android:layout_below="@+id/tv_qunadai_name"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@+id/btn_apply_qunadai"
+                    android:text="来去哪贷，每日前一千名用户即 有机会享秒下款福利"
+                    android:textSize="13sp" />
+
+                <Button
+                    android:id="@+id/btn_apply_qunadai"
+                    android:layout_width="80dp"
+                    android:layout_height="26dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginRight="15dp"
+                    android:background="@drawable/btn_shape_gradient"
+                    android:text="立即申请"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="15dp"
-                    android:text="申请步骤"
+                    android:text="申请流程"
                     android:textColor="@color/input_text_color"
                     android:textSize="14sp" />
 

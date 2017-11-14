@@ -4,60 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rl_edit_bankcard"
-        android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/layout_bankcard_shape"
-        android:orientation="vertical">
-
-
-        <ImageView
-            android:id="@+id/iv_bankcard_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="31dp"
-            android:layout_marginTop="23dp"
-            android:scaleType="centerInside"
-            android:background="@drawable/circle_white_bg"
-            android:src="@mipmap/banklogo_d" />
-
-
-        <TextView
-            android:id="@+id/tv_bankcard_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="23dp"
-            android:text="456"
-            android:layout_toRightOf="@+id/iv_bankcard_icon"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tv_bankcard_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_bankcard_name"
-            android:layout_below="@+id/tv_bankcard_name"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/tv_bankcard_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/iv_bankcard_icon"
-            android:layout_below="@+id/iv_bankcard_icon"
-            android:layout_marginTop="27dp"
-            android:text="12312123123"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/btnTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="权限测试" />
 
 
 </LinearLayout>
