@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -20,6 +21,7 @@ import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.ui.account.presenter.RegisterPresenter;
 import com.zyjr.emergencylending.utils.NetworkUtils;
@@ -41,8 +43,7 @@ import rx.functions.Action1;
  */
 
 public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<RegisterBean>> implements BaseView<RegisterBean> {
-    @BindView(R.id.iv_close)
-    ImageView ivClose;
+
     @BindView(R.id.et_phone_number)
     EditText etPhoneNumber;
     @BindView(R.id.et_password)
@@ -61,6 +62,12 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
     TextView tvAgreed;
     @BindView(R.id.btn_register)
     Button btnRegister;
+    @BindView(R.id.top_bar)
+    TopBar topBar;
+    @BindView(R.id.layout_user_input)
+    LinearLayout layoutUserInput;
+    @BindView(R.id.textView)
+    TextView textView;
     private boolean isShow;
     private String phone, inviteCode, pwd;
     private Subscription subscription;
@@ -80,6 +87,17 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
     }
 
     private void initView() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
         //处理协议
         WYUtils.processProtocol(mContext, tvAgreed);
 
@@ -123,23 +141,21 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
                 } else if (TextUtils.isEmpty(sms)) {
                     ToastAlone.showShortToast(mContext, "请输入验证码");
                 } else if (TextUtils.isEmpty(pwd)) {
-                    ToastAlone.showShortToast(mContext, "请输入新密码");
+                    ToastAlone.showShortToast(mContext, "请输入密码");
                 } else if (!WYUtils.checkPass(pwd)) {
                     ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
                 } else {
-                    mPresenter.register(NetConstantValues.REGISTER, phone, SPUtils.getString(mContext,Config.KEY_CLIENT_ID,""), sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
+                    mPresenter.register(NetConstantValues.REGISTER, phone, SPUtils.getString(mContext, Config.KEY_CLIENT_ID, ""), sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
                 }
             }
         });
 
     }
 
-    @OnClick({R.id.iv_close, R.id.iv_show_pwd})
+    @OnClick({ R.id.iv_show_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_close:
-                finish();
-                break;
+
             case R.id.iv_show_pwd:
                 if (!isShow) {
                     //可见

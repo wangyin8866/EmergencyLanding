@@ -26,6 +26,7 @@ import com.zyjr.emergencylending.entity.Banner;
 import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
@@ -183,7 +184,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
 
 
     @Override
-    public void getBanner(Banner banner) {
+    public void getBanner(final Banner banner) {
         if (images != null) {
             images.clear();
         }
@@ -200,7 +201,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             }, images).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused}).startTurning(2000).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-
+                    H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
                 }
             });
         } else {
@@ -212,7 +213,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             }, images).setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused}).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-
+                    H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
                 }
             });
         }

@@ -1,41 +1,28 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
+    <com.zyjr.emergencylending.custom.TopBar
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
+        app:drawableLeft="@mipmap/icon_return"
+        app:drawableLeftVisibility="true"
+        app:top_background="#FFFFFF" />
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/top_bar"
         android:scrollbars="none">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_register"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginLeft="18dp"
-                android:layout_marginTop="10dp"
-                android:text="注册"
-                android:textColor="#474747"
-                android:textSize="18sp" />
-
-            <ImageView
-                android:id="@+id/iv_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="15dp"
-                android:src="@mipmap/icon_close" />
 
             <ImageView
                 android:id="@+id/iv_app_logo"
@@ -43,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/logo" />
 
@@ -168,10 +155,8 @@
                         style="@style/register_cbx"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginRight="5dp"
                         android:checked="false"
-                        android:padding="5dp" />
+                        />
 
                     <TextView
                         android:id="@+id/tv_agreed"

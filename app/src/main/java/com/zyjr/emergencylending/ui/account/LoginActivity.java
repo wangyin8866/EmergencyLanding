@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -20,6 +21,7 @@ import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
@@ -43,8 +45,6 @@ import rx.functions.Action1;
 public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBean>> implements BaseView<LoginBean> {
 
 
-    @BindView(R.id.iv_close)
-    ImageView ivClose;
     @BindView(R.id.et_phone_number)
     EditText etPhoneNumber;
     @BindView(R.id.et_password)
@@ -57,6 +57,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     TextView tvForget;
     @BindView(R.id.tv_register)
     TextView tvRegister;
+    @BindView(R.id.top_bar)
+    TopBar topBar;
+    @BindView(R.id.textView)
+    TextView textView;
+    @BindView(R.id.layout_warm_notice)
+    LinearLayout layoutWarmNotice;
     private String phone;
     private String pwd;
     private boolean isShow;
@@ -76,6 +82,17 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     }
 
     private void initView() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+
+            }
+        });
         //登录按钮
         subscription = RxView.clicks(btnLogin).throttleFirst(2, TimeUnit.SECONDS).subscribe(new Action1<Void>() {
             @Override
@@ -107,12 +124,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
         SPUtils.clear(mContext);
     }
 
-    @OnClick({R.id.iv_close, R.id.iv_show_pwd, R.id.tv_forget, R.id.tv_register})
+    @OnClick({ R.id.iv_show_pwd, R.id.tv_forget, R.id.tv_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_close:
-                finish();
-                break;
+
             case R.id.iv_show_pwd:
                 if (!isShow) {
                     //可见

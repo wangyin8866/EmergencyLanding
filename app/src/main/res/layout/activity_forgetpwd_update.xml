@@ -11,7 +11,7 @@
         android:paddingLeft="20dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
-        app:title="忘记密码"
+        app:title="找回密码"
         app:titleTextColor="#333333"
         app:titleTextSize="16sp" />
 
