@@ -62,7 +62,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
     compile 'com.android.support:design:26.0.0-alpha1'
-    compile 'com.bigkoo:convenientbanner:2.0.5'
+    //    compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-support-v4:0.3.0'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
@@ -106,4 +106,5 @@ dependencies {
     compile 'com.lidong.pdf:android_pdf:1.0.1'
     // 权限管控
     compile 'com.yanzhenjie:permission:1.1.0'
+    compile project(':convenientbanner')
 }
