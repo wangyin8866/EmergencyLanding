@@ -74,7 +74,7 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
             public void onNext(ApiResult<String> result) {
                 if (result.getFlag().equals("API0000")) {
                     LogUtils.d("进件做废件处理(成功)---->" + result.getResult().toString());
-                    getView().onSuccessGetEffectiveOrder(Constants.DELETE_LOAN_ORDER_INFO, result.getResult());
+                    getView().onSuccessDeleteLoanOrder(Constants.DELETE_LOAN_ORDER_INFO, result.getResult());
                 } else {
                     LogUtils.d("进件做废件处理(失败)---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.DELETE_LOAN_ORDER_INFO, result.getPromptMsg());

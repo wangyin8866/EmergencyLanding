@@ -1,22 +1,17 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
 import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
@@ -120,7 +115,6 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         ButterKnife.bind(this);
 
         init();
-        initData();
     }
 
 
@@ -180,10 +174,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 // 审核中
                 if (orderStatus.equals("9")) {
                     // 审核拒绝
-                    Intent intent = new Intent(this, HandleFailActivity.class);
-                    intent.putExtra("stepStatus", stepStatus);
-                    intent.putExtra("orderStatus", orderStatus);
-                    startActivity(intent);
+                    jumpToFailPage(stepStatus, orderStatus);
                 }
             } else if (stepStatus.equals("4")) {
                 // 领取金额 (验证问题、领取金额、领取超时、领取拒件)
@@ -203,10 +194,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                     finish();
                 } else if (orderStatus.equals("9")) {
                     // 领取拒件(领取拒绝)
-                    Intent intent = new Intent(this, HandleFailActivity.class);
-                    intent.putExtra("stepStatus", stepStatus);
-                    intent.putExtra("orderStatus", orderStatus);
-                    startActivity(intent);
+                    jumpToFailPage(stepStatus, orderStatus);
                 }
             } else if (stepStatus.equals("5")) {
                 // 放款中
@@ -219,10 +207,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                     startActivity(intent);
                 } else if (orderStatus.equals("9")) {
                     // 放款拒绝
-                    Intent intent = new Intent(this, HandleFailActivity.class);
-                    intent.putExtra("stepStatus", stepStatus);
-                    intent.putExtra("orderStatus", orderStatus);
-                    startActivity(intent);
+                    jumpToFailPage(stepStatus, orderStatus);
                 }
             } else if (stepStatus.equals("6")) {
                 // 还款中
@@ -237,8 +222,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         }
     }
 
-    private void initData() {
-
+    private void jumpToFailPage(String step_status, String order_status) {
+        Intent intent = new Intent(this, HandleFailActivity.class);
+        intent.putExtra("stepStatus", step_status);
+        intent.putExtra("orderStatus", order_status);
+        startActivity(intent);
     }
 
     /**
@@ -514,7 +502,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
 
     @Override
     public void onSuccessDeleteLoanOrder(String api, String result) {
-
+        LogUtils.d("废件处理成功--" + result);
     }
 
 
