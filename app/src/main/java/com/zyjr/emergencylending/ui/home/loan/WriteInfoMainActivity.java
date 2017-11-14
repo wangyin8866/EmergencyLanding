@@ -471,7 +471,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     @Override
     public void onFail(String apiCode, String flag, String failMsg) {
-        if ("API2022".equals(flag)) {
+        if (apiCode.equals(Constants.GET_LOCAL_STORE_INFO) && "API2022".equals(flag)) {
             // 获取业务员门店信息(未匹配到支持城市)
             Intent intent = new Intent(this, ClerkApplyResultActivity.class);
             intent.putExtra("flag", flag);

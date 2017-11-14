@@ -475,7 +475,7 @@ public class StringUtil {
         if (isEmpty(num)) {
             return "";
         }
-        return num.substring(0, 6) + "**** ****" + num.substring(num.length() - 4, num.length());
+        return num.substring(0, 3) + "**** ****" + num.substring(num.length() - 3, num.length());
     }
 
     /**

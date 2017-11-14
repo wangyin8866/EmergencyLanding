@@ -73,6 +73,8 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
     private BankcardInfo bankcardInfo = null;
     private SQLiteDatabase db = null;
     private SupportBank supportBank = null;
+    private String bank_username = "";
+    private String id_card = "";
 
     @Override
     protected BankcardInfoPresenter createPresenter() {
@@ -116,7 +118,7 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
             return;
         }
         if (StringUtil.isEmpty(bankcardNumber)) {
-            ToastAlone.showLongToast(this, "请输入银行卡");
+            ToastAlone.showLongToast(this, "请输入银行卡卡号");
             return;
         }
         if (StringUtil.isEmpty(openBank)) {
@@ -134,8 +136,8 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         if (bankcardInfo == null) {
             bankcardInfo = new BankcardInfo();
         }
-        bankcardInfo.setBank_username(userName);
-        bankcardInfo.setId_card(idcardNumber);
+        bankcardInfo.setBank_username(bank_username);
+        bankcardInfo.setId_card(id_card);
         bankcardInfo.setBankcard_no(bankcardNumber);
         bankcardInfo.setBank_name(openBank);
         bankcardInfo.setBank_phone(reservedPhone);
@@ -197,10 +199,10 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
     private void initGetData() {
         Intent intent = getIntent();
-        String bank_username = intent.getStringExtra("bank_username");
-        String id_card = intent.getStringExtra("id_card");
+        bank_username = intent.getStringExtra("bank_username");
+        id_card = intent.getStringExtra("id_card");
         tvUserName.setText(StringUtil.isEmpty(bank_username) ? "" : bank_username);
-        tvIdcardNumer.setText(StringUtil.isEmpty(id_card) ? "" : id_card);
+        tvIdcardNumer.setText(StringUtil.isEmpty(id_card) ? "" : StringUtil.hideIDcard(id_card));
     }
 
 
