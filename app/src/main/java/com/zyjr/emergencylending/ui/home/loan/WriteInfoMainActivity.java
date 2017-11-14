@@ -151,6 +151,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent.putExtra("status", writeInfoBean.getUser_data_status());
                 startActivityForResult(intent, INTENT_PERSONAL_INFO_CODE);
                 break;
+
             case R.id.layout_work_info:
                 if (writeInfoBean == null) {
                     return;
@@ -160,6 +161,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent.putExtra("status", writeInfoBean.getUser_job_status());
                 startActivityForResult(intent, INTENT_WORK_INFO_CODE);
                 break;
+
             case R.id.layout_contact_info:
                 if (writeInfoBean == null) {
                     return;
@@ -174,6 +176,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent.putExtra("status", writeInfoBean.getUser_contact_status());
                 startActivityForResult(intent, INTENT_CONTACT_INFO_CODE);
                 break;
+
             case R.id.layout_bank_info:
                 if (writeInfoBean == null) {
                     return;
@@ -188,11 +191,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 intent.putExtra("status", writeInfoBean.getUser_contact_status());
                 startActivityForResult(intent, INTENT_BANKCARD_CODE);
                 break;
+
             case R.id.btn_apply_quickly:
                 intent = new Intent(WriteInfoMainActivity.this, ApplyToOfflineConfirmActivity.class);
                 intent.putExtra("renew_loan_type", renew_loan_type);  // 首续贷
                 startActivity(intent);
                 break;
+
             case R.id.btn_submit:
                 if (writeInfoBean == null) {
                     return;
@@ -207,40 +212,29 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                         return;
                     }
                 }
-                if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
-                    LogUtils.d("当前是业务员----走业务员");
-                    getClerkStoreInfo();
-                } else {
-                    // TODO 获取通讯资料
-                    // 方案一
-                    ToolPermission.checkPermission(this, new ToolPermission.PermissionCallBack() {
-                                @Override
-                                public void callBack(int requestCode, boolean isPass) {
-                                    LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
-                                    if (isPass) {
-                                        judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
-                                    }else {
-                                        Intent localIntent = new Intent();
-                                        localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        if (Build.VERSION.SDK_INT >= 9) {
-                                            localIntent.setAction("android.settings.APPLICATION_DETAILS_SETTINGS");
-                                            localIntent.setData(Uri.fromParts("package", getPackageName(), null));
-                                        } else if (Build.VERSION.SDK_INT <= 8) {
-                                            localIntent.setAction(Intent.ACTION_VIEW);
-                                            localIntent.setClassName("com.android.settings","com.android.settings.InstalledAppDetails");
-                                            localIntent.putExtra("com.android.settings.ApplicationPkgName", getPackageName());
-                                        }
-                                        startActivity(localIntent);
-                                    }
-                                }
-                            },
-                            2000,
-                            Manifest.permission.READ_CONTACTS, Manifest.permission.READ_PHONE_STATE);
-//                    // 方案二
-//                    if (ToolPermission.checkSelfPermission(this, null, Manifest.permission.READ_CONTACTS, "请允许读取权限!", CODE_PERMISSION_CONTANCT_LIST)) {
-//                        judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
-//                    }
+                // 缺少首续贷标识
+                if (StringUtil.isEmpty(renew_loan_type)) {
 
+                } else {
+                    if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
+                        LogUtils.d("当前是业务员----走业务员");
+                        getClerkStoreInfo();
+                    } else {
+                        // TODO 获取通讯资料
+                        ToolPermission.checkPermission(this, new ToolPermission.PermissionCallBack() {
+                                    @Override
+                                    public void callBack(int requestCode, boolean isPass) {
+                                        LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
+                                        if (isPass) {
+                                            judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                                        } else {
+                                            ToastAlone.showLongToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+                                        }
+                                    }
+                                },
+                                2000,
+                                Manifest.permission.READ_CONTACTS);
+                    }
                 }
                 break;
         }
@@ -490,6 +484,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             intent.putExtra("msg", failMsg);
             startActivity(intent);
         } else {
+            renew_loan_type = "";
             ToastAlone.showLongToast(this, failMsg);
             loadingDialog.dismiss();
             pullToRefreshScrollView.onRefreshComplete();
@@ -498,6 +493,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     @Override
     public void onError(String returnCode, String errorMsg) {
+        renew_loan_type = "";
         ToastAlone.showLongToast(this, errorMsg);
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();

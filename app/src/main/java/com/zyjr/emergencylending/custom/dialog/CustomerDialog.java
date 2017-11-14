@@ -119,27 +119,32 @@ public class CustomerDialog extends Dialog {
      * @return
      */
     public CustomerDialog loanProductMatchInfo(View.OnClickListener listener, String userFlag, String renewLoanType, String money, String period, String periodDistance, String periodUnit) {
-        setContentView(R.layout.dialog_product_match);
-        TextView tvDesc = findViewById(R.id.tv_title1);
-        if (renewLoanType.equals("3")) {
-            tvDesc.setVisibility(View.INVISIBLE);
+        if (renewLoanType.equals("0")) {
+            setContentView(R.layout.dialog_product_match);
+            Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
+            TextView tvLoadMoney = findViewById(R.id.tv_loan_money);
+            tvLoadMoney.setText(money + "元");
+            TextView tvLoadWeek = findViewById(R.id.tv_loan_week);
+            if (periodUnit.equals("1")) {
+                // 天 作为期
+                tvLoadWeek.setText(periodDistance + "天");
+            } else if (periodUnit.equals("2")) {
+                tvLoadWeek.setText(period + "周");
+            } else {
+                tvLoadWeek.setText(period);
+            }
+            ImageView ivClose = findViewById(R.id.iv_close);
+            window.setGravity(Gravity.CENTER);
+            ivClose.setOnClickListener(listener);
+            btnSumbit.setOnClickListener(listener);
+        } else if (renewLoanType.equals("3")) {
+            setContentView(R.layout.dialog_product_match_refinance);
+            Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
+            ImageView ivClose = findViewById(R.id.iv_close);
+            window.setGravity(Gravity.CENTER);
+            ivClose.setOnClickListener(listener);
+            btnSumbit.setOnClickListener(listener);
         }
-        Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
-        TextView tvLoadMoney = findViewById(R.id.tv_loan_money);
-        tvLoadMoney.setText(money + "元");
-        TextView tvLoadWeek = findViewById(R.id.tv_loan_week);
-        if (periodUnit.equals("1")) {
-            // 天 作为期
-            tvLoadWeek.setText(periodDistance + "天");
-        } else if (periodUnit.equals("2")) {
-            tvLoadWeek.setText(period + "周");
-        } else {
-            tvLoadWeek.setText(period);
-        }
-        ImageView ivClose = findViewById(R.id.iv_close);
-        window.setGravity(Gravity.CENTER);
-        ivClose.setOnClickListener(listener);
-        btnSumbit.setOnClickListener(listener);
         return instance;
     }
 

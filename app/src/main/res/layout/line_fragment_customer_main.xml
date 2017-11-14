@@ -250,16 +250,15 @@
                         android:id="@+id/ran_list"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
-                        android:text="32"
+                        android:text="1100"
                         android:textColor="#FF9000"
                         android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
+                        android:layout_marginLeft="1dp"
                         android:gravity="center_vertical"
                         android:text="位"
                         android:textColor="#262626"
@@ -269,7 +268,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -278,9 +277,8 @@
                         android:id="@+id/amount"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
                         android:gravity="center_vertical"
-                        android:text="112.05"
+                        android:text="111.05"
                         android:textColor="#FF9000"
                         android:textSize="16sp" />
 
