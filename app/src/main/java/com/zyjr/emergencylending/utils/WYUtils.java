@@ -42,6 +42,7 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -591,7 +592,7 @@ public class WYUtils {
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
-                ToastAlone.showShortToast(mContext, "用户使用及安全隐私协议");
+                H5WebView.skipH5WebView(mContext,"用户使用及安全隐私协议","file:///android_asset/h5/register.html");
             }
 
             @Override
@@ -605,7 +606,7 @@ public class WYUtils {
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
-                ToastAlone.showShortToast(mContext, "用户信息授权服务协议");
+                H5WebView.skipH5WebView(mContext,"用户信息授权服务协议","file:///android_asset/h5/authorized_agreement.html");
             }
 
             @Override

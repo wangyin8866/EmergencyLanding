@@ -30,7 +30,6 @@ import rx.Subscription;
 import rx.functions.Action1;
 
 /**
- *
  * @author wangyin
  * @date 2017/10/12
  */
@@ -68,7 +67,9 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
 
     private void init() {
         String title = getIntent().getStringExtra("title");
-        topBar.setTitle(title);
+        if (!TextUtils.isEmpty(title)) {
+            topBar.setTitle(title);
+        }
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -93,7 +94,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
                 } else if (!WYUtils.checkPhone(phone)) {
                     ToastAlone.showShortToast(mContext, "请输入正确的手机号码");
                 } else {
-                    mPresenter.sendSMS(btnLoginCode,NetConstantValues.SMS, phone);
+                    mPresenter.sendSMS(btnLoginCode, NetConstantValues.SMS, phone);
                 }
             }
         });
@@ -117,7 +118,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
                     ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
                 } else if (TextUtils.isEmpty(pwdAgain)) {
                     ToastAlone.showShortToast(mContext, "请再次输入新密码");
-                }else if (!pwd.equals(pwdAgain)) {
+                } else if (!pwd.equals(pwdAgain)) {
                     ToastAlone.showShortToast(mContext, "两次输入的密码不一致！");
                 } else {
                     mPresenter.forgetPassword(NetConstantValues.REST_PASSWORD, phone, sms, pwd);

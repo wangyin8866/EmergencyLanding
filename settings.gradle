@@ -1,1 +1,1 @@
-include ':app', ':retrofitlibrary', ':livenesslib', ':IDCardLib', ':PullToRefreshLib'
+include ':app', ':retrofitlibrary', ':livenesslib', ':IDCardLib', ':PullToRefreshLib', ':convenientbanner'

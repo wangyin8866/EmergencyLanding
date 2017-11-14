@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
                 break;
             case R.id.tv_forget:
                 Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
-                intent.putExtra("title", "忘记密码");
+                intent.putExtra("title", "找回密码");
                 startActivity(intent);
                 break;
             case R.id.tv_register:

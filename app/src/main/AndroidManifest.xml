@@ -82,7 +82,9 @@
         <!-- 借款 -->
         <activity
             android:name=".ui.home.loan.LoanMainActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+
+        </activity>
         <!-- 联系人资料 -->
         <activity
             android:name=".ui.home.loan.basicInfo.ContactInfoActivity"
@@ -270,6 +272,7 @@
         <activity
             android:name=".ui.salesman.activity.MyIncome"
             android:screenOrientation="portrait" />
+        <!--启动页-->
         <activity
             android:name=".ui.guide.SplashActivity"
             android:screenOrientation="portrait">
@@ -279,6 +282,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--导航页-->
         <activity
             android:name=".ui.guide.GuideAtActivity"
             android:screenOrientation="portrait" />

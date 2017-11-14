@@ -138,12 +138,12 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
                     ToastAlone.showShortToast(mContext, "请输入手机号码");
                 } else if (!WYUtils.checkPhone(phone)) {
                     ToastAlone.showShortToast(mContext, "请输入正确的手机号码");
-                } else if (TextUtils.isEmpty(sms)) {
-                    ToastAlone.showShortToast(mContext, "请输入验证码");
                 } else if (TextUtils.isEmpty(pwd)) {
                     ToastAlone.showShortToast(mContext, "请输入密码");
                 } else if (!WYUtils.checkPass(pwd)) {
                     ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
+                } else if (TextUtils.isEmpty(sms)) {
+                    ToastAlone.showShortToast(mContext, "请输入验证码");
                 } else {
                     mPresenter.register(NetConstantValues.REGISTER, phone, SPUtils.getString(mContext, Config.KEY_CLIENT_ID, ""), sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
                 }
@@ -152,7 +152,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
 
     }
 
-    @OnClick({ R.id.iv_show_pwd})
+    @OnClick({R.id.iv_show_pwd})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
