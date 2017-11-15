@@ -33,7 +33,7 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
             public void onNext(ApiResult<StoreResultBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取支持门店信息(成功)---->" + result.getResult().toString());
+                        LogUtils.d("获取支持门店信息(成功)---->" + result.getMsg());
                         getView().onSuccessGetLocalStoreList(Constants.GET_LOCAL_STORE_INFO, result.getResult().getStorePoList());
                     }
                 } else {
@@ -55,7 +55,7 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("提交借款资料(成功)---->" + result.getResult().toString());
+                    LogUtils.d("提交借款资料(成功)---->" + result.getMsg());
                     getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getPromptMsg());
                 } else {
                     LogUtils.d("提交借款资料(失败)---->" + result.getFlag() + "," + result.getMsg());

@@ -31,7 +31,7 @@ public class ReceiveMoneyPresenter extends BasePresenter<ReceiveMoneyView> {
             @Override
             public void onNext(ApiResult<ReceiveMoneyBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("获取领取金额信息(成功)---->" + result.getResult().toString());
+                    LogUtils.d("获取领取金额信息(成功)---->" + result.getMsg());
                     getView().onSuccessGet(Constants.GET_RECEIVE_MONEY_INFO, result.getResult());
                 } else {
                     LogUtils.d("获取领取金额信息失败---->" + result.getFlag() + "," + result.getMsg());

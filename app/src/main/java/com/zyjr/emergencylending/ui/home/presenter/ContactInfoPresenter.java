@@ -33,7 +33,7 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("获取联系人信息(成功)---->" + result.getResult());
+                    LogUtils.d("获取联系人信息(成功)---->" + result.getMsg());
                     if (result.getResult() != null) {
                         getView().onSuccessGet(Constants.GET_CONTACT_INFO, result.getResult());
                     }
@@ -99,7 +99,7 @@ public class ContactInfoPresenter extends BasePresenter<ContactInfoView> {
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取个人信息(成功)---->" + result.getResult());
+                        LogUtils.d("获取个人信息(成功)---->" + result.getMsg());
                         getView().onSuccessGetPersonInfo(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {

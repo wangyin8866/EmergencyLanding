@@ -30,7 +30,7 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
             @Override
             public void onNext(ApiResult<LoanOrderBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("查询当前用户借款订单信息(成功)---->" + result.getResult().toString());
+                    LogUtils.d("查询当前用户借款订单信息(成功)---->" + result.getMsg());
                     getView().onSuccessGet(Constants.GET_CURRENT_LOAN_ORDER_INFO, result.getResult());
                 } else {
                     LogUtils.d("查询当前用户借款订单信息(失败)---->" + result.getFlag() + "," + result.getMsg());
@@ -52,7 +52,7 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("查询当前用户有效订单(成功)---->" + result.getResult().toString());
+                    LogUtils.d("查询当前用户有效订单(成功)---->" + result.getMsg());
                     getView().onSuccessGetEffectiveOrder(Constants.GET_CURRENT_EFFECTIVE_LOAN_ORDER, result.getResult());
                 } else {
                     LogUtils.d("查询当前用户有效订单(失败)---->" + result.getFlag() + "," + result.getMsg());
@@ -73,7 +73,7 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (result.getFlag().equals("API0000")) {
-                    LogUtils.d("进件做废件处理(成功)---->" + result.getResult().toString());
+                    LogUtils.d("进件做废件处理(成功)---->" + result.getMsg());
                     getView().onSuccessDeleteLoanOrder(Constants.DELETE_LOAN_ORDER_INFO, result.getResult());
                 } else {
                     LogUtils.d("进件做废件处理(失败)---->" + result.getFlag() + "," + result.getMsg());

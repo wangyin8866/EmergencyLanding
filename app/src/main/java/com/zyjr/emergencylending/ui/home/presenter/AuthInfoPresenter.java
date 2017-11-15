@@ -39,7 +39,7 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
             @Override
             public void onSuccess(ApiResult<AuthResult> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("获取用户认证信息明细成功---->" + result.getResult().getAuth_result());
+                    LogUtils.d("获取用户认证信息明细成功---->" + result.getMsg());
                     getView().onSuccessGet(Constants.GET_AUTH_STATUS_INFO, result.getResult().getAuth_result(), result.getResult().getUserName(), result.getResult().getIdcard());
                 } else {
                     LogUtils.d("获取用户认证信息明细失败---->" + result.getFlag() + "," + result.getMsg());
@@ -63,7 +63,7 @@ public class AuthInfoPresenter extends BasePresenter<AuthInfoView> {
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取个人信息成功---->" + result.getResult());
+                        LogUtils.d("获取个人信息成功---->" + result.getMsg());
                         getView().onSuccessGetUserInfo(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {

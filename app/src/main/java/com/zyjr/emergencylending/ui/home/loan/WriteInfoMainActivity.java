@@ -229,7 +229,29 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                                     public void callBack(int requestCode, boolean isPass) {
                                         LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
                                         if (isPass) {
-                                            judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                                            if (product_id.equals("1")) {
+                                                LogUtils.d("线下----]");
+                                                Intent intent = null;
+                                                if (is_view.equals("1")) {
+                                                    // 如果有门店
+                                                    intent = new Intent(WriteInfoMainActivity.this, ApplyConfirmActivity.class);
+                                                } else if (is_view.equals("0")) {
+                                                    intent = new Intent(WriteInfoMainActivity.this, NoStoreApplyConfirmActivity.class);
+                                                    intent.putExtra("moneyProgress", moneyProgress); // 金额进度
+                                                    intent.putExtra("periodProgress", periodProgress); // 周期进度
+                                                }
+                                                intent.putExtra("online_type", online_type); // 产品类型
+                                                intent.putExtra("product_id", product_id); // 产品ID
+                                                intent.putExtra("apply_amount", apply_amount); // 申请金额
+                                                intent.putExtra("apply_periods", apply_periods); // 申请期数
+                                                intent.putExtra("apply_zq", apply_zq); // 申请期数间隔
+                                                intent.putExtra("apply_periods_unit", apply_periods_unit); // 申请周期单位
+                                                intent.putExtra("renew_loan_type", renew_loan_type);  // 首续贷 0.首贷 3.续贷
+                                                startActivity(intent);
+                                            } else {
+                                                LogUtils.d("线上----]");
+                                                judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
+                                            }
                                         } else {
                                             ToastAlone.showLongToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
                                         }
@@ -338,7 +360,6 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
      * @param periodUnit     周期单位
      */
     private void judgeMatchProInfo(String userFlag, final String renewLoanType, String money, String period, String periodDistance, String periodUnit) {
-
         final CustomerDialog customerDialog = new CustomerDialog(this);
         customerDialog.loanProductMatchInfo(new View.OnClickListener() {
             @Override
@@ -350,34 +371,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
                     case R.id.btn_comfirm_submit:
                         customerDialog.dismiss();
-                        if (product_id.equals("1")) {
-                            LogUtils.d("当前是普通商户");
-                            Intent intent = null;
-                            if (is_view.equals("1")) {
-                                // 如果有门店
-                                intent = new Intent(WriteInfoMainActivity.this, ApplyConfirmActivity.class);
-                            } else if (is_view.equals("0")) {
-                                intent = new Intent(WriteInfoMainActivity.this, NoStoreApplyConfirmActivity.class);
-                                intent.putExtra("moneyProgress", moneyProgress); // 金额进度
-                                intent.putExtra("periodProgress", periodProgress); // 周期进度
-                            }
-                            intent.putExtra("online_type", online_type); // 产品类型
-                            intent.putExtra("product_id", product_id); // 产品ID
-                            intent.putExtra("apply_amount", apply_amount); // 申请金额
-                            intent.putExtra("apply_periods", apply_periods); // 申请期数
-                            intent.putExtra("apply_zq", apply_zq); // 申请期数间隔
-                            intent.putExtra("apply_periods_unit", apply_periods_unit); // 申请周期单位
-                            // 首续贷
-                            if (renewLoanType.equals("0")) {
-                                intent.putExtra("renew_loan_type", "0");  // 0.首贷
-                            } else {
-                                intent.putExtra("renew_loan_type", "3"); // 0.续贷
-                            }
-                            startActivity(intent);
-                        } else if (product_id.equals("0")) {
-                            // 线上件
-                            submitLoanInfo("", "");
-                        }
+                        submitLoanInfo("", "");
                         break;
                 }
             }
