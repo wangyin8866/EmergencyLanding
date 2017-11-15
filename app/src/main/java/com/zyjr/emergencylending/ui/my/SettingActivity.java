@@ -1,11 +1,13 @@
 package com.zyjr.emergencylending.ui.my;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
@@ -45,6 +47,7 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.version)
     RelativeLayout version;
     private CustomerDialog dialog;
+    private CustomerDialog customerDialog;
 
 
     @Override
@@ -81,7 +84,7 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.modify_password:
-                Intent intent = new Intent(mContext, ForgetPasswordActivity.class);
+                final Intent intent = new Intent(mContext, ForgetPasswordActivity.class);
                 intent.putExtra("title", "修改密码");
                 intent.putExtra("type", "2");
                 startActivity(intent);
@@ -96,7 +99,26 @@ public class SettingActivity extends BaseActivity {
                 phoneDialog();
                 break;
             case R.id.exit:
-                SPUtils.clear(BaseApplication.getContext());
+                customerDialog = new CustomerDialog(mContext);
+                customerDialog.operateComfirm(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.message_left:
+                                customerDialog.dismiss();
+                                break;
+                            case R.id.message_right:
+                                SPUtils.clear(BaseApplication.getContext());
+                                customerDialog.dismiss();
+                                Intent intent1 = new Intent(SettingActivity.this, MainActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("index", 0);
+                                intent1.putExtras(bundle);
+                                startActivity(intent1);
+                                break;
+                        }
+                    }
+                }, "您确定要退出么", Color.parseColor("#333333"), "取消", Color.parseColor("#6F95FF"), "确定", Color.parseColor("#6F95FF")).show();
 
                 break;
             case R.id.version:

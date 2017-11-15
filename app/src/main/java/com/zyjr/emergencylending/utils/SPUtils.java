@@ -3,8 +3,6 @@ package com.zyjr.emergencylending.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.zyjr.emergencylending.base.ActivityCollector;
-
 
 /**
  * //实现标记的写入与读取
@@ -88,8 +86,7 @@ public class SPUtils {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
         sp.edit().clear().apply();
-        ActivityCollector.finishAll();
-        System.exit(0);
+
     }
 
     //保存导航页
@@ -105,5 +102,20 @@ public class SPUtils {
             sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
         }
         return sp2.getBoolean(key, defValue);
+    }
+
+    //保存ClientId
+    public static void saveClientString(Context context, String key, String value) {
+        if (sp2 == null) {
+            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+        }
+        sp2.edit().putString(key, value).apply();
+    }
+
+    public static String getClientString(Context context, String key, String defValue) {
+        if (sp2 == null) {
+            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+        }
+        return sp2.getString(key, defValue);
     }
 }

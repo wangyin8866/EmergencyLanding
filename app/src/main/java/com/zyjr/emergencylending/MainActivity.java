@@ -80,7 +80,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.statusBarDarkFont(true).init();
         ActivityCollector.addActivity(this);
-
         fragments = new ArrayList<>();
 
         HomeFragment homeFragment = new HomeFragment();

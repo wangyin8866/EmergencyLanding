@@ -40,8 +40,9 @@ public class SplashActivity extends BaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                //不是第一次就跳转到主页
                 if (SPUtils.getGuideBoolean(mContext, "splash", false)) {
-                    //不是第一次就跳转到主页
+                
                     if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
                         Intent intent = new Intent(SplashActivity.this, LineMainActivity.class);
                         startActivity(intent);
