@@ -83,6 +83,7 @@ public class SettingActivity extends BaseActivity {
             case R.id.modify_password:
                 Intent intent = new Intent(mContext, ForgetPasswordActivity.class);
                 intent.putExtra("title", "修改密码");
+                intent.putExtra("type", "2");
                 startActivity(intent);
                 break;
             case R.id.about_us:

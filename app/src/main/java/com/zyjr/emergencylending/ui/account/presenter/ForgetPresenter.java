@@ -26,8 +26,8 @@ public class ForgetPresenter extends BasePresenter<BaseView<BaseBean>> {
     }
 
     public void forgetPassword(String router, String phone,
-                               String verify_code, String password) {
-        invoke(AccountModel.getInstance().forgetPassword(router, phone, verify_code, password), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+                               String verify_code, String password,String type) {
+        invoke(AccountModel.getInstance().forgetPassword(router, phone, verify_code, password,type), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
