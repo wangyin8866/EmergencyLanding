@@ -1,14 +1,14 @@
 [
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\indicator_arrow.png",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\indicator_arrow.png"
     },
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_flip.png",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
     },
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_flip.png",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_flip.png"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\default_ptr_rotate.png",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\drawable-mdpi-v4\\default_ptr_rotate.png"
     }
 ]

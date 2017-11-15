@@ -1,18 +1,18 @@
 [
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_out_to_bottom.xml",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_out_to_bottom.xml"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_out_to_top.xml",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_out_to_top.xml"
     },
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_bottom.xml",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_bottom.xml"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
     },
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_top.xml",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_top.xml"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_in_from_bottom.xml",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_in_from_bottom.xml"
     },
     {
-        "merged": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_out_to_top.xml",
-        "source": "E:\\droid-as-project\\EmergencyLanding\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_out_to_top.xml"
+        "merged": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\slide_out_to_bottom.xml",
+        "source": "F:\\User\\wangyin\\android\\workspace\\EmergencyLanding_jjt\\PullToRefreshLib\\build\\intermediates\\bundles\\debug\\res\\anim\\slide_out_to_bottom.xml"
     }
 ]
