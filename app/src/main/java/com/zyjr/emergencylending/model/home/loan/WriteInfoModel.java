@@ -37,13 +37,13 @@ public class WriteInfoModel extends BaseModel {
 
     public Observable<ApiResult<WriteInfoBean>> getWriteInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_WRITE_INFO);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, "1"));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
         return writeInfoService.getWriteInfo(params);
     }
 
     public Observable<ApiResult<String>> submitLoanInformation(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_SUBMIT_LOAN_INFORMATION);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, "1"));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
         return writeInfoService.submitLoanInformation(params);
     }
 
@@ -54,7 +54,7 @@ public class WriteInfoModel extends BaseModel {
 
     public Observable<ApiResult<StoreResultBean>> getLocalStoreList(Map<String, String> params){
         params.put("router", NetConstantValues.ROUTER_GET_LOCAL_STORE_LIST);
-        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, "1"));
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
         return writeInfoService.getLocalStoreList(params);
     }
 
