@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -34,9 +35,17 @@ public class LineCustomerAdapter extends WyBaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         viewHolder.name.setText(resultBean.getCust_name());
-        viewHolder.amount.setText(resultBean.getLoan_amount()+"元");
-        viewHolder.deadline.setText(resultBean.getLoan_period() + "周");
-        viewHolder.status.setText(WYUtils.getOrderStatus(Integer.valueOf(resultBean.getStep_status()), Integer.valueOf(resultBean.getOrder_status())));
+        if (TextUtils.isEmpty(resultBean.getLoan_amount())) {
+            viewHolder.amount.setText("- -");
+        } else {
+            viewHolder.amount.setText(resultBean.getLoan_amount() + "元");
+        }
+        if (TextUtils.isEmpty(resultBean.getLoan_period())) {
+            viewHolder.deadline.setText("- -");
+        } else {
+            viewHolder.deadline.setText(resultBean.getLoan_period() + "周");
+        }
+        viewHolder.status.setText(WYUtils.getWaitFollowStatus(Integer.valueOf(resultBean.getStep_status()), Integer.valueOf(resultBean.getOrder_status())));
         return convertView;
     }
 

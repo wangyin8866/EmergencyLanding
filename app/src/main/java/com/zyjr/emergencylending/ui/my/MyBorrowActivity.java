@@ -125,11 +125,12 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
         }
 
         if (currentBorrowBean != null) {
-            borrowState.setText(WYUtils.getOrderStatus(Integer.parseInt(currentBorrowBean.getStep_status()), Integer.parseInt(currentBorrowBean.getLoan_status())));
+            borrowState.setText(WYUtils.getMyBorrowStatus(Integer.parseInt(currentBorrowBean.getStep_status()), Integer.parseInt(currentBorrowBean.getLoan_status())));
             borrowAmount.setText(currentBorrowBean.getLoan_amount());
             borrowDeadline.setText(currentBorrowBean.getLoan_period() + "周");
-            borrowType.setText(currentBorrowBean.getProduct_name());
+            borrowType.setText("   (" + currentBorrowBean.getProduct_type_name() + ")");
             borrowDate.setText(currentBorrowBean.getLoan_time());
+
         }
         if (hisBorrowListBeans.size() != 0) {
             rvMain.setLayoutManager(new LinearLayoutManager(this));

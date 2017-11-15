@@ -17,6 +17,7 @@ public class MyBorrow {
      * lockerFlag : false
      */
     private String promptMsg;
+
     public String getPromptMsg() {
         return promptMsg;
     }
@@ -24,6 +25,7 @@ public class MyBorrow {
     public void setPromptMsg(String promptMsg) {
         this.promptMsg = promptMsg;
     }
+
     private String flag;
     private String msg;
     private String ext;
@@ -145,6 +147,24 @@ public class MyBorrow {
             private String out_push_title;
             private String step_status;
             private String isRepaymentFlag;
+            private String online_type;
+            private String product_type_name;
+
+            public String getOnline_type() {
+                return online_type;
+            }
+
+            public void setOnline_type(String online_type) {
+                this.online_type = online_type;
+            }
+
+            public String getProduct_type_name() {
+                return product_type_name;
+            }
+
+            public void setProduct_type_name(String product_type_name) {
+                this.product_type_name = product_type_name;
+            }
 
             public String getProduct_name() {
                 return product_name;
@@ -281,6 +301,24 @@ public class MyBorrow {
             private String out_push_title;
             private String step_status;
             private String isRepaymentFlag;
+            private String online_type;
+            private String product_type_name;
+
+            public String getOnline_type() {
+                return online_type;
+            }
+
+            public void setOnline_type(String online_type) {
+                this.online_type = online_type;
+            }
+
+            public String getProduct_type_name() {
+                return product_type_name;
+            }
+
+            public void setProduct_type_name(String product_type_name) {
+                this.product_type_name = product_type_name;
+            }
 
             public String getProduct_name() {
                 return product_name;

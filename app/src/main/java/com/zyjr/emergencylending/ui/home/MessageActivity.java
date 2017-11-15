@@ -146,7 +146,9 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
         if (messageBean.getResult().getResultList().size() == 0) {
             easylayout.setVisibility(View.GONE);
             llEmpty.setVisibility(View.VISIBLE);
+            tvMark.setEnabled(false);
         } else {
+            tvMark.setEnabled(true);
             easylayout.setVisibility(View.VISIBLE);
             llEmpty.setVisibility(View.GONE);
             if (!(messageBean.getResult().getResultList().size() > Config.PAGE_SIZE)) {
