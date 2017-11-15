@@ -293,6 +293,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
         intent.putExtra("online_type", online_type);
         intent.putExtra("product_id", product_id);
         startActivity(intent);
+        finish();
     }
 
     @Override

@@ -76,8 +76,8 @@ public class ImmediateBean {
          * cust_id : 97e123b56d2e4f0fa5eb9fc4368d9d08
          */
 
-        private String is_exists;
-        private String is_lz;
+        private String is_exists; // 是否存在在途件标识 1:存在  0:不存在
+        private String is_lz; // 是否能流转 1：是 ;0：否
         private String cust_juid;
 
         public String getIs_exists() {

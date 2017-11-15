@@ -207,10 +207,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 } else {
                     if (writeInfoBean.getUser_data_status().equals("0")
                             || writeInfoBean.getUser_job_status().equals("0")
-                            || writeInfoBean.getUser_contact_status().equals("0")) {
-                        ToastAlone.showLongToast(this, "请先完善个人信息!");
-                        return;
-                    } else if (writeInfoBean.getUser_bank_status().equals("0")) {
+                            || writeInfoBean.getUser_contact_status().equals("0")
+                            || writeInfoBean.getUser_bank_status().equals("0")) {
                         ToastAlone.showLongToast(this, "请完善资料信息!");
                         return;
                     }
@@ -459,12 +457,15 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             }
         }
         if (bean.getRenew_loan_flag().equals("0")) {
-            renew_loan_type = "0";
             // 首贷
-            apply_amount = bean.getLoan_amount();
-            apply_periods = bean.getLoan_periods();
-            apply_zq = bean.getLoan_zq();
-            apply_periods_unit = bean.getLoan_unit();
+            renew_loan_type = "0";
+            if (online_type.equals("0")) {
+                // 线上
+                apply_amount = bean.getLoan_amount();
+                apply_periods = bean.getLoan_periods();
+                apply_zq = bean.getLoan_zq();
+                apply_periods_unit = bean.getLoan_unit();
+            }
         } else {
             // 续贷
             renew_loan_type = "3";

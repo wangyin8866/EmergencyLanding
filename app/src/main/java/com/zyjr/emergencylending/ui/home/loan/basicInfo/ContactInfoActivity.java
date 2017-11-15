@@ -387,10 +387,9 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
-            getContactInfo();
-        } else {
             getPersonInfo();
         }
+        getPersonInfo();
     }
 
 

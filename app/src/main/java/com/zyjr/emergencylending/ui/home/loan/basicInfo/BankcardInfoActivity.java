@@ -194,7 +194,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
      * 已完成状态获取资料信息
      */
     private void getBindBankcardInfo() {
-        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+        if (StringUtil.isNotEmpty(status)) {
             loadingBindBankcardInfo();
         }
     }

@@ -162,5 +162,6 @@ public class ImmediatelyBorrowActivity extends BaseActivity<ImmediatelyPresenter
     @Override
     public void onlineToOffline(BaseBean baseBean) {
         startActivity(new Intent(mContext, BorrowActivity.class));
+        finish();
     }
 }

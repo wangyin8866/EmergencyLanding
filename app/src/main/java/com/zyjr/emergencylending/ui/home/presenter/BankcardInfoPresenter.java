@@ -58,7 +58,7 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
             @Override
             public void onSuccess(CustomApiResult<BankcardInfo, BankcardInfo> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    if (result.getResult() != null) {
+                    if (result.getResult() != null ) {
                         LogUtils.d("获取绑定银行卡信息(成功:存在银行卡)---->" + result.getMsg());
                         getView().onSuccessGet(Constants.GET_BIND_BANKCARD_INFO, result.getResult());
                     } else if (result.getExt() != null) {

@@ -23,16 +23,20 @@ public class ImmediatelyPresenter extends BasePresenter<ImmediatelyView> {
         super(context);
     }
 
-    public void preCheckBook(String router, String phone,String valid_code) {
-        invoke(SalesmanModel.getInstance().preCheckBook(router, phone,valid_code), new ProgressSubscriber<ImmediateBean>(new SubscriberOnNextListener<ImmediateBean>() {
+    public void preCheckBook(String router, String phone, String valid_code) {
+        invoke(SalesmanModel.getInstance().preCheckBook(router, phone, valid_code), new ProgressSubscriber<ImmediateBean>(new SubscriberOnNextListener<ImmediateBean>() {
             @Override
             public void onNext(ImmediateBean result) {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
+                    getView().preCheckBook(result);
+                } else if (result.getFlag().equals("API2025") || result.getFlag().equals("API2026")) {
+                    // 2025:线上有在途件; 2026:线下有在途件
                     getView().preCheckBook(result);
                 } else {
                     ToastAlone.showShortToast(mContext, result.getPromptMsg());
                 }
             }
+
             @Override
             public void onError(Throwable e) {
                 ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
@@ -40,8 +44,8 @@ public class ImmediatelyPresenter extends BasePresenter<ImmediatelyView> {
         }, mContext));
     }
 
-    public void borrowSkip(String router ,String cust_juid) {
-        invoke(SalesmanModel.getInstance().onlineToOffline(router,cust_juid), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
+    public void borrowSkip(String router, String cust_juid) {
+        invoke(SalesmanModel.getInstance().onlineToOffline(router, cust_juid), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean result) {
                 if (result.getFlag().equals(Config.CODE_SUCCESS)) {
@@ -50,6 +54,7 @@ public class ImmediatelyPresenter extends BasePresenter<ImmediatelyView> {
                     ToastAlone.showShortToast(mContext, result.getPromptMsg());
                 }
             }
+
             @Override
             public void onError(Throwable e) {
                 ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);

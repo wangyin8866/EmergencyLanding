@@ -325,7 +325,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             getPersonInfo();
         }
         if (isEdit.equals("0")) { // 不可编辑
-            WYUtils.coverPage(false, llCover);
+//            WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
         }
     }
@@ -356,7 +356,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             return;
         }
         if (StringUtil.isEmpty(liveStatus) && liveCodeBean == null) {
-            ToastAlone.showLongToast(this, "请选择居住状态!");
+            ToastAlone.showLongToast(this, "请选择居住状况!");
             return;
         }
         if (StringUtil.isEmpty(hujiAddress) && hujiAddressBean == null) {

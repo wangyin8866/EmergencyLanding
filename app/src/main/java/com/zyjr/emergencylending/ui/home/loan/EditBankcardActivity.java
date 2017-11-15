@@ -134,6 +134,10 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
             ToastAlone.showLongToast(this, "请输入银行卡");
             return;
         }
+        if (bankcardNumber.length() < 15) {
+            ToastAlone.showLongToast(this, "请正确填写银行卡");
+            return;
+        }
         if (StringUtil.isEmpty(openBank)) {
             ToastAlone.showLongToast(this, "请选择开户银行");
             return;
@@ -143,7 +147,7 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
             return;
         }
         if (!StringUtil.isMobile(reservedPhone)) {
-            ToastAlone.showLongToast(this, "请输入正确的手机号");
+            ToastAlone.showLongToast(this, "请正确填写银行预留手机号");
             return;
         }
         if (bankcardInfo == null) {
