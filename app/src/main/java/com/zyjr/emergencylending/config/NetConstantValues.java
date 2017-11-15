@@ -9,8 +9,12 @@ public interface NetConstantValues {
     /**
      * 测试服务器
      */
-    String HOST_URL = "http://192.168.6.107:8086/";
-//    String HOST_URL = "http://192.168.10.12:8080/";
+//    String HOST_URL = "http://192.168.6.107:8086/";
+    //内网
+    String HOST_URL = "http://192.168.6.107/";
+    //外网
+//    String HOST_URL = "http://101.95.160.70:8001/";
+
     /**
      * 杨存本地
      */
@@ -19,17 +23,12 @@ public interface NetConstantValues {
     /**
      * 我的还款登陆
      */
-    String REPAYMENT_LOGIN_BASE= "http://192.168.10.14:8080/cffg_loan/";
+    String REPAYMENT_LOGIN_BASE = "http://192.168.10.14:8080/cffg_loan/";
     /**
      * 二级地址
      */
     String LOAN = "jjt-api/http/do";
 
-    /**
-     * 订单状态
-     */
-
-    String order = "http://192.168.6.107:9090/jjth5/orderStatus.html";
 
     /**
      * 帮助说明
