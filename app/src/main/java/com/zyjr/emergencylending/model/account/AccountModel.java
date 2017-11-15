@@ -91,12 +91,13 @@ public class AccountModel extends BaseModel {
      * 忘记密码
      */
     public Observable<BaseBean> forgetPassword(String router, String phone,
-                                               String verify_code, String password) {
+                                               String verify_code, String password, String type) {
         Map<String, String> map = new HashMap<String, String>(4);
         map.put("router", router);
         map.put("phone", phone);
         map.put("verify_code", verify_code);
         map.put("password", password);
+        map.put("type", type);
         return mApi.sendSMS(map);
     }
 

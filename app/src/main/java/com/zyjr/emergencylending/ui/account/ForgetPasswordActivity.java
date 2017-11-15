@@ -3,7 +3,6 @@ package com.zyjr.emergencylending.ui.account;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,16 +15,13 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.ui.account.presenter.ForgetPresenter;
-import com.zyjr.emergencylending.utils.DateUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
-import com.zyjr.emergencylending.utils.UIUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Subscription;
 import rx.functions.Action1;
 
@@ -67,9 +63,8 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
 
     private void init() {
         String title = getIntent().getStringExtra("title");
-        if (!TextUtils.isEmpty(title)) {
-            topBar.setTitle(title);
-        }
+        final String type = getIntent().getStringExtra("type");
+        topBar.setTitle(title);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -121,44 +116,13 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
                 } else if (!pwd.equals(pwdAgain)) {
                     ToastAlone.showShortToast(mContext, "两次输入的密码不一致！");
                 } else {
-                    mPresenter.forgetPassword(NetConstantValues.REST_PASSWORD, phone, sms, pwd);
+                    mPresenter.forgetPassword(NetConstantValues.REST_PASSWORD, phone, sms, pwd,type);
                 }
 
             }
         });
     }
 
-    @OnClick({R.id.btn_login_code, R.id.btn_sure})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_login_code:
-                // TODO: 2017/10/14 调短信验证码的接口，下面代码写在成功后的回调中
-                btnLoginCode.setEnabled(false);
-                DateUtil.countDown(btnLoginCode, "重新发送");
-                break;
-            case R.id.btn_sure:
-                phone = etMobileNumber.getText().toString().trim();
-                inviteCode = etSmsCode.getText().toString().trim();
-                pwd = etNewPwd.getText().toString().trim();
-                pwdAgain = etNewPwdAgain.getText().toString().trim();
-                if (TextUtils.isEmpty(phone) || !WYUtils.checkPhone(phone)) {
-                    UIUtils.showToastCommon(mContext, "手机号输入错误");
-                    return;
-                } else if (TextUtils.isEmpty(inviteCode)) {
-                    UIUtils.showToastCommon(mContext, "验证码不能为空");
-                    return;
-                } else if (TextUtils.isEmpty(pwd)) {
-                    UIUtils.showToastCommon(mContext, "密码不能为空");
-                    return;
-                } else if (!pwd.equals(pwdAgain)) {
-                    UIUtils.showToastCommon(mContext, "密码不一致");
-                    return;
-                }
-                // TODO: 2017/10/14 调找回密码接口
-                startActivity(new Intent(ForgetPasswordActivity.this, LoginActivity.class));
-                break;
-        }
-    }
 
     @Override
     public void getCommonData(BaseBean baseBean) {
