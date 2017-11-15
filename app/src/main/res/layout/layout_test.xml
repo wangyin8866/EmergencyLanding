@@ -54,6 +54,7 @@
                 style="@style/SeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:thumbOffset="20dp"
                 android:max="50"
                 android:progressDrawable="@drawable/seekbar_money_process"
                 android:thumb="@mipmap/button_slide" />
@@ -143,6 +144,7 @@
                 style="@style/SeekBar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:thumbOffset="20dp"
                 android:max="50"
                 android:progressDrawable="@drawable/seekbar_week_process"
                 android:thumb="@mipmap/button_slide" />

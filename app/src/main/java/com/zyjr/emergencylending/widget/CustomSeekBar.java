@@ -1,6 +1,9 @@
 package com.zyjr.emergencylending.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -9,8 +12,8 @@ import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
+import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.utils.Arithmetic;
-import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.UIUtils;
 
 /**
@@ -47,6 +50,9 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
     public int PERIOD_MIN_UNIT = 0; // 最小周期单位 1:天,2:周
     public int PERIOD_MAX = 0;
     private Context mContext;
+    float x1 = 0;
+    float x2 = 0;
+    private float offsetX;
 
     public CustomSeekBar(Context context) {
         this(context, null);
@@ -94,6 +100,7 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
         mHeight = h;
     }
 
+    @SuppressLint("DrawAllocation")
     @Override
     protected synchronized void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -113,8 +120,15 @@ public class CustomSeekBar extends android.support.v7.widget.AppCompatSeekBar {
         Rect bounds = this.getProgressDrawable().getBounds();
 //        LogUtils.e("矩形:", bounds.left + "---" + bounds.top + "\n" + bounds.right + "---" + bounds.bottom);
 //        LogUtils.e("宽度:", bounds.width() + "");
-        float xText = bounds.width() * getProgress() / getMax() - mTextBound.width() / 2 + getPaddingLeft() - 2;
-//        LogUtils.e("xText", xText + "");
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        opts.inJustDecodeBounds = true;
+        BitmapFactory.decodeResource(getResources(), R.mipmap.button_slide, opts);
+        opts.inSampleSize = 1;
+        opts.inJustDecodeBounds = false;
+        Bitmap mBitmap =BitmapFactory.decodeResource(getResources(), R.mipmap.button_slide, opts);
+        int width=mBitmap.getWidth();
+
+        float xText = (bounds.width()-width/2) * getProgress() / getMax() +width/2-mTextBound.width()/2-15;
         canvas.drawText(mText, xText, mHeight / 2 + mTextBound.height() / 3, mTextPaint);
     }
 
