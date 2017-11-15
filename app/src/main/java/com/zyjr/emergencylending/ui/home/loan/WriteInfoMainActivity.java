@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
@@ -73,6 +74,8 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     RelativeLayout rlRecommend;
     @BindView(R.id.root_refreshview)
     PullToRefreshScrollView pullToRefreshScrollView;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry; // 网络加载失败时重试
 
     private Intent intent = null;
     private String apply_amount = ""; // 申请借款金额
@@ -138,7 +141,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
      *
      * @param view
      */
-    @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info, R.id.btn_apply_quickly, R.id.btn_submit})
+    @OnClick({R.id.layout_personal_info, R.id.layout_work_info, R.id.layout_contact_info, R.id.layout_bank_info, R.id.btn_apply_quickly, R.id.btn_submit, R.id.btn_retry})
     public void onViewClicked(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -214,7 +217,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 }
                 // 缺少首续贷标识
                 if (StringUtil.isEmpty(renew_loan_type)) {
-
+                    ToastAlone.showLongToast(WriteInfoMainActivity.this, "APP开小差了,请尝试重新申请");
                 } else {
                     if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
                         LogUtils.d("当前是业务员----走业务员");
@@ -236,6 +239,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                                 Manifest.permission.READ_CONTACTS);
                     }
                 }
+                break;
+
+            case R.id.btn_retry:
+                loadingWriteInfoStatus();
                 break;
         }
     }
@@ -415,6 +422,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     @Override
     public void onSuccessGet(String returnCode, WriteInfoBean bean) {
+        showSuccess();
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         writeInfoBean = bean;
@@ -497,6 +505,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
         ToastAlone.showLongToast(this, errorMsg);
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
+        showError();
     }
 
     /**
@@ -510,5 +519,16 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             submitLoanInfo(storeBean.getStoreId(), storeBean.getStoreName());
         }
     }
+
+    private void showError() {
+        llRetry.setVisibility(View.VISIBLE);
+        pullToRefreshScrollView.setVisibility(View.GONE);
+    }
+
+    private void showSuccess() {
+        llRetry.setVisibility(View.GONE);
+        pullToRefreshScrollView.setVisibility(View.VISIBLE);
+    }
+
 
 }

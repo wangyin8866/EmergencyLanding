@@ -314,6 +314,7 @@
             android:layout_gravity="bottom"
             android:background="@drawable/bg_operate_status"
             android:enabled="true"
+            android:gravity="center"
             android:text="提交"
             android:textColor="@color/white"
             android:textSize="17sp" />
