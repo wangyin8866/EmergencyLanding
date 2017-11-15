@@ -259,7 +259,7 @@ public class CustomerDialog extends Dialog {
         TextView tvContent = findViewById(R.id.tv_content);
         tvContent.setText(content);
         if (contentColor != 0) {
-            tvContent.setTextColor(leftFrontColor);
+            tvContent.setTextColor(contentColor);
         }
         TextView tvLeftMsg = findViewById(R.id.message_left);
         tvLeftMsg.setText(leftMsg);
@@ -269,7 +269,7 @@ public class CustomerDialog extends Dialog {
         TextView tvRightMsg = findViewById(R.id.message_right);
         tvRightMsg.setText(rightMsg);
         if (rightFrontColor != 0) {
-            tvRightMsg.setTextColor(leftFrontColor);
+            tvRightMsg.setTextColor(rightFrontColor);
         }
         window.setGravity(Gravity.CENTER);
         setCanceledOnTouchOutside(false);
