@@ -34,7 +34,7 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             @Override
             public void onNext(ApiResult<ZhimaAuthBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("获取芝麻信用授权地址成功---->" + result.getResult());
+                    LogUtils.d("获取芝麻信用授权地址成功---->" + result.getMsg());
                     getView().onSuccessGetZhimaAuthUrl(Constants.GET_ZHIMA_AUTH_URL, result.getResult());
                 } else {
                     LogUtils.d("获取芝麻信用授权地址失败---->" + result.getFlag() + "," + result.getMsg());
@@ -55,7 +55,7 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("获取芝麻信用分成功---->" + result.getResult());
+                    LogUtils.d("获取芝麻信用分成功---->" + result.getMsg());
                     getView().onSuccessGetZhimaScore(Constants.GET_ZHIMA_AUTH_SCORE, result.getPromptMsg());
                 } else {
                     LogUtils.d("获取芝麻信用分失败---->" + result.getFlag() + "," + result.getMsg());
@@ -104,7 +104,7 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取个人信息成功---->" + result.getResult());
+                        LogUtils.d("获取个人信息成功---->" + result.getMsg());
                         getView().onSuccessGetUserInfo(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {
@@ -127,7 +127,7 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             public void onNext(ApiResult<MobileBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("校验运营商验证是否有效(成功)---->" + result.getResult());
+                        LogUtils.d("校验运营商验证是否有效(成功)---->" + result.getMsg());
                         getView().onSuccessJudgeMobileValide(Constants.JUDGE_MOBILE_CODE_VALIDE, result.getResult());
                     }
                 } else {

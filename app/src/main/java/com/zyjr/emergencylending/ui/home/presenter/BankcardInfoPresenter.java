@@ -36,7 +36,7 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
             public void onNext(ApiResult<List<SupportBank>> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取支持银行信息(成功)---->" + result.getResult().toString());
+                        LogUtils.d("获取支持银行信息(成功)---->" + result.getMsg());
                         getView().onSuccessGetSupportBanks(Constants.GET_SUPPORT_BANK_INFO, result.getResult());
                     }
                 } else {
@@ -59,7 +59,7 @@ public class BankcardInfoPresenter extends BasePresenter<BankcardInfoView> {
             public void onSuccess(CustomApiResult<BankcardInfo, BankcardInfo> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取绑定银行卡信息(成功:存在银行卡)---->" + result.getResult().toString());
+                        LogUtils.d("获取绑定银行卡信息(成功:存在银行卡)---->" + result.getMsg());
                         getView().onSuccessGet(Constants.GET_BIND_BANKCARD_INFO, result.getResult());
                     } else if (result.getExt() != null) {
                         LogUtils.d("获取绑定银行卡信息(成功:没有银行卡)---->" + result.getExt().toString());

@@ -31,7 +31,7 @@ public class WorkInfoPresenter extends BasePresenter<WorkInfoView> {
             public void onNext(ApiResult<WorkInfoBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取工作信息(成功)---->" + result.getResult().toString());
+                        LogUtils.d("获取工作信息(成功)---->" + result.getMsg());
                         getView().onSuccessGet(Constants.GET_WORK_INFO, result.getResult());
                     }
                 } else {

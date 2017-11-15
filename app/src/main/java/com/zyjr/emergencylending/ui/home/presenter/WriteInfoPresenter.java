@@ -35,7 +35,7 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             public void onSuccess(ApiResult<WriteInfoBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取填写信息(资料完成情况)成功---->" + result.getResult().toString());
+                        LogUtils.d("获取填写信息(资料完成情况)成功---->" + result.getMsg());
                         getView().onSuccessGet(Constants.GET_WRITE_INFO, result.getResult());
                     }
                 } else {
@@ -57,7 +57,7 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("提交借款资料(成功)---->" + result.getResult().toString());
+                    LogUtils.d("提交借款资料(成功)---->" + result.getMsg());
                     if (StringUtil.isEmpty(params.get("store"))) {
                         getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, Config.ONLINE, result.getPromptMsg());
                     } else {
@@ -83,7 +83,7 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             public void onNext(ApiResult<MayApplyProBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取可申请产品类型(成功)---->" + result.getResult().toString());
+                        LogUtils.d("获取可申请产品类型(成功)---->" + result.getMsg());
                         getView().onSuccessGetMayApplyPro(Constants.GET_MAYAPPLY_PRODUCT_TYPE, result.getResult());
                     }
                 } else {
@@ -106,7 +106,7 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             public void onNext(ApiResult<StoreResultBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取业务员门店信息(成功)---->" + result.getResult().toString());
+                        LogUtils.d("获取业务员门店信息(成功)---->" + result.getMsg());
                         getView().onSuccessGetClerkStore(Constants.GET_LOCAL_STORE_INFO, result.getResult().getStorePoList());
                     }
                 } else if (result.getFlag().equals("API2022")) {

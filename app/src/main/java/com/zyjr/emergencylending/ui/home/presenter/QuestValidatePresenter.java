@@ -32,7 +32,7 @@ public class QuestValidatePresenter extends BasePresenter<QuestValidateView> {
             @Override
             public void onNext(ApiResult<List<ContactInfoBean>> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("获取联系人信息(成功)---->" + result.getResult());
+                    LogUtils.d("获取联系人信息(成功)---->" + result.getMsg());
                     if (result.getResult() != null) {
                         getView().onSuccessGetContactInfo(Constants.GET_CONTACT_INFO, result.getResult());
                     }

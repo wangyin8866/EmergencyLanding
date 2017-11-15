@@ -33,7 +33,7 @@ public class ProductInfoPresenter extends BasePresenter<ProductInfoView> {
             public void onNext(ApiResult<List<SupportCityBean>> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("查询支持城市信息(成功)---->" + result.getResult());
+                        LogUtils.d("查询支持城市信息(成功)---->" + result.getMsg());
                         getView().onSuccessGetSupportCity(Constants.GET_SUPPORT_CITIES_LIST, result.getResult());
                     }
                 } else {
@@ -56,7 +56,7 @@ public class ProductInfoPresenter extends BasePresenter<ProductInfoView> {
             public void onNext(ApiResult<ProIntroduceBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("查询产品介绍信息成功---->" + result.getResult());
+                        LogUtils.d("查询产品介绍信息成功---->" + result.getMsg());
                         getView().onSuccessGetIntro(Constants.GET_PRODUCT_INTRODUCE, result.getResult().getProduct_info());
                     }
                 } else {

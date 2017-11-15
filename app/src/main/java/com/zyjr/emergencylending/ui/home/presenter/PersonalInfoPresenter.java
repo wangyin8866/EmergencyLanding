@@ -77,7 +77,7 @@ public class PersonalInfoPresenter extends BasePresenter<PersonalInfoView> {
             public void onNext(ApiResult<PersonalInfoBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
-                        LogUtils.d("获取个人信息(成功)---->" + result.getResult());
+                        LogUtils.d("获取个人信息(成功)---->" + result.getMsg());
                         getView().onSuccessGet(Constants.GET_PERSONAL_INFO, result.getResult());
                     }
                 } else {
