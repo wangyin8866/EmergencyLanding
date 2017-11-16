@@ -18,6 +18,8 @@ import com.zyjr.emergencylending.ui.home.loan.basicInfo.ContactInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.PersonalInfoActivity;
 import com.zyjr.emergencylending.ui.home.loan.basicInfo.WorkInfoActivity;
 import com.zyjr.emergencylending.ui.my.presenter.PersonalDataPresenter;
+import com.zyjr.emergencylending.utils.StringUtil;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -150,12 +152,20 @@ public class PersonalDataActivity extends BaseActivity<PersonalDataPresenter, Ba
 
                 break;
             case R.id.pic_contact:
+                if (StringUtil.isNotEmpty(personalStatus) && personalStatus.equals("0")) {
+                    ToastAlone.showLongToast(this, "请先完善个人信息!");
+                    return;
+                }
                 intent = new Intent(mContext, ContactInfoActivity.class);
                 intent.putExtra("isEdit", isContactEdit);
                 intent.putExtra("status", contactStatus);
                 startActivity(intent);
                 break;
             case R.id.pic_card:
+                if (StringUtil.isNotEmpty(personalStatus) && personalStatus.equals("0")) {
+                    ToastAlone.showLongToast(this, "请先完善个人信息!");
+                    return;
+                }
                 intent = new Intent(mContext, BankcardInfoActivity.class);
                 intent.putExtra("isEdit", isCardEdit);
                 intent.putExtra("status", cardStatus);

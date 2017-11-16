@@ -31,6 +31,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.AppConfig;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
@@ -70,8 +71,8 @@ import static com.zyjr.emergencylending.utils.CommonUtils.provinceList;
 
 /**
  * Created by neil on 2017/10/12
- * 备注: 个人信息/资料
- * 根据状态判断 是否可编辑修改
+ * </br>个人信息/资料
+ * </br>根据状态判断 是否可编辑修改
  */
 public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, PersonalInfoView> implements TakePhoto.TakeResultListener, PersonalInfoView {
 
@@ -324,7 +325,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         if (StringUtil.isNotEmpty(status) && status.equals("1")) {
             getPersonInfo();
         }
-        if (isEdit.equals("0")) { // 不可编辑
+        if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
 //            WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
         }
@@ -677,7 +678,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                         break;
 
                     case R.id.tv_scan_again:
-                        ToastAlone.showLongToast(BaseApplication.getContext(), "重新扫描");
+
                         break;
                 }
             }
@@ -824,7 +825,9 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
-        showError();
+        if(Constants.GET_PERSONAL_INFO.equals(returnCode)){
+            showError();
+        }
     }
 
     private void showError() {

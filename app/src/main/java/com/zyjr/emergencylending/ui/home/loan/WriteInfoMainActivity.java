@@ -55,7 +55,7 @@ import butterknife.OnClick;
 
 /**
  * Created by neil on 2017/10/12
- * 备注: 填写资料(包含个人信息.工作信息)
+ * </br> 填写资料(包含个人信息.工作信息.联系人信息.银行卡)
  */
 public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, WriteInfoView> implements WriteInfoView {
     @BindView(R.id.top_bar)
@@ -120,7 +120,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 judgeMatchProInfo("", renew_loan_type, apply_amount, apply_periods, apply_zq, apply_periods_unit);
             } else {
-                ToastAlone.showLongToast(WriteInfoMainActivity.this, "请允许通讯录权限!");
+                ToastAlone.showLongToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
             }
         }
     }
@@ -343,12 +343,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             layoutBankInfo.setRightContent("未完成", getResources().getColor(R.color.front_text_color_hint));
         }
         if (personal.equals("1") && work.equals("1") && contact.equals("1") && bank.equals("1")) {
+            // TODO 获取门店及推荐产品
             getMayApplyProductType();
         }
     }
 
     /**
-     * 匹配金额 pop
+     * 匹配金额 弹出框(线上才有)
      *
      * @param userFlag       用户标识
      * @param renewLoanType  是否首贷(0首,3续)
@@ -457,7 +458,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             }
         }
         if (bean.getRenew_loan_flag().equals("0")) {
-            // 首贷
+            // 首贷标识
             renew_loan_type = "0";
             if (online_type.equals("0")) {
                 // 线上
@@ -467,7 +468,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                 apply_periods_unit = bean.getLoan_unit();
             }
         } else {
-            // 续贷
+            // 续贷标识
             renew_loan_type = "3";
         }
     }
@@ -475,13 +476,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     @Override
     public void onFail(String apiCode, String flag, String failMsg) {
         if (apiCode.equals(Constants.GET_LOCAL_STORE_INFO) && "API2022".equals(flag)) {
-            // 获取业务员门店信息(未匹配到支持城市)
+            // 业务员帮录件获取门店信息(未匹配到支持城市)
             Intent intent = new Intent(this, ClerkApplyResultActivity.class);
             intent.putExtra("flag", flag);
             intent.putExtra("msg", failMsg);
             startActivity(intent);
         } else if (apiCode.equals(Constants.SUBMIT_LOAN_INFORMATION) && product_id.equals("0")) {
-            // 线上存款提交 失败
+            // 线上借款预检失败
             Intent intent = new Intent(this, HandleFailActivity.class);
             intent.putExtra("flag", flag);
             intent.putExtra("msg", failMsg);

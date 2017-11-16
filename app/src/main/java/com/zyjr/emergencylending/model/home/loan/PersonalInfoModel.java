@@ -61,6 +61,7 @@ public class PersonalInfoModel extends BaseModel {
         } else {
             params.put("router", NetConstantValues.ROUTER_UPLOAD_FILE);
         }
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
         return personalInfoService.uploadFile(params);
     }
 }
