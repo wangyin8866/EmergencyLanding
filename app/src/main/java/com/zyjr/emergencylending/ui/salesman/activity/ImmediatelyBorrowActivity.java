@@ -155,6 +155,7 @@ public class ImmediatelyBorrowActivity extends BaseActivity<ImmediatelyPresenter
             }
         } else {
             startActivity(new Intent(mContext, BorrowActivity.class));
+            finish();
         }
 
     }

@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.config.AppConfig;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CityModel;
@@ -249,8 +250,6 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         workInfoBean.setTitle(workPositionCodebean.getCode()); // 工作职位
         workInfoBean.setMonth_pay(inComeCodebean.getCode()); // 每月收入
         Map<String, String> paramsMap = ReflectionUtils.beanToMap(workInfoBean);
-        LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
-        LogUtils.d("参数数量:" + paramsMap.size());
         mPresenter.addWorkInfo(paramsMap);
     }
 
@@ -393,7 +392,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         if (StringUtil.isNotEmpty(status) && status.equals("1")) {
             getWorkInfo();
         }
-        if (isEdit.equals("0")) { // 不可编辑
+        if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
         }
@@ -438,7 +437,9 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
-        showError();
+        if(Constants.GET_WORK_INFO.equals(returnCode)){
+            showError();
+        }
     }
 
     private void showError() {

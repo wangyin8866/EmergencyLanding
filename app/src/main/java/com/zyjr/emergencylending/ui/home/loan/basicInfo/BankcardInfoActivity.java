@@ -21,6 +21,7 @@ import com.jph.takephoto.model.TakePhotoOptions;
 import com.xfqz.xjd.mylibrary.CustomProgressDialog;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.BankcardInfo;
@@ -320,9 +321,11 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
-        showError();
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
+        if (Constants.GET_BIND_BANKCARD_INFO.equals(returnCode)) {
+            showError();
+        }
     }
 
     @Override

@@ -43,7 +43,7 @@ public class WorkInfoPresenter extends BasePresenter<WorkInfoView> {
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("获取工作信息(异常)---->" + e.getMessage());
-                getView().onError(Constants.ADD_PERSONAL_INFO, Config.TIP_NET_ERROR);
+                getView().onError(Constants.GET_WORK_INFO, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

@@ -161,5 +161,6 @@ public class BorrowActivity extends BaseActivity {
         intent.putExtra("online_type", "1");
         intent.putExtra("product_id", "1");
         startActivity(intent);
+        finish();
     }
 }

@@ -25,6 +25,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.AppConfig;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.CodeBean;
@@ -52,8 +53,8 @@ import butterknife.OnClick;
 
 /**
  * Created by neil on 2017/10/12
- * 备注: 联系人信息
- * 普通用户从手机通讯录中选择号码,业务员需要手输号码 【联调时注意】
+ * </br> 联系人信息
+ * </br> 普通用户从手机通讯录中选择号码,业务员需要手输号码
  */
 public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, ContactInfoView> implements ContactInfoView {
     @BindView(R.id.top_bar)
@@ -240,6 +241,10 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             ToastAlone.showLongToast(this, "请选择联系人电话!");
             return;
         }
+        if(!StringUtil.isMobile(contactPhone1)){
+            ToastAlone.showLongToast(this, "请正确填写联系人电话!");
+            return;
+        }
         if (StringUtil.isEmpty(relation1) || relationCodeBean1 == null) {
             ToastAlone.showLongToast(this, "请选择“关系1”联系人!");
             return;
@@ -250,6 +255,10 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         }
         if (StringUtil.isEmpty(contactPhone2)) {
             ToastAlone.showLongToast(this, "请选择联系人电话!");
+            return;
+        }
+        if(!StringUtil.isMobile(contactPhone2)){
+            ToastAlone.showLongToast(this, "请正确填写联系人电话!");
             return;
         }
         if (StringUtil.isEmpty(relation2) || relationCodeBean2 == null) {
@@ -278,8 +287,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         contactsList.add(contactBean2);
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("contactList", new Gson().toJson(contactsList));
-        LogUtils.d("参数明细:" + new Gson().toJson(paramsMap));
-        LogUtils.d("参数数量:" + paramsMap.size());
         mPresenter.addContactInfo(paramsMap);
     }
 
@@ -387,7 +394,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
-            getPersonInfo();
         }
         getPersonInfo();
     }
@@ -423,9 +429,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
             }
             if (phone.contains("-")) {
                 phone = phone.replace("-", "").toString();
-            }
-            if (phone.length() > 11) {
-                phone = phone.substring(phone.length() - 11);
             }
             if (phone.length() != 11) {
                 ToastAlone.showShortToast(this, "联系人电话不合法!");
@@ -490,7 +493,9 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showLongToast(this, errorMsg);
-        showError();
+        if(Constants.GET_CONTACT_INFO.equals(returnCode) || Constants.GET_PERSONAL_INFO.equals(returnCode) ){
+            showError();
+        }
     }
 
     @Override
