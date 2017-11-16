@@ -107,4 +107,5 @@ dependencies {
     // 权限管控
     compile 'com.yanzhenjie:permission:1.1.0'
     compile project(':convenientbanner')
+    compile 'com.android.support:multidex:1.0.2'
 }
