@@ -101,7 +101,7 @@ dependencies {
     compile files('libs/weiboSDKCore.jar')
     //个推
     compile 'com.getui:sdk:2.11.1.0'
-    compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:support-v4:26.1.0'
     //打开pdf
     compile 'com.lidong.pdf:android_pdf:1.0.1'
     // 权限管控

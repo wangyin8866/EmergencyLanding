@@ -296,7 +296,7 @@
             android:name=".service.DemoPushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice"></service>
+            android:process=":pushservice"/>
         <service android:name=".service.DemoIntentService" />
 
         <!-- 线下件确认 -->
@@ -326,7 +326,8 @@
         <activity
             android:name=".ui.salesman.activity.MyCardActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.salesman.activity.ApplyActivity" />
+        <!--申请客户-->
+        <activity android:name=".ui.salesman.activity.ApplyActivity" android:screenOrientation="portrait"/>
 
 
     </application>

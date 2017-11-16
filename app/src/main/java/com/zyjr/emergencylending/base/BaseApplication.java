@@ -5,12 +5,12 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.multidex.MultiDex;
 
 import com.igexin.sdk.PushManager;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.config.SupportCityConfig;
 import com.zyjr.emergencylending.service.DemoIntentService;
 import com.zyjr.emergencylending.service.DemoPushService;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -108,5 +108,10 @@ public class BaseApplication extends Application {
         PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
         PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
         PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
+    }
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(base);
     }
 }
