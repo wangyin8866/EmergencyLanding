@@ -103,7 +103,7 @@
                         android:layout_height="70dp"
                         app:bg_color="@color/loan_bg"
                         app:circle_out_sweep_width="5dp"
-                        app:circle_text="200"
+                        app:circle_text="--"
                         app:circle_text_color="#333333"
                         app:circle_text_size="16sp"
                         app:out_color_end="#FF8C00"
@@ -132,7 +132,7 @@
                         android:layout_centerInParent="true"
                         app:bg_color="@color/loan_bg"
                         app:circle_out_sweep_width="5dp"
-                        app:circle_text="135"
+                        app:circle_text="--"
                         app:circle_text_color="#333333"
                         app:circle_text_size="16sp"
                         app:out_color_end="#477CEA"
@@ -161,7 +161,7 @@
                         android:layout_centerInParent="true"
                         app:bg_color="@color/loan_bg"
                         app:circle_out_sweep_width="5dp"
-                        app:circle_text="100"
+                        app:circle_text="--"
                         app:circle_text_color="#333333"
                         app:circle_text_size="16sp"
                         app:out_color_end="#FF4444"
@@ -218,7 +218,7 @@
                         android:id="@+id/now_month"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="9月"
+                        android:text="--月"
                         android:textColor="#FFFFFF"
                         android:textSize="16sp" />
 
@@ -251,7 +251,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="1100"
+                        android:text="--"
                         android:textColor="#FF9000"
                         android:textSize="16sp" />
 
@@ -278,7 +278,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="111.05"
+                        android:text="--"
                         android:textColor="#FF9000"
                         android:textSize="16sp" />
 
@@ -302,6 +302,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_apply"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="10dp"
@@ -327,10 +328,11 @@
                     android:textSize="15sp" />
 
                 <TextView
+                    android:id="@+id/apply_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:text="(近7天)"
+                    android:text="(--)"
                     android:textColor="#878787"
                     android:textSize="15sp" />
             </LinearLayout>

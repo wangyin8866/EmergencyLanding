@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
@@ -13,7 +12,6 @@ import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
-import com.zyjr.emergencylending.utils.NetworkUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 
 /**
@@ -31,11 +29,11 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_main);
-        if (!NetworkUtils.isNetAvailable(SplashActivity.this)) {
-            Toast.makeText(SplashActivity.this, "亲,您的网络没有打开,无法进行操作,请连接网络之后再操作！", Toast.LENGTH_LONG).show();
-            finish();
-            return;
-        }
+//        if (!NetworkUtils.isNetAvailable(SplashActivity.this)) {
+//            Toast.makeText(SplashActivity.this, "亲,您的网络没有打开,无法进行操作,请连接网络之后再操作！", Toast.LENGTH_LONG).show();
+//            finish();
+//            return;
+//        }
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -69,6 +69,10 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     Button btnRetry;
     @BindView(R.id.ll_retry)
     LinearLayout llRetry;
+    @BindView(R.id.apply_type)
+    TextView applyType;
+    @BindView(R.id.ll_apply)
+    LinearLayout llApply;
     private int type;
 
     @Nullable
@@ -198,8 +202,29 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     @Override
     public void waitApply(WaitApplyBean baseBean) {
+        if (baseBean.getResult().getClerkRecordList().size() > 0) {
+            llApply.setVisibility(View.VISIBLE);
+            applyType.setText(getType());
+            xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult().getClerkRecordList(), mContext));
+        } else {
+            llApply.setVisibility(View.GONE);
+        }
+    }
 
-        xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult().getClerkRecordList(), mContext));
+    private String getType() {
+        String result = "";
+        switch (type) {
+            case 1:
+                result = "(近七天)";
+                break;
+            case 2:
+                result = "(当月)";
+                break;
+            case 3:
+                result = "(上月)";
+                break;
+        }
+        return result;
     }
 
     @Override

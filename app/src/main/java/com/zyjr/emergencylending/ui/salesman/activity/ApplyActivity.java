@@ -3,13 +3,13 @@ package com.zyjr.emergencylending.ui.salesman.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -24,8 +24,8 @@ import butterknife.ButterKnife;
 public class ApplyActivity extends BaseActivity {
 
 
-    @BindView(R.id.top_bar)
-    TopBar topBar;
+    @BindView(R.id.go_back)
+    View goBack;
     @BindView(R.id.web_view)
     WebView webView;
     @BindView(R.id.progress_bar)
@@ -48,14 +48,10 @@ public class ApplyActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_apply);
         ButterKnife.bind(this);
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+        goBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void OnLeftButtonClicked() {
+            public void onClick(View view) {
                 finish();
-            }
-
-            @Override
-            public void OnRightButtonClicked() {
             }
         });
         String url = getIntent().getStringExtra("url");
