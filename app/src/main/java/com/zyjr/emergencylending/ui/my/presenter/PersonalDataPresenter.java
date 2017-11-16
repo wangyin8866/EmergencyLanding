@@ -82,12 +82,12 @@ public class PersonalDataPresenter extends BasePresenter<BaseView<UserStatus>> {
         }
         //银行卡
         if (Config.TRUE.equals(isBankError)) {
-            iconPicCard.setVisibility(View.GONE);
+            iconPicCard.setImageResource(R.mipmap.data_icon_abnormal);
         } else if (Config.TRUE.equals(cardStatus) && Config.TRUE.equals(isCardEdit)) {
             iconPicCard.setVisibility(View.VISIBLE);
             iconPicCard.setImageResource(R.mipmap.data_icon_edit_complete);
         } else if (Config.FALSE.equals(cardStatus) && Config.TRUE.equals(isCardEdit)) {
-            iconPicCard.setImageResource(R.mipmap.data_icon_abnormal);
+            iconPicCard.setVisibility(View.GONE);
         } else if (Config.FALSE.equals(isCardEdit)) {
             iconPicCard.setVisibility(View.VISIBLE);
             iconPicCard.setImageResource(R.mipmap.data_icon_complete);
