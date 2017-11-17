@@ -83,8 +83,8 @@ public class BorrowActivity extends BaseActivity {
         MAX_WEEK = 52;
         MIN_MONEY = 5000;
         MAX_MONEY = 30000;
-        initSeekMoney(10, MIN_MONEY, MAX_MONEY);
-        initSeekWeek(1, MIN_WEEK, MAX_WEEK, 2);
+        initSeekMoney(16, MIN_MONEY, MAX_MONEY);
+        initSeekWeek(8, MIN_WEEK, MAX_WEEK, 2);
     }
 
 
