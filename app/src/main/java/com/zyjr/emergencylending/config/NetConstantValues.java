@@ -11,19 +11,19 @@ public interface NetConstantValues {
      */
 //    String HOST_URL = "http://192.168.6.107:8086/";
     //内网
-//    String HOST_URL = "http://192.168.6.107/";
+    String HOST_URL = "http://192.168.6.107/";
     //外网
 //    String HOST_URL = "http://101.95.160.70:8001/";
 
     /**
      * 杨存本地
      */
-    String HOST_URL = "http://192.168.9.152:8086/";
+//    String HOST_URL = "http://192.168.9.152:8086/";
 
     /**
      * 我的还款登陆
      */
-    String REPAYMENT_LOGIN_BASE = "http://192.168.10.14:8080/cffg_loan/";
+    String REPAYMENT_LOGIN_BASE = "http://192.168.10.51:8080/cffg_loan/";
     /**
      * 二级地址
      */

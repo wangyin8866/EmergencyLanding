@@ -98,6 +98,15 @@ public class WaitApplyBean {
             private String order_status;
             private String order_time;
             private String step_status;
+            private String loan_periods_unit;
+
+            public String getLoan_periods_unit() {
+                return loan_periods_unit;
+            }
+
+            public void setLoan_periods_unit(String loan_periods_unit) {
+                this.loan_periods_unit = loan_periods_unit;
+            }
 
             public String getStep_status() {
                 return step_status;

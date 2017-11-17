@@ -36,14 +36,14 @@ public class LineCustomerAdapter extends WyBaseAdapter {
         }
         viewHolder.name.setText(resultBean.getCust_name());
         if (TextUtils.isEmpty(resultBean.getLoan_amount())) {
-            viewHolder.amount.setText("- -");
+            viewHolder.amount.setText("- -元");
         } else {
             viewHolder.amount.setText(resultBean.getLoan_amount() + "元");
         }
         if (TextUtils.isEmpty(resultBean.getLoan_period())) {
-            viewHolder.deadline.setText("- -");
+            viewHolder.deadline.setText("- -"+ resultBean.getLoan_periods_unit());
         } else {
-            viewHolder.deadline.setText(resultBean.getLoan_period() + "周");
+            viewHolder.deadline.setText(resultBean.getLoan_period() + resultBean.getLoan_periods_unit());
         }
         viewHolder.status.setText(WYUtils.getWaitFollowStatus(Integer.valueOf(resultBean.getStep_status()), Integer.valueOf(resultBean.getOrder_status())));
         return convertView;

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.ajguan.library.EasyRefreshLayout;
+import com.ajguan.library.LoadModel;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
@@ -39,7 +41,9 @@ import butterknife.Unbinder;
  * @date 2017/8/9
  */
 
-public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> implements BorrowView {
+public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> implements BorrowView, EasyRefreshLayout.EasyEvent {
+    @BindView(R.id.swipe_container)
+    EasyRefreshLayout easyRefreshLayout;
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.notice_auto_roll)
@@ -76,6 +80,9 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
         View view = inflater.inflate(R.layout.line_fragment_borrow_main, container, false);
         unbinder = ButterKnife.bind(this, view);
         init();
+        easyRefreshLayout.addEasyEvent(this);
+        //隐藏上拉加载
+        easyRefreshLayout.setLoadMoreModel(LoadModel.NONE);
         return view;
     }
 
@@ -189,5 +196,18 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> im
             auto_roll_data2.add("没有最新动态");
         }
         showAutoRollStrings2();
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
+
+    @Override
+    public void onRefreshing() {
+        easyRefreshLayout.refreshComplete();
+
+        mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
     }
 }

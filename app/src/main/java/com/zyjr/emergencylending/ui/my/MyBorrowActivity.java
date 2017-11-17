@@ -127,7 +127,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
         if (currentBorrowBean != null) {
             borrowState.setText(WYUtils.getMyBorrowStatus(Integer.parseInt(currentBorrowBean.getStep_status()), Integer.parseInt(currentBorrowBean.getLoan_status())));
             borrowAmount.setText(currentBorrowBean.getLoan_amount());
-            borrowDeadline.setText(currentBorrowBean.getLoan_period() + "周");
+            borrowDeadline.setText(currentBorrowBean.getLoan_period() + WYUtils.getPeriod(currentBorrowBean.getLoan_unit()));
             borrowType.setText("   (" + currentBorrowBean.getProduct_type_name() + ")");
             borrowDate.setText(currentBorrowBean.getLoan_time());
 

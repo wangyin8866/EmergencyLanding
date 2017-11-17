@@ -1,8 +1,10 @@
 package com.zyjr.emergencylending.ui.salesman.fragment;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +77,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     LinearLayout llApply;
     private int type;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,6 +87,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         init();
         xlv.setXListViewListener(this);
         xlv.setPullLoadEnable(false);
+
         return view;
     }
 
@@ -204,28 +208,12 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     public void waitApply(WaitApplyBean baseBean) {
         if (baseBean.getResult().getClerkRecordList().size() > 0) {
             llApply.setVisibility(View.VISIBLE);
-            applyType.setText(getType());
             xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult().getClerkRecordList(), mContext));
         } else {
             llApply.setVisibility(View.GONE);
         }
     }
 
-    private String getType() {
-        String result = "";
-        switch (type) {
-            case 1:
-                result = "(近七天)";
-                break;
-            case 2:
-                result = "(当月)";
-                break;
-            case 3:
-                result = "(上月)";
-                break;
-        }
-        return result;
-    }
 
     @Override
     public void getCommonData(Object o) {
@@ -241,4 +229,5 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     public void requestSuccess() {
         WYUtils.showRequestSuccess(llMain, llRetry);
     }
+
 }

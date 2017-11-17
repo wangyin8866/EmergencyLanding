@@ -739,4 +739,13 @@ public class WYUtils {
         llMain.setVisibility(View.VISIBLE);
         llRetry.setVisibility(View.GONE);
     }
+
+    public static String getPeriod(String loan_unit) {
+        if ("1".equals(loan_unit)) {
+            return "天";
+        } else if ("2".equals(loan_unit)) {
+            return "周";
+        }
+        return null;
+    }
 }
