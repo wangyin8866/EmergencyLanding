@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
@@ -125,7 +126,7 @@ public class UpdateVersionService {
                 dialog.dismiss();
                 Constants.update = false;
                 if ("0001".equals(flag)) {
-                    System.exit(1);
+                    ActivityCollector.finishAll();
                 }
             }
         });
@@ -149,7 +150,7 @@ public class UpdateVersionService {
                     case R.id.cancel:
                         Constants.update = false;
                         if ("0001".equals(flag)) {
-                            System.exit(1);
+                            ActivityCollector.finishAll();
                         }
                         break;
                     case R.id.update:
@@ -184,7 +185,7 @@ public class UpdateVersionService {
                     cancelUpdate = true;
                     Constants.update = false;
                     if ("0001".equals(flag)) {
-                        System.exit(1);
+                        ActivityCollector.finishAll();
                     }
                 }
             });

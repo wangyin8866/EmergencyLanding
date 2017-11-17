@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.utils;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AppOpsManager;
@@ -213,6 +214,7 @@ public class WYUtils {
     /**
      * webView加载
      */
+    @SuppressLint("SetJavaScriptEnabled")
     public static void loadHtml(final String url, final WebView mWebView, final ProgressBar mProgressBar) {
         LogUtils.e("webViewUrl", url);
         WebSettings settings = mWebView.getSettings();
@@ -284,6 +286,7 @@ public class WYUtils {
     /**
      * webView加载
      */
+    @SuppressLint("SetJavaScriptEnabled")
     public static void loadHtmlWithDialog(final String url, final WebView mWebView, final Dialog dialog) {
         LogUtils.e("webViewUrl", url);
         WebSettings settings = mWebView.getSettings();
