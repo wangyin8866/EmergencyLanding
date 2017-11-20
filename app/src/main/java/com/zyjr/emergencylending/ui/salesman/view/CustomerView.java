@@ -27,4 +27,5 @@ public interface CustomerView extends BaseView{
      * @param baseBean
      */
     void waitApply(WaitApplyBean baseBean);
+    void waitApplyMore(WaitApplyBean baseBean);
 }

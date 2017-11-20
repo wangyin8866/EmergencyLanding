@@ -30,7 +30,6 @@ import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
-import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 import com.zyjr.emergencylending.utils.SPUtils;
 
@@ -110,7 +109,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     }
 
     private void showAutoRollStrings() {
-        noticeAutoRoll.setText(auto_roll_data.get(0));
+        noticeAutoRoll.setTText(auto_roll_data.get(0));
         handler.sendEmptyMessage(199);
 
     }
@@ -135,17 +134,17 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         handler.removeCallbacksAndMessages(null);
     }
 
-    @OnClick({R.id.QR_code, R.id.message_center, R.id.pro1_btn, R.id.pro2_btn})
+    @OnClick({R.id.cl_QR_code, R.id.cl_message_center, R.id.pro1_btn, R.id.pro2_btn})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.QR_code:
+            case R.id.cl_QR_code:
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 }
                 break;
-            case R.id.message_center:
+            case R.id.cl_message_center:
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {

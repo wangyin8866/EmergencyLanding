@@ -24,9 +24,12 @@ import com.zyjr.emergencylending.entity.RankBean;
 import com.zyjr.emergencylending.entity.WaitApplyBean;
 import com.zyjr.emergencylending.ui.salesman.presenter.CustomerPresenter;
 import com.zyjr.emergencylending.ui.salesman.view.CustomerView;
+import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -76,6 +79,9 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     @BindView(R.id.ll_apply)
     LinearLayout llApply;
     private int type;
+    private int pageNum = 1;
+    private int pageSize = 15;
+    private List<WaitApplyBean.ResultBean.ClerkRecordListBean> clerkRecordListBeans;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
@@ -86,7 +92,7 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
         LogUtils.e("onCreateView", "onCreateView");
         init();
         xlv.setXListViewListener(this);
-        xlv.setPullLoadEnable(false);
+
 
         return view;
     }
@@ -141,8 +147,8 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 break;
             case R.id.btn_retry:
                 mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
-                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1");
                 mPresenter.rankList(NetConstantValues.RANKING_LIST);
+                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + "");
                 break;
         }
     }
@@ -175,18 +181,20 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 break;
         }
         mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + "");
         mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
     public void onRefresh() {
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1");
+        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", "1", pageSize + "");
     }
 
     @Override
     public void onLoadMore() {
+        pageNum += 1;
 
+        mPresenter.getWaitApplyMore(NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + "");
     }
 
     @Override
@@ -206,11 +214,28 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     @Override
     public void waitApply(WaitApplyBean baseBean) {
-        if (baseBean.getResult().getClerkRecordList().size() > 0) {
+        clerkRecordListBeans = baseBean.getResult().getClerkRecordList();
+        if (clerkRecordListBeans.size() > 0) {
             llApply.setVisibility(View.VISIBLE);
-            xlv.setAdapter(new LineCustomerAdapter(baseBean.getResult().getClerkRecordList(), mContext));
+            xlv.setPullLoadEnable(true);
+            xlv.setAdapter(new LineCustomerAdapter(clerkRecordListBeans, mContext));
         } else {
             llApply.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void waitApplyMore(WaitApplyBean baseBean) {
+        if (baseBean.getResult().getClerkRecordList().size() > 0) {
+            xlv.setPullLoadEnable(true);
+            clerkRecordListBeans.addAll(baseBean.getResult().getClerkRecordList());
+            xlv.setAdapter(new LineCustomerAdapter(clerkRecordListBeans, mContext));
+            //定位
+            xlv.setSelection(clerkRecordListBeans.size() - baseBean.getResult().getClerkRecordList().size());
+        } else {
+            pageNum = 1;
+            AppToast.makeShortToast(mContext, "没有数据了");
+            xlv.setPullLoadEnable(false);
         }
     }
 

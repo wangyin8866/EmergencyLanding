@@ -54,11 +54,13 @@ public class SalesmanModel extends BaseModel {
         return api.rankList(map);
     }
 
-    public Observable<WaitApplyBean> waitApply(String router, String type, String isHome) {
+    public Observable<WaitApplyBean> waitApply(String router, String type, String isHome,String currentPage,String pageSize) {
         Map<String, String> map = new HashMap<String, String>(3);
         map.put("router", router);
         map.put("type", type);
         map.put("isHome", isHome);
+        map.put("currentPage", currentPage);
+        map.put("pageSize", pageSize);
         return api.waitApply(map);
     }
 

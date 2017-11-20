@@ -65,13 +65,32 @@ public class CustomerPresenter extends BasePresenter<CustomerView> {
 
     }
 
-    public void waitApply(String router, String type, String isHome) {
-        invoke(SalesmanModel.getInstance().waitApply(router, type, isHome), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
+    public void waitApply(String router, String type, String isHome,String currentPage,String pageSize) {
+        invoke(SalesmanModel.getInstance().waitApply(router, type, isHome,currentPage,pageSize), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
             @Override
             public void onNext(WaitApplyBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                     getView().requestSuccess();
                     getView().waitApply(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                getView().requestError();
+            }
+        }, mContext));
+
+    }
+    public void getWaitApplyMore(String router, String type, String isHome,String currentPage,String pageSize) {
+        invoke(SalesmanModel.getInstance().waitApply(router, type, isHome,currentPage,pageSize), new ProgressSubscriber<WaitApplyBean>(new SubscriberOnNextListener<WaitApplyBean>() {
+            @Override
+            public void onNext(WaitApplyBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().requestSuccess();
+                    getView().waitApplyMore(baseBean);
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
