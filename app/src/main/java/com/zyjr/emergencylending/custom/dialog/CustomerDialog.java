@@ -63,8 +63,8 @@ public class CustomerDialog extends Dialog {
         ImageView qr_we_chat = findViewById(R.id.qr_we_chat);
         ImageView circle_of_friends = findViewById(R.id.circle_of_friends);
         ImageView qq = findViewById(R.id.qq);
-        ImageView qq_zone = findViewById(R.id.qq_zone);
-        ImageView weibo = findViewById(R.id.weibo);
+//        ImageView qq_zone = findViewById(R.id.qq_zone);
+//        ImageView weibo = findViewById(R.id.weibo);
         LinearLayout share_close = findViewById(R.id.share_close);
 
         window.setGravity(Gravity.BOTTOM);
@@ -76,8 +76,8 @@ public class CustomerDialog extends Dialog {
         qr_we_chat.setOnClickListener(listener);
         circle_of_friends.setOnClickListener(listener);
         qq.setOnClickListener(listener);
-        qq_zone.setOnClickListener(listener);
-        weibo.setOnClickListener(listener);
+//        qq_zone.setOnClickListener(listener);
+//        weibo.setOnClickListener(listener);
         share_close.setOnClickListener(listener);
         return instance;
     }

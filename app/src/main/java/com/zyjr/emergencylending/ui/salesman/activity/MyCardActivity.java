@@ -2,30 +2,28 @@ package com.zyjr.emergencylending.ui.salesman.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.View;
-import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
-import com.sina.weibo.sdk.utils.LogUtil;
+import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
 import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +44,7 @@ public class MyCardActivity extends BaseActivity {
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     private ImmersionBar mImmersionBar;
+    private String sUrl = "http://www.baidu.com";
 
     @Override
     protected BasePresenter createPresenter() {
@@ -78,22 +77,45 @@ public class MyCardActivity extends BaseActivity {
                 customerDialog.cardShareDialog(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        UMImage thumb = new UMImage(mContext, R.mipmap.ic_launcher);
+                        final UMWeb web = new UMWeb(sUrl);
+                        web.setTitle("邀您注册有惊喜");
+                        web.setThumb(thumb);
+                        web.setDescription("注册有惊喜，更多活动等你来体验，立即注册！");
                         switch (view.getId()) {
                             case R.id.qr_we_chat:
                                 customerDialog.dismiss();
+                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.WEIXIN)) {
+                                    new ShareAction(MyCardActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN)
+                                            .setCallback(umShareListener).share();
+                                } else {
+                                    ToastAlone.showShortToast(mContext, "微信未安装");
+                                }
                                 break;
                             case R.id.circle_of_friends:
                                 customerDialog.dismiss();
+                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.WEIXIN)) {
+                                    new ShareAction(MyCardActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                            .setCallback(umShareListener).share();
+                                } else {
+                                    ToastAlone.showShortToast(mContext, "微信未安装");
+                                }
                                 break;
                             case R.id.qq:
                                 customerDialog.dismiss();
+                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.QQ)) {
+                                    new ShareAction(MyCardActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.QQ)
+                                            .setCallback(umShareListener).share();
+                                } else {
+                                    ToastAlone.showShortToast(mContext, "QQ未安装");
+                                }
                                 break;
-                            case R.id.qq_zone:
-                                customerDialog.dismiss();
-                                break;
-                            case R.id.weibo:
-                                customerDialog.dismiss();
-                                break;
+//                            case R.id.qq_zone:
+//                                customerDialog.dismiss();
+//                                break;
+//                            case R.id.weibo:
+//                                customerDialog.dismiss();
+//                                break;
                             case R.id.share_close:
                                 customerDialog.dismiss();
                                 break;
@@ -117,7 +139,6 @@ public class MyCardActivity extends BaseActivity {
         // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-
         }
         mWebView.setDrawingCacheEnabled(true);
         settings.setJavaScriptEnabled(true);
@@ -125,7 +146,8 @@ public class MyCardActivity extends BaseActivity {
         mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
         // 触摸焦点起作用
         mWebView.requestFocus();
-        settings.setSavePassword(false);// 不弹窗浏览器是否保存密码
+        // 不弹窗浏览器是否保存密码
+        settings.setSavePassword(false);
         settings.setDefaultTextEncodingName("utf-8");
         settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
@@ -146,24 +168,7 @@ public class MyCardActivity extends BaseActivity {
                 }
             }
         });
-        mWebView.setWebViewClient(new WebViewClient() {
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                LogUtil.e("shouldOverrideUrlLoading", request.getUrl().getPath());
-                return true;
-            }
 
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                //注意：super句话一定要删除，或者注释掉，否则又走handler.cancel()默认的不支持https的了。
-                //super.onReceivedSslError(view, handler, error);
-                //handler.cancel(); // Android默认的处理方式
-                //handler.handleMessage(Message msg); // 进行其他处理
-
-                handler.proceed(); // 接受所有网站的证书
-            }
-        });
     }
 
     @Override
