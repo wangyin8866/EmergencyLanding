@@ -40,7 +40,7 @@ public class SplashActivity extends BaseActivity {
             public void run() {
                 //不是第一次就跳转到主页
                 if (SPUtils.getGuideBoolean(mContext, "splash", false)) {
-                
+
                     if (BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
                         Intent intent = new Intent(SplashActivity.this, LineMainActivity.class);
                         startActivity(intent);
@@ -59,7 +59,7 @@ public class SplashActivity extends BaseActivity {
                     finish();
                 }
             }
-        }, 1500);
+        }, 0);
     }
 
 

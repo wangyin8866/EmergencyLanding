@@ -275,6 +275,7 @@
         <!--启动页-->
         <activity
             android:name=".ui.guide.SplashActivity"
+            android:theme="@style/AppTheme.Launcher"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

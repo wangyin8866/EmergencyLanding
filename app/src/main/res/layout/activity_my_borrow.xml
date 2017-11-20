@@ -50,7 +50,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="申请金额"
+                        android:text="审批金额"
                         android:textColor="#FFFFFF"
                         android:textSize="15sp" />
 

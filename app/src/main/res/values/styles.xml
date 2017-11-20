@@ -34,18 +34,20 @@
         <item name="android:background">@drawable/btn_shape_gradient</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="button_orange_mine">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/btn_shape_gradient_mine</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="register_cbx" parent="@android:style/Widget.CompoundButton.CheckBox">
         <item name="android:background">@drawable/register_cbx_selector</item>
         <item name="android:button">@color/transparent</item>
     </style>
 
     <!-- 输入框 -->
-    <style name="et_input_style" >
+    <style name="et_input_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginLeft">25dp</item>
@@ -62,6 +64,7 @@
         <item name="android:layout_height">1.5dp</item>
         <item name="android:background">@color/line_color</item>
     </style>
+
     <style name="dialogToast" parent="@android:style/Theme.Dialog">
         <item name="android:windowNoTitle">false</item>
         <item name="android:windowIsTranslucent">true</item>
@@ -103,5 +106,9 @@
     <!--tabLayout字体大小-->
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">14sp</item>
+    </style>
+    <!--冷启动优化-->
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/branded_launch_screens</item>
     </style>
 </resources>

@@ -23,7 +23,7 @@ public class BorrowLogAdapter extends BaseQuickAdapter<MyBorrow.ResultBean.HisBo
 
     @Override
     protected void convert(BaseViewHolder helper, MyBorrow.ResultBean.HisBorrowListBean item) {
-        helper.setText(R.id.item_borrow_amount, item.getLoan_amount())
+        helper.setText(R.id.item_borrow_amount, item.getLoan_amount()+"元")
                 .setText(R.id.item_borrow_deadline, item.getLoan_period() + "周")
                 .setText(R.id.item_borrow_date, item.getLoan_time())
                 .setText(R.id.item_borrow_status, WYUtils.getMyBorrowStatus(Integer.parseInt(item.getStep_status()), Integer.parseInt(item.getLoan_status())));
