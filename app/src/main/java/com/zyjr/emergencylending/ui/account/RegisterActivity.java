@@ -141,7 +141,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
                 } else if (TextUtils.isEmpty(pwd)) {
                     ToastAlone.showShortToast(mContext, "请输入密码");
                 } else if (!WYUtils.checkPass(pwd)) {
-                    ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
+                    ToastAlone.showShortToast(mContext, "密码必须由6-16位字母或数字组成");
                 } else if (TextUtils.isEmpty(sms)) {
                     ToastAlone.showShortToast(mContext, "请输入验证码");
                 } else {

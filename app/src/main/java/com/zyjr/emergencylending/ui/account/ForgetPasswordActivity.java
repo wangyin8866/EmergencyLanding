@@ -110,7 +110,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
                 } else if (TextUtils.isEmpty(pwd)) {
                     ToastAlone.showShortToast(mContext, "请输入新密码");
                 } else if (!WYUtils.checkPass(pwd)) {
-                    ToastAlone.showShortToast(mContext, "密码必须由6-16位字母和数字组成");
+                    ToastAlone.showShortToast(mContext, "密码必须由6-16位字母或数字组成");
                 } else if (TextUtils.isEmpty(pwdAgain)) {
                     ToastAlone.showShortToast(mContext, "请再次输入新密码");
                 } else if (!pwd.equals(pwdAgain)) {
