@@ -302,7 +302,6 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_apply"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="10dp"
@@ -344,7 +343,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@null"
+                android:visibility="visible"
                 android:scrollbars="none" />
+
+            <include layout="@layout/layout_no_data"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <include

@@ -31,7 +31,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
                 android:scaleType="fitXY"
                 android:src="@mipmap/logo" />
 
@@ -40,7 +39,7 @@
             <LinearLayout
                 android:id="@+id/layout_user_input"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/iv_app_logo"
                 android:layout_marginLeft="37dp"
                 android:layout_marginRight="37dp"
@@ -71,7 +70,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
 
@@ -99,7 +98,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
 
@@ -130,7 +129,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
 
@@ -177,54 +176,55 @@
                     style="@style/button_orange"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_marginTop="13dp"
                     android:enabled="false"
+                    android:shadowColor="@color/auth_fail"
                     android:text="@string/register"
                     android:textSize="17sp" />
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/layout_user_input"
-                android:layout_marginTop="30dp"
-                android:background="#FBFAFF"
-                android:paddingBottom="5dp"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center"
-                    android:text="@string/warm_notice"
-                    android:textColor="@color/front_text_color"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
-                    android:gravity="center"
-                    android:text="工作人员不会以任何方式向您索要其他费用"
-                    android:textColor="@color/front_text_color_hint"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="请到APP确认官方联系方式，谨防上当受骗"
-                    android:textColor="@color/front_text_color_hint"
-                    android:textSize="12sp" />
-            </LinearLayout>
 
         </RelativeLayout>
 
     </ScrollView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="#FBFAFF"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="5dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:text="@string/warm_notice"
+            android:textColor="@color/front_text_color"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:gravity="center"
+            android:text="工作人员不会以任何方式向您索要其他费用"
+            android:textColor="@color/front_text_color_hint"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="请到APP确认官方联系方式，谨防上当受骗"
+            android:textColor="@color/front_text_color_hint"
+            android:textSize="12sp" />
+    </LinearLayout>
 
 </RelativeLayout>

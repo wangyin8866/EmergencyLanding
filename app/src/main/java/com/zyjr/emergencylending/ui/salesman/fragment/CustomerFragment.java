@@ -76,8 +76,8 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     LinearLayout llRetry;
     @BindView(R.id.apply_type)
     TextView applyType;
-    @BindView(R.id.ll_apply)
-    LinearLayout llApply;
+    @BindView(R.id.ll_empty)
+    LinearLayout llEmpty;
     private int type;
     private int pageNum = 1;
     private int pageSize = 15;
@@ -216,11 +216,13 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
     public void waitApply(WaitApplyBean baseBean) {
         clerkRecordListBeans = baseBean.getResult().getClerkRecordList();
         if (clerkRecordListBeans.size() > 0) {
-            llApply.setVisibility(View.VISIBLE);
+            xlv.setVisibility(View.VISIBLE);
+            llEmpty.setVisibility(View.GONE);
             xlv.setPullLoadEnable(true);
             xlv.setAdapter(new LineCustomerAdapter(clerkRecordListBeans, mContext));
         } else {
-            llApply.setVisibility(View.GONE);
+            llEmpty.setVisibility(View.VISIBLE);
+            xlv.setVisibility(View.GONE);
         }
     }
 

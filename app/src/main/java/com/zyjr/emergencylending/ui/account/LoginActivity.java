@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -61,8 +60,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     TopBar topBar;
     @BindView(R.id.textView)
     TextView textView;
-    @BindView(R.id.layout_warm_notice)
-    LinearLayout layoutWarmNotice;
     private String phone;
     private String pwd;
     private boolean isShow;
