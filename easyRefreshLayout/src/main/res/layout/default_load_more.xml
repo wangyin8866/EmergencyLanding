@@ -19,10 +19,10 @@
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/spin_kit"
         style="@style/SpinKitView.Small.Circle"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_centerVertical="true"
         android:layout_marginRight="8dp"
         android:layout_toLeftOf="@id/tv_hit_content"
-        app:SpinKit_Color="@color/colorAccent" />
+        app:SpinKit_Color="#999999" />
 </RelativeLayout>

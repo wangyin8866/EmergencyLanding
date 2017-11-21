@@ -10,12 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ajguan.library.EasyRefreshLayout;
-import com.ajguan.library.LoadModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.SwipeAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.MessageBean;
@@ -119,15 +117,15 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
 
     @Override
     public void onLoadMore() {
+        easylayout.loadMoreComplete();
         pageNum += 1;
-
         mPresenter.getMessageMore(NetConstantValues.USER_NEWS, pageNum + "");
 
     }
 
     @Override
     public void onRefreshing() {
-
+        easylayout.refreshComplete();
         mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
 
     }
@@ -142,7 +140,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
 
     @Override
     public void getMessage(MessageBean messageBean) {
-        easylayout.refreshComplete();
+
         if (messageBean.getResult().getResultList().size() == 0) {
             easylayout.setVisibility(View.GONE);
             llEmpty.setVisibility(View.VISIBLE);
@@ -150,14 +148,8 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
         } else {
             tvMark.setEnabled(true);
             easylayout.setVisibility(View.VISIBLE);
+
             llEmpty.setVisibility(View.GONE);
-            if (!(messageBean.getResult().getResultList().size() > Config.PAGE_SIZE)) {
-                //隐藏上拉加载
-                easylayout.setLoadMoreModel(LoadModel.NONE);
-            } else {
-                //显示上拉加载
-                easylayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
-            }
             messageBeanList = messageBean.getResult().getResultList();
             myAdapter = new SwipeAdapter(R.layout.item_message_swipe, messageBeanList);
 
@@ -171,15 +163,11 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
 
     @Override
     public void getMessageMore(final MessageBean messageBean) {
-        easylayout.loadMoreComplete();
+
         if (messageBean.getResult().getResultList().size() == 0) {
             pageNum = 1;
             AppToast.makeShortToast(mContext, "没有数据了");
-            //隐藏上拉加载
-            easylayout.setLoadMoreModel(LoadModel.NONE);
         } else {
-            //显示上拉加载
-            easylayout.setLoadMoreModel(LoadModel.COMMON_MODEL);
 
             messageBeanList.addAll(messageBean.getResult().getResultList());
             myAdapter = new SwipeAdapter(R.layout.item_message_swipe, messageBeanList);

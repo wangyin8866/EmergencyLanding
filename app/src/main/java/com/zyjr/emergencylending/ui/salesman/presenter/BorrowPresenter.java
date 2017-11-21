@@ -10,7 +10,7 @@ import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.model.home.MessageModel;
 import com.zyjr.emergencylending.ui.salesman.model.SalesmanModel;
-import com.zyjr.emergencylending.ui.salesman.view.BorrowView;
+import com.zyjr.emergencylending.ui.salesman.view.MessageView;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 /**
@@ -19,7 +19,7 @@ import com.zyjr.emergencylending.utils.ToastAlone;
  * @description :
  */
 
-public class BorrowPresenter extends BasePresenter<BorrowView> {
+public class BorrowPresenter extends BasePresenter<MessageView> {
     public BorrowPresenter(Context context) {
         super(context);
     }

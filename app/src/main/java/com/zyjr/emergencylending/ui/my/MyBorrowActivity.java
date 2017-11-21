@@ -7,17 +7,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BorrowLogAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.MyBorrow;
+import com.zyjr.emergencylending.ui.my.View.MyBorrowView;
 import com.zyjr.emergencylending.ui.my.presenter.MyBorrowPresenter;
+import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.List;
@@ -32,7 +35,7 @@ import butterknife.OnClick;
  * 我的借款
  */
 
-public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<MyBorrow>> implements BaseView<MyBorrow>, EasyRefreshLayout.EasyEvent {
+public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowView> implements MyBorrowView, EasyRefreshLayout.EasyEvent {
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.borrow_type)
@@ -61,8 +64,11 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
     LinearLayout llRetry;
     @BindView(R.id.swipe_container)
     EasyRefreshLayout swipeContainer;
+
     private List<MyBorrow.ResultBean.HisBorrowListBean> hisBorrowListBeans;
     private MyBorrow.ResultBean.CurrentBorrowBean currentBorrowBean;
+    private int pageNum = 1;
+    private int pageSize = 15;
 
     @Override
     protected MyBorrowPresenter createPresenter() {
@@ -99,7 +105,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", pageSize + "");
     }
 
     @Override
@@ -135,15 +141,28 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
         if (hisBorrowListBeans.size() != 0) {
             rvMain.setLayoutManager(new LinearLayoutManager(this));
             BorrowLogAdapter adapter = new BorrowLogAdapter(R.layout.item_borrow_log, hisBorrowListBeans);
+
+
+            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (Integer.parseInt(hisBorrowListBeans.get(position).getLoan_status()) == 9) {
+                        // TODO: 2017/11/21 跳转到审批拒件
+                        Toast.makeText(mContext, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+
             rvMain.setAdapter(adapter);
-            if (hisBorrowListBeans.size() < 20) {
-                //取消加载更多
-                easylayout.setLoadMoreModel(LoadModel.NONE);
-            }
+
+
             easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
                 @Override
                 public void onLoadMore() {
                     easylayout.loadMoreComplete();
+                    pageNum += 1;
+                    mPresenter.getMoreData(NetConstantValues.MY_LOAN, pageNum + "", pageSize + "");
                 }
 
                 @Override
@@ -151,9 +170,37 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
                     easylayout.refreshComplete();
                 }
             });
+
+
         }
 
 
+    }
+
+    @Override
+    public void getMoreData(MyBorrow myBorrow) {
+        if (myBorrow.getResult().getHis_borrow_list().size() > 0) {
+            hisBorrowListBeans.addAll(myBorrow.getResult().getHis_borrow_list());
+            rvMain.setLayoutManager(new LinearLayoutManager(this));
+            BorrowLogAdapter adapter = new BorrowLogAdapter(R.layout.item_borrow_log, hisBorrowListBeans);
+
+            adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (Integer.parseInt(hisBorrowListBeans.get(position).getLoan_status()) == 9) {
+                        // TODO: 2017/11/21 跳转到审批拒件
+                        Toast.makeText(mContext, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            rvMain.setAdapter(adapter);
+
+            //定位
+            moveToPosition(new LinearLayoutManager(this), rvMain, hisBorrowListBeans.size() - myBorrow.getResult().getHis_borrow_list().size());
+        } else {
+            pageNum = 1;
+            AppToast.makeShortToast(mContext, "没有数据了");
+        }
     }
 
     @Override
@@ -170,17 +217,38 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, BaseView<M
 
     @OnClick(R.id.btn_retry)
     public void onViewClicked() {
-        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", pageSize + "");
     }
 
     @Override
     public void onLoadMore() {
-
+        swipeContainer.refreshComplete();
     }
 
     @Override
     public void onRefreshing() {
         swipeContainer.refreshComplete();
-        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "15");
+        mPresenter.getData(NetConstantValues.MY_LOAN, "1", pageSize + "");
+    }
+
+    /**
+     * RecyclerView 移动到当前位置，
+     *
+     * @param manager       设置RecyclerView对应的manager
+     * @param mRecyclerView 当前的RecyclerView
+     * @param n             要跳转的位置
+     */
+    private void moveToPosition(LinearLayoutManager manager, RecyclerView mRecyclerView, int n) {
+        int firstItem = manager.findFirstVisibleItemPosition();
+        int lastItem = manager.findLastVisibleItemPosition();
+        if (n <= firstItem) {
+            mRecyclerView.scrollToPosition(n);
+        } else if (n <= lastItem) {
+            int top = mRecyclerView.getChildAt(n - firstItem).getTop();
+            mRecyclerView.scrollBy(0, top);
+        } else {
+            mRecyclerView.scrollToPosition(n);
+        }
+
     }
 }

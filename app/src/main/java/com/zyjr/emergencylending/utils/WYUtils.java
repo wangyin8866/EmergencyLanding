@@ -13,6 +13,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
@@ -28,9 +29,12 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -243,6 +247,25 @@ public class WYUtils {
                 }
             }
         });
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                LogUtils.e("webViewUrl", url);
+                view.loadUrl(url);
+                return true;
+
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                //注意：super句话一定要删除，或者注释掉，否则又走handler.cancel()默认的不支持https的了。
+                //super.onReceivedSslError(view, handler, error);
+                //handler.cancel(); // Android默认的处理方式
+                //handler.handleMessage(Message msg); // 进行其他处理
+
+                handler.proceed(); // 接受所有网站的证书
+            }
+        });
     }
 
 
@@ -291,6 +314,25 @@ public class WYUtils {
                 } else {
                     dialog.show();
                 }
+            }
+        });
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                LogUtils.e("webViewUrl", url);
+                view.loadUrl(url);
+                return true;
+
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                //注意：super句话一定要删除，或者注释掉，否则又走handler.cancel()默认的不支持https的了。
+                //super.onReceivedSslError(view, handler, error);
+                //handler.cancel(); // Android默认的处理方式
+                //handler.handleMessage(Message msg); // 进行其他处理
+
+                handler.proceed(); // 接受所有网站的证书
             }
         });
     }

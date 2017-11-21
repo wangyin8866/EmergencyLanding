@@ -11,9 +11,9 @@ public interface NetConstantValues {
      */
 //    String HOST_URL = "http://192.168.6.107:8086/";
     //内网
-//    String HOST_URL = "http://192.168.6.107/";
+    String HOST_URL = "http://192.168.6.107/";
     //张超峰
-    String HOST_URL = "http://192.168.10.12:8080/";
+//    String HOST_URL = "http://192.168.10.12:8080/";
     //外网
 //    String HOST_URL = "http://101.95.160.70:8001/";
 
@@ -25,7 +25,7 @@ public interface NetConstantValues {
     /**
      * 我的还款登陆
      */
-    String REPAYMENT_LOGIN_BASE = "http://192.168.6.107:8080/cffg_loan";
+    String REPAYMENT_LOGIN_BASE = "http://192.168.6.107:8080/cffg_loan/";
     /**
      * 二级地址
      */

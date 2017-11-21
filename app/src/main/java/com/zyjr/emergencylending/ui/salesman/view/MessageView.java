@@ -10,6 +10,6 @@ import com.zyjr.emergencylending.entity.NoticeBean;
  * @description :
  */
 
-public interface BorrowView extends BaseView<NoticeBean> {
+public interface MessageView extends BaseView<NoticeBean> {
     void getMessage(MessageBean messageBean);
 }

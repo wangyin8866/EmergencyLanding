@@ -25,7 +25,7 @@ import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.ImmediatelyBorrowActivity;
 import com.zyjr.emergencylending.ui.salesman.presenter.BorrowPresenter;
-import com.zyjr.emergencylending.ui.salesman.view.BorrowView;
+import com.zyjr.emergencylending.ui.salesman.view.MessageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ import butterknife.Unbinder;
  * @date 2017/8/9
  */
 
-public class BorrowFragment extends BaseFragment<BorrowPresenter, BorrowView> implements BorrowView, EasyRefreshLayout.EasyEvent {
+public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> implements MessageView, EasyRefreshLayout.EasyEvent {
     @BindView(R.id.swipe_container)
     EasyRefreshLayout easyRefreshLayout;
     @BindView(R.id.top_bar)

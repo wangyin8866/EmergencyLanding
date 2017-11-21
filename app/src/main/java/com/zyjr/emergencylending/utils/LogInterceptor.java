@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.FormBody;
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -28,13 +29,13 @@ public class LogInterceptor implements Interceptor {
     public okhttp3.Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         LogUtils.e(TAG, "request:" + request.url());
-//        Headers headers = request.headers();
-//        for (int i = 0; i < headers.size(); i++){
-//            String headerName = headers.name(i);
-//            String headerValue = headers.get(headerName);
-//           LogUtils.e(TAG,"Header----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
-//
-//        }
+        Headers headers = request.headers();
+        for (int i = 0; i < headers.size(); i++){
+            String headerName = headers.name(i);
+            String headerValue = headers.get(headerName);
+           LogUtils.e(TAG,"Header----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
+
+        }
         RequestBody requestBody = request.body();
         if (requestBody instanceof FormBody) {
             HashMap<String, Object> rootMap = new HashMap<>();
