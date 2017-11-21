@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.account;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.ui.account.presenter.ForgetPresenter;
+import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -64,6 +66,13 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
     private void init() {
         String title = getIntent().getStringExtra("title");
         final String type = getIntent().getStringExtra("type");
+
+        if ("修改密码".equals(title)) {
+            etMobileNumber.setText(SPUtils.getString(mContext, Config.KEY_PHONE, ""));
+            etMobileNumber.setTextColor(Color.parseColor("#999999"));
+            etMobileNumber.setFocusable(false);
+        }
+
         topBar.setTitle(title);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
@@ -116,7 +125,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
                 } else if (!pwd.equals(pwdAgain)) {
                     ToastAlone.showShortToast(mContext, "两次输入的密码不一致！");
                 } else {
-                    mPresenter.forgetPassword(NetConstantValues.REST_PASSWORD, phone, sms, pwd,type);
+                    mPresenter.forgetPassword(NetConstantValues.REST_PASSWORD, phone, sms, pwd, type);
                 }
 
             }

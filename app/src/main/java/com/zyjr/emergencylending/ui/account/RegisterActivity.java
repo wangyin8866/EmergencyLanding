@@ -145,7 +145,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<R
                 } else if (TextUtils.isEmpty(sms)) {
                     ToastAlone.showShortToast(mContext, "请输入验证码");
                 } else {
-                    mPresenter.register(NetConstantValues.REGISTER, phone, SPUtils.getClientString(mContext, Config.KEY_CLIENT_ID, ""), sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode());
+                    mPresenter.register(NetConstantValues.REGISTER, phone, SPUtils.getClientString(mContext, Config.KEY_CLIENT_ID, ""), sms, pwd, inviteCode, Constants.getPlatform(1), NetworkUtils.getIp(mContext), Constants.getDeviceCode(), "sdk");
                 }
             }
         });

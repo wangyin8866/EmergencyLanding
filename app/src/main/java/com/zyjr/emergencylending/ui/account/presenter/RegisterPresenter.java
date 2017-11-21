@@ -27,8 +27,8 @@ public class RegisterPresenter extends BasePresenter<BaseView<RegisterBean>> {
 
     public void register(String router, String phone, String clientid,
                          String verify_code, String password, String recommend_code,
-                         String register_platform, String register_ip, String register_device_no) {
-        invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_ip, register_device_no), new ProgressSubscriber<RegisterBean>(new SubscriberOnNextListener<RegisterBean>() {
+                         String register_platform, String register_ip, String register_device_no,String phone_equipment) {
+        invoke(AccountModel.getInstance().register(router, phone, clientid, verify_code, password, recommend_code, register_ip, register_device_no,phone_equipment), new ProgressSubscriber<RegisterBean>(new SubscriberOnNextListener<RegisterBean>() {
             @Override
             public void onNext(RegisterBean registerBean) {
                 if (Config.CODE_SUCCESS.equals(registerBean.getFlag())) {

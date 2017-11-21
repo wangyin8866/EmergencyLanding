@@ -43,7 +43,7 @@ public class AccountModel extends BaseModel {
      */
     public Observable<RegisterBean> register(String router, String phone, String clientid,
                                              String verify_code, String password, String recommend_code,
-                                             String register_ip, String register_device_no) {
+                                             String register_ip, String register_device_no,String phone_equipment) {
         Map<String, String> map = new HashMap<String, String>(8);
         map.put("router", router);
         map.put("phone", phone);
@@ -53,6 +53,7 @@ public class AccountModel extends BaseModel {
         map.put("recommend_code", recommend_code);
         map.put("register_ip", register_ip);
         map.put("register_device_no", register_device_no);
+        map.put("phone_equipment", phone_equipment);
         return mApi.register(map);
     }
 
@@ -60,7 +61,7 @@ public class AccountModel extends BaseModel {
      * 登录
      */
     public Observable<LoginBean> login(String router, String phone, String password,
-                                       String clientid, String login_ip, String login_platform, String login_device_no) {
+                                       String clientid, String login_ip, String login_platform, String login_device_no,String phone_equipment) {
         Map<String, String> map = new HashMap<String, String>(6);
         map.put("router", router);
         map.put("phone", phone);
@@ -69,6 +70,7 @@ public class AccountModel extends BaseModel {
         map.put("login_ip", login_ip);
         map.put("login_platform", login_platform);
         map.put("login_device_no", login_device_no);
+        map.put("phone_equipment", phone_equipment);
         return mApi.login(map);
     }
 

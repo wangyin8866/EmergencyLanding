@@ -22,8 +22,8 @@ import com.zyjr.emergencylending.utils.ToastAlone;
 public class LoginPresenter extends BasePresenter<BaseView<LoginBean>> {
 
     public void login(String router, String phone, String password,
-                      String clientid, String login_ip, String login_platform, String login_device_no) {
-        invoke(AccountModel.getInstance().login(router, phone, password, clientid, login_ip, login_platform, login_device_no), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
+                      String clientid, String login_ip, String login_platform, String login_device_no,String phone_equipment) {
+        invoke(AccountModel.getInstance().login(router, phone, password, clientid, login_ip, login_platform, login_device_no,phone_equipment), new ProgressSubscriber<LoginBean>(new SubscriberOnNextListener<LoginBean>() {
             @Override
             public void onNext(LoginBean loginBean) {
 

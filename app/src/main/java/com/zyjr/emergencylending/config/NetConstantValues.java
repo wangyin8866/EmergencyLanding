@@ -11,7 +11,9 @@ public interface NetConstantValues {
      */
 //    String HOST_URL = "http://192.168.6.107:8086/";
     //内网
-    String HOST_URL = "http://192.168.6.107/";
+//    String HOST_URL = "http://192.168.6.107/";
+    //张超峰
+    String HOST_URL = "http://192.168.10.12:8080/";
     //外网
 //    String HOST_URL = "http://101.95.160.70:8001/";
 

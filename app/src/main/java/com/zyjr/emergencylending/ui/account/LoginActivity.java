@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
 //                    ToastAlone.showShortToast(mContext, "密码由6-16位字母和数字组成");
 //                }
                 else {
-                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd, SPUtils.getClientString(mContext, Config.KEY_CLIENT_ID, ""), Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode()
+                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd, SPUtils.getClientString(mContext, Config.KEY_CLIENT_ID, ""), Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode(),"sdk"
                     );
                 }
             }

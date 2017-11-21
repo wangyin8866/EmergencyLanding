@@ -223,7 +223,7 @@
             </LinearLayout>
 
             <include
-                layout="@layout/layout_no_data"
+                layout="@layout/layout_no_borrow"
                 android:visibility="gone" />
 
 
