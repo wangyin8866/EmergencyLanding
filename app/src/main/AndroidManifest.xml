@@ -21,9 +21,15 @@
     <!-- iBeancon功能所需权限 -->;
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <!-- 个推3.0电子围栏功能所需权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!--同盾-->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 可选权限，不声明此部分权限将放弃部分设备信息的采集，对数据分析及设备指纹的精准度有一定影响 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--白骑士-->
+    <!--采集传感器信息必要权限-->
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
         android:name=".base.BaseApplication"
@@ -82,7 +88,7 @@
         <!-- 借款 -->
         <activity
             android:name=".ui.home.loan.LoanMainActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
 
         </activity>
         <!-- 联系人资料 -->
@@ -275,8 +281,8 @@
         <!--启动页-->
         <activity
             android:name=".ui.guide.SplashActivity"
-            android:theme="@style/AppTheme.Launcher"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -297,7 +303,7 @@
             android:name=".service.DemoPushService"
             android:exported="true"
             android:label="PushService"
-            android:process=":pushservice"/>
+            android:process=":pushservice" />
         <service android:name=".service.DemoIntentService" />
 
         <!-- 线下件确认 -->
@@ -328,9 +334,14 @@
             android:name=".ui.salesman.activity.MyCardActivity"
             android:screenOrientation="portrait" />
         <!--申请客户-->
-        <activity android:name=".ui.salesman.activity.ApplyActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.salesman.activity.ApplyActivity"
+            android:screenOrientation="portrait" />
 
-
+        <!--同盾-->
+        <meta-data
+            android:name="PARTNER_CODE"
+            android:value="haoliwang" />
     </application>
 
 </manifest>

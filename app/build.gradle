@@ -108,4 +108,6 @@ dependencies {
     compile project(':convenientbanner')
     compile 'com.android.support:multidex:1.0.2'
     implementation project(':easyRefreshLayout')
+    implementation files('libs/fm-sdk-3.1.1.jar')
+    implementation files('libs/baiqishi-risk-sdk-2.2.1.jar')
 }

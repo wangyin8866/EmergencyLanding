@@ -15,11 +15,10 @@ import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
-
 /**
  * activity 基类
  */
-public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCompatActivity {
+public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCompatActivity  {
     private static final String BASE_ACTIVITY = "BaseActivity";
     public String tag = getClass().getSimpleName();
     private CompositeSubscription mCompositeSubscription;
@@ -74,10 +73,14 @@ public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCom
     }
 
 
+
+
+
     @Override
     protected void onResume() {
         super.onResume();
         mForegroundActivity = this;
+
     }
 
 

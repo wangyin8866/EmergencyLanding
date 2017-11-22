@@ -22,6 +22,7 @@ import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.home.HomeFragment;
 import com.zyjr.emergencylending.ui.my.MyFragment;
 import com.zyjr.emergencylending.ui.repayment.RepaymentFragment;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -30,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.tongdun.android.shell.FMAgent;
 
 
 /**
@@ -74,6 +76,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
+
+        LogUtils.e("FMAgent", FMAgent.getInitStatus());
     }
 
     private void init() {
@@ -116,7 +120,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(currentPage);
                 break;
             case R.id.id_tab_ll_02:
-                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
 
@@ -126,7 +130,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 break;
             case R.id.id_tab_ll_03:
-                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 } else {
                     currentPage = 2;

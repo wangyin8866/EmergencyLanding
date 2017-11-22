@@ -121,7 +121,7 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
                 setTabSelection(currentPage);
                 break;
             case R.id.id_tab_ll_03:
-                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     currentPage = 2;
                     setTabSelection(currentPage);
                 } else {

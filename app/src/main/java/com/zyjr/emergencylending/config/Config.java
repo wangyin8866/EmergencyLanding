@@ -177,5 +177,16 @@ public interface Config {
      * 我的业绩周期类型
      */
     String KEY_TYPE = "type";
-
+    /**
+     * 是否第一次进入应用
+     */
+    String KEY_GUIDE = "splash";
+    /**
+     * 同盾
+     */
+    String KEY_TONG_DUN = "tong_dun";
+    /**
+     * 白骑士
+     */
+    String KEY_BAI_QI_SHI = "bai_qi_shi";
 }

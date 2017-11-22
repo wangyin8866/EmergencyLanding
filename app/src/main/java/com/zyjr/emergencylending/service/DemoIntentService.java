@@ -32,7 +32,7 @@ public class DemoIntentService extends GTIntentService {
     @Override
     public void onReceiveClientId(Context context, String clientid) {
         LogUtils.e(TAG, "onReceiveClientId -> " + "clientid = " + clientid);
-        SPUtils.saveClientString(context, Config.KEY_CLIENT_ID, clientid);
+        SPUtils.saveWyString(context, Config.KEY_CLIENT_ID, clientid);
     }
 
     @Override

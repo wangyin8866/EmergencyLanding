@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.ajguan.library.EasyRefreshLayout;
 import com.ajguan.library.LoadModel;
@@ -18,6 +18,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.MyBorrow;
+import com.zyjr.emergencylending.ui.home.loan.HandleFailActivity;
 import com.zyjr.emergencylending.ui.my.View.MyBorrowView;
 import com.zyjr.emergencylending.ui.my.presenter.MyBorrowPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
@@ -147,8 +148,15 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     if (Integer.parseInt(hisBorrowListBeans.get(position).getLoan_status()) == 9) {
-                        // TODO: 2017/11/21 跳转到审批拒件
-                        Toast.makeText(mContext, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+                        //  跳转到审批拒件
+
+                        Intent intent = new Intent(mContext, HandleFailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("bean", hisBorrowListBeans.get(position));
+                        bundle.putString("jumpFlag", "brrow");
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
                     }
                 }
             });
@@ -188,8 +196,13 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     if (Integer.parseInt(hisBorrowListBeans.get(position).getLoan_status()) == 9) {
-                        // TODO: 2017/11/21 跳转到审批拒件
-                        Toast.makeText(mContext, "onItemClick" + position, Toast.LENGTH_SHORT).show();
+                        //  跳转到审批拒件
+                        Intent intent = new Intent(mContext, HandleFailActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("bean", hisBorrowListBeans.get(position));
+                        bundle.putString("jumpFlag", "brrow");
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
                 }
             });

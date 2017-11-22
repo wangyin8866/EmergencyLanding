@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @description :
  */
 
-public class MyBorrow {
+public class MyBorrow implements Serializable{
     /**
      * flag : API0000
      * msg : 操作成功
@@ -72,7 +73,7 @@ public class MyBorrow {
         this.lockerFlag = lockerFlag;
     }
 
-    public static class ResultBean {
+    public static class ResultBean implements Serializable{
         /**
          * his_borrow_list : [{"product_name":null,"loan_amount":null,"loan_period":null,"loan_unit":null,"loan_time":"2017-11-08 15:16:03.0","loan_status":"2","loan_msg":"终审通过","is_out_push":"0","out_push_url":"www.baidu.com","out_push_image_url":"D:\\outLine","out_push_title":"欢迎去去哪儿贷借款","step_status":"5","isRepaymentFlag":"0"},{"product_name":null,"loan_amount":null,"loan_period":null,"loan_unit":null,"loan_time":"2017-11-08 15:16:03.0","loan_status":"2","loan_msg":"终审通过","is_out_push":"0","out_push_url":"www.baidu.com","out_push_image_url":"D:\\outLine","out_push_title":"欢迎去去哪儿贷借款","step_status":"5","isRepaymentFlag":"0"}]
          * pageNo : 1
@@ -117,7 +118,7 @@ public class MyBorrow {
             this.his_borrow_list = his_borrow_list;
         }
 
-        public static class CurrentBorrowBean {
+        public static class CurrentBorrowBean implements Serializable{
             /**
              * product_name : null
              * loan_amount : null
@@ -271,7 +272,7 @@ public class MyBorrow {
             }
         }
 
-        public static class HisBorrowListBean {
+        public static class HisBorrowListBean implements Serializable{
             /**
              * product_name : null
              * loan_amount : null

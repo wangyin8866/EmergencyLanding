@@ -10,7 +10,14 @@ import android.content.SharedPreferences;
  * @author wangyin
  */
 public class SPUtils {
+    /**
+     * 安全退出时清除
+     */
     private static final String SP_NAME = "wyman";
+    /**
+     * 卸载应用时清除
+     */
+    private static final String SP_NAME_WY = "wangyin";
     /**
      * //保存是否登录,用户基本信息
      */
@@ -21,18 +28,18 @@ public class SPUtils {
     private static SharedPreferences sp2;
 
     //保存布尔值
-    public static void saveBoolean(Context context, String key, boolean value) {
+    public static void saveBoolean(Context context, String key) {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        sp.edit().putBoolean(key, value).apply();
+        sp.edit().putBoolean(key, true).apply();
     }
 
-    public static boolean getBoolean(Context context, String key, boolean defValue) {
+    public static boolean getBoolean(Context context, String key) {
         if (sp == null) {
             sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
         }
-        return sp.getBoolean(key, defValue);
+        return sp.getBoolean(key, false);
     }
 
     //保存字符串
@@ -90,32 +97,32 @@ public class SPUtils {
     }
 
     //保存导航页
-    public static void saveGuideBoolean(Context context, String key, boolean value) {
+    public static void saveWyBoolean(Context context, String key, boolean value) {
         if (sp2 == null) {
-            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+            sp2 = context.getSharedPreferences(SP_NAME_WY, Context.MODE_PRIVATE);
         }
         sp2.edit().putBoolean(key, value).apply();
     }
 
-    public static boolean getGuideBoolean(Context context, String key, boolean defValue) {
+    public static boolean getWyBoolean(Context context, String key) {
         if (sp2 == null) {
-            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+            sp2 = context.getSharedPreferences(SP_NAME_WY, Context.MODE_PRIVATE);
         }
-        return sp2.getBoolean(key, defValue);
+        return sp2.getBoolean(key, false);
     }
 
     //保存ClientId
-    public static void saveClientString(Context context, String key, String value) {
+    public static void saveWyString(Context context, String key, String value) {
         if (sp2 == null) {
-            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+            sp2 = context.getSharedPreferences(SP_NAME_WY, Context.MODE_PRIVATE);
         }
         sp2.edit().putString(key, value).apply();
     }
 
-    public static String getClientString(Context context, String key, String defValue) {
+    public static String getWyString(Context context, String key) {
         if (sp2 == null) {
-            sp2 = context.getSharedPreferences("guide", Context.MODE_PRIVATE);
+            sp2 = context.getSharedPreferences(SP_NAME_WY, Context.MODE_PRIVATE);
         }
-        return sp2.getString(key, defValue);
+        return sp2.getString(key, "");
     }
 }

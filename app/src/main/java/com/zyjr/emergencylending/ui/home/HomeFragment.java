@@ -89,7 +89,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
 
 
         //是否有消息
-        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
             mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
         }
@@ -138,14 +138,14 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.cl_QR_code:
-                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 }
                 break;
             case R.id.cl_message_center:
-                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
 
@@ -153,7 +153,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 }
                 break;
             case R.id.pro1_btn:
-                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
@@ -166,7 +166,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 }
                 break;
             case R.id.pro2_btn:
-                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(mContext, LoginActivity.class));
                 } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
@@ -254,7 +254,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
         //是否有消息
-        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN, false)) {
+        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
             mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
         }

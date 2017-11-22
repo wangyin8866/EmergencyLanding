@@ -15,7 +15,7 @@ public class Constants {
      * 判断是否更新APK
      */
     public static boolean update = true;
-
+    public static boolean authRuntimePermissions;
     /**
      * 身份证信息扫描|活体验证
      */

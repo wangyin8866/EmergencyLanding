@@ -24,6 +24,7 @@ import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
@@ -107,7 +108,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
 //                    ToastAlone.showShortToast(mContext, "密码由6-16位字母和数字组成");
 //                }
                 else {
-                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd, SPUtils.getClientString(mContext, Config.KEY_CLIENT_ID, ""), Constants.getNetIp(mContext), Constants.getPlatform(1), Constants.getDeviceCode(),"sdk"
+                    LogUtils.e("tokenkey", WYUtils.getDeviceFingerprinting(mContext));
+                    mPresenter.login(NetConstantValues.LOGIN, phone, pwd,
+                            SPUtils.getWyString(mContext, Config.KEY_CLIENT_ID),
+                            Constants.getNetIp(mContext), Constants.getPlatform(1),
+                            Constants.getDeviceCode(), WYUtils.getDeviceFingerprinting(mContext)
                     );
                 }
             }
@@ -161,7 +166,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
     @Override
     public void getCommonData(LoginBean loginBean) {
         if (Config.CODE_SUCCESS.equals(loginBean.getFlag())) {
-            SPUtils.saveBoolean(mContext, Config.KEY_LOGIN, true);
+            SPUtils.saveBoolean(mContext, Config.KEY_LOGIN);
             SPUtils.saveString(mContext, Config.KEY_TOKEN, loginBean.getResult().getLogin_token());
             SPUtils.saveString(mContext, Config.KEY_USER_TYPE, loginBean.getResult().getUser_type());
             SPUtils.saveString(mContext, Config.KEY_RECOMMEND_CODE, loginBean.getResult().getRecommendCode());

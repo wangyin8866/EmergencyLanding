@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
 
 import java.lang.reflect.Field;
@@ -736,5 +737,10 @@ public class WYUtils {
             return "周";
         }
         return null;
+    }
+
+    public static String getDeviceFingerprinting(Context context) {
+
+        return SPUtils.getWyString(context, Config.KEY_TONG_DUN )+","+SPUtils.getWyString(context, Config.KEY_BAI_QI_SHI );
     }
 }
