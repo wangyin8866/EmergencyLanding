@@ -11,7 +11,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="借款金额"
-        android:textColor="#999999"
+        android:textColor="#666666"
         android:textSize="13sp" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="周期"
-        android:textColor="#999999"
+        android:textColor="#666666"
         android:textSize="13sp" />
 
     <TextView
@@ -31,7 +31,7 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="申请时间"
-        android:textColor="#999999"
+        android:textColor="#666666"
         android:textSize="13sp" />
 
     <TextView
@@ -41,6 +41,6 @@
         android:layout_weight="1"
         android:gravity="center"
         android:text="状态"
-        android:textColor="#999999"
+        android:textColor="#666666"
         android:textSize="13sp" />
 </LinearLayout>
