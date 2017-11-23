@@ -8,7 +8,7 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
-import com.zyjr.emergencylending.entity.ProIntroduceBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.model.home.loan.ProductInfoModel;
 import com.zyjr.emergencylending.ui.home.View.ProductInfoView;
@@ -51,9 +51,9 @@ public class ProductInfoPresenter extends BasePresenter<ProductInfoView> {
     }
 
     public void getProIntroduce(Map<String, String> params) {
-        invoke(ProductInfoModel.getInstance().getProIntroduce(params), new ProgressSubscriber<ApiResult<ProIntroduceBean>>(new SubscriberOnNextListener<ApiResult<ProIntroduceBean>>() {
+        invoke(ProductInfoModel.getInstance().getProIntroduce(params), new ProgressSubscriber<ApiResult<PrecheckResultBean.ProIntroduceBean>>(new SubscriberOnNextListener<ApiResult<PrecheckResultBean.ProIntroduceBean>>() {
             @Override
-            public void onNext(ApiResult<ProIntroduceBean> result) {
+            public void onNext(ApiResult<PrecheckResultBean.ProIntroduceBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     if (result.getResult() != null) {
                         LogUtils.d("查询产品介绍信息成功---->" + result.getMsg());

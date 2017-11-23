@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.home.View;
 
 import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 
@@ -23,4 +24,6 @@ public interface WriteInfoView {
     void onError(String apiCode, String errorMsg);
 
     void onSuccessGetClerkStore(String apiCode, List<StoreResultBean.StoreBean> beanList);
+
+    void onSuccessPrecheck(String apiCode, String flag, PrecheckResultBean precheckResultBean);
 }

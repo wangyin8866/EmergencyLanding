@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.utils.StringUtil;
 
 import static com.zyjr.emergencylending.R.id.tv_album;
 import static com.zyjr.emergencylending.R.id.tv_picture;
@@ -138,7 +139,7 @@ public class CustomerDialog extends Dialog {
             ivClose.setOnClickListener(listener);
             btnSumbit.setOnClickListener(listener);
         } else if (renewLoanType.equals("3")) {
-            setContentView(R.layout.dialog_product_match_refinance);
+            setContentView(R.layout.dialog_loan_apply_confirm);
             Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
             ImageView ivClose = findViewById(R.id.iv_close);
             window.setGravity(Gravity.CENTER);
@@ -309,6 +310,27 @@ public class CustomerDialog extends Dialog {
         left.setOnClickListener(onClickListener);
         right.setOnClickListener(onClickListener);
         content.setText(str);
+        return instance;
+    }
+
+    /**
+     * 借款申请操作 确认
+     *
+     * @param listener
+     * @param detailMsg
+     * @return
+     */
+    public CustomerDialog loanOperateConfirm(View.OnClickListener listener, String detailMsg) {
+        setContentView(R.layout.dialog_loan_apply_confirm);
+        Button btnSumbit = findViewById(R.id.btn_comfirm_submit);
+        ImageView ivClose = findViewById(R.id.iv_close);
+        TextView tvDetailMsg = findViewById(R.id.tv_title2);
+        if (StringUtil.isNotEmpty(detailMsg)) {
+            tvDetailMsg.setText(detailMsg);
+        }
+        window.setGravity(Gravity.CENTER);
+        ivClose.setOnClickListener(listener);
+        btnSumbit.setOnClickListener(listener);
         return instance;
     }
 }

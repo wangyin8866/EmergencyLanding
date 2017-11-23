@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.service.home.loan;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 
@@ -24,7 +25,7 @@ public interface WriteInfoService {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<WriteInfoBean>> getWriteInfo(@FieldMap Map<String,String> map);
+    Observable<ApiResult<WriteInfoBean>> getWriteInfo(@FieldMap Map<String, String> map);
 
 
     /**
@@ -32,21 +33,30 @@ public interface WriteInfoService {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<String>> submitLoanInformation(@FieldMap Map<String,String> map);
+    Observable<ApiResult<String>> submitLoanInformation(@FieldMap Map<String, String> map);
 
     /**
      * 获取可申请产品类型
      */
+    @Deprecated
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<MayApplyProBean>> getMayApplyProductType(@FieldMap Map<String,String> map);
+    Observable<ApiResult<MayApplyProBean>> getMayApplyProductType(@FieldMap Map<String, String> map);
 
     /**
      * 获取所在线下支持门店信息
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<StoreResultBean>> getLocalStoreList(@FieldMap Map<String,String> map);
+    Observable<ApiResult<StoreResultBean>> getLocalStoreList(@FieldMap Map<String, String> map);
+
+
+    /**
+     * 提交预检
+     */
+    @FormUrlEncoded
+    @POST(NetConstantValues.LOAN)
+    Observable<ApiResult<PrecheckResultBean>> submitPrecheck(@FieldMap Map<String, String> map);
 
 }
 

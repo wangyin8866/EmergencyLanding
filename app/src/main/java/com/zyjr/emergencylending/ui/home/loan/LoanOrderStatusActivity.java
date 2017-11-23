@@ -21,6 +21,8 @@ import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
+import org.w3c.dom.Text;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,11 +66,16 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     ImageView ivOrderStatusIcon;
     @BindView(R.id.btn_status_operate)
     Button btnOrderOperate;
+    @BindView(R.id.tv_product_type)
+    TextView tvProductType; // 产品类型
 
     @BindView(R.id.ll_retry)
     LinearLayout llRetry; // 网络加载失败时重试
     @BindView(R.id.sv_main)
     ScrollView svMain;  // 主布局
+    @BindView(R.id.ll_loan_info)
+    LinearLayout llLoanInfo; // 借款信息
+
     // 订单状态线
     @BindView(R.id.view_line_status1_right)
     View viewLineStatus1Right; // 状态1右侧色
@@ -102,6 +109,8 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     View viewLineStatus6Left; // 状态6左侧色
 
     private LoanOrderBean loanOrderBean = null;
+    private String failStatus = ""; // 失败状态
+    private String failDesc = ""; // 失败信息
 
     @Override
     protected LoanOrderPresenter createPresenter() {
@@ -167,14 +176,14 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             } else if (stepStatus.equals("7")) {
                 // 受理中
                 if (orderStatus.equals("9")) {
-                    // 推送拒件 重新申请
-                    finish();
+                    // 审批拒件
+                    jumpToFailPage(loanOrderBean);
                 }
             } else if (stepStatus.equals("3")) {
                 // 审核中
                 if (orderStatus.equals("9")) {
                     // 审核拒绝
-                    jumpToFailPage(stepStatus, orderStatus);
+                    jumpToFailPage(loanOrderBean);
                 }
             } else if (stepStatus.equals("4")) {
                 // 领取金额 (验证问题、领取金额、领取超时、领取拒件)
@@ -191,10 +200,10 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                     }
                 } else if (orderStatus.equals("11")) {
                     // 领取超时(重新申请)
-                    finish();
+                    deleteLoanOrder();
                 } else if (orderStatus.equals("9")) {
                     // 领取拒件(领取拒绝)
-                    jumpToFailPage(stepStatus, orderStatus);
+                    jumpToFailPage(loanOrderBean);
                 }
             } else if (stepStatus.equals("5")) {
                 // 放款中
@@ -207,7 +216,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                     startActivity(intent);
                 } else if (orderStatus.equals("9")) {
                     // 放款拒绝
-                    jumpToFailPage(stepStatus, orderStatus);
+                    jumpToFailPage(loanOrderBean);
                 }
             } else if (stepStatus.equals("6")) {
                 // 还款中
@@ -218,14 +227,19 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                     startActivity(intent);
                     finish();
                 }
+            } else if (stepStatus.equals("7")) {
+                // 推送拒件 (领取拒绝)
+                jumpToFailPage(loanOrderBean);
             }
         }
     }
 
-    private void jumpToFailPage(String step_status, String order_status) {
+    private void jumpToFailPage(LoanOrderBean loanOrderBean) {
         Intent intent = new Intent(this, HandleFailActivity.class);
-        intent.putExtra("stepStatus", step_status);
-        intent.putExtra("orderStatus", order_status);
+        intent.putExtra("loanOrderBean", loanOrderBean);
+        intent.putExtra("jumpFlag", "order");
+        intent.putExtra("failStatus", failStatus);
+        intent.putExtra("failDesc", failDesc);
         startActivity(intent);
     }
 
@@ -233,33 +247,46 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
      * 订单状态
      *
      * @param isClerkOpt  普通用户|业务员
+     * @param productId   线上线下标识
+     * @param amount      借款金额
      * @param stepStatus  步骤码
      * @param orderStatus 订单状态
+     * @param orderDesc   订单描述
      */
-    private void setOrderStatusInfo(String isClerkOpt, String stepStatus, String orderStatus, String msg) {
+    private void setOrderStatusInfo(String isClerkOpt, String productId, String amount, String stepStatus, String orderStatus, String orderDesc) {
         int orderStatusIocn = 0;
         if (stepStatus.equals("2") && orderStatus.equals("10")) {
             // 认证中
+            llLoanInfo.setVisibility(View.GONE);
+            btnOrderOperate.setVisibility(View.VISIBLE);
+            orderDesc("认证未完成，请前往认证！", "");
+            btnOrderOperate.setText("前往认证");
+            btnOrderOperate.setEnabled(true);
             orderStatusIocn = R.mipmap.emptypage_authentication;
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.order_uncompleted_color);
             setTextView(tvOrderStatus4, "领取金额", R.color.order_uncompleted_color);
             setTextView(tvOrderStatus5, "放款中", R.color.order_uncompleted_color);
             setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
-            tvLoanDesc.setText("申请金额");
-            btnOrderOperate.setText("前往认证");
-            btnOrderOperate.setEnabled(true);
         } else if (stepStatus.equals("7")) {
+            llLoanInfo.setVisibility(View.VISIBLE);
+            showLoanInfo();
             // 受理中
             if (orderStatus.equals("10") || orderStatus.equals("4")) {
-                btnOrderOperate.setText("受理中");
+                btnOrderOperate.setVisibility(View.GONE);
+                orderDesc("订单正在受理中，请耐心等待！", "");
                 tvLoanDesc.setText("申请金额");
-                btnOrderOperate.setEnabled(false);
+                orderStatusIocn = R.mipmap.emptypage_examine;
             } else if (orderStatus.equals("9")) {
-                btnOrderOperate.setText("重新申请");
-                deleteLoanOrder();
+                btnOrderOperate.setVisibility(View.VISIBLE);
+                btnOrderOperate.setEnabled(true);
+                tvLoanDesc.setText("申请金额");
+                orderStatusIocn = R.mipmap.emptypage_fail;
+                orderDesc(orderDesc, "");
+                btnOrderOperate.setText("审批拒件");
+                failStatus = "审批拒件";
+                failDesc = orderDesc;
             }
-            orderStatusIocn = R.mipmap.emptypage_examine;
             setTextView(tvOrderStatus2, "受理中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.order_uncompleted_color);
             setTextView(tvOrderStatus4, "领取金额", R.color.order_uncompleted_color);
@@ -268,17 +295,35 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         } else if (stepStatus.equals("3")) {
             // 审核中
             if (orderStatus.equals("10") || orderStatus.equals("0") || orderStatus.equals("2")) {
-                btnOrderOperate.setText("审核中");
-                tvLoanDesc.setText("申请金额");
+                if (productId.equals("0")) {
+                    // 线上
+                    if (StringUtil.isEmpty(amount)) {
+                        // 首贷
+                        llLoanInfo.setVisibility(View.GONE);
+                    } else {
+                        llLoanInfo.setVisibility(View.VISIBLE);
+                        showLoanInfo();
+                    }
+                    tvLoanDesc.setText("审批金额");
+                } else if (productId.equals("1")) {
+                    // 线下
+                    llLoanInfo.setVisibility(View.VISIBLE);
+                    tvLoanDesc.setText("申请金额");
+                }
+                btnOrderOperate.setVisibility(View.GONE);
+                orderDesc("订单正在审核中，请耐心等待！", "");
                 orderStatusIocn = R.mipmap.emptypage_examine;
             } else if (orderStatus.equals("9")) {
-                btnOrderOperate.setText("审核拒绝");
-                tvLoanDesc.setText("申请金额");
+                llLoanInfo.setVisibility(View.VISIBLE);
+                showLoanInfo();
+                btnOrderOperate.setVisibility(View.VISIBLE);
+                btnOrderOperate.setText("审批拒件");
+                tvLoanDesc.setText("审批金额");
                 orderStatusIocn = R.mipmap.emptypage_fail;
-                tvOrderDesc1.setText(msg);
-                deleteLoanOrder();
+                orderDesc(orderDesc, "");
+                failStatus = "审批拒件";
+                failDesc = orderDesc;
             }
-            btnOrderOperate.setEnabled(false);
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.white);
             setTextView(tvOrderStatus4, "领取金额", R.color.order_uncompleted_color);
@@ -286,29 +331,35 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("4")) {
             // 领取金额
-            tvLoanDesc.setText("审批额度");
+            llLoanInfo.setVisibility(View.VISIBLE);
+            showLoanInfo();
+            btnOrderOperate.setVisibility(View.VISIBLE);
+            tvLoanDesc.setText("审批金额");
             if (orderStatus.equals("2")) {
                 if (isClerkOpt.equals("1")) {
                     // 订单是业务员操作
                     btnOrderOperate.setText("验证问题");
-                    tvOrderDesc1.setText("");
+                    orderDesc("完成验证后，即可领取金额！", "");
                     btnOrderOperate.setEnabled(true);
-                    orderStatusIocn = R.mipmap.emptypage_authentication;
+                    orderStatusIocn = R.mipmap.emptypage_getthemoney;
                 } else {
                     btnOrderOperate.setText("领取金额");
-                    tvOrderDesc1.setText("请尽快领取金额");
+                    orderDesc("请尽快领取金额，过期将失效！", "");
                     orderStatusIocn = R.mipmap.emptypage_getthemoney;
                     btnOrderOperate.setEnabled(true);
                 }
             } else if (orderStatus.equals("11")) {
+                btnOrderOperate.setEnabled(true);
                 btnOrderOperate.setText("重新申请");
-                tvOrderDesc1.setText("领取超时");
+                orderDesc("领取金额超时", "");
                 orderStatusIocn = R.mipmap.emptypage_fail;
-                deleteLoanOrder(); // 件废除
             } else if (orderStatus.equals("9")) {
-                btnOrderOperate.setText("领取拒绝");
+                btnOrderOperate.setEnabled(true);
+                btnOrderOperate.setText("领取拒件");
                 orderStatusIocn = R.mipmap.emptypage_fail;
-                tvOrderDesc1.setText(msg);
+                orderDesc(orderDesc, "");
+                failStatus = "领取拒件";
+                failDesc = orderDesc;
             }
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.white);
@@ -317,23 +368,28 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("5")) {
             // 放款中
-            tvLoanDesc.setText("审批额度");
+            llLoanInfo.setVisibility(View.VISIBLE);
+            showLoanInfo();
+            tvLoanDesc.setText("审批金额");
             if (orderStatus.equals("2") || orderStatus.equals("3")) {
-                btnOrderOperate.setText("放款中");
-                tvOrderDesc1.setText("");
+                llLoanInfo.setVisibility(View.VISIBLE);
+                btnOrderOperate.setVisibility(View.GONE);
+                orderDesc("订单正在放款中，请耐心等待！", "");
                 orderStatusIocn = R.mipmap.emptypage_loan;
-                btnOrderOperate.setEnabled(false);
             } else if (orderStatus.equals("7")) {
-                orderStatusIocn = R.mipmap.emptypage_fail;
+                btnOrderOperate.setVisibility(View.VISIBLE);
                 btnOrderOperate.setEnabled(true);
+                orderStatusIocn = R.mipmap.emptypage_fail;
                 btnOrderOperate.setText("前往修改");
-                tvOrderDesc1.setText("放款失败");
-                tvOrderDesc2.setText("核实并修改银行卡,等待系统自动放款");
+                orderDesc("放款失败", "核实并修改银行卡,等待系统自动放款");
             } else if (orderStatus.equals("9")) {
+                btnOrderOperate.setVisibility(View.VISIBLE);
                 btnOrderOperate.setEnabled(true);
+                btnOrderOperate.setText("放款拒件");
                 orderStatusIocn = R.mipmap.emptypage_fail;
-                btnOrderOperate.setText("放款拒绝");
-                tvOrderDesc1.setText(msg);
+                orderDesc(orderDesc, "");
+                failStatus = "放款拒件";
+                failDesc = orderDesc;
             }
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.white);
@@ -341,10 +397,14 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             setTextView(tvOrderStatus5, "放款中", R.color.white);
             setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (stepStatus.equals("6")) {
+            llLoanInfo.setVisibility(View.VISIBLE);
+            showLoanInfo();
             // 立即还款
-            tvLoanDesc.setText("审批额度");
+            tvLoanDesc.setText("审批金额");
             if (orderStatus.equals("1")) {
+                btnOrderOperate.setVisibility(View.VISIBLE);
                 btnOrderOperate.setText("立即还款");
+                orderDesc("按时还款，保持良好的信誉，有助于提额哦！", "");
                 btnOrderOperate.setEnabled(true);
             }
             orderStatusIocn = R.mipmap.emptypage_repayment;
@@ -361,6 +421,11 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     private void setTextView(TextView tv, String content, int color) {
         tv.setText(content);
         tv.setTextColor(getResources().getColor(color));
+    }
+
+    private void orderDesc(String desc1, String desc2) {
+        tvOrderDesc1.setText(desc1);
+        tvOrderDesc2.setText(desc2);
     }
 
     private void setLineColor(String stepCode) {
@@ -476,18 +541,25 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     public void onSuccessGet(String returnCode, LoanOrderBean bean) {
         loanOrderBean = bean;
         showSuccess();
+        setOrderStatusInfo(loanOrderBean.getIs_clerk_opt(), loanOrderBean.getProduct_id(), loanOrderBean.getLoan_amount(), loanOrderBean.getStep_status(), loanOrderBean.getOrder_status(), loanOrderBean.getOrder_code_desc());
+    }
+
+    private void showLoanInfo() {
+        if (loanOrderBean.getProduct_id().equals("0")) {
+            tvProductType.setText("急速借款");
+        } else if (loanOrderBean.getProduct_id().equals("1")) {
+            tvProductType.setText("传统借款");
+        }
         tvLoadMoney.setText(loanOrderBean.getLoan_amount() + "元");
         if (loanOrderBean.getZq_unit().equals("1")) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "天");
         } else if (loanOrderBean.getZq_unit().equals("2")) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "周");
         }
-        setOrderStatusInfo(loanOrderBean.getIs_clerk_opt(), loanOrderBean.getStep_status(), loanOrderBean.getOrder_status(), loanOrderBean.getOrder_code_desc());
     }
 
     @Override
     public void onSuccessGetEffectiveOrder(String api, String result) {
-
     }
 
     @Override
@@ -503,6 +575,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
     @Override
     public void onSuccessDeleteLoanOrder(String api, String result) {
         LogUtils.d("废件处理成功--" + result);
+        finish();
     }
 
 

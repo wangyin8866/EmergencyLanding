@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.model.home.loan.WriteInfoModel;
@@ -77,6 +78,7 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
         }, mContext));
     }
 
+    @Deprecated
     public void getMayApplyProductType(Map<String, String> params) {
         invoke(WriteInfoModel.getInstance().getMayApplayProductType(params), new ProgressSubscriber<ApiResult<MayApplyProBean>>(new SubscriberOnNextListener<ApiResult<MayApplyProBean>>() {
             @Override
@@ -122,6 +124,32 @@ public class WriteInfoPresenter extends BasePresenter<WriteInfoView> {
             public void onError(Throwable e) {
                 LogUtils.d("获取业务员门店信息(异常)---->" + e.getMessage());
                 getView().onError(Constants.GET_LOCAL_STORE_INFO, Config.TIP_NET_ERROR);
+            }
+        }, mContext));
+    }
+
+    // 提交预检 获取首续贷相关信息
+    public void submitPrecheck(final Map<String, String> params) {
+        invoke(WriteInfoModel.getInstance().submitPrecheck(params), new ProgressSubscriber<ApiResult<PrecheckResultBean>>(new SubscriberOnNextListener<ApiResult<PrecheckResultBean>>() {
+            @Override
+            public void onNext(ApiResult<PrecheckResultBean> result) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("提交预检(成功)---->" + result.getMsg());
+                    if (StringUtil.isEmpty(params.get("store"))) {
+                        getView().onSuccessPrecheck(Constants.SUBMIT_LOAN_INFORMATION, Config.ONLINE, result.getResult());
+                    } else {
+                        getView().onSuccessPrecheck(Constants.SUBMIT_LOAN_INFORMATION, Config.OFFLINE_CLERK, result.getResult());
+                    }
+                } else {
+                    LogUtils.d("提交预检(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getPromptMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("提交预检(异常)---->" + e.getMessage());
+                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

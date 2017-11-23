@@ -3,11 +3,8 @@ package com.zyjr.emergencylending.model.home.loan;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.entity.ProIntroduceBean;
-import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.service.home.loan.QuestValidateService;
 
-import java.util.List;
 import java.util.Map;
 
 import rx.Observable;

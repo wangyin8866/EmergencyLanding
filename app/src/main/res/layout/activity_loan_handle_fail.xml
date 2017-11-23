@@ -8,8 +8,8 @@
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="申请失败"
@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:text="申请失败"
                 android:textColor="@color/input_text_color"
                 android:textSize="16sp" />
 
@@ -55,7 +54,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:gravity="center"
-                android:text="系统审核拒绝"
                 android:textColor="@color/front_text_color_hint"
                 android:textSize="13sp" />
 

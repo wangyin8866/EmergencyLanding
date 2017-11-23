@@ -7,8 +7,8 @@
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="找回密码"

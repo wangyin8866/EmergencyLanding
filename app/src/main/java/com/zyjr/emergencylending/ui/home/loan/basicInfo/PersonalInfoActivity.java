@@ -777,7 +777,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     @Override
     public void onSuccessUploadPic(String apiCode, String fileFlag, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         // 区分 正面和反面
         if (fileFlag.equals("2")) {
             ivIdcardFront.setImageBitmap(mBitmapIDcardFront);
@@ -803,7 +803,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -811,7 +811,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();

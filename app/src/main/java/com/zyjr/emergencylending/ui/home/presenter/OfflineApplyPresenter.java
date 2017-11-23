@@ -8,10 +8,12 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.model.home.loan.WriteInfoModel;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
 
 import java.util.Map;
 
@@ -38,7 +40,7 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
                     }
                 } else {
                     LogUtils.d("获取支持门店信息(失败)---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getPromptMsg());
+                    getView().onFail(Constants.GET_LOCAL_STORE_INFO, result.getFlag(), result.getPromptMsg());
                 }
             }
 
@@ -59,7 +61,7 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
                     getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getPromptMsg());
                 } else {
                     LogUtils.d("提交借款资料(失败)---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getPromptMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getPromptMsg());
                 }
             }
 
@@ -71,5 +73,31 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
         }, mContext));
     }
 
+
+    // 提交预检 获取首续贷相关信息
+    public void submitPrecheck(final Map<String, String> params) {
+        invoke(WriteInfoModel.getInstance().submitPrecheck(params), new ProgressSubscriber<ApiResult<PrecheckResultBean>>(new SubscriberOnNextListener<ApiResult<PrecheckResultBean>>() {
+            @Override
+            public void onNext(ApiResult<PrecheckResultBean> result) {
+                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+                    LogUtils.d("提交预检(成功)---->" + result.getMsg());
+                    if (StringUtil.isEmpty(params.get("store"))) {
+                        getView().onSuccessPrecheck(Constants.SUBMIT_LOAN_INFORMATION, Config.ONLINE, result.getResult());
+                    } else {
+                        getView().onSuccessPrecheck(Constants.SUBMIT_LOAN_INFORMATION, Config.OFFLINE_CLERK, result.getResult());
+                    }
+                } else {
+                    LogUtils.d("提交预检(失败)---->" + result.getFlag() + "," + result.getMsg());
+                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getPromptMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.d("提交预检(异常)---->" + e.getMessage());
+                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, Config.TIP_NET_ERROR);
+            }
+        }, mContext));
+    }
 
 }

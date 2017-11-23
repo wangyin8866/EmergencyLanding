@@ -41,8 +41,8 @@ public abstract class HttpSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        ToastAlone.showShortToast(BaseApplication.getContext(), e.getMessage());
         onRequestError(e);
+//        ToastAlone.showShortToast(BaseApplication.getContext(), e.getMessage());
 //        if (e instanceof SocketTimeoutException) {
 //            ToastAlone.showShortToast(BaseApplication.getContext(), "请求超时，稍后再试");
 //            return;

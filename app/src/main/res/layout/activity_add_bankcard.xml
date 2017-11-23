@@ -8,8 +8,8 @@
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="添加银行卡"
@@ -249,6 +249,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_marginTop="12dp"
                     android:layout_toRightOf="@+id/tv_support_bank_title"
+                    android:textColor="@color/auth_success"
                     android:text="*仅支持借记卡(不支持信用卡)"
                     android:textSize="12sp" />
 

@@ -7,8 +7,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceActivity;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -275,12 +277,40 @@ public class ToolPermission {
 //                                })
 //
 //                                .setTitle("权限提示").setMessage(R.string.permission_prompt).show();
-                        ToastAlone.showLongToast(context, context.getResources().getString(R.string.permission_prompt));
+//                        ToastAlone.showLongToast(context, context.getResources().getString(R.string.permission_prompt));
+
                         callBack.callBack(requestCode, false);
                     }
                 })
                 .start();
     }
 
+
+    /**
+     * 跳转到系统设置界面去开启权限
+     * @param activity
+     * @param message
+     */
+    public static void openSettingActivity(final Activity activity, String message) {
+        showMessageOKCancel(activity, message, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
+                intent.setData(uri);
+                activity.startActivity(intent);
+            }
+        }, null);
+    }
+
+    private static void showMessageOKCancel(final Activity context, String message, DialogInterface.OnClickListener okListener, DialogInterface.OnClickListener cancelListener) {
+        new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setPositiveButton("是", okListener)
+                .setNegativeButton("否", cancelListener)
+                .create()
+                .show();
+    }
 
 }

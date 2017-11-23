@@ -2,7 +2,7 @@ package com.zyjr.emergencylending.service.home.loan;
 
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.entity.ProIntroduceBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 
 import java.util.List;
@@ -24,7 +24,7 @@ public interface ProductInfoService {
      */
     @FormUrlEncoded
     @POST(NetConstantValues.LOAN)
-    Observable<ApiResult<ProIntroduceBean>> getProIntroduce(@FieldMap Map<String, String> params);
+    Observable<ApiResult<PrecheckResultBean.ProIntroduceBean>> getProIntroduce(@FieldMap Map<String, String> params);
 
 
     /**

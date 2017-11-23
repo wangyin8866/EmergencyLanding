@@ -113,7 +113,7 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
         }
         if (flag.equals("1")) {
             submitMobileAuth(account, flag, servicePasswd, "");
-        } else {
+        } else if (flag.equals("2")) {
             if (StringUtil.isEmpty(mobileValidateCode)) {
                 ToastAlone.showLongToast(this, "请输入验证码");
                 return;
@@ -184,14 +184,14 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
     @Override
     public void onSuccessJudgeMobileValide(String apiCode, MobileBean bean) {
         mobileBean = bean;
-//        if (mobileBean.getStatus().equals("0")) {
-//            llMobileValidateCode.setVisibility(View.GONE);
-//            flag = "1";
-//        } else if (mobileBean.getStatus().equals("1")) {
-//            llMobileValidateCode.setVisibility(View.VISIBLE);
-//            flag = "2";
-//            etMobileValidateCode.setText("");
-//        }
+        if (mobileBean.getStatus().equals("0")) {
+            llMobileValidateCode.setVisibility(View.GONE);
+            flag = "1";
+        } else if (mobileBean.getStatus().equals("1")) {
+            llMobileValidateCode.setVisibility(View.VISIBLE);
+            flag = "2";
+            etMobileValidateCode.setText("");
+        }
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
@@ -16,8 +17,13 @@ import com.zyjr.emergencylending.model.home.loan.AuthHelperModel;
 import com.zyjr.emergencylending.model.home.loan.PersonalInfoModel;
 import com.zyjr.emergencylending.ui.home.View.AuthHelperView;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
+import com.zyjr.emergencylending.utils.ToastAlone;
 
+import java.net.SocketTimeoutException;
 import java.util.Map;
+
+import retrofit2.HttpException;
 
 /**
  * 提交认证信息
@@ -80,7 +86,7 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
                     getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getPromptMsg());
                 } else if (result.getFlag().equals("API0000")) {
                     LogUtils.d("运营商采集认证成功---->" + result.getMsg());
-                    getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), "已完成提交");
+                    getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getPromptMsg());
                 } else if (result.getFlag().equals("API3020")) {
                     LogUtils.d("运营商采集认证失败(大数据那边处理有问题,需要调转第一步操作)---->" + result.getMsg());
                     getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getPromptMsg());
@@ -92,8 +98,12 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
 
             @Override
             public void onError(Throwable e) {
-                LogUtils.d("运营商采集认证异常--->" + e.getMessage());
-                getView().onError(Constants.MOBILE_COLLECT_AUTH, Config.TIP_NET_ERROR);
+                LogUtils.d("运营商采集认证异常--->" + e.toString());
+                if (e instanceof SocketTimeoutException) {
+                    getView().onError(Constants.MOBILE_COLLECT_AUTH, "请求超时,请稍后再试");
+                } else {
+                    getView().onError(Constants.MOBILE_COLLECT_AUTH, Config.TIP_NET_ERROR);
+                }
             }
         }, mContext));
     }
@@ -139,7 +149,11 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             @Override
             public void onError(Throwable e) {
                 LogUtils.d("校验运营商验证是否有效(异常)---->" + e.getMessage());
-                getView().onError(Constants.JUDGE_MOBILE_CODE_VALIDE, Config.TIP_NET_ERROR);
+                if (e instanceof SocketTimeoutException) {
+                    getView().onError(Constants.JUDGE_MOBILE_CODE_VALIDE, "请求超时,请稍后再试");
+                } else {
+                    getView().onError(Constants.JUDGE_MOBILE_CODE_VALIDE, Config.TIP_NET_ERROR);
+                }
             }
         }, mContext));
     }

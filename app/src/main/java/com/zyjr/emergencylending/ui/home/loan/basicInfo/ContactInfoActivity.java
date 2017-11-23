@@ -471,7 +471,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -479,7 +479,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();

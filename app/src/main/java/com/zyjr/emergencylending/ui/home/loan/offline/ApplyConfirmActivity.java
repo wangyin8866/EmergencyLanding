@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.home.loan.offline;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,13 +21,18 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
 import com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity;
+import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.OfflineApplyPresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
+import com.zyjr.emergencylending.utils.permission.ToolPermission;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
 import java.util.ArrayList;
@@ -72,7 +78,6 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
     private String apply_periods = "";
     private String apply_zq = "";
     private String apply_periods_unit = "";
-    private String renew_loan_type = ""; // 首续贷,首:0;续:3
 
     @Override
     protected OfflineApplyPresenter createPresenter() {
@@ -89,11 +94,23 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         initGetData();
     }
 
-    @OnClick({R.id.btn_submit_apply,R.id.btn_retry})
+    @OnClick({R.id.btn_submit_apply, R.id.btn_retry})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_submit_apply:
-                validate();
+                ToolPermission.checkPermission(this, new ToolPermission.PermissionCallBack() {
+                            @Override
+                            public void callBack(int requestCode, boolean isPass) {
+                                LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
+                                if (isPass) {
+                                    validate();
+                                } else {
+                                    ToastAlone.showLongToast(ApplyConfirmActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+                                }
+                            }
+                        },
+                        2000,
+                        Manifest.permission.READ_CONTACTS);
                 break;
 
             case R.id.btn_retry:
@@ -107,7 +124,7 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
             ToastAlone.showLongToast(this, "请选择门店!");
             return;
         }
-        submitLoanInfo();
+        submitPrecheck();
     }
 
 
@@ -133,14 +150,12 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         apply_periods = intent.getStringExtra("apply_periods"); // 申请期数
         apply_zq = intent.getStringExtra("apply_zq"); // 申请期数间隔
         apply_periods_unit = intent.getStringExtra("apply_periods_unit"); // 申请周期单位
-        renew_loan_type = intent.getStringExtra("renew_loan_type");
         LogUtils.d("【接收数据】:" +
                 "\n申请金额apply_amount:" + apply_amount +
                 "\n申请期数apply_periods:" + apply_periods +
                 "\n申请期数间隔apply_zq:" + apply_zq +
                 "\n申请周期单位apply_periods_unit:" + apply_periods_unit +
                 "\n产品id:" + product_id +
-                "\n首续贷renew_loan_type:" + renew_loan_type +
                 "\n产品类型online_type:" + online_type);
         tvOfflineBorrowMoney.setText(apply_amount + "元");
         if (apply_periods_unit.equals("1")) {
@@ -157,7 +172,7 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         mPresenter.getLocalStoreList(params);
     }
 
-    private void submitLoanInfo() {
+    private void submitPrecheck() {
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("online_type", online_type); // 产品类型
         paramsMap.put("product_id", product_id); // 产品ID
@@ -165,13 +180,13 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         paramsMap.put("apply_periods", apply_periods); // 申请期数
         paramsMap.put("apply_zq", apply_zq); // 申请期数间隔
         paramsMap.put("apply_periods_unit", apply_periods_unit); // 申请周期单位
-        paramsMap.put("renew_loan_type", renew_loan_type); // 首续贷
         if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
             paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
         }
         paramsMap.put("store", storeBean.getStoreId()); // 门店iD
         paramsMap.put("store_name", storeBean.getStoreName());  // 门店名称
-        mPresenter.submitLoanInformation(paramsMap);
+        paramsMap.put("phone_equipment", WYUtils.getDeviceFingerprinting(this));  // 手机设备唯一串号
+        mPresenter.submitPrecheck(paramsMap);
     }
 
     private void showError() {
@@ -209,7 +224,11 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
 
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+
+    }
+
+    @Override
+    public void onSuccessPrecheck(String apiCode, String flag, PrecheckResultBean precheckResultBean) {
         Intent intent = new Intent(this, LoanApplyResultActivity.class);
         intent.putExtra("online_type", online_type);
         intent.putExtra("product_id", product_id);
@@ -217,7 +236,7 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
     }
 
     @Override
-    public void onFail(String apiCode, String failMsg) {
+    public void onFail(String apiCode, String flag, String failMsg) {
         ToastAlone.showLongToast(this, failMsg);
     }
 

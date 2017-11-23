@@ -7,8 +7,8 @@
     <com.zyjr.emergencylending.custom.TopBar
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:layout_height="@dimen/top_height"
+        android:paddingLeft="16dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="申请确认"
@@ -30,8 +30,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="281dp"
-                android:background="@color/white">
+                android:layout_height="281dp">
 
                 <ImageView
                     android:id="@+id/iv_no_store_support"
@@ -52,63 +51,35 @@
 
             </RelativeLayout>
 
-
             <TextView
-                android:id="@+id/tv_support_cities"
+                android:id="@+id/tv_product_recommend_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginTop="15dp"
-                android:text="急速贷款"
+                android:text="根据您的情况,可以申请以下产品"
                 android:textColor="#474747"
-                android:textSize="18sp" />
+                android:textSize="15sp" />
 
-
-            <!-- 推荐贷款 -->
+            <!-- 无匹配门店,产品推荐 -->
             <LinearLayout
-                android:id="@+id/layout_store_supported"
+                android:id="@+id/layout_product_recommend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="40dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="5dp"
                 android:background="@drawable/bg_home_notice"
                 android:orientation="vertical">
 
-                <!-- 续贷 -->
                 <include
-                    android:id="@+id/ll_refinance"
-                    layout="@layout/line_layout_loan_type"
-                    android:visibility="gone" />
-
-                <!-- 首贷 -->
-                <include
-                    android:id="@+id/ll_first_finance"
-                    layout="@layout/layout_offline_loan_first_match" />
+                    layout="@layout/layout_offline_no_store_recommend" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
-
-    <RelativeLayout
-        android:id="@+id/layout_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/btn_submit_apply"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:background="@color/mine_center_bg"
-            android:text="提交"
-            android:textColor="@color/white"
-            android:textSize="17sp" />
-    </RelativeLayout>
-
 
 </RelativeLayout>

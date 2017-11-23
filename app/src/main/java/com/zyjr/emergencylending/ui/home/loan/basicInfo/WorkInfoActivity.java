@@ -415,7 +415,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
 
     @Override
     public void onSuccessAdd(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -423,7 +423,7 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();

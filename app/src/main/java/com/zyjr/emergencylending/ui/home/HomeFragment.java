@@ -28,8 +28,10 @@ import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
+import com.zyjr.emergencylending.ui.home.loan.AuthCenterActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
+import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 import com.zyjr.emergencylending.utils.SPUtils;
 
@@ -158,10 +160,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 } else if (Config.TRUE.equals(is_effective_order)) {
                     startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
                 } else {
-                    Intent intent = new Intent(getActivity(), LoanMainActivity.class);
-                    intent.putExtra("flag", "online");
-//                    intent.putExtra("online_type", "0");
-//                    intent.putExtra("product_id", "0");
+                    Intent intent = new Intent(getActivity(), WriteInfoMainActivity.class);
+                    intent.putExtra("online_type", "0");
+                    intent.putExtra("product_id", "0");
                     startActivity(intent);
                 }
                 break;

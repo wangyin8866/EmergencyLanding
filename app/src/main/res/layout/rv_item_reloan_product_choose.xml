@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="75dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/bg_home_notice"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/l1"
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/head_layout"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="3dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_item_loan_money_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:text="金额"
+                    android:textColor="@color/input_text_color" />
+
+                <TextView
+                    android:id="@+id/tv_item_loan_money"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tv_item_loan_money_desc"
+                    android:gravity="center"
+                    android:textColor="@color/input_text_color" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_item_loan_period_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/tv_item_store_name"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="周期" />
+
+                <TextView
+                    android:id="@+id/tv_item_loan_period"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/tv_item_loan_period_desc"
+                    android:gravity="center"
+                    android:textColor="@color/input_text_color" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="15dp"
+            android:gravity="center">
+
+            <com.zyjr.emergencylending.widget.SelectorImageView
+                android:id="@+id/iv_item_product_selected"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@mipmap/choice_off"
+                app:selector_src="@mipmap/choice_on" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

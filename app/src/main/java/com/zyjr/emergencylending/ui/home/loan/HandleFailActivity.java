@@ -5,13 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
+import com.zyjr.emergencylending.entity.MyBorrow;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.HandleFailView;
 import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
 import com.zyjr.emergencylending.ui.home.presenter.HandleFailPresenter;
@@ -43,10 +47,16 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
     TextView tvApplyResultDesc;
     @BindView(R.id.btn_apply_qunadai)
     Button btnApplyQunadai;
+    @BindView(R.id.layout_recommend)
+    RelativeLayout layoutRecommend;
+
     private String stepStatus = "";
     private String orderStatus = "";
     private String flag = "";
     private String msg = "";
+    private LoanOrderBean loanOrderBean = null;
+    private String title = ""; // title
+    private String pushUrl = ""; // 外推url
 
     @Override
     protected HandleFailPresenter createPresenter() {
@@ -67,7 +77,7 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_apply_qunadai:  // 去哪贷
-
+                H5WebView.skipH5WebView(this, title, pushUrl);
                 break;
         }
     }
@@ -88,18 +98,34 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
 
     private void initGetData() {
         Intent intent = getIntent();
-        // 从订单页面过来的
-        stepStatus = intent.getStringExtra("stepStatus");
-        orderStatus = intent.getStringExtra("orderStatus");
-        // 从预检过来的
-        flag = intent.getStringExtra("flag");
-        msg = intent.getStringExtra("msg");
-        if (StringUtil.isNotEmpty(stepStatus) && StringUtil.isNotEmpty(orderStatus)) {
-            // 从订单页面过来的 (做废件处理)
-            deleteLoanOrder();
-        } else if (StringUtil.isNotEmpty(flag) && StringUtil.isNotEmpty(msg)) {
-            // 件 提交失败
-            tvApplyResultDesc.setText(msg);
+        String jumpFlag = intent.getStringExtra("jumpFlag");
+        if (StringUtil.isNotEmpty(jumpFlag)) {
+            if (jumpFlag.equals("order")) {
+                // 从订单页面过来的 (做废件处理)
+                loanOrderBean = (LoanOrderBean) intent.getSerializableExtra("loanOrderBean");
+                pushUrl = loanOrderBean.getOut_push_url();
+                title = loanOrderBean.getOut_push_title();
+                if (StringUtil.isNotEmpty(pushUrl)) {
+                    layoutRecommend.setVisibility(View.VISIBLE);
+                }
+                String failStatus = intent.getStringExtra("failStatus");
+                String failDesc = intent.getStringExtra("failDesc");
+                tvApplyResult.setText(failStatus);
+                tvApplyResultDesc.setText(failDesc);
+                deleteLoanOrder();
+            } else if (jumpFlag.equals("brrow")) {
+                MyBorrow.ResultBean.HisBorrowListBean borrowBean = (MyBorrow.ResultBean.HisBorrowListBean) intent.getSerializableExtra("bean");
+                pushUrl = borrowBean.getOut_push_url();
+                title = borrowBean.getOut_push_title();
+                if (StringUtil.isNotEmpty(pushUrl)) {
+                    layoutRecommend.setVisibility(View.VISIBLE);
+                }
+                tvApplyResult.setText(borrowBean.getLoan_msg());
+            } else if (jumpFlag.equals("precheck")) {
+                String flag = intent.getStringExtra("flag");
+                String msg = intent.getStringExtra("msg");
+                tvApplyResult.setText(msg);
+            }
         }
     }
 
@@ -121,7 +147,8 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
 
     @Override
     public void onSuccessDeleteLoanOrder(String api, String result) {
-        ToastAlone.showLongToast(this, result);
+        // 废件成功后,出栈处理
+        ActivityCollector.getInstance().popActivity(LoanOrderStatusActivity.class);
     }
 
 }

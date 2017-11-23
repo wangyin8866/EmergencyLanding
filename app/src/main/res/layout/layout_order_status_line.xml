@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text="认证中"
-                android:textColor="#494949"
+                android:textColor="@color/order_uncompleted_color"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -149,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text="审核中"
-                android:textColor="#494949"
+                android:textColor="@color/order_uncompleted_color"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -198,7 +198,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text="领取金额"
-                android:textColor="#494949"
+                android:textColor="@color/order_uncompleted_color"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -248,7 +248,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text="放款中"
-                android:textColor="#494949"
+                android:textColor="@color/order_uncompleted_color"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -295,7 +295,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="还款中"
-                android:textColor="#494949"
+                android:textColor="@color/order_uncompleted_color"
                 android:textSize="12sp" />
 
         </LinearLayout>

@@ -19,9 +19,9 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.SupportStoreAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
 import com.zyjr.emergencylending.ui.home.loan.LoanApplyResultActivity;
@@ -30,11 +30,10 @@ import com.zyjr.emergencylending.utils.Arithmetic;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.WYUtils;
 import com.zyjr.emergencylending.widget.CustomSeekBar;
-import com.zyjr.emergencylending.widget.SelectorImageView;
 import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,8 +44,9 @@ import butterknife.OnClick;
 
 /**
  * Created by neil on 2017/10/14
- * 备注: 线上申请件 转线下
+ * 备注: 线上申请件 转线下 【资料信息中无推荐link 废弃】
  */
+@Deprecated
 public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPresenter, OfflineApplyView> implements OfflineApplyView {
 
     @BindView(R.id.top_bar)
@@ -260,7 +260,8 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
         paramsMap.put("store", storeBean.getStoreId()); // 门店iD
         paramsMap.put("store_name", storeBean.getStoreName());  // 门店名称
         paramsMap.put("renew_loan_type", renew_loan_type);  // 首续贷
-        mPresenter.submitLoanInformation(paramsMap);
+        paramsMap.put("phone_equipment", WYUtils.getDeviceFingerprinting(this));  // 手机设备唯一串号
+        mPresenter.submitPrecheck(paramsMap);
     }
 
     private void showError() {
@@ -298,7 +299,11 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
 
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+
+    }
+
+    @Override
+    public void onSuccessPrecheck(String apiCode, String flag, PrecheckResultBean precheckResultBean) {
         Intent intent = new Intent(this, LoanApplyResultActivity.class);
         intent.putExtra("online_type", online_type);
         intent.putExtra("product_id", product_id);
@@ -306,7 +311,7 @@ public class ApplyToOfflineConfirmActivity extends BaseActivity<OfflineApplyPres
     }
 
     @Override
-    public void onFail(String apiCode, String failMsg) {
+    public void onFail(String apiCode, String flag, String failMsg) {
         ToastAlone.showLongToast(this, failMsg);
     }
 

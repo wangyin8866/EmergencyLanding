@@ -137,6 +137,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
                 LogUtils.d("传递借款参数->" + "online_type:" + online_type + ",apply_amount:" + loanMoney + ",apply_periods:" + loanPeriod + ",apply_periods_unit:" + loanPeriodUnit
                         + ",product_id:" + product_id + ",periodProgress:" + seekbarPeriod.getProgress() + ",moneyProgress:" + seekbarMoney.getProgress());
                 startActivity(intent);
+                finish();
                 break;
             case R.id.layout_offline_support_cities:
                 startActivity(new Intent(LoanMainActivity.this, SupportCitiesActivity.class));

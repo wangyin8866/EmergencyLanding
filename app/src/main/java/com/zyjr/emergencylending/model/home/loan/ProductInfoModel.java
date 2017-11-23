@@ -3,7 +3,7 @@ package com.zyjr.emergencylending.model.home.loan;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.NetConstantValues;
-import com.zyjr.emergencylending.entity.ProIntroduceBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.service.home.loan.ProductInfoService;
 
@@ -33,7 +33,7 @@ public class ProductInfoModel extends BaseModel {
         return SingletonHolder.productInfoModel;
     }
 
-    public Observable<ApiResult<ProIntroduceBean>> getProIntroduce(Map<String, String> params) {
+    public Observable<ApiResult<PrecheckResultBean.ProIntroduceBean>> getProIntroduce(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_GET_PRODUCT_INTRODUCE);
         return productInfoService.getProIntroduce(params);
     }

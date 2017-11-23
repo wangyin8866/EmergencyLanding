@@ -6,6 +6,7 @@ import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.MayApplyProBean;
+import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.entity.WriteInfoBean;
 import com.zyjr.emergencylending.service.home.loan.WriteInfoService;
@@ -41,6 +42,7 @@ public class WriteInfoModel extends BaseModel {
         return writeInfoService.getWriteInfo(params);
     }
 
+    @Deprecated
     public Observable<ApiResult<String>> submitLoanInformation(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_SUBMIT_LOAN_INFORMATION);
         params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
@@ -57,5 +59,12 @@ public class WriteInfoModel extends BaseModel {
         params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
         return writeInfoService.getLocalStoreList(params);
     }
+
+    public Observable<ApiResult<PrecheckResultBean>> submitPrecheck(Map<String, String> params) {
+        params.put("router", NetConstantValues.ROUTER_SUBMIT_LOAN_INFORMATION);
+        params.put("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_CUST_JUID, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "1")));
+        return writeInfoService.submitPrecheck(params);
+    }
+
 
 }
