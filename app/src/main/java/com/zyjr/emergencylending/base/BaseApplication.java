@@ -1,11 +1,8 @@
 package com.zyjr.emergencylending.base;
 
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
@@ -18,11 +15,6 @@ import com.zyjr.emergencylending.service.DemoIntentService;
 import com.zyjr.emergencylending.service.DemoPushService;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
-
-import cn.tongdun.android.shell.FMAgent;
-import cn.tongdun.android.shell.exception.FMException;
-
-import static android.support.v4.app.ActivityCompat.requestPermissions;
 
 
 /**
@@ -83,27 +75,7 @@ public class BaseApplication extends Application {
 
         PushManager.getInstance().initialize(this.getApplicationContext(), DemoPushService.class);
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), DemoIntentService.class);
-        /**
-         * 同盾
-         */
-        //权限申请
-        if (Build.VERSION.SDK_INT > 23) {
-            requestPermissions((Activity) context, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,  //必选
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.READ_PHONE_STATE,  //必选
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, 100);
-        }
-        //FMAgent.ENV_SANDBOX表示测试环境，FMAgent.ENV_PRODUCTION表示生产环境
-        try {
-            FMAgent.init(context, FMAgent.ENV_SANDBOX);
-            String blackBox = FMAgent.onEvent(context);
-            LogUtils.e("tokenkey", blackBox);
-            SPUtils.saveWyString(context, Config.KEY_TONG_DUN, blackBox);
-        } catch (FMException e) {
-            e.printStackTrace();
-        }
+
 
     }
 
