@@ -49,7 +49,7 @@ public class ClerkApplyResultActivity extends BaseActivity {
         String flag = intent.getStringExtra("flag");
         String errorMsg = intent.getStringExtra("msg");
         if ("API2022".equals(flag)) {
-            tvApplyResult.setText("未匹配到支持城市，请核查资料");
+            tvApplyResult.setText(errorMsg);
             ivApplyResultIcon.setBackgroundResource(R.mipmap.emptypage_city);
         } else if ("API0000".equals(flag)) {
             tvApplyResult.setText("申请提交成功");

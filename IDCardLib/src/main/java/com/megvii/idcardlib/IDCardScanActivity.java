@@ -384,8 +384,9 @@ public class IDCardScanActivity extends Activity implements TextureView.SurfaceT
                                         verticalTitle.setText("");
                                         horizontalTitle.setText("");
                                     }
-                                    if (mCount != 0)
+                                    if (mCount != 0 && mTimSum != 0) {
                                         fps.setText((1000 * mCount / mTimSum) + " FPS");
+                                    }
                                 }
                             });
                         }

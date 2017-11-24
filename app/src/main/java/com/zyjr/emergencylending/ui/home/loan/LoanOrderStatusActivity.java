@@ -375,7 +375,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 llLoanInfo.setVisibility(View.VISIBLE);
                 btnOrderOperate.setVisibility(View.GONE);
                 orderDesc("订单正在放款中，请耐心等待！", "");
-                orderStatusIocn = R.mipmap.emptypage_loan;
+                orderStatusIocn = R.mipmap.emptypage_sendmoney;
             } else if (orderStatus.equals("7")) {
                 btnOrderOperate.setVisibility(View.VISIBLE);
                 btnOrderOperate.setEnabled(true);

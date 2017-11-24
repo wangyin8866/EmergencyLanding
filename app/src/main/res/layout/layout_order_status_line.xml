@@ -2,12 +2,12 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="25dp"
+    android:paddingTop="15dp"
     android:background="@color/mine_center_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="65dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 

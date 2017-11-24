@@ -41,7 +41,7 @@
                     android:layout_height="102dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="65dp"
-                    android:src="@mipmap/emptypage_loan" />
+                    android:src="@mipmap/emptypage_examine" />
 
                 <TextView
                     android:id="@+id/tv_status_desc"

@@ -50,6 +50,7 @@ public class ProgressSubscriber<T> extends Subscriber<T> implements ProgressCanc
 
     @Override
     public void onError(Throwable e) {
+        Log.e("onError", "ProgressSubscriber.throwable =" + e.toString());
         Log.e("onError", e.getMessage() + "");
         dismissProgressDialog();
         mSubscriberOnNextListener.onError(e);

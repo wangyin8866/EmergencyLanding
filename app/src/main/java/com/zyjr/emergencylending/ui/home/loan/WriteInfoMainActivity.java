@@ -355,6 +355,10 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             // 业务员
             paramsMap.put("store", storeId); // 门店iD
             paramsMap.put("store_name", storeName);  // 门店名称
+            paramsMap.put("apply_amount", apply_amount); // 申请金额
+            paramsMap.put("apply_periods", apply_periods); // 申请期数
+            paramsMap.put("apply_zq", apply_zq); // 申请期数间隔
+            paramsMap.put("apply_periods_unit", apply_periods_unit); // 申请周期单位
         } else {
             // 普通用户
             paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
