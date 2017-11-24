@@ -58,10 +58,15 @@ public class Constants {
      * 版本号
      */
     public static String getVersionCode(Context context) {
-
         return String.valueOf(WYUtils.getVersionCode(context));
     }
 
+    /**
+     * 版本名称
+     */
+    public static String getVersionName(Context context) {
+        return String.valueOf(WYUtils.getAppVersionName(context));
+    }
 
 
     // 获取填写信息

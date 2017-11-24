@@ -91,7 +91,7 @@ public class BaseModel {
                     .header("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""))
                     .header("register_platform", Constants.getPlatform(1))
                     .header("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""))
-                    .header("version_no", Constants.getVersionCode(BaseApplication.getContext()))
+                    .header("version_no", Constants.getVersionName(BaseApplication.getContext()))
                     .build();
             return chain.proceed(request);
         }

@@ -68,6 +68,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     private List<String> auto_roll_data;
     private ArrayList<String> images;
     private String is_effective_order;
+    private String turnFlag = "";
 
     @Nullable
     @Override
@@ -89,11 +90,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         //banner
         mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
-
         //是否有消息
         if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
-            mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
         }
     }
 
@@ -150,31 +149,23 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 } else {
-
                     startActivity(new Intent(getActivity(), MessageActivity.class));
                 }
                 break;
             case R.id.pro1_btn:
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(mContext, LoginActivity.class));
-                } else if (Config.TRUE.equals(is_effective_order)) {
-                    startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
                 } else {
-                    Intent intent = new Intent(getActivity(), WriteInfoMainActivity.class);
-                    intent.putExtra("online_type", "0");
-                    intent.putExtra("product_id", "0");
-                    startActivity(intent);
+                    turnFlag = "online";
+                    mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
                 }
                 break;
             case R.id.pro2_btn:
                 if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
                     startActivity(new Intent(mContext, LoginActivity.class));
-                } else if (Config.TRUE.equals(is_effective_order)) {
-                    startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
                 } else {
-                    Intent intent1 = new Intent(getActivity(), LoanMainActivity.class);
-                    intent1.putExtra("flag", "offline");
-                    startActivity(intent1);
+                    turnFlag = "offline";
+                    mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
                 }
                 break;
         }
@@ -236,6 +227,20 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void isEffectiveOrder(EffectiveOrderBean baseBean) {
         is_effective_order = baseBean.getResult().getIs_effective_order();
+        if (Config.TRUE.equals(is_effective_order)) {
+            startActivity(new Intent(mContext, LoanOrderStatusActivity.class));
+        } else {
+            if (turnFlag.equals("online")) {
+                Intent intent = new Intent(getActivity(), WriteInfoMainActivity.class);
+                intent.putExtra("online_type", "0");
+                intent.putExtra("product_id", "0");
+                startActivity(intent);
+            } else if (turnFlag.equals("offline")) {
+                Intent intent = new Intent(getActivity(), LoanMainActivity.class);
+                intent.putExtra("flag", "offline");
+                startActivity(intent);
+            }
+        }
     }
 
     @Override
@@ -257,7 +262,6 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         //是否有消息
         if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
-            mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
         }
     }
 }

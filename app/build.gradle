@@ -1,5 +1,12 @@
 apply plugin: 'com.android.application'
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def keyStore = file(properties.getProperty("keystroe_storeFile_jjt"))
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
@@ -11,15 +18,16 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "2.0"
         // dex突破65535的限制
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        flavorDimensions "versionCode"
         //个推配置
         manifestPlaceholders = [
-                GETUI_APP_ID : "uI72I8n8Sq5Zz9aQlW5ly",
-                GETUI_APP_KEY : "2RyhVxyOmK96MNt7LE8D86",
-                GETUI_APP_SECRET : "LNUF19wQCW86TeKmcPW1A"
+                GETUI_APP_ID    : "uI72I8n8Sq5Zz9aQlW5ly",
+                GETUI_APP_KEY   : "2RyhVxyOmK96MNt7LE8D86",
+                GETUI_APP_SECRET: "LNUF19wQCW86TeKmcPW1A"
         ]
         //个推配置
         ndk {
@@ -33,23 +41,123 @@ android {
         javaMaxHeapSize "4g"//越大越好
         incremental true
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            minifyEnabled false
-            signingConfig signingConfigs.debug
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    // 签名信息
+    signingConfigs {
+        debug {
+        }
+        release {
+            storeFile file(properties.getProperty("keystroe_storeFile_jjt"))
+            storePassword properties.getProperty("keystroe_storePassword_jjt")
+            keyAlias properties.getProperty("keystroe_keyAlias_jjt")
+            keyPassword properties.getProperty("keystroe_keyPassword_jjt")
+        }
+    }
+
+    buildTypes {
+        // debug 调试
+        debug {
+            debuggable true
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            if (keyStore.exists()) {
+                println "debug using release key"
+                signingConfig signingConfigs.release
+            } else {
+                println "debug using default key"
+            }
+        }
+
+        // 线上版本
+        release {
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            minifyEnabled false
+            zipAlignEnabled true
+            shrinkResources false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "JijietongNew_v${variant.productFlavors[0].name}_v${variant.versionName}.apk"
+                }
+            }
+        }
+
+    }
+
+    productFlavors {
+        W_JJTGW {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_JJTGW"]
+        }
+
+//        W_360 {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_360"]
+//        }
+//
+//        W_TXYYB {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_TXYYB"]
+//        }
+//
+//        W_91 {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_91"]
+//        }
+//
+//        W_OPPO {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_OPPO"]
+//        }
+//
+//        W_AZSC {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_AZSC"]
+//        }
+//
+//        W_HWYYSC {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_HWYYSC"]
+//        }
+//
+//        W_XMYYSD {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_XMYYSD"]
+//        }
+//
+//        W_BDSJZS {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_BDSJZS"]
+//        }
+//
+//        W_FLYME {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_FLYME"]
+//        }
+//
+//        W_ALFFPT {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_ALFFPT"]
+//        }
+//
+//        W_VIVO {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_VIVO"]
+//        }
+//
+//        W_AZ2SC {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_AZ2SC"]
+//        }
+//
+//        W_SGSJZS {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_SGSJZS"]
+//        }
+//
+//        W_MMY {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_MMY"]
+//        }
+//
+//        W_CZYYSC {
+//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_CZYYSC"]
+//        }
+    }
+
 }
 
 dependencies {

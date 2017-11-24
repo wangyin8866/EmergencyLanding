@@ -208,6 +208,10 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="561cae6ae0f55abd990035bf" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+
         <!--新浪-->
         <activity
             android:name="com.umeng.socialize.media.WBShareCallBackActivity"
