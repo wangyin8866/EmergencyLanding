@@ -166,18 +166,22 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
             switch (contract.getContract_no()) {
                 case "loanAgreement": // 借款协议
                     jiekuanContract = contract;
+                    tvLoanAgreement1.setText("《" + jiekuanContract.getContract_name() + "》");
                     break;
 
                 case "creditManagement":  // 信用管理
                     xinyongContract = contract;
+                    tvLoanAgreement2.setText("《" + xinyongContract.getContract_name() + "》");
                     break;
 
                 case "accountManagement": // 账户管理与服务
                     zhanghuContract = contract;
+                    tvLoanAgreement3.setText("《" + zhanghuContract.getContract_name() + "》");
                     break;
 
                 case "reimbursementDetail": // 还款说明协议
                     huankuanContract = contract;
+                    tvLoanAgreement4.setText("《" + huankuanContract.getContract_name() + "》");
                     break;
             }
         }

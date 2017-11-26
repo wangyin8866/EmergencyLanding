@@ -210,7 +210,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 if (orderStatus.equals("7")) {
                     // 放款失败,前往修改 银行卡修改页面
                     LogUtils.d("放款失败---前往修改,stepStatus:" + stepStatus + ",orderStatus:" + orderStatus);
-                    Intent intent = new Intent(this, BankcardInfoActivity.class);
+                    Intent intent = new Intent(this, EditBankcardActivity.class);
                     intent.putExtra("isEdit", "1");
                     intent.putExtra("status", "1");
                     startActivity(intent);
@@ -308,6 +308,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                 } else if (productId.equals("1")) {
                     // 线下
                     llLoanInfo.setVisibility(View.VISIBLE);
+                    showLoanInfo();
                     tvLoanDesc.setText("申请金额");
                 }
                 btnOrderOperate.setVisibility(View.GONE);
@@ -372,7 +373,6 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             showLoanInfo();
             tvLoanDesc.setText("审批金额");
             if (orderStatus.equals("2") || orderStatus.equals("3")) {
-                llLoanInfo.setVisibility(View.VISIBLE);
                 btnOrderOperate.setVisibility(View.GONE);
                 orderDesc("订单正在放款中，请耐心等待！", "");
                 orderStatusIocn = R.mipmap.emptypage_sendmoney;
@@ -551,9 +551,9 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             tvProductType.setText("传统借款");
         }
         tvLoadMoney.setText(loanOrderBean.getLoan_amount() + "元");
-        if (loanOrderBean.getZq_unit().equals("1")) {
+        if ("1".equals(loanOrderBean.getZq_unit())) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "天");
-        } else if (loanOrderBean.getZq_unit().equals("2")) {
+        } else if ("2".equals(loanOrderBean.getZq_unit())) {
             tvLoadPeriod.setText(loanOrderBean.getLoan_zq() + "周");
         }
     }

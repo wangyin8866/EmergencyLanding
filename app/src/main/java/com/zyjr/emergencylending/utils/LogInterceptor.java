@@ -1,6 +1,13 @@
 package com.zyjr.emergencylending.utils;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.zyjr.emergencylending.base.BaseApplication;
+import com.zyjr.emergencylending.ui.account.LoginActivity;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -30,11 +37,10 @@ public class LogInterceptor implements Interceptor {
         Request request = chain.request();
         LogUtils.e(TAG, "request:" + request.url());
         Headers headers = request.headers();
-        for (int i = 0; i < headers.size(); i++){
+        for (int i = 0; i < headers.size(); i++) {
             String headerName = headers.name(i);
             String headerValue = headers.get(headerName);
-           LogUtils.e(TAG,"Header----------->Name:"+headerName+"------------>Value:"+headerValue+"\n");
-
+            LogUtils.e(TAG, "Header----------->Name:" + headerName + "------------>Value:" + headerValue + "\n");
         }
         RequestBody requestBody = request.body();
         if (requestBody instanceof FormBody) {
@@ -52,15 +58,30 @@ public class LogInterceptor implements Interceptor {
             content = originalBody.string();
         }
         LogUtils.e(TAG, "response body:" + content);
+        try {
+            JsonObject returnData = new JsonParser().parse(content).getAsJsonObject();
+            if (returnData != null) {
+                String flag = returnData.get("flag").getAsString();
+                if ("API8888".equals(flag)) {
+                    SPUtils.clear(BaseApplication.getContext());
+                    Intent intent = new Intent(BaseApplication.context, LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("index", 0);
+                    intent.putExtras(bundle);
+                    BaseApplication.context.startActivity(intent);
+                }
+            }
+        } catch (Exception e) {
+        }
         long tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - t1);
         LogUtils.e(TAG, "time : " + " (" + tookMs + "ms" + ')');
-        return response.newBuilder()
-                .body(ResponseBody.create(mediaType, content))
-                .build();
+        return response.newBuilder().body(ResponseBody.create(mediaType, content)).build();
     }
 
     /**
      * 解决中文乱码结果集
+     *
      * @param value
      * @return
      */

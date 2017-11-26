@@ -127,32 +127,32 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
         String openBank = tvOpenbank.getText().toString().trim(); // 开户行
         String reservedPhone = etReservedPhone.getText().toString().trim();// 预留手机号
         if (StringUtil.isEmpty(userName) || StringUtil.isEmpty(idcardNumber)) {
-            ToastAlone.showLongToast(this, "请重新获取绑定银行卡信息");
+            ToastAlone.showShortToast(this, "请重新获取绑定银行卡信息");
             return;
         }
         if (StringUtil.isEmpty(bankcardNumber)) {
-            ToastAlone.showLongToast(this, "请输入银行卡");
+            ToastAlone.showShortToast(this, "请输入银行卡");
             return;
         }
         if (bankcardNumber.length() < 15) {
-            ToastAlone.showLongToast(this, "请正确填写银行卡");
+            ToastAlone.showShortToast(this, "请正确填写银行卡");
             return;
         }
         if (StringUtil.isEmpty(openBank)) {
-            ToastAlone.showLongToast(this, "请选择开户银行");
+            ToastAlone.showShortToast(this, "请选择开户银行");
             return;
         }
         if (StringUtil.isEmpty(reservedPhone)) {
-            ToastAlone.showLongToast(this, "请输入银行预留手机号");
+            ToastAlone.showShortToast(this, "请输入银行预留手机号");
             return;
         }
         if (!StringUtil.isMobile(reservedPhone)) {
-            ToastAlone.showLongToast(this, "请正确填写银行预留手机号");
+            ToastAlone.showShortToast(this, "请正确填写银行预留手机号");
             return;
         }
         if (bankcardInfo == null) {
             LogUtils.d("编辑银行卡信息----" + bankcardInfo);
-            ToastAlone.showLongToast(this, "请重新获取信息");
+            ToastAlone.showShortToast(this, "请重新获取信息");
             return;
         }
         bankcardInfo.setBankcard_no(bankcardNumber);
@@ -239,12 +239,12 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.message_left:
-                        ToastAlone.showLongToast(EditBankcardActivity.this, "取消");
+                        ToastAlone.showShortToast(EditBankcardActivity.this, "取消");
                         customerDialog.dismiss();
 
                         break;
                     case R.id.message_right:
-                        ToastAlone.showLongToast(EditBankcardActivity.this, "确认");
+                        ToastAlone.showShortToast(EditBankcardActivity.this, "确认");
 
                         break;
                 }
@@ -295,7 +295,7 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onSuccessEdit(String returnCode, String msg) {
-        ToastAlone.showLongToast(this, "修改成功");
+        ToastAlone.showShortToast(this, "修改成功");
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -303,11 +303,11 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 }

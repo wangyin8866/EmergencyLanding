@@ -117,7 +117,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 operateConfirm("您的申请资料一旦提交，将不可修改！");
             } else {
-                ToastAlone.showLongToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+                ToastAlone.showShortToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
             }
         }
     }
@@ -167,7 +167,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                     return;
                 } else {
                     if (writeInfoBean.getUser_data_status().equals("0")) {
-                        ToastAlone.showLongToast(this, "请先完善个人信息!");
+                        ToastAlone.showShortToast(this, "请先完善个人信息!");
                         return;
                     }
                 }
@@ -182,7 +182,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                     return;
                 } else {
                     if (writeInfoBean.getUser_data_status().equals("0")) {
-                        ToastAlone.showLongToast(this, "请先完善个人信息!");
+                        ToastAlone.showShortToast(this, "请先完善个人信息!");
                         return;
                     }
                 }
@@ -200,7 +200,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                             || writeInfoBean.getUser_job_status().equals("0")
                             || writeInfoBean.getUser_contact_status().equals("0")
                             || writeInfoBean.getUser_bank_status().equals("0")) {
-                        ToastAlone.showLongToast(this, "请完善资料信息!");
+                        ToastAlone.showShortToast(this, "请完善资料信息!");
                         return;
                     }
                 }
@@ -222,7 +222,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
                                             operateConfirm("您的申请资料一旦提交，将不可修改！");
                                         }
                                     } else {
-                                        ToastAlone.showLongToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+                                        ToastAlone.showShortToast(WriteInfoMainActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
                                     }
                                 }
                             },
@@ -390,13 +390,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     @Override
     public void onFail(String apiCode, String flag, String failMsg) {
-        if (apiCode.equals(Constants.GET_LOCAL_STORE_INFO) && "API2022".equals(flag)) {
+        if (Constants.GET_LOCAL_STORE_INFO.equals(apiCode) && "API2022".equals(flag)) {
             // 业务员帮录件获取门店信息(未匹配到支持城市)
             Intent intent = new Intent(this, ClerkApplyResultActivity.class);
             intent.putExtra("flag", flag);
             intent.putExtra("msg", failMsg);
             startActivity(intent);
-        } else if (apiCode.equals(Constants.SUBMIT_LOAN_INFORMATION) && product_id.equals("0")) {
+        } else if (Constants.SUBMIT_LOAN_INFORMATION.equals(apiCode) && "0".equals(product_id)) {
             // 线上借款预检失败
             Intent intent = new Intent(this, HandleFailActivity.class);
             intent.putExtra("jumpFlag", "precheck");
@@ -404,7 +404,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             intent.putExtra("msg", failMsg);
             startActivity(intent);
         } else {
-            ToastAlone.showLongToast(this, failMsg);
+            ToastAlone.showShortToast(this, failMsg);
             loadingDialog.dismiss();
             pullToRefreshScrollView.onRefreshComplete();
         }
@@ -412,7 +412,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         if (Constants.GET_WRITE_INFO.equals(returnCode)) {
@@ -452,13 +452,13 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
     public void onSuccessPrecheck(String apiCode, String flag, PrecheckResultBean precheckResultBean) {
         if (Config.ONLINE.equals(flag)) {
             String is_run_risk = precheckResultBean.getIs_run_risk(); // 是否过风控首贷策略 1:是 0:否
-            if (is_run_risk.equals("1")) {
+            if ("1".equals(is_run_risk)) {
                 // 走风控策略 (认证)
                 ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
                 ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
                 startActivity(new Intent(WriteInfoMainActivity.this, AuthCenterActivity.class));
                 finish();
-            } else if (is_run_risk.equals("0")) {
+            } else if ("0".equals(is_run_risk)) {
                 // 走续贷
                 Intent intent = new Intent(this, ReloanApplyActivity.class);
                 intent.putExtra("precheckResultBean", precheckResultBean);

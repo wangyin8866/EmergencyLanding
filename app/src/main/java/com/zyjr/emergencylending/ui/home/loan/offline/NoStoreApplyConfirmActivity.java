@@ -158,7 +158,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
 
     @Override
     public void onSuccessSubmit(String apiCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
         ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
         Intent intent = new Intent(this, AuthCenterActivity.class);
@@ -171,12 +171,12 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
     @Override
     public void onSuccessPrecheck(String apiCode, String flag, PrecheckResultBean precheckResultBean) {
         String is_run_risk = precheckResultBean.getIs_run_risk(); // 是否过风控首贷策略 1:是 0:否
-        if (is_run_risk.equals("1")) {
+        if ("1".equals(is_run_risk)) {
             ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
             ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
             startActivity(new Intent(NoStoreApplyConfirmActivity.this, AuthCenterActivity.class));
             finish();
-        } else if (is_run_risk.equals("0")) {
+        } else if ("0".equals(is_run_risk)) {
             // 不走大数据风控,续贷产品选择
             Intent intent = new Intent(this, ReloanApplyActivity.class);
             intent.putExtra("precheckResultBean", precheckResultBean);
@@ -196,6 +196,6 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 }

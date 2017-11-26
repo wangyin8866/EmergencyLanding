@@ -109,7 +109,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                     break;
                 case MESSAGE_LIVENESS_WARRANTY_FAIL:
                     isAuthorizationSuccess = false;
-                    ToastAlone.showLongToast(AuthCenterActivity.this, "授权失败,请重新授权!");
+                    ToastAlone.showShortToast(AuthCenterActivity.this, "授权失败,请重新授权!");
                     break;
             }
         }
@@ -135,8 +135,8 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_zhimaxinyong_auth:  // 芝麻认证 2:成功;3:采集失败
-                if (zhimaAuthFlag.equals("2")) {
-                    ToastAlone.showLongToast(this, "已认证成功");
+                if ("2".equals(zhimaAuthFlag)) {
+                    ToastAlone.showShortToast(this, "已认证成功");
                     return;
                 }
                 Intent intent = new Intent(this, ZhimaAuthActivity.class);
@@ -146,30 +146,30 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 break;
 
             case R.id.rl_mobile_auth:  // 手机运营商认证  4:成功;5:采集中;6:采集失败
-                if (mobileAuthFlag.equals("4")) {
-                    ToastAlone.showLongToast(this, "已认证成功");
+                if ("4".equals(mobileAuthFlag)) {
+                    ToastAlone.showShortToast(this, "已认证成功");
                     return;
-                } else if (mobileAuthFlag.equals("5")) {
-                    ToastAlone.showLongToast(this, "认证中,请等待结果");
+                } else if ("5".equals(mobileAuthFlag)) {
+                    ToastAlone.showShortToast(this, "认证中,请等待结果");
                     return;
                 }
                 startActivityForResult(new Intent(this, MobileAuthActivity.class), INTENT_MOBILE_CODE);
                 break;
 
             case R.id.rl_face_auth:  // 人脸认证 7:成功;8:失败
-                if (faceAuthFlag.equals("7")) {
-                    ToastAlone.showLongToast(this, "已认证成功");
+                if ("7".equals(faceAuthFlag)) {
+                    ToastAlone.showShortToast(this, "已认证成功");
                     return;
                 }
                 jumpToFaceAuth(RC_PAGE_TO_LIVENESS);
                 break;
 
             case R.id.btn_submit:
-                if (zhimaAuthFlag.equals("2") && mobileAuthFlag.equals("4") && faceAuthFlag.equals("7")) {
+                if ("2".equals(zhimaAuthFlag) && "4".equals(mobileAuthFlag) && "7".equals(faceAuthFlag)) {
                     // 提交认证
                     submitAllAuth();
                 } else {
-                    ToastAlone.showLongToast(this, "请完成所有认证");
+                    ToastAlone.showShortToast(this, "请完成所有认证");
                 }
                 break;
 
@@ -183,7 +183,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToFaceAuth(RC_PAGE_TO_LIVENESS);
             } else {
-                AppToast.makeToast(AuthCenterActivity.this, "相机权限被拒绝");
+                ToastAlone.showShortToast(AuthCenterActivity.this, "相机权限被拒绝");
             }
         }
     }
@@ -206,7 +206,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                     String idcardNum = idCardNumber;
                     imageVerify(images, delta, name, idcardNum);
                 } else {
-                    ToastAlone.showLongToast(this, "人脸识别失败，请重新识别");
+                    ToastAlone.showShortToast(this, "人脸识别失败，请重新识别");
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -262,7 +262,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                 "请允许开启相机权限",
                 requestCode)) {
             if (StringUtil.isEmpty(userName) || StringUtil.isEmpty(idCardNumber)) {
-                ToastAlone.showLongToast(this, "资料有误,请刷新重试");
+                ToastAlone.showShortToast(this, "资料有误,请刷新重试");
                 return;
             }
             startActivityForResult(new Intent(this, LivenessActivity.class), requestCode);
@@ -331,29 +331,29 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                             double hundredThreshold = jsonObject2.getDouble("1e-5");
                             LogUtils.d("confidence:" + confidence + ",tenThreshold:" + tenThreshold);
                             if (confidence > tenThreshold) {
-                                ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别通过");
+                                ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别通过");
                                 // TODO 识别通过后,做一些业务操作
                                 submitFaceAuth();
                             } else {
-                                ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别未通过,请本人再次尝试");
+                                ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别未通过,请本人再次尝试");
                             }
                         } else {
-                            ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别失败,请重试");
+                            ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
                         }
                     } catch (Exception e1) {
                         e1.printStackTrace();
                         LogUtils.d("人脸识别比对--e1:" + e1.getMessage().toString());
-                        ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别失败,请重试");
+                        ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
                     }
                 }
 
                 @Override
                 public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
-                    ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别失败,请重试");
+                    ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
                 }
             });
         } catch (Exception e) {
-            ToastAlone.showLongToast(AuthCenterActivity.this, "人脸识别失败,请重试");
+            ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
             LogUtils.d("人脸识别比对人脸识别e----->" + e.getMessage());
             e.printStackTrace();
         }
@@ -475,7 +475,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     @Override
     public void onSuccessSubmitFace(String apiCode, String msg) {
         if (apiCode.equals(Constants.SUBMIT_FACE_AUTH)) {
-            ToastAlone.showLongToast(this, msg);
+            ToastAlone.showShortToast(this, msg);
             loadingAuthStatus();
         }
     }
@@ -489,14 +489,14 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
     public void onFail(String apiCode, String failMsg) {
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
 }

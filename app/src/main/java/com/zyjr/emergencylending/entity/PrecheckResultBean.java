@@ -97,7 +97,9 @@ public class PrecheckResultBean implements Serializable {
     }
 
     // 审批结果集合
-    public static class LoanProduct {
+    public static class LoanProduct implements Serializable{
+
+        private static final long serialVersionUID = -2527425430146205050L;
 
         private String loan_amount; // 审批金额
         private String loan_periods; // 审批期数

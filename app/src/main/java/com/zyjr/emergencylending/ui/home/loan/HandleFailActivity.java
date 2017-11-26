@@ -137,12 +137,12 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override

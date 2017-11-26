@@ -52,28 +52,6 @@ public class OfflineApplyPresenter extends BasePresenter<OfflineApplyView> {
         }, mContext));
     }
 
-    public void submitLoanInformation(Map<String, String> params) {
-        invoke(WriteInfoModel.getInstance().submitLoanInformation(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
-            @Override
-            public void onNext(ApiResult<String> result) {
-                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("提交借款资料(成功)---->" + result.getMsg());
-                    getView().onSuccessSubmit(Constants.SUBMIT_LOAN_INFORMATION, result.getPromptMsg());
-                } else {
-                    LogUtils.d("提交借款资料(失败)---->" + result.getFlag() + "," + result.getMsg());
-                    getView().onFail(Constants.SUBMIT_LOAN_INFORMATION, result.getFlag(), result.getPromptMsg());
-                }
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                LogUtils.d("提交借款资料(异常)---->" + e.getMessage());
-                getView().onError(Constants.SUBMIT_LOAN_INFORMATION, Config.TIP_NET_ERROR);
-            }
-        }, mContext));
-    }
-
-
     // 提交预检 获取首续贷相关信息
     public void submitPrecheck(final Map<String, String> params) {
         invoke(WriteInfoModel.getInstance().submitPrecheck(params), new ProgressSubscriber<ApiResult<PrecheckResultBean>>(new SubscriberOnNextListener<ApiResult<PrecheckResultBean>>() {

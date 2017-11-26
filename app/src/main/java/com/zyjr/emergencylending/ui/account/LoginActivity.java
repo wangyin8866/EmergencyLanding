@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding.view.RxView;
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseView;
@@ -23,6 +25,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
+import com.zyjr.emergencylending.ui.my.SettingActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
@@ -83,7 +86,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
-                finish();
+                Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("index", 0);
+                intent1.putExtras(bundle);
+                startActivity(intent1);
             }
 
             @Override
@@ -126,7 +133,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
         SPUtils.clear(mContext);
     }
 
-    @OnClick({ R.id.iv_show_pwd, R.id.tv_forget, R.id.tv_register})
+    @OnClick({R.id.iv_show_pwd, R.id.tv_forget, R.id.tv_register})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 
@@ -194,5 +201,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
 
     }
 
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            Intent intent1 = new Intent(LoginActivity.this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", 0);
+            intent1.putExtras(bundle);
+            startActivity(intent1);
+            return true;
+        }
+        return false;
+    }
 }

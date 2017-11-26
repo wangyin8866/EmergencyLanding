@@ -114,27 +114,27 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
         String openBank = tvOpenbank.getText().toString().trim(); // 开户行
         String reservedPhone = etReservedPhone.getText().toString().trim();// 预留手机号
         if (StringUtil.isEmpty(userName) || StringUtil.isEmpty(idcardNumber)) {
-            ToastAlone.showLongToast(this, "请重新获取信息");
+            ToastAlone.showShortToast(this, "请重新获取信息");
             return;
         }
         if (StringUtil.isEmpty(bankcardNumber)) {
-            ToastAlone.showLongToast(this, "请输入银行卡卡号");
+            ToastAlone.showShortToast(this, "请输入银行卡卡号");
             return;
         }
         if (bankcardNumber.length() < 15) {
-            ToastAlone.showLongToast(this, "请正确填写银行卡");
+            ToastAlone.showShortToast(this, "请正确填写银行卡");
             return;
         }
         if (StringUtil.isEmpty(openBank)) {
-            ToastAlone.showLongToast(this, "请选择开户银行");
+            ToastAlone.showShortToast(this, "请选择开户银行");
             return;
         }
         if (StringUtil.isEmpty(reservedPhone)) {
-            ToastAlone.showLongToast(this, "请输入银行预留手机号");
+            ToastAlone.showShortToast(this, "请输入银行预留手机号");
             return;
         }
         if (!StringUtil.isMobile(reservedPhone)) {
-            ToastAlone.showLongToast(this, "请正确填写银行预留手机号");
+            ToastAlone.showShortToast(this, "请正确填写银行预留手机号");
             return;
         }
         if (bankcardInfo == null) {
@@ -246,12 +246,12 @@ public class AddBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ban
 
     @Override
     public void onFail(String returnCode, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     private void showSupportBanklist(List<SupportBank> supportBanks) {

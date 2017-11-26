@@ -116,7 +116,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
 
     private void jumpToAuthPage(String url) {
-        LogUtils.d("授权url:" + url);
+        LogUtils.d("芝麻信用授权url:" + url);
         layoutContentView.setVisibility(View.GONE);
         webView.setVisibility(View.VISIBLE);
         Dialog loadingDialog = CustomProgressDialog.createDialog(this);
@@ -163,7 +163,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
                     String applyId = StringUtil.getUrlValueByName(url, "applyId");
                     String state = StringUtil.getUrlValueByName(url, "state");
                     String success = StringUtil.getUrlValueByName(url, "success");
-                    LogUtils.d("芝麻信用分:" + "applyId:" + applyId + ",state:" + state + ",success:" + success);
+                    LogUtils.d("获取芝麻信用分:" + "applyId:" + applyId + ",state:" + state + ",success:" + success);
                     if (success.equals("true")) {
                         // 获取信用积分
                         getZhimaScore(applyId, state);
@@ -206,7 +206,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
     @Override
     public void onSuccessGetZhimaScore(String apiCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
+        ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
         finish();
@@ -219,12 +219,12 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
 }

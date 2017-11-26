@@ -141,13 +141,13 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
     @Override
     public void onFail(String returnCode, String failMsg) {
         pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
         pullToRefreshScrollView.onRefreshComplete();
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     private void loadingSupportBanklist() {

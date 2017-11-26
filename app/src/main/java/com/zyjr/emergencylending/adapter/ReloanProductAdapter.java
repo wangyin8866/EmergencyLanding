@@ -7,8 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.entity.PrecheckResultBean;
-import com.zyjr.emergencylending.entity.ReloanProductBean;
-import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.widget.SelectorImageView;
 
 import java.util.List;
@@ -25,8 +23,14 @@ public class ReloanProductAdapter extends BaseQuickAdapter<PrecheckResultBean.Lo
 
     @Override
     protected void convert(BaseViewHolder viewHolder, PrecheckResultBean.LoanProduct item) {
-        viewHolder.setText(R.id.tv_item_loan_money, item.getLoan_amount());
-        viewHolder.setText(R.id.tv_item_loan_period, item.getLoan_periods());
+        viewHolder.setText(R.id.tv_item_loan_money, item.getLoan_amount() + "元");
+        if ("1".equals(item.getLoan_unit())) {
+            // 天
+            viewHolder.setText(R.id.tv_item_loan_period, item.getLoan_spac() + "天");
+        } else if ("2".equals(item.getLoan_unit())) {
+            // 周
+            viewHolder.setText(R.id.tv_item_loan_period, item.getLoan_periods() + "周");
+        }
         SelectorImageView view = viewHolder.getView(R.id.iv_item_product_selected);
         if (item.getIs_selected()) {
             view.toggle(true);

@@ -346,6 +346,12 @@
         <meta-data
             android:name="PARTNER_CODE"
             android:value="haoliwang" />
+        <!-- 续贷产品选择 -->
+        <activity
+            android:name="com.zyjr.emergencylending.ui.home.loan.ReloanApplyActivity"
+            android:screenOrientation="portrait" />
+
+
     </application>
 
 </manifest>

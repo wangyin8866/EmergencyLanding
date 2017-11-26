@@ -7,6 +7,7 @@ import java.io.Serializable;
  * @author neil
  * @date 2017/11/20
  */
+@Deprecated
 public class ReloanProductBean implements Serializable {
 
     private static final long serialVersionUID = -2368585430146205050L;

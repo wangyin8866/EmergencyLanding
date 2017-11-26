@@ -193,19 +193,19 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToTakePhoto(INTENT_IDCARD_HOLD);
             } else {
-                ToastAlone.showLongToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
+                ToastAlone.showShortToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
             }
         } else if (requestCode == INTENT_IDCARD_FRONT) { // 扫描正面
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_FRONT, 0, false);
             } else {
-                ToastAlone.showLongToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
+                ToastAlone.showShortToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
             }
         } else if (requestCode == INTENT_IDCARD_BACK) {
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpScanIDcard(INTENT_IDCARD_BACK, 1, false);
             } else {
-                ToastAlone.showLongToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
+                ToastAlone.showShortToast(PersonalInfoActivity.this, "相机权限被拒绝,请您到设置页面手动授权");
             }
         }
     }
@@ -341,49 +341,49 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         String liveAddress = tvLiveAddress.getText().toString().trim(); // 居住地址
         String liveDetailAddress = etLiveDetailAddress.getText().toString().trim(); // 居住详细地址
         if (StringUtil.isEmpty(personalName) || StringUtil.isEmpty(personalIdcard) || StringUtil.isEmpty(hujiDetailAddress) || frontFlag.equals("0")) {
-            ToastAlone.showLongToast(this, "请拍照上传身份证正面!");
+            ToastAlone.showShortToast(this, "请拍照上传身份证正面!");
             return;
         }
         if (backFlag.equals("0")) {
-            ToastAlone.showLongToast(this, "请拍照上传身份证反面!");
+            ToastAlone.showShortToast(this, "请拍照上传身份证反面!");
             return;
         }
         if (handheldFlag.equals("0")) {
-            ToastAlone.showLongToast(this, "请手持身份证自拍!");
+            ToastAlone.showShortToast(this, "请手持身份证自拍!");
             return;
         }
         if (StringUtil.isEmpty(marriageStatus) && marriageCodeBean == null) {
-            ToastAlone.showLongToast(this, "请选择婚姻关系!");
+            ToastAlone.showShortToast(this, "请选择婚姻关系!");
             return;
         }
         if (StringUtil.isEmpty(liveStatus) && liveCodeBean == null) {
-            ToastAlone.showLongToast(this, "请选择居住状况!");
+            ToastAlone.showShortToast(this, "请选择居住状况!");
             return;
         }
         if (StringUtil.isEmpty(hujiAddress) && hujiAddressBean == null) {
-            ToastAlone.showLongToast(this, "请选择户籍地址!");
+            ToastAlone.showShortToast(this, "请选择户籍地址!");
             return;
         } else {
             if (hujiAddressBean != null && (StringUtil.containChinese(hujiAddressBean.getHuji_province())
                     || StringUtil.containChinese(hujiAddressBean.getHuji_city()))
                     || StringUtil.containChinese(hujiAddressBean.getHuji_county())) {
-                ToastAlone.showLongToast(this, "请重新选择户籍地址!");
+                ToastAlone.showShortToast(this, "请重新选择户籍地址!");
                 return;
             }
         }
         if (StringUtil.isEmpty(liveAddress) && liveAddressBean == null) {
-            ToastAlone.showLongToast(this, "请选择居住地址!");
+            ToastAlone.showShortToast(this, "请选择居住地址!");
             return;
         } else {
             if (liveAddressBean != null && (StringUtil.containChinese(liveAddressBean.getLive_province())
                     || StringUtil.containChinese(liveAddressBean.getLive_city()))
                     || StringUtil.containChinese(liveAddressBean.getLive_county())) {
-                ToastAlone.showLongToast(this, "请重新选择居住地址!");
+                ToastAlone.showShortToast(this, "请重新选择居住地址!");
                 return;
             }
         }
         if (StringUtil.isEmpty(liveDetailAddress)) {
-            ToastAlone.showLongToast(this, "请填写现居住详细地址!");
+            ToastAlone.showShortToast(this, "请填写现居住详细地址!");
             return;
         }
         if (personalInfoBean == null) {
@@ -624,7 +624,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
         filePath = result.getImage().getOriginalPath();  // 原始路径
         Bitmap bitmap = BitmapFactory.decodeFile(filePath);
         if (bitmap == null) {
-            ToastAlone.showLongToast(PersonalInfoActivity.this, "图片为空").show();
+            ToastAlone.showShortToast(PersonalInfoActivity.this, "图片为空").show();
             return;
         }
         Bitmap decode = ImageUtils.comp(bitmap);
@@ -667,7 +667,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                         EditText etAddress = dialogCustom.findViewById(R.id.et_detail_address);
                         String finalAddress = etAddress.getText().toString().trim();
                         if (StringUtil.isEmpty(finalAddress)) {
-                            ToastAlone.showLongToast(BaseApplication.getContext(), "地址信息有误");
+                            ToastAlone.showShortToast(BaseApplication.getContext(), "地址信息有误");
                             return;
                         }
                         idCardFrontBean.setAddress(etAddress.getText().toString().trim());
@@ -755,13 +755,13 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     public void onSuccessFrontBean(String returnCode, IDCardFrontBean resultBean) {
         if ("front".equals(returnCode)) {  // 身份证正面信息
             if (!StringUtil.isIDCard(resultBean.getId_card_number())) {
-                ToastAlone.showLongToast(this, "身份证号码有误");
+                ToastAlone.showShortToast(this, "身份证号码有误");
                 return;
             }
             idCardFrontBean = resultBean;
             scanSuccessInfo(resultBean.getName(), resultBean.getId_card_number(), resultBean.getAddress());
         } else {
-            ToastAlone.showLongToast(this, "请使用正式身份证拍照");
+            ToastAlone.showShortToast(this, "请使用正式身份证拍照");
         }
     }
 
@@ -771,7 +771,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             mBitmapIDcardBack = Bitmap.createScaledBitmap(BitmapFactory.decodeFile(idcardFile.getPath()), mWidth, mHeight, true);
             uploadFile(idcardFile, "3");
         } else {
-            ToastAlone.showLongToast(this, "请使用正式身份证拍照");
+            ToastAlone.showShortToast(this, "请使用正式身份证拍照");
         }
     }
 
@@ -819,12 +819,12 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
         if(Constants.GET_PERSONAL_INFO.equals(returnCode)){
             showError();
         }

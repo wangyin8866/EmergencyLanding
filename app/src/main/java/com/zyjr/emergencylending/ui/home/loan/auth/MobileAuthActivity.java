@@ -98,24 +98,24 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
     private void validate(String flag) {
         String account = tvMobileNumber.getText().toString().trim();
         if (StringUtil.isEmpty(account)) {
-            ToastAlone.showLongToast(this, "资料信息有误");
+            ToastAlone.showShortToast(this, "资料信息有误");
             return;
         }
         String servicePasswd = etServicePassword.getText().toString().trim();
         if (StringUtil.isEmpty(servicePasswd)) {
-            ToastAlone.showLongToast(this, "请输入运营商服务密码");
+            ToastAlone.showShortToast(this, "请输入运营商服务密码");
             return;
         }
         String mobileValidateCode = etMobileValidateCode.getText().toString().trim();
         if (!cbCheck.isChecked()) {
-            ToastAlone.showLongToast(this, "请确认阅读并同意");
+            ToastAlone.showShortToast(this, "请确认阅读并同意");
             return;
         }
         if (flag.equals("1")) {
             submitMobileAuth(account, flag, servicePasswd, "");
         } else if (flag.equals("2")) {
             if (StringUtil.isEmpty(mobileValidateCode)) {
-                ToastAlone.showLongToast(this, "请输入验证码");
+                ToastAlone.showShortToast(this, "请输入验证码");
                 return;
             }
             submitMobileAuth(account, flag, servicePasswd, mobileValidateCode);
@@ -162,18 +162,18 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
 
     @Override
     public void onSuccessSubmit(String apiCode, String returnCode, String msg) {
-        ToastAlone.showLongToast(this, msg);
-        if (returnCode.equals("00040004")) {
+        ToastAlone.showShortToast(this, msg);
+        if ("00040004".equals(returnCode)) {
             // 短信发送成功
             llMobileValidateCode.setVisibility(View.VISIBLE);
             flag = "2";
             etMobileValidateCode.setText("");
-        } else if (returnCode.equals("API0000")) {
+        } else if ("API0000".equals(returnCode)) {
             // 提交成功
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
             finish();
-        } else if (returnCode.equals("API3020")) {
+        } else if ("API3020".equals(returnCode)) {
             // 需要返回第一步,重新开始操作
             Intent intent = new Intent();
             setResult(RESULT_OK, intent);
@@ -184,10 +184,10 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
     @Override
     public void onSuccessJudgeMobileValide(String apiCode, MobileBean bean) {
         mobileBean = bean;
-        if (mobileBean.getStatus().equals("0")) {
+        if ("0".equals(mobileBean.getStatus())) {
             llMobileValidateCode.setVisibility(View.GONE);
             flag = "1";
-        } else if (mobileBean.getStatus().equals("1")) {
+        } else if ("1".equals(mobileBean.getStatus())) {
             llMobileValidateCode.setVisibility(View.VISIBLE);
             flag = "2";
             etMobileValidateCode.setText("");
@@ -196,12 +196,12 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override

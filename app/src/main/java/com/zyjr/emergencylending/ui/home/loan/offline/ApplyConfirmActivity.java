@@ -105,7 +105,7 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
                                 if (isPass) {
                                     validate();
                                 } else {
-                                    ToastAlone.showLongToast(ApplyConfirmActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+                                    ToastAlone.showShortToast(ApplyConfirmActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
                                 }
                             }
                         },
@@ -121,7 +121,7 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
 
     private void validate() {
         if (storeBean == null) {
-            ToastAlone.showLongToast(this, "请选择门店!");
+            ToastAlone.showShortToast(this, "请选择门店!");
             return;
         }
         submitPrecheck();
@@ -158,10 +158,10 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
                 "\n产品id:" + product_id +
                 "\n产品类型online_type:" + online_type);
         tvOfflineBorrowMoney.setText(apply_amount + "元");
-        if (apply_periods_unit.equals("1")) {
+        if ("1".equals(apply_periods_unit)) {
             // 天 作为期
             tvOfflineBorrowPeriod.setText(apply_zq + "天");
-        } else if (apply_periods_unit.equals("2")) {
+        } else if ("2".equals(apply_periods_unit)) {
             tvOfflineBorrowPeriod.setText(apply_periods + "周");
         }
         getLocalStoreList();
@@ -237,7 +237,7 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
 
     @Override
     public void onFail(String apiCode, String flag, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override

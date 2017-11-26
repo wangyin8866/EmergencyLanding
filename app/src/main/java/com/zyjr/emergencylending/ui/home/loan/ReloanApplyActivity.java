@@ -58,7 +58,7 @@ public class ReloanApplyActivity extends BaseActivity<ReloanApplyPresenter, Relo
     @BindView(R.id.layout_bottom)
     RelativeLayout layoutBottom;  // 底部布局
 
-    private List<ReloanProductBean> reloanProductList = null;
+    private List<PrecheckResultBean.LoanProduct> reloanProductList = new ArrayList<>();
     private ReloanProductAdapter reloanProductAdapter = null;
     private PrecheckResultBean.LoanProduct loanProduct = null;
     private PrecheckResultBean precheckResultBean = null;
@@ -75,6 +75,7 @@ public class ReloanApplyActivity extends BaseActivity<ReloanApplyPresenter, Relo
         setContentView(R.layout.activity_reloan_product_choose);
         ButterKnife.bind(this);
 
+        init();
         initGetData();
     }
 
@@ -91,6 +92,19 @@ public class ReloanApplyActivity extends BaseActivity<ReloanApplyPresenter, Relo
         }
     }
 
+    private void init() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+            }
+        });
+    }
+
     private void initGetData() {
         Intent intent = getIntent();
         precheckResultBean = (PrecheckResultBean) intent.getSerializableExtra("precheckResultBean");
@@ -98,18 +112,9 @@ public class ReloanApplyActivity extends BaseActivity<ReloanApplyPresenter, Relo
         fillUpData(precheckResultBean.getLoan_products());
     }
 
-    private void fillUpData(List<PrecheckResultBean.LoanProduct> reloanProductList) {
-        reloanProductList = new ArrayList<>();
-        for (int i = 0; i < reloanProductList.size(); i++) {
-            PrecheckResultBean.LoanProduct targetBean = reloanProductList.get(i);
-            PrecheckResultBean.LoanProduct item = new PrecheckResultBean.LoanProduct();
-            item.setLoan_amount(targetBean.getLoan_amount());
-            if (targetBean.getLoan_unit().equals("0")) {
-                item.setLoan_periods(item.getLoan_periods() + "天");
-            } else if (targetBean.getLoan_unit().equals("1")) {
-                item.setLoan_periods(item.getLoan_periods() + "周");
-            }
-            reloanProductList.add(item);
+    private void fillUpData(List<PrecheckResultBean.LoanProduct> resultData) {
+        if (resultData != null && resultData.size() > 0) {
+            reloanProductList = resultData;
         }
         reloanProductAdapter = new ReloanProductAdapter(R.layout.rv_item_reloan_product_choose, reloanProductList);
         rlReloanProduct.setLayoutManager(new LinearLayoutManager(this));
@@ -154,11 +159,11 @@ public class ReloanApplyActivity extends BaseActivity<ReloanApplyPresenter, Relo
 
     @Override
     public void onFail(String apiCode, String flag, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 }

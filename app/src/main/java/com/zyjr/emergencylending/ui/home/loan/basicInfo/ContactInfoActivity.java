@@ -190,7 +190,7 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         if (INTENT_SELECT_PHONE == requestCode && resultCode == Activity.RESULT_OK) { // 从通讯录获取号码
             String phoneNumber = "";
             if (data == null) {
-                ToastAlone.showLongToast(this, "操作失败!");
+                ToastAlone.showShortToast(this, "操作失败!");
             } else {
                 Uri contactUri = data.getData();
                 String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -234,39 +234,39 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
         String relation2 = tvRelation2.getText().toString().trim(); // 关系2
         // TODO 上传通讯录信息
         if (StringUtil.isEmpty(contactName1)) {
-            ToastAlone.showLongToast(this, "请填写联系人信息!");
+            ToastAlone.showShortToast(this, "请填写联系人信息!");
             return;
         }
         if (StringUtil.isEmpty(contactPhone1)) {
-            ToastAlone.showLongToast(this, "请选择联系人电话!");
+            ToastAlone.showShortToast(this, "请选择联系人电话!");
             return;
         }
         if(!StringUtil.isMobile(contactPhone1)){
-            ToastAlone.showLongToast(this, "请正确填写联系人电话!");
+            ToastAlone.showShortToast(this, "请正确填写联系人电话!");
             return;
         }
         if (StringUtil.isEmpty(relation1) || relationCodeBean1 == null) {
-            ToastAlone.showLongToast(this, "请选择“关系1”联系人!");
+            ToastAlone.showShortToast(this, "请选择“关系1”联系人!");
             return;
         }
         if (StringUtil.isEmpty(contactName2)) {
-            ToastAlone.showLongToast(this, "请填写联系人信息!");
+            ToastAlone.showShortToast(this, "请填写联系人信息!");
             return;
         }
         if (StringUtil.isEmpty(contactPhone2)) {
-            ToastAlone.showLongToast(this, "请选择联系人电话!");
+            ToastAlone.showShortToast(this, "请选择联系人电话!");
             return;
         }
         if(!StringUtil.isMobile(contactPhone2)){
-            ToastAlone.showLongToast(this, "请正确填写联系人电话!");
+            ToastAlone.showShortToast(this, "请正确填写联系人电话!");
             return;
         }
         if (StringUtil.isEmpty(relation2) || relationCodeBean2 == null) {
-            ToastAlone.showLongToast(this, "请选择“关系2”联系人!");
+            ToastAlone.showShortToast(this, "请选择“关系2”联系人!");
             return;
         }
         if (contactPhone1.equals(contactPhone2)) {
-            ToastAlone.showLongToast(this, "联系人手机号不能相同!");
+            ToastAlone.showShortToast(this, "联系人手机号不能相同!");
             return;
         }
         if (contactInfoBean == null) {
@@ -412,11 +412,11 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
                 intent.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
                 startActivityForResult(intent, INTENT_SELECT_PHONE);
             } else {
-                ToastAlone.showLongToast(this, "请添加联系人或检查权限");
+                ToastAlone.showShortToast(this, "请添加联系人或检查权限");
             }
         } else {
             if (AppOpsManagerUtil.isCheck(this, AppOpsManagerUtil.OP_READ_CONTACTS) == AppOpsManager.MODE_IGNORED) {
-                ToastAlone.showLongToast(this, "请打开读取联系人权限!");
+                ToastAlone.showShortToast(this, "请打开读取联系人权限!");
             }
         }
     }

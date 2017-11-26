@@ -72,7 +72,7 @@ public class LoanOrderPresenter extends BasePresenter<LoanOrderView> {
         invoke(LoanOrderModel.getInstance().deleteLoanOrder(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
             @Override
             public void onNext(ApiResult<String> result) {
-                if (result.getFlag().equals("API0000")) {
+                if ("API0000".equals(result.getFlag())) {
                     LogUtils.d("进件做废件处理(成功)---->" + result.getMsg());
                     getView().onSuccessDeleteLoanOrder(Constants.DELETE_LOAN_ORDER_INFO, result.getResult());
                 } else {

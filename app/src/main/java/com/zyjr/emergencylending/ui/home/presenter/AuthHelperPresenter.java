@@ -81,13 +81,13 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
         invoke(AuthHelperModel.getInstance().submitMobileAuthInfo(params), new ProgressSubscriber<ApiResult<AuthInfoBean>>(new SubscriberOnNextListener<ApiResult<AuthInfoBean>>() {
             @Override
             public void onNext(ApiResult<AuthInfoBean> result) {
-                if (result.getFlag().equals("00040004")) {
+                if ("00040004".equals(result.getFlag())) {
                     LogUtils.d("运营商采集认证,获取短信验证码成功---->" + result.getMsg());
                     getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getPromptMsg());
-                } else if (result.getFlag().equals("API0000")) {
+                } else if ("API0000".equals(result.getFlag())) {
                     LogUtils.d("运营商采集认证成功---->" + result.getMsg());
                     getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getPromptMsg());
-                } else if (result.getFlag().equals("API3020")) {
+                } else if ("API3020".equals(result.getFlag())) {
                     LogUtils.d("运营商采集认证失败(大数据那边处理有问题,需要调转第一步操作)---->" + result.getMsg());
                     getView().onSuccessSubmit(Constants.MOBILE_COLLECT_AUTH, result.getFlag(), result.getPromptMsg());
                 } else {

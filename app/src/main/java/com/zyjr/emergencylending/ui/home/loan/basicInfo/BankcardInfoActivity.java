@@ -128,7 +128,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
             if (ToolPermission.checkPermission(permissions, grantResults)) {
                 jumpToNext(PERMISSION_CODE_STORAGE, "add");
             } else {
-                AppToast.makeToast(BankcardInfoActivity.this, "存储权限被拒绝");
+                ToastAlone.showShortToast(BankcardInfoActivity.this, "存储权限被拒绝");
             }
         }
     }

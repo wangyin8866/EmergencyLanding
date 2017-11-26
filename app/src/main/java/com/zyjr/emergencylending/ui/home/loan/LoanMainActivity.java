@@ -301,7 +301,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
 
     @Override
     public void onFail(String returnCode, String errorMessage) {
-        ToastAlone.showLongToast(this, errorMessage);
+        ToastAlone.showShortToast(this, errorMessage);
     }
 
     @Override

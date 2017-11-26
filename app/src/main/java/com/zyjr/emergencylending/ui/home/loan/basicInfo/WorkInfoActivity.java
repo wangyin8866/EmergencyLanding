@@ -192,46 +192,46 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
         String workPosition = tvWorkPosition.getText().toString().trim(); // 工作职位
         String income = tvIncome.getText().toString().trim(); // 税后月收入
         if (StringUtil.isEmpty(unitIndustry) && unintIndustryCodebean == null) {
-            ToastAlone.showLongToast(this, "请选择单位行业!");
+            ToastAlone.showShortToast(this, "请选择单位行业!");
             return;
         }
         if (StringUtil.isEmpty(unitName)) {
-            ToastAlone.showLongToast(this, "请填写单位名称!");
+            ToastAlone.showShortToast(this, "请填写单位名称!");
             return;
         }
         if (StringUtil.isEmpty(districtNum)) {
-            ToastAlone.showLongToast(this, "请填写区号!");
+            ToastAlone.showShortToast(this, "请填写区号!");
             return;
         }
         if (StringUtil.isEmpty(unitTel)) {
-            ToastAlone.showLongToast(this, "请填写单位固话!");
+            ToastAlone.showShortToast(this, "请填写单位固话!");
             return;
         }
         if (StringUtil.isEmpty(workAddress) && workAddressBean == null) {
-            ToastAlone.showLongToast(this, "请选择工作地址!");
+            ToastAlone.showShortToast(this, "请选择工作地址!");
             return;
         } else {
             if (workAddressBean != null && (StringUtil.containChinese(workAddressBean.getUnit_province())
                     || StringUtil.containChinese(workAddressBean.getUnit_city()))
                     || StringUtil.containChinese(workAddressBean.getUnit_county())) {
-                ToastAlone.showLongToast(this, "请重新选择工作地址!");
+                ToastAlone.showShortToast(this, "请重新选择工作地址!");
                 return;
             }
         }
         if (StringUtil.isEmpty(workDetailAddress)) {
-            ToastAlone.showLongToast(this, "请填写工作详细地址!");
+            ToastAlone.showShortToast(this, "请填写工作详细地址!");
             return;
         }
         if (StringUtil.isEmpty(workDepartment)) {
-            ToastAlone.showLongToast(this, "请填写单位部门!");
+            ToastAlone.showShortToast(this, "请填写单位部门!");
             return;
         }
         if (StringUtil.isEmpty(workPosition) && workPositionCodebean == null) {
-            ToastAlone.showLongToast(this, "请选择职位!");
+            ToastAlone.showShortToast(this, "请选择职位!");
             return;
         }
         if (StringUtil.isEmpty(income) && inComeCodebean == null) {
-            ToastAlone.showLongToast(this, "请选择税后月收入!");
+            ToastAlone.showShortToast(this, "请选择税后月收入!");
             return;
         }
         workInfoBean = new WorkInfoBean();
@@ -431,12 +431,12 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
         if(Constants.GET_WORK_INFO.equals(returnCode)){
             showError();
         }
