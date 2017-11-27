@@ -4,6 +4,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:textColor="#333333"
+        android:layout_marginTop="20dp"
+        android:textSize="16sp"
+        android:text="还款" />
+
+    <include layout="@layout/bg_line_1" />
     <LinearLayout
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
