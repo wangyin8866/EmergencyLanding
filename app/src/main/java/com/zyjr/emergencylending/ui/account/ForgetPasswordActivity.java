@@ -13,6 +13,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.ui.account.presenter.ForgetPresenter;
@@ -36,15 +37,15 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
     @BindView(R.id.top_bar)
     TopBar topBar;
     @BindView(R.id.et_mobile_number)
-    EditText etMobileNumber;
+    ClearEditText etMobileNumber;
     @BindView(R.id.et_sms_code)
     EditText etSmsCode;
     @BindView(R.id.btn_login_code)
     Button btnLoginCode;
     @BindView(R.id.et_new_pwd)
-    EditText etNewPwd;
+    ClearEditText etNewPwd;
     @BindView(R.id.et_new_pwd_again)
-    EditText etNewPwdAgain;
+    ClearEditText etNewPwdAgain;
     @BindView(R.id.btn_sure)
     Button btnSure;
     private String phone, inviteCode, pwd, pwdAgain, sms;

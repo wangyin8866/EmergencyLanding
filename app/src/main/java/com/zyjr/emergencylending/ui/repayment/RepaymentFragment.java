@@ -106,7 +106,8 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
         try {
             RepaymentLogin repaymentLogin = new RepaymentLogin();
 
-            RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(userInfo.getResult().getIdcard(), userInfo.getResult().getTel(), "android", "jjtapp");
+            RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(userInfo.getResult().getIdcard(), userInfo.getResult().getTel(), "android", "jjtapp",System.currentTimeMillis());
+            LogUtils.e("recordBean",recordBean.toString());
             String json = new Gson().toJson(recordBean);
             String des3 = HDes3.encode(json);
             repaymentLogin.setRecord(des3);

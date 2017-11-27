@@ -29,11 +29,12 @@ public class RepaymentLogin {
     }
 
     public static class RecordBean {
-        public RecordBean(String idcard, String phone, String platform, String type) {
+        public RecordBean(String idcard, String phone, String platform, String type,long time) {
             this.idcard = idcard;
             this.phone = phone;
             this.platform = platform;
             this.type = type;
+            this.time = time;
         }
 
         /**
@@ -47,6 +48,15 @@ public class RepaymentLogin {
         private String phone;
         private String platform;
         private String type;
+        private long time;
+
+        public long getTime() {
+            return time;
+        }
+
+        public void setTime(long time) {
+            this.time = time;
+        }
 
         public String getIdcard() {
             return idcard;
@@ -78,6 +88,17 @@ public class RepaymentLogin {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        @Override
+        public String toString() {
+            return "RecordBean{" +
+                    "idcard='" + idcard + '\'' +
+                    ", phone='" + phone + '\'' +
+                    ", platform='" + platform + '\'' +
+                    ", type='" + type + '\'' +
+                    ", time=" + time +
+                    '}';
         }
     }
 }

@@ -264,7 +264,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
                 try {
                     RepaymentLogin repaymentLogin = new RepaymentLogin();
 
-                    RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(idCard, phone, "android", "jjtapp");
+                    RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(idCard, phone, "android", "jjtapp",System.currentTimeMillis());
                     String json = new Gson().toJson(recordBean);
                     String des3 = HDes3.encode(json);
                     repaymentLogin.setRecord(des3);

@@ -2,17 +2,16 @@ package com.zyjr.emergencylending.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
-import com.zyjr.emergencylending.ui.my.SettingActivity;
-import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
 import com.zyjr.emergencylending.utils.LogInterceptor;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.WYUtils;
 
@@ -55,7 +54,7 @@ public class BaseModel {
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new AddHeaderInterceptor()).addInterceptor(new LogInterceptor());
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new AddHeaderInterceptor()).addInterceptor(new LogInterceptor()).addInterceptor(new ResponseInterceptor());
         } else {
             httpClientBuilder.addInterceptor(new AddHeaderInterceptor()).addInterceptor(new ResponseInterceptor());
         }
@@ -80,7 +79,7 @@ public class BaseModel {
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor());
+            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new LogInterceptor()).addInterceptor(new ResponseInterceptor());
         } else {
             httpClientBuilder.addInterceptor(new AddHeaderInterceptor()).addInterceptor(new ResponseInterceptor());
         }
@@ -140,8 +139,15 @@ public class BaseModel {
                         BaseApplication.context.startActivity(intent);
                         return response.newBuilder().body(ResponseBody.create(mediaType, content)).build();
                     }
+                    if ("API0007".equals(flag)) {
+                        Looper.prepare();
+//                        WYUtils.upDateVersion(BaseActivity.getForegroundActivity(), NetConstantValues.VERSION_UPDATE);
+                        Looper.loop();
+                    }
                 }
             } catch (Exception e) {
+                LogUtils.e("Exception",e.getMessage());
+                e.printStackTrace();
             }
             return chain.proceed(request);
         }
@@ -164,7 +170,7 @@ public class BaseModel {
                 newFormBody.add("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""));
                 newFormBody.add("cust_juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""));
                 newFormBody.add("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""));
-                newFormBody.add("version_no", Constants.getVersionCode(BaseApplication.getContext()));
+                newFormBody.add("version_no", Constants.getVersionName(BaseApplication.getContext()));
                 newFormBody.add("register_platform", Constants.getPlatform(1));
                 requestBuilder.method(original.method(), newFormBody.build());
             }

@@ -21,6 +21,7 @@ import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.account.RegisterBean;
 import com.zyjr.emergencylending.ui.account.presenter.RegisterPresenter;
@@ -45,9 +46,9 @@ import rx.functions.Action1;
 public class RegisterActivity extends BaseActivity<RegisterPresenter, BaseView<RegisterBean>> implements BaseView<RegisterBean> {
 
     @BindView(R.id.et_phone_number)
-    EditText etPhoneNumber;
+    ClearEditText etPhoneNumber;
     @BindView(R.id.et_password)
-    EditText etPassword;
+    ClearEditText etPassword;
     @BindView(R.id.iv_show_pwd)
     ImageView ivShowPwd;
     @BindView(R.id.et_sms_code)

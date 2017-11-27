@@ -87,13 +87,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         init();
-
     }
 
     private void init() {
         initPermission();
-
-
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.statusBarDarkFont(true).init();
         ActivityCollector.addActivity(this);
@@ -122,6 +119,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         idTabLl02.setOnClickListener(this);
         idTabLl03.setOnClickListener(this);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setTabSelection(currentPage);
     }
 
@@ -233,12 +236,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(TAG, currentPage);
+        LogUtils.e("onSaveInstanceState", "onSaveInstanceState");
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         currentPage = savedInstanceState.getInt(TAG);
+        LogUtils.e("onRestoreInstanceState", "onRestoreInstanceState");
     }
 
     @Override
@@ -258,6 +263,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        LogUtils.e("onNewIntent", "onNewIntent");
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             int index = bundle.getInt("index");

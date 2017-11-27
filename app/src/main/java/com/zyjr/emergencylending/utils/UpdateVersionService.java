@@ -9,10 +9,11 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
-import android.text.Html;
+import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -21,23 +22,14 @@ import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
-import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
-import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.entity.VersionBean;
-import com.zyjr.emergencylending.model.VersionUpdateModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * 检测安装更新文件的助手类
@@ -105,61 +97,30 @@ public class UpdateVersionService {
     /**
      * 更新提示框
      */
+
     private void showUpdateVersionDialog() {
-        // 构造对话框
-        Builder builder = new Builder(context);
-        builder.setCustomTitle(View.inflate(context, R.layout.update_title, null));
-        builder.setMessage(Html.fromHtml(display));
-        // 更新
-        builder.setPositiveButton("更新", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                // 显示下载对话框
-                showDownloadDialog();
-            }
-        });
-        // 稍后更新
-        builder.setNegativeButton("稍后更新", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Constants.update = false;
-                if ("0001".equals(flag)) {
-                    ActivityCollector.finishAll();
-                }
-            }
-        });
-        Dialog noticeDialog = builder.create();
-        noticeDialog.setCancelable(false);
-        noticeDialog.show();
 
-        noticeDialog.setCanceledOnTouchOutside(false);
-    }
-
-    /**
-     * 自定义弹框
-     */
-    private void showUpdateVersionDialog2() {
-
-        CustomerDialog dialog = new CustomerDialog(context);
+        final CustomerDialog dialog = new CustomerDialog(context);
         dialog.versionUpdate(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switch (view.getId()) {
                     case R.id.cancel:
+                        dialog.dismiss();
                         Constants.update = false;
                         if ("0001".equals(flag)) {
                             ActivityCollector.finishAll();
+                            System.exit(0);
                         }
                         break;
                     case R.id.update:
+                        dialog.dismiss();
                         // 显示下载对话框
                         showDownloadDialog();
                         break;
                 }
             }
-        }, "版本更新！");
+        }, display).show();
     }
 
     /**
@@ -186,6 +147,7 @@ public class UpdateVersionService {
                     Constants.update = false;
                     if ("0001".equals(flag)) {
                         ActivityCollector.finishAll();
+                        System.exit(0);
                     }
                 }
             });
@@ -212,57 +174,60 @@ public class UpdateVersionService {
      * 判断是否可更新
      */
     private void update() {
-
-        VersionUpdateModel.getInstance(NetConstantValues.HOST_URL).update(updateVersionXMLPath, SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, "")
-                , SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""),
-                Constants.getVersionCode(BaseApplication.getContext())).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<VersionBean>() {
-                    @Override
-                    public void onCompleted() {
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastAlone.showShortToast(context, Config.TIP_NET_ERROR);
-                    }
-
-                    @Override
-                    public void onNext(VersionBean o) {
-                        urlApk = o.getResult().getUrl();
-                        display = o.getResult().getContent();
-                        flag = o.getResult().getFlag();
-                        if ("0001".equals(flag) || "0012".equals(flag)) {
-                            showUpdateVersionDialog();
-                        } else {
-                            ToastAlone.showShortToast(context, o.getPromptMsg());
-                        }
-
-
+        showUpdateVersionDialog();
+//        VersionUpdateModel.getInstance().update(updateVersionXMLPath).subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<VersionBean>() {
+//                    @Override
+//                    public void onCompleted() {
 //
-//                        // 创建一个新的字符串
-//                        StringReader read = new StringReader(o);
-//                        // 创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
-//                        InputSource source = new InputSource(read);
-//                        SAXReader reader = new SAXReader();
-//                        try {
-//                            Document document = reader.read(source);
-//                            Element root = document.getRootElement();
-//                            List<Element> childElements = root.elements();
-//                            serverCode = Integer.valueOf(childElements.get(0).getText()
-//                                    .trim());
-//                            display = childElements.get(1).getText().trim();
-//                            urlApk = childElements.get(2).getText().trim();
-//                            isMust = Integer.valueOf(childElements.get(3).getText().trim());
-//                            if (serverCode > versionCode) {
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        LogUtils.e("onError",e.getMessage());
+//                        ToastAlone.showShortToast(context, e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(VersionBean o) {
+//                        if (o.getFlag().equals(Config.CODE_SUCCESS)) {
+//
+//                            urlApk = o.getResult().getUrl();
+//                            display = o.getResult().getContent();
+//                            flag = o.getResult().getFlag();
+//                            if ("0001".equals(flag) || "0012".equals(flag)) {
 //                                showUpdateVersionDialog();
+//                            } else {
+//                                ToastAlone.showShortToast(context, o.getPromptMsg());
 //                            }
-//                        } catch (DocumentException e) {
-//                            e.printStackTrace();
+//                        } else {
+//                            ToastAlone.showShortToast(context, o.getPromptMsg());
 //                        }
-                    }
-                });
+//
+////
+////                        // 创建一个新的字符串
+////                        StringReader read = new StringReader(o);
+////                        // 创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
+////                        InputSource source = new InputSource(read);
+////                        SAXReader reader = new SAXReader();
+////                        try {
+////                            Document document = reader.read(source);
+////                            Element root = document.getRootElement();
+////                            List<Element> childElements = root.elements();
+////                            serverCode = Integer.valueOf(childElements.get(0).getText()
+////                                    .trim());
+////                            display = childElements.get(1).getText().trim();
+////                            urlApk = childElements.get(2).getText().trim();
+////                            isMust = Integer.valueOf(childElements.get(3).getText().trim());
+////                            if (serverCode > versionCode) {
+////                                showUpdateVersionDialog();
+////                            }
+////                        } catch (DocumentException e) {
+////                            e.printStackTrace();
+////                        }
+//                    }
+//                });
     }
 
     /**
@@ -290,15 +255,22 @@ public class UpdateVersionService {
             return;
         }
         // 通过Intent安装APK文件
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        System.out.println("filepath=" + apkfile.toString() + "  "
-                + apkfile.getPath());
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
-                "application/vnd.android.package-archive");
-        context.startActivity(i);
-        android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
-
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//如果是安卓7.0以上
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                Uri uri = FileProvider.getUriForFile(context, "com.zyjr.emergencylending", apkfile);
+                intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            } else {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.setDataAndType(Uri.parse("file://" + apkfile), "application/vnd.android.package-archive");
+            }
+            context.startActivity(intent);
+            android.os.Process.killProcess(android.os.Process.myPid());// 如果不加上这句的话在apk安装完成之后点击单开会崩溃
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -328,7 +300,9 @@ public class UpdateVersionService {
                     String sdpath = Environment.getExternalStorageDirectory()
                             + "/";
                     fileSavePath = sdpath + "download";
-                    URL url = new URL(urlApk);
+//                    URL url = new URL(urlApk);
+                    URL url = new URL("http://192.168.9.235:8080/jjt2.0.0.apk");
+
                     // 创建连接
                     HttpURLConnection conn = (HttpURLConnection) url
                             .openConnection();

@@ -120,8 +120,15 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
         idTabLl02.setOnClickListener(this);
         idTabLl03.setOnClickListener(this);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setTabSelection(currentPage);
     }
+
     private void initPermission() {
         /**
          * 同盾

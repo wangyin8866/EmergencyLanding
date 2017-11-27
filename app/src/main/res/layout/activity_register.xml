@@ -54,10 +54,11 @@
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
 
-                    <EditText
+                    <com.zyjr.emergencylending.custom.ClearEditText
                         android:id="@+id/et_phone_number"
                         style="@style/et_input_style"
                         android:layout_weight="1"
+                        android:paddingRight="24dp"
                         android:drawableLeft="@mipmap/icon_mobile"
                         android:hint="@string/login_account_hint"
                         android:inputType="phone"
@@ -74,13 +75,14 @@
                     android:background="@drawable/et_login_input_shape"
                     android:orientation="horizontal">
 
-                    <EditText
+                    <com.zyjr.emergencylending.custom.ClearEditText
                         android:id="@+id/et_password"
                         style="@style/et_input_style"
                         android:layout_weight="1"
                         android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:drawableLeft="@mipmap/icon_lock"
                         android:hint="@string/login_password_hint"
+                        android:paddingRight="20dp"
                         android:inputType="textPassword"
                         android:maxLength="16"
                         android:textSize="13sp" />

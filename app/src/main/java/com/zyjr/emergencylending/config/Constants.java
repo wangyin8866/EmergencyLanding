@@ -65,7 +65,7 @@ public class Constants {
      * 版本名称
      */
     public static String getVersionName(Context context) {
-        return String.valueOf(WYUtils.getAppVersionName(context));
+        return WYUtils.getAppVersionName(context);
     }
 
 

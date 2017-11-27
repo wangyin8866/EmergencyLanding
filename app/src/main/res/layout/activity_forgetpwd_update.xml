@@ -32,12 +32,13 @@
             android:background="@drawable/et_login_input_shape"
             android:orientation="vertical">
 
-            <EditText
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_mobile_number"
                 style="@style/et_input_style"
                 android:drawableLeft="@mipmap/icon_mobile"
                 android:hint="@string/login_account_hint"
                 android:inputType="phone"
+                android:paddingRight="24dp"
                 android:maxLength="11"
                 android:textSize="13sp" />
 
@@ -57,6 +58,7 @@
                 android:drawableLeft="@mipmap/icon_verification"
                 android:hint="@string/sms_code_hint"
                 android:inputType="number"
+                android:paddingRight="24dp"
                 android:maxLength="6"
                 android:textSize="13sp" />
 
@@ -80,7 +82,7 @@
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
 
-            <EditText
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_new_pwd"
                 style="@style/et_input_style"
                 android:layout_weight="1"
@@ -88,6 +90,7 @@
                 android:drawableLeft="@mipmap/icon_lock"
                 android:hint="@string/update_login_pwd_hint"
                 android:inputType="textPassword"
+                android:paddingRight="24dp"
                 android:maxLength="16"
                 android:textSize="13sp" />
 
@@ -102,7 +105,7 @@
             android:background="@drawable/et_login_input_shape"
             android:orientation="horizontal">
 
-            <EditText
+            <com.zyjr.emergencylending.custom.ClearEditText
                 android:id="@+id/et_new_pwd_again"
                 style="@style/et_input_style"
                 android:layout_weight="1"
@@ -111,6 +114,7 @@
                 android:hint="@string/update_login_pwd_hint_again"
                 android:inputType="textPassword"
                 android:lines="1"
+                android:paddingRight="24dp"
                 android:maxLength="16"
                 android:textSize="13sp" />
 

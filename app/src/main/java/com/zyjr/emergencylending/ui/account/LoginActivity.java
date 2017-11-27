@@ -8,24 +8,22 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.account.LoginBean;
 import com.zyjr.emergencylending.ui.account.presenter.LoginPresenter;
-import com.zyjr.emergencylending.ui.my.SettingActivity;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
@@ -49,9 +47,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter, BaseView<LoginBe
 
 
     @BindView(R.id.et_phone_number)
-    EditText etPhoneNumber;
+    ClearEditText etPhoneNumber;
     @BindView(R.id.et_password)
-    EditText etPassword;
+    ClearEditText etPassword;
     @BindView(R.id.iv_show_pwd)
     ImageView ivShowPwd;
     @BindView(R.id.btn_login)
