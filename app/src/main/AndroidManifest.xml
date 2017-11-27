@@ -351,6 +351,17 @@
             android:name="com.zyjr.emergencylending.ui.home.loan.ReloanApplyActivity"
             android:screenOrientation="portrait" />
 
+        <provider
+            android:name="com.zyjr.emergencylending.widget.MyFileProvider"
+            android:authorities="com.zyjr.emergencylending"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/down_file_paths" />
+
+        </provider>
+
 
     </application>
 
