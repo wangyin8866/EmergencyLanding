@@ -105,7 +105,7 @@ public class BaseModel {
                     .header("juid", SPUtils.getString(BaseApplication.getContext(), Config.KEY_JUID, ""))
                     .header("register_platform", Constants.getPlatform(1))
                     .header("login_token", SPUtils.getString(BaseApplication.getContext(), Config.KEY_TOKEN, ""))
-                    .header("version_no", Constants.getVersionName(BaseApplication.getContext()))
+                    .header("version_no", "1.2.3")
                     .build();
             return chain.proceed(request);
         }
@@ -141,7 +141,7 @@ public class BaseModel {
                     }
                     if ("API0007".equals(flag)) {
                         Looper.prepare();
-//                        WYUtils.upDateVersion(BaseActivity.getForegroundActivity(), NetConstantValues.VERSION_UPDATE);
+                        WYUtils.upDateVersion(BaseActivity.getForegroundActivity(), NetConstantValues.VERSION_UPDATE);
                         Looper.loop();
                     }
                 }

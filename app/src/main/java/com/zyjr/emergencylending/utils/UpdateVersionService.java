@@ -22,14 +22,21 @@ import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
+import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.VersionBean;
+import com.zyjr.emergencylending.model.VersionUpdateModel;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * 检测安装更新文件的助手类
@@ -174,60 +181,60 @@ public class UpdateVersionService {
      * 判断是否可更新
      */
     private void update() {
-        showUpdateVersionDialog();
-//        VersionUpdateModel.getInstance().update(updateVersionXMLPath).subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<VersionBean>() {
-//                    @Override
-//                    public void onCompleted() {
+//        showUpdateVersionDialog();
+        VersionUpdateModel.getInstance().update(updateVersionXMLPath).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<VersionBean>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LogUtils.e("onError",e.getMessage());
+                        ToastAlone.showShortToast(context, e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(VersionBean o) {
+                        if (o.getFlag().equals(Config.CODE_SUCCESS)) {
+
+                            urlApk = o.getResult().getUrl();
+                            display = o.getResult().getContent();
+                            flag = o.getResult().getFlag();
+                            if ("0001".equals(flag) || "0012".equals(flag)) {
+                                showUpdateVersionDialog();
+                            } else {
+                                ToastAlone.showShortToast(context, o.getPromptMsg());
+                            }
+                        } else {
+                            ToastAlone.showShortToast(context, o.getPromptMsg());
+                        }
+
 //
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        LogUtils.e("onError",e.getMessage());
-//                        ToastAlone.showShortToast(context, e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(VersionBean o) {
-//                        if (o.getFlag().equals(Config.CODE_SUCCESS)) {
-//
-//                            urlApk = o.getResult().getUrl();
-//                            display = o.getResult().getContent();
-//                            flag = o.getResult().getFlag();
-//                            if ("0001".equals(flag) || "0012".equals(flag)) {
+//                        // 创建一个新的字符串
+//                        StringReader read = new StringReader(o);
+//                        // 创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
+//                        InputSource source = new InputSource(read);
+//                        SAXReader reader = new SAXReader();
+//                        try {
+//                            Document document = reader.read(source);
+//                            Element root = document.getRootElement();
+//                            List<Element> childElements = root.elements();
+//                            serverCode = Integer.valueOf(childElements.get(0).getText()
+//                                    .trim());
+//                            display = childElements.get(1).getText().trim();
+//                            urlApk = childElements.get(2).getText().trim();
+//                            isMust = Integer.valueOf(childElements.get(3).getText().trim());
+//                            if (serverCode > versionCode) {
 //                                showUpdateVersionDialog();
-//                            } else {
-//                                ToastAlone.showShortToast(context, o.getPromptMsg());
 //                            }
-//                        } else {
-//                            ToastAlone.showShortToast(context, o.getPromptMsg());
+//                        } catch (DocumentException e) {
+//                            e.printStackTrace();
 //                        }
-//
-////
-////                        // 创建一个新的字符串
-////                        StringReader read = new StringReader(o);
-////                        // 创建新的输入源SAX 解析器将使用 InputSource 对象来确定如何读取 XML 输入
-////                        InputSource source = new InputSource(read);
-////                        SAXReader reader = new SAXReader();
-////                        try {
-////                            Document document = reader.read(source);
-////                            Element root = document.getRootElement();
-////                            List<Element> childElements = root.elements();
-////                            serverCode = Integer.valueOf(childElements.get(0).getText()
-////                                    .trim());
-////                            display = childElements.get(1).getText().trim();
-////                            urlApk = childElements.get(2).getText().trim();
-////                            isMust = Integer.valueOf(childElements.get(3).getText().trim());
-////                            if (serverCode > versionCode) {
-////                                showUpdateVersionDialog();
-////                            }
-////                        } catch (DocumentException e) {
-////                            e.printStackTrace();
-////                        }
-//                    }
-//                });
+                    }
+                });
     }
 
     /**
