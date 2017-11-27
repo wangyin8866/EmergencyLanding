@@ -26,7 +26,7 @@ public class BankAdapter extends BaseQuickAdapter<SupportBank, BaseViewHolder> {
         if (item.getName_().contains("中国工商") || item.getName_().contains("工商")) {
             helper.setImageResource(R.id.iv_bank_icon, R.mipmap.banklogo_a);
             helper.setText(R.id.tv_bank_name, item.getName_());
-        } else if (item.getName_().contains("中国农业")) {
+        } else if (item.getName_().contains("中国农业") || item.getName_().contains("农业")) {
             helper.setImageResource(R.id.iv_bank_icon, R.mipmap.banklogo_b);
             helper.setText(R.id.tv_bank_name, item.getName_());
         } else if (item.getName_().contains("中国银行")) {

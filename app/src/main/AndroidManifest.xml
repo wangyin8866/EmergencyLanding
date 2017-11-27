@@ -362,6 +362,16 @@
 
         </provider>
 
+        <!-- 热修复 -->
+        <meta-data
+            android:name="com.taobao.android.hotfix.IDSECRET"
+            android:value="24708766-1" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.APPSECRET"
+            android:value="aa2d4c037835fe32db5dfea6669f567b" />
+        <meta-data
+            android:name="com.taobao.android.hotfix.RSASECRET"
+            android:value="MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCLL64xMxu2G8/PKluHUCqa7Vzmsq3zoCNXgd8s/HbIJ26pUbK2pRec6bsjgp0kZaIxmzn+x0HpqnBvF4Msf9LUcOTtJrzk6m1YFqSRyMoTECh2jkz870EoUPgz+fpDlpnqD7Xnil+XcXe2LnJnp5Ewv88nhtcYN4QRbstj79+vNZD5tKhjkR/WWkn8200U8Ea5PqHT2sD2HAgQwj1+6uys4V6JNCb68wt1trtKuGe9di7NlsMGs0AAAVe9/9DhJoclksAVKC0Hly1o17qC2BTyqbTNI4f4ii3R+Re/ChQ7Y++xT1UgNDInrLTO0LyV+ahoQjlqIfm3vwxuB4hasbr5AgMBAAECggEAWuxe4oz8gU5RxodpG0/nRSXiFmKK+CeYbsXMQNr7zWzVAY75LA9VCZA2S9A7T1eFSNqaXDFWgYpxwGCftCYcV+MX6UPxCamKnIzOHN4KA8H+bNQwvtqcufWK7olST2zGRvzUW9ks8QWSqlRVMBlq42mprayMPqmlgK3b+ADvIsjmxc2lWm1OAaSqShmQp0am0IKD/n1nWcPuNcJ2OHJMZnPe9yx43UuIaqa8OYLQQ+WAQqOCBymRHHF+RBJbWqksoY/L6f/4+Cdl1eIq3xBW1oL4Hzx7gYY6FirT89UsrfnLxrFvI6izPvnFEWNfog/5Y9iqNom11OAlhNBbt6hSAQKBgQDWBpfnNGNxyFyK6cWY6VKeW3kAGqErwm+4Vw5VckSsMCD9JlzTYmf1US0YQxGgexdRdXPxFAYYpPOqNfRzqwXUxDvJuDFPVEmrXRHn9wY9WqmCon7yOFqEfjSvZkFO/X0yeCBtGvceKzDnLLMn1KYpgHXpqoLB9yyY1A0jOrvtCQKBgQCme69CugJ03yqqcLPojAL87F3GQ9kuHjLUUdIRXP0YUtg3/SSVShyxN6dTkjF+xRlCwgxzyeXQqbS1akk4icqkZTxhSslzbfwT0l5GTfJ6xdd+qzONs7z5c7FnU4oTsxx5PnZErJ8ULfcH/9+gQFwcEz7qspAZXDjWpHF1UU3KcQKBgAhE0PGZ0I3A0/J5/axet1Zu6knavYdXR8Gze1ZJx+VvJpchOEzibGnJ7RgW30N3/fqjswsJXwLsvI1C8GLXpK4HttegSidqdj4splhz7sXIDuyBIq5xBu4/ggGUzckjegbNJVORyyJbQNRtoa5UROctk2Cnuc2Moyh0aN2Hk2MhAoGASM9TCQW8yUxIpp3/sLZ7IA5nvKwzsX23kS/vhXR7pEWnFmV5uGjfP4otfdk0GFMvBwlC1Oj5v1ZZF/ZR644nt9omnA5PKFJzql+Yp3qzj4ozAszxEQoInbhBYAUjIBZ3X3c31jUApZysqyz2qmk7X3PzUkWhy9WPbiAhFsPmF6ECgYBJ7rGgjUIyyfofI9hdTERd/VYIkLtM9dmeMbBmY22Sa9bxulCXdR6tI2n+CR1dEexex2jpU2/jpWQvvsE4eGYoP1O6g2QxvEXby+gMY9j4no3/pCvez3T/9azKdnY0ZXJE3HxjPGAhGc6SrNqVAW9qAbVLo9Qa29K+dpO+xoEfcA==" />
 
     </application>
 

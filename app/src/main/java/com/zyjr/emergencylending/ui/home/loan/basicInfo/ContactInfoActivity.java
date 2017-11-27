@@ -487,12 +487,12 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
     @Override
     public void onFail(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override
     public void onError(String returnCode, String errorMsg) {
-        ToastAlone.showLongToast(this, errorMsg);
+        ToastAlone.showShortToast(this, errorMsg);
         if(Constants.GET_CONTACT_INFO.equals(returnCode) || Constants.GET_PERSONAL_INFO.equals(returnCode) ){
             showError();
         }

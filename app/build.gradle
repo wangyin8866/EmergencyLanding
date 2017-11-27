@@ -160,6 +160,14 @@ android {
 
 }
 
+repositories{
+    // 阿里云仓库
+    maven {
+        url "http://maven.aliyun.com/nexus/content/repositories/releases"
+    }
+}
+
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -218,4 +226,6 @@ dependencies {
     implementation project(':easyRefreshLayout')
     implementation files('libs/fm-sdk-3.1.1.jar')
     implementation files('libs/baiqishi-risk-sdk-2.2.1.jar')
+    // 热修复
+    compile 'com.aliyun.ams:alicloud-android-hotfix:3.1.6'
 }

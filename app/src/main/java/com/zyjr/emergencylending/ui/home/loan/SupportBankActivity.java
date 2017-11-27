@@ -27,6 +27,7 @@ import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.widget.recyc.RecycleViewDivider;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -85,6 +86,7 @@ public class SupportBankActivity extends BaseActivity<BankcardInfoPresenter, Ban
         });
         bankAdapter = new BankAdapter(R.layout.rv_item_bankcard, supportBankList);
         rvBankList.setLayoutManager(new LinearLayoutManager(this));
+        rvBankList.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.VERTICAL));
         rvBankList.setAdapter(bankAdapter);
         // TODO 获取支持银行卡列表
         bankAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

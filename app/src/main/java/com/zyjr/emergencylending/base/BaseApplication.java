@@ -3,11 +3,15 @@ package com.zyjr.emergencylending.base;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.multidex.MultiDex;
 
 import com.igexin.sdk.PushManager;
+import com.taobao.sophix.PatchStatus;
+import com.taobao.sophix.SophixManager;
+import com.taobao.sophix.listener.PatchLoadStatusListener;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.Config;
@@ -52,7 +56,11 @@ public class BaseApplication extends Application {
      */
     public static String isSalesman;
 
-
+    public static MsgDisplayListener msgDisplayListener = null;
+    public static StringBuilder cacheMsg = new StringBuilder();
+    public interface MsgDisplayListener {
+        void handle(String msg);
+    }
 
     @Override
     public void onCreate() {
@@ -118,6 +126,56 @@ public class BaseApplication extends Application {
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
+        initSopfix();
         MultiDex.install(base);
+    }
+
+    private void initSopfix() {
+        String appVersion = "";
+        try {
+            appVersion = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            appVersion = "1.0.0";
+        }
+        SophixManager.getInstance().setContext(this).setAppVersion(appVersion).setAesKey(null)
+                .setEnableDebug(true)
+                .setPatchLoadStatusStub(new PatchLoadStatusListener() {
+                    @Override
+                    public void onLoad(int mode, int code, String info, int handlePatchVersion) {
+                        String msg = new StringBuilder("")
+                                .append(" Mode:")
+                                .append(mode)
+                                .append(" Code:")
+                                .append(code)
+                                .append(" Info:")
+                                .append(info)
+                                .append(" HandlePatchVersion:")
+                                .append(handlePatchVersion).toString();
+                        System.out.println("加载补丁msg：" + msg);
+                        if (msgDisplayListener != null) {
+                            msgDisplayListener.handle(msg);
+                        } else {
+                            cacheMsg.append("\n").append(msg);
+                        }
+                        if (code == PatchStatus.CODE_LOAD_SUCCESS) {
+                            // 表明补丁加载ok
+                            System.out.println("加载补丁ok:" + PatchStatus.CODE_LOAD_SUCCESS);
+                        } else if (code == PatchStatus.CODE_LOAD_RELAUNCH) {
+                            // 表明新补丁生效需要重启，开发者课题室用户或者强制重启
+                            // 建议:用户可以监听进入后台事件,然后应用自杀
+                            System.out.println("加载补丁:" + PatchStatus.CODE_LOAD_RELAUNCH);
+                        } else if (code == PatchStatus.CODE_LOAD_FAIL) {
+                            // 内部引擎异常，推荐此时清空本地补丁，防止失败补丁重复加载
+                            SophixManager.getInstance().cleanPatches();
+                            System.out.println("加载补丁:" + PatchStatus.CODE_LOAD_FAIL);
+                        } else {
+                            // 其他错误信息
+                            System.out.println("加载补丁:其他");
+                        }
+
+                    }
+                }).initialize();
+        SophixManager.getInstance().queryAndLoadNewPatch(); // 加载新的补丁包
     }
 }

@@ -74,6 +74,7 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private CharSequence temp;
     private BankcardInfo bankcardInfo = null;
     private SQLiteDatabase db = null;
+    private boolean isSupport = false; // 是否支持
 
     @Override
     protected BankcardInfoPresenter createPresenter() {
@@ -201,7 +202,7 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (temp.length() > 10) {
+                if (temp.length() >= 15) {
                     if (StringUtil.isEmpty(tvOpenbank.getText().toString().trim())) {
                         BankDbBean bankDbBean = BankcardDb.getInstance().queryBankcard(db, etBankcardNumber.getText().toString());
                         if (null == bankDbBean) {
@@ -210,6 +211,19 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
                             LogUtils.d("获取的银行信息为:" + bankDbBean + ",可用");
                             if (bankcardInfo == null) {
                                 bankcardInfo = new BankcardInfo();
+                            }
+                            // 如果银行卡不在支持列表中,则提示不符
+                            if (supportBankList != null && supportBankList.size() > 0) {
+                                for (int i = 0; i < supportBankList.size(); i++) {
+                                    if (supportBankList.get(i).getCode_().equals(bankDbBean.getBank_code())) {
+                                        isSupport = true;
+                                        break;
+                                    }
+                                    if (i == supportBankList.size() - 1) {
+                                        LogUtils.d("库里暂不支持该银行的借记卡");
+                                        return;
+                                    }
+                                }
                             }
                             if (StringUtil.isNotEmpty(bankDbBean.getBank_code())) {
                                 bankcardInfo.setBank_code(bankDbBean.getBank_code());
@@ -220,7 +234,8 @@ public class EditBankcardActivity extends BaseActivity<BankcardInfoPresenter, Ba
                             }
                         }
                     }
-                } else if (temp.length() < 6 && temp.length() > 0) {
+                } else if (temp.length() < 15 && temp.length() > 0) {
+                    isSupport = false;
                     tvOpenbank.setText("");
                     bankcardInfo.setBank_code("");
                     bankcardInfo.setBank_name("");
