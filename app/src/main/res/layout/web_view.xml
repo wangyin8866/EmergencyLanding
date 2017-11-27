@@ -15,7 +15,6 @@
         app:titleTextColor="#333333"
         app:titleTextSize="16sp"
         app:top_background="#FFFFFF" />
-
     <WebView
         android:id="@+id/web_view"
         android:layout_width="match_parent"
