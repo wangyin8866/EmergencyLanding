@@ -108,7 +108,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
 
     protected void init() {
 
-
+        if (auto_roll_data != null) {
+            auto_roll_data.clear();
+        }
         auto_roll_data = new ArrayList<>();
 
 

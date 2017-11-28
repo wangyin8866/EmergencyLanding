@@ -535,7 +535,13 @@ public class WYUtils {
         }
         return false;
     }
+    public static boolean clickDialogBack(int keyCode, KeyEvent event, final Context context) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 
+            return true;
+        }
+        return false;
+    }
     /***
      * 获取url 指定name的value;
      * @param url
