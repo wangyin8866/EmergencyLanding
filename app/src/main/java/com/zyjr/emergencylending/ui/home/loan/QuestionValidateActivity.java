@@ -21,7 +21,9 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.ContactInfoBean;
+import com.zyjr.emergencylending.entity.MobileContactBean;
 import com.zyjr.emergencylending.ui.home.View.QuestValidateView;
+import com.zyjr.emergencylending.ui.home.loan.offline.NoStoreApplyConfirmActivity;
 import com.zyjr.emergencylending.ui.home.presenter.QuestValidatePresenter;
 import com.zyjr.emergencylending.utils.CommonUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
@@ -265,7 +267,12 @@ public class QuestionValidateActivity extends BaseActivity<QuestValidatePresente
 
     private void saveContactsListInfo() {
         Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
+        List<MobileContactBean> mobileContactsList = CommonUtils.queryContactPhoneNumber(this);
+        if (mobileContactsList.size() == 0) {
+            ToastAlone.showShortToast(QuestionValidateActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+            return;
+        }
+        paramsMap.put("contact_list", new Gson().toJson(mobileContactsList)); // 通讯录集合
         mPresenter.saveContactsList(paramsMap);
     }
 

@@ -18,6 +18,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.MobileContactBean;
 import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.ReloanProductBean;
 import com.zyjr.emergencylending.ui.home.View.ReloanApplyView;
@@ -133,7 +134,12 @@ public class ReloanApplyActivity extends BaseActivity<ReloanApplyPresenter, Relo
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("online_type", "0"); // 产品类型
         paramsMap.put("product_id", "0"); // 产品ID
-        paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
+        List<MobileContactBean> mobileContactsList = CommonUtils.queryContactPhoneNumber(this);
+        if (mobileContactsList.size() == 0) {
+            ToastAlone.showShortToast(ReloanApplyActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+            return;
+        }
+        paramsMap.put("contact_list", new Gson().toJson(mobileContactsList)); // 通讯录集合
         paramsMap.put("is_run_risk", precheckResultBean.getIs_run_risk());  // 策略标识
         paramsMap.put("phone_equipment", WYUtils.getDeviceFingerprinting(this));  // 手机设备唯一串号
         paramsMap.put("renew_loans_grade", precheckResultBean.getRenew_loans_grade());  // 提交标示

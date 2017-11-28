@@ -324,7 +324,8 @@ public class CustomerDialog extends Dialog {
                 return false;
             }
         });
-        content.setText(str);
+//        content.setText(str);
+        content.setText(str.replace("\\n", "\n"));
         return instance;
     }
 

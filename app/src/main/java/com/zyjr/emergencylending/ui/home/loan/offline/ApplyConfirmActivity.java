@@ -21,6 +21,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.entity.MobileContactBean;
 import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
@@ -181,7 +182,13 @@ public class ApplyConfirmActivity extends BaseActivity<OfflineApplyPresenter, Of
         paramsMap.put("apply_zq", apply_zq); // 申请期数间隔
         paramsMap.put("apply_periods_unit", apply_periods_unit); // 申请周期单位
         if (!BaseApplication.isSalesman.equals(Config.USER_SALESMAN)) {
-            paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
+            // 普通用户
+            List<MobileContactBean> mobileContactsList = CommonUtils.queryContactPhoneNumber(this);
+            if (mobileContactsList.size() == 0) {
+                ToastAlone.showShortToast(ApplyConfirmActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+                return;
+            }
+            paramsMap.put("contact_list", new Gson().toJson(mobileContactsList)); // 通讯录集合
         }
         paramsMap.put("store", storeBean.getStoreId()); // 门店iD
         paramsMap.put("store_name", storeBean.getStoreName());  // 门店名称

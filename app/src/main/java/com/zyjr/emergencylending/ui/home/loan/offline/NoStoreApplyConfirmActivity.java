@@ -14,6 +14,7 @@ import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.entity.MobileContactBean;
 import com.zyjr.emergencylending.entity.PrecheckResultBean;
 import com.zyjr.emergencylending.entity.StoreResultBean;
 import com.zyjr.emergencylending.ui.home.View.OfflineApplyView;
@@ -116,7 +117,12 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
         Map<String, String> paramsMap = new HashMap<>();
         paramsMap.put("online_type", "0"); // 产品类型
         paramsMap.put("product_id", "0"); // 产品ID
-        paramsMap.put("contact_list", new Gson().toJson(CommonUtils.queryContactPhoneNumber(this))); // 通讯录集合
+        List<MobileContactBean> mobileContactsList = CommonUtils.queryContactPhoneNumber(this);
+        if (mobileContactsList.size() == 0) {
+            ToastAlone.showShortToast(NoStoreApplyConfirmActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
+            return;
+        }
+        paramsMap.put("contact_list", new Gson().toJson(mobileContactsList)); // 通讯录集合
         paramsMap.put("is_run_risk", "");  // 策略标识
         paramsMap.put("phone_equipment", WYUtils.getDeviceFingerprinting(this));  // 手机设备唯一串号
         mPresenter.submitPrecheck(paramsMap);
