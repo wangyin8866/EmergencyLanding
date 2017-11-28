@@ -2,7 +2,6 @@ package com.zyjr.emergencylending.base;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -139,11 +138,7 @@ public class BaseModel {
                         BaseApplication.context.startActivity(intent);
                         return response.newBuilder().body(ResponseBody.create(mediaType, content)).build();
                     }
-                    if ("API0007".equals(flag)) {
-                        Looper.prepare();
-                        WYUtils.upDateVersion(BaseActivity.getForegroundActivity(), NetConstantValues.VERSION_UPDATE);
-                        Looper.loop();
-                    }
+
                 }
             } catch (Exception e) {
                 LogUtils.e("Exception",e.getMessage());

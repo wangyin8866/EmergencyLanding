@@ -122,7 +122,7 @@ public class SettingActivity extends BaseActivity {
 
                 break;
             case R.id.version:
-                WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE);
+                WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE,true);
                 break;
         }
     }

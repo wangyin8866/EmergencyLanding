@@ -266,8 +266,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         LogUtils.e("onNewIntent", "onNewIntent");
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            int index = bundle.getInt("index");
-            setTabSelection(index);
+            currentPage = bundle.getInt("index");
         }
     }
 

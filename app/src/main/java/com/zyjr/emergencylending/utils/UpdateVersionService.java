@@ -102,9 +102,11 @@ public class UpdateVersionService {
 
     /**
      * 检测是否可更新
+     *
+     * @param isClick
      */
-    void checkUpdate() {
-        update();
+    void checkUpdate(boolean isClick) {
+        update(isClick);
     }
 
     /**
@@ -185,8 +187,10 @@ public class UpdateVersionService {
 
     /**
      * 判断是否可更新
+     *
+     * @param isClick
      */
-    private void update() {
+    private void update(final boolean isClick) {
 //        showUpdateVersionDialog();
         VersionUpdateModel.getInstance().update(updateVersionXMLPath).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -198,8 +202,8 @@ public class UpdateVersionService {
 
                     @Override
                     public void onError(Throwable e) {
-                        LogUtils.e("onError",e.getMessage());
-                        ToastAlone.showShortToast(context, e.getMessage());
+                        LogUtils.e("onError", e.getMessage());
+                        ToastAlone.showShortToast(context, Config.TIP_NET_ERROR);
                     }
 
                     @Override
@@ -212,7 +216,9 @@ public class UpdateVersionService {
                             if ("0001".equals(flag) || "0012".equals(flag)) {
                                 showUpdateVersionDialog();
                             } else {
-                                ToastAlone.showShortToast(context, o.getPromptMsg());
+                                if (isClick) {
+                                    ToastAlone.showShortToast(context, "已经是最新版本!");
+                                }
                             }
                         } else {
                             ToastAlone.showShortToast(context, o.getPromptMsg());

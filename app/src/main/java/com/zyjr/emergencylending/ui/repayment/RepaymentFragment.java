@@ -16,6 +16,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.RepaymentLogin;
@@ -54,6 +55,7 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     @BindView(R.id.ll_retry)
     LinearLayout llRetry;
     private View view;
+    private String contractNo;
 
     @Nullable
     @Override
@@ -80,8 +82,8 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
         if (baseBean.getResult().getCurrent_borrow() != null) {
 
             if (Config.TRUE.equals(baseBean.getResult().getCurrent_borrow().getIsRepaymentFlag())) {
-                //获取身份证和手机号
-                mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
+                //获取订单状态
+                mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
             } else {
                 WYUtils.loadHtml(Config.NO_REPAY, webView, progressBar);
             }
@@ -90,42 +92,24 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
         }
     }
 
-    @Override
-    public void getRepaymentLogin(RepaymentSuccess baseBean) {
-        String token = baseBean.getToken();
-
-        SPUtils.saveString(mContext, Config.KEY_REPAYMENT_TOKEN, token);
-        // 调还款的接口
-        mPresenter.getRepaymentH5Url(Config.H5_URL_REPAYMENT);
-    }
-
-    @Override
-    public void getUserInfo(UserInfo userInfo) {
-
-
-        try {
-            RepaymentLogin repaymentLogin = new RepaymentLogin();
-
-            RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(userInfo.getResult().getIdcard(), userInfo.getResult().getTel(), "android", "jjtapp",System.currentTimeMillis());
-            LogUtils.e("recordBean",recordBean.toString());
-            String json = new Gson().toJson(recordBean);
-            String des3 = HDes3.encode(json);
-            repaymentLogin.setRecord(des3);
-
-
-            LogUtils.e("repaymentLogin", des3);
-            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(repaymentLogin));
-
-            //获取token
-            mPresenter.repaymentLogin(body);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void loadH5(H5Bean h5Bean) {
-        WYUtils.loadHtml(h5Bean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_REPAYMENT_TOKEN, "") + "&page=1", webView, progressBar);
+        WYUtils.loadHtml(h5Bean.getResult().getH5_url() + "?contractNo=" + contractNo + "&page=1", webView, progressBar);
+    }
+
+    @Override
+    public void isEffectiveOrder(EffectiveOrderBean baseBean) {
+
+        if (Config.TRUE.equals(baseBean.getResult().getOrder_status())) {
+
+            contractNo = baseBean.getResult().getContract_no();
+            // 调还款的接口
+            mPresenter.getRepaymentH5Url(Config.H5_URL_REPAYMENT);
+        } else {
+            WYUtils.loadHtml(Config.NO_REPAY, webView, progressBar);
+        }
+
     }
 
     @Override
@@ -141,12 +125,12 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
 
     @Override
     public void requestError() {
-        WYUtils.showRequestError(llMain,llRetry);
+        WYUtils.showRequestError(llMain, llRetry);
     }
 
     @Override
     public void requestSuccess() {
-        WYUtils.showRequestSuccess(llMain,llRetry);
+        WYUtils.showRequestSuccess(llMain, llRetry);
 
     }
 
@@ -154,5 +138,46 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     public void onViewClicked() {
         //是否有还款
         mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
+    }
+
+    /**
+     * 没有用到
+     *
+     * @param baseBean
+     */
+    @Override
+    public void getRepaymentLogin(RepaymentSuccess baseBean) {
+        String token = baseBean.getToken();
+
+        SPUtils.saveString(mContext, Config.KEY_REPAYMENT_TOKEN, token);
+        // 调还款的接口
+        mPresenter.getRepaymentH5Url(Config.H5_URL_REPAYMENT);
+    }
+
+    /**
+     * 没有用到
+     *
+     * @param
+     */
+    @Override
+    public void getUserInfo(UserInfo userInfo) {
+        try {
+            RepaymentLogin repaymentLogin = new RepaymentLogin();
+
+            RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(userInfo.getResult().getIdcard(), userInfo.getResult().getTel(), "android", "jjtapp", System.currentTimeMillis());
+            LogUtils.e("recordBean", recordBean.toString());
+            String json = new Gson().toJson(recordBean);
+            String des3 = HDes3.encode(json);
+            repaymentLogin.setRecord(des3);
+
+
+            LogUtils.e("repaymentLogin", des3);
+            RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(repaymentLogin));
+
+            //获取token
+            mPresenter.repaymentLogin(body);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

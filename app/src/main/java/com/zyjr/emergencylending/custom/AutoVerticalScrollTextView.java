@@ -60,6 +60,11 @@ public class AutoVerticalScrollTextView extends TextSwitcher implements ViewSwit
         t.setTextColor(Color.parseColor("#B9B9B9"));
         showNext();
     }
+    public String getText(){
+        final TextView t = (TextView) getCurrentView();
+
+        return t.getText().toString();
+    }
     public void setTText2(CharSequence text){
         final TextView t = (TextView) getNextView();
         t.setText(text);

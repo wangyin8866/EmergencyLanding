@@ -6,6 +6,7 @@ import com.xfqz.xjd.mylibrary.ProgressSubscriber;
 import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
@@ -52,7 +53,28 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
             }
         }, mContext));
     }
+    /**
+     * 获取订单状态
+     *
+     * @param router
+     */
+    public void isEffectiveOrder(String router) {
+        invoke(AccountModel.getInstance().isEffectiveOrder(router), new ProgressSubscriber<EffectiveOrderBean>(new SubscriberOnNextListener<EffectiveOrderBean>() {
+            @Override
+            public void onNext(EffectiveOrderBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().isEffectiveOrder(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
+                }
+            }
 
+            @Override
+            public void onError(Throwable e) {
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+            }
+        }, mContext));
+    }
     /**
      * 获取手机号和身份证
      *

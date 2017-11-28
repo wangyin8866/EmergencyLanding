@@ -42,7 +42,7 @@
             android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="10dp"
-            android:src="@mipmap/billboard_head"
+            android:src="@mipmap/head_portrait"
             />
 
         <ImageView

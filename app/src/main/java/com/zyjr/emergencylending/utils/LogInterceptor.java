@@ -2,14 +2,11 @@ package com.zyjr.emergencylending.utils;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
 
 import java.io.IOException;
@@ -74,11 +71,7 @@ public class LogInterceptor implements Interceptor {
                     intent.putExtras(bundle);
                     BaseApplication.context.startActivity(intent);
                 }
-                if ("API0007".equals(flag)) {
-                    Looper.prepare();
-                    WYUtils.upDateVersion(BaseActivity.getForegroundActivity(), NetConstantValues.VERSION_UPDATE);
-                    Looper.loop();
-                }
+
             }
         } catch (Exception e) {
             LogUtils.e("Exception",e.getMessage());

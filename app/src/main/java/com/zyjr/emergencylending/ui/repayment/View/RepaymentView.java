@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.repayment.View;
 
 import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
@@ -18,4 +19,5 @@ public interface RepaymentView extends BaseView {
 
     void getUserInfo(UserInfo userInfo);
     void loadH5(H5Bean h5Bean);
+    void isEffectiveOrder(EffectiveOrderBean baseBean);
 }

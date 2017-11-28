@@ -149,7 +149,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
                 mPresenter.getH5Url(Config.H5_URL_ACTIVITYLIST, "活动");
                 break;
             case R.id.invest:
-                mPresenter.getH5Url(Config.H5_URL_INVITE, "邀请");
+                mPresenter.getH5Url(Config.H5_URL_INVITE, "邀请有奖");
                 break;
             case R.id.more_dynamic:
                 startActivity(new Intent(mContext, MessageActivity.class));

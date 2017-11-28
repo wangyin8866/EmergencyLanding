@@ -49,6 +49,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Random;
 
 import static com.zyjr.emergencylending.utils.UIUtils.getResources;
 
@@ -193,9 +194,9 @@ public class WYUtils {
     /**
      * 版本更新
      */
-    public static void upDateVersion(Context context, String url) {
+    public static void upDateVersion(Context context, String url, boolean isClick) {
         UpdateVersionService service = new UpdateVersionService(url, context);
-        service.checkUpdate();
+        service.checkUpdate(isClick);
     }
 
 
@@ -737,8 +738,19 @@ public class WYUtils {
         return null;
     }
 
+    /**
+     * 获取同盾和白骑士设备指纹
+     * @param context
+     * @return
+     */
     public static String getDeviceFingerprinting(Context context) {
 
         return SPUtils.getWyString(context, Config.KEY_TONG_DUN )+","+SPUtils.getWyString(context, Config.KEY_BAI_QI_SHI );
+    }
+
+    //获取一个随机数
+    public static int getOneRandom(int size) {
+        Random random = new Random();
+        return random.nextInt(size);
     }
 }

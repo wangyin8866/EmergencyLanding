@@ -19,6 +19,7 @@ import com.bigkoo.convenientbanner.listener.OnItemClickListener;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
 import com.zyjr.emergencylending.custom.LocalImageHolderView;
@@ -28,12 +29,12 @@ import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
-import com.zyjr.emergencylending.ui.home.loan.AuthCenterActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
 import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 import com.zyjr.emergencylending.utils.SPUtils;
+import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +70,11 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     private ArrayList<String> images;
     private String is_effective_order;
     private String turnFlag = "";
+    private String[] surname = {"赵", "钱", "孙", "李", "周", "吴", "郑", "王",
+            "冯", "陈", "卫", "沈", "杨", "朱", "尤", "何",
+            "吕", "张"};
+    private String[] sex = {"先生", "女士"};
+    int[] types = {0, 1};
 
     @Nullable
     @Override
@@ -87,9 +93,13 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void onResume() {
         super.onResume();
+
+        //版本更新
+        if (Constants.update) {
+            WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE, false);
+        }
         //banner
         mPresenter.getHomeAds(NetConstantValues.HOME_AD);
-
         //是否有消息
         if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
             mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
@@ -100,13 +110,42 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
 
 
         auto_roll_data = new ArrayList<>();
-        auto_roll_data.add("wangyin");
-        auto_roll_data.add("wangyin2");
-        auto_roll_data.add("wangyin3");
-        auto_roll_data.add("wangyin4");
+
+
+        for (int i = 0; i < surname.length; i++) {
+
+            String CarouselFamilyName = surname[WYUtils.getOneRandom(surname.length)];
+            String CarouselSex = sex[WYUtils.getOneRandom(sex.length)];
+            int CarouselType = types[WYUtils.getOneRandom(types.length)];
+
+            if (CarouselType == 0) {
+                int random = WYUtils.getOneRandom(28);
+                int money = 2000 + random * 1000;
+                auto_roll_data.add("喜讯  " + CarouselFamilyName + CarouselSex + "  成功借款" + money + "元");
+            } else {
+                String inviteFamilyName = surname[WYUtils.getOneRandom(surname.length)];
+                String inviteSex = sex[WYUtils.getOneRandom(sex.length)];
+                auto_roll_data.add(CarouselFamilyName + CarouselSex + "  成功邀请  " + inviteFamilyName + inviteSex);
+            }
+
+        }
+
+
         showAutoRollStrings();
 
+        noticeAutoRoll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                } else {
+                    if (noticeAutoRoll.getText().contains("邀请")) {
+                        startActivity(new Intent(getActivity(), QrCodeActivity.class));
+                    }
+                }
 
+            }
+        });
     }
 
     private void showAutoRollStrings() {
