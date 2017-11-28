@@ -2,7 +2,9 @@ package com.zyjr.emergencylending.custom.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -13,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.utils.StringUtil;
 
 import static com.zyjr.emergencylending.R.id.tv_album;
@@ -307,8 +310,20 @@ public class CustomerDialog extends Dialog {
         right = findViewById(R.id.update);
         content = findViewById(R.id.content);
         window.setGravity(Gravity.CENTER);
+        setCanceledOnTouchOutside(false);
         left.setOnClickListener(onClickListener);
         right.setOnClickListener(onClickListener);
+        instance.setOnKeyListener(new OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                    dismiss();
+                    ActivityCollector.finishAll();
+                    System.exit(0);
+                }
+                return false;
+            }
+        });
         content.setText(str);
         return instance;
     }

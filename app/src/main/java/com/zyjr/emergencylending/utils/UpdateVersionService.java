@@ -59,8 +59,9 @@ public class UpdateVersionService {
     private Dialog downLoadDialog;
     private String display;
     private String flag;
+
     @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {// 跟心ui
+    private Handler handler = new Handler() {
 
         @Override
         public void handleMessage(Message msg) {
@@ -75,9 +76,9 @@ public class UpdateVersionService {
                         }
                     });
                     break;
+
                 case DOWN_FINISH:
-                    Toast.makeText(context, "文件下载完成,正在安装更新", Toast.LENGTH_SHORT)
-                            .show();
+                    ToastAlone.showLongToast(context, "文件下载完成,正在安装更新").show();
                     installAPK();
                     break;
 
@@ -114,7 +115,6 @@ public class UpdateVersionService {
      */
 
     private void showUpdateVersionDialog() {
-
         final CustomerDialog dialog = new CustomerDialog(context);
         dialog.versionUpdate(new View.OnClickListener() {
             @Override
@@ -142,38 +142,35 @@ public class UpdateVersionService {
      * 下载的提示框
      */
     private void showDownloadDialog() {
-        {
-            // 构造软件下载对话框
-            Builder builder = new Builder(context);
-            builder.setTitle("正在更新！");
-            // 给下载对话框增加进度条
-            final LayoutInflater inflater = LayoutInflater.from(context);
-            View v = inflater.inflate(R.layout.downloaddialog, null);
-            progressBar = (ProgressBar) v.findViewById(R.id.updateProgress);
-            tv_progress = (TextView) v.findViewById(R.id.tv_progress);
-            builder.setView(v);
-            // 取消更新
-            builder.setNegativeButton("取消", new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    // 设置取消状态
-                    cancelUpdate = true;
-                    Constants.update = false;
-                    if ("0001".equals(flag)) {
-                        ActivityCollector.finishAll();
-                        System.exit(0);
-                    }
+        // App下载对话框
+        Builder builder = new Builder(context);
+        builder.setTitle("正在更新！");
+        // 给下载对话框增加进度条
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        View v = inflater.inflate(R.layout.downloaddialog, null);
+        progressBar = (ProgressBar) v.findViewById(R.id.updateProgress);
+        tv_progress = (TextView) v.findViewById(R.id.tv_progress);
+        builder.setView(v);
+        // 取消更新
+        builder.setNegativeButton("取消", new OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                // 设置取消状态
+                cancelUpdate = true;
+                Constants.update = false;
+                if ("0001".equals(flag)) {
+                    ActivityCollector.finishAll();
+                    System.exit(0);
                 }
-            });
-            downLoadDialog = builder.create();
-            downLoadDialog.setCancelable(false);
-            downLoadDialog.setCanceledOnTouchOutside(false);
-            downLoadDialog.show();
-            // 现在文件
-            downloadApk();
-        }
-
+            }
+        });
+        downLoadDialog = builder.create();
+        downLoadDialog.setCancelable(false);
+        downLoadDialog.setCanceledOnTouchOutside(false);
+        downLoadDialog.show();
+        // 下载文件
+        downloadApk();
     }
 
 
@@ -182,7 +179,6 @@ public class UpdateVersionService {
      */
     private void downloadApk() {
         new downloadApkThread().start();
-
     }
 
     /**
@@ -209,7 +205,6 @@ public class UpdateVersionService {
                     @Override
                     public void onNext(VersionBean o) {
                         if (o.getFlag().equals(Config.CODE_SUCCESS)) {
-
                             urlApk = o.getResult().getUrl();
                             display = o.getResult().getContent();
                             flag = o.getResult().getFlag();
@@ -313,27 +308,22 @@ public class UpdateVersionService {
             super.run();
             try {
                 // 判断SD卡是否存在，并且是否具有读写权限
-                if (Environment.getExternalStorageState().equals(
-                        Environment.MEDIA_MOUNTED)) {
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                     // 获得存储卡的路径
-                    String sdpath = Environment.getExternalStorageDirectory()
-                            + "/";
+                    String sdpath = Environment.getExternalStorageDirectory() + "/";
                     fileSavePath = sdpath + "download";
-//                    URL url = new URL(urlApk);
-                    URL url = new URL("http://192.168.9.235:8080/jjt2.0.0.apk");
+                    URL url = new URL(urlApk);
+//                    URL url = new URL("http://192.168.9.235:8080/jjt2.0.0.apk");
 
                     // 创建连接
-                    HttpURLConnection conn = (HttpURLConnection) url
-                            .openConnection();
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setReadTimeout(5 * 1000);// 设置超时时间
                     conn.setRequestMethod("GET");
-                    conn.setRequestProperty("Charser",
-                            "GBK,utf-8;q=0.7,*;q=0.3");
+                    conn.setRequestProperty("Charser", "GBK,utf-8;q=0.7,*;q=0.3");
                     // 获取文件大小
                     int length = conn.getContentLength();
                     // 创建输入流
                     InputStream is = conn.getInputStream();
-
                     File file = new File(fileSavePath);
                     // 判断文件目录是否存在
                     if (!file.exists()) {
@@ -373,6 +363,7 @@ public class UpdateVersionService {
                 e.printStackTrace();
             }
         }
-
     }
+
+
 }
