@@ -18,7 +18,6 @@ import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.AutoVerticalScrollTextView;
-import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.MessageBean;
 import com.zyjr.emergencylending.entity.NoticeBean;
 import com.zyjr.emergencylending.ui.home.MessageActivity;
@@ -44,8 +43,6 @@ import butterknife.Unbinder;
 public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> implements MessageView, EasyRefreshLayout.EasyEvent {
     @BindView(R.id.swipe_container)
     EasyRefreshLayout easyRefreshLayout;
-    @BindView(R.id.top_bar)
-    TopBar topBar;
     @BindView(R.id.notice_auto_roll)
     AutoVerticalScrollTextView noticeAutoRoll;
     @BindView(R.id.notice_close)
@@ -164,17 +161,20 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
 
     @Override
     public void getCommonData(NoticeBean baseBean) {
+        if (auto_roll_data != null) {
+            auto_roll_data.clear();
+        }
         auto_roll_data = new ArrayList<>();
         if (baseBean.getResult().getResultList().size() > 0) {
             llNotice.setVisibility(View.VISIBLE);
             for (int i = 0; i < baseBean.getResult().getResultList().size(); i++) {
                 auto_roll_data.add(baseBean.getResult().getResultList().get(i).getTitle());
             }
-
+            showAutoRollStrings();
         } else {
             llNotice.setVisibility(View.GONE);
         }
-        showAutoRollStrings();
+
     }
 
     @Override
@@ -189,12 +189,15 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
 
     @Override
     public void getMessage(MessageBean messageBean) {
+        if (auto_roll_data2 != null) {
+            auto_roll_data2.clear();
+        }
         auto_roll_data2 = new ArrayList<>();
         for (int i = 0; i < messageBean.getResult().getResultList().size(); i++) {
             auto_roll_data2.add(messageBean.getResult().getResultList().get(i).getNews_detail());
         }
         if (auto_roll_data2.size() == 0) {
-            auto_roll_data2.add("没有最新动态");
+            auto_roll_data2.add("最新动态");
         }
         showAutoRollStrings2();
     }
@@ -207,7 +210,6 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
     @Override
     public void onRefreshing() {
         easyRefreshLayout.refreshComplete();
-
         mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
         mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
     }

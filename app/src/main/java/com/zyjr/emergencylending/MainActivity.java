@@ -248,8 +248,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        WYUtils.clickBack(keyCode, event, MainActivity.this);
-        return true;
+        return WYUtils.clickBack(keyCode, event, MainActivity.this);
     }
 
     @Override

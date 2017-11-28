@@ -115,6 +115,7 @@ public class UpdateVersionService {
 
     private void showUpdateVersionDialog() {
 
+
         final CustomerDialog dialog = new CustomerDialog(context);
         dialog.versionUpdate(new View.OnClickListener() {
             @Override
@@ -136,6 +137,8 @@ public class UpdateVersionService {
                 }
             }
         }, display).show();
+
+
     }
 
     /**
