@@ -9,6 +9,7 @@ import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
+import com.zyjr.emergencylending.entity.RemindBean;
 import com.zyjr.emergencylending.model.home.loan.ReceiveMoneyModel;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.utils.LogUtils;
@@ -49,12 +50,12 @@ public class ReceiveMoneyPresenter extends BasePresenter<ReceiveMoneyView> {
     }
 
     public void confirmReceiveInfo(Map<String, String> params) {
-        invoke(ReceiveMoneyModel.getInstance().confirmReceiveInfo(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+        invoke(ReceiveMoneyModel.getInstance().confirmReceiveInfo(params), new ProgressSubscriber<ApiResult<RemindBean>>(new SubscriberOnNextListener<ApiResult<RemindBean>>() {
             @Override
-            public void onNext(ApiResult<String> result) {
+            public void onNext(ApiResult<RemindBean> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("确认领取金额(成功)---->" + result.getMsg());
-                    getView().onSuccessConfirmReceive(Constants.CONFIRM_RECEIVE_INFO, result.getMsg());
+                    getView().onSuccessConfirmReceive(Constants.CONFIRM_RECEIVE_INFO, result.getMsg(), result.getResult());
                 } else {
                     LogUtils.d("确认领取金额(失败)---->" + result.getFlag() + "," + result.getMsg());
                     getView().onFail(Constants.CONFIRM_RECEIVE_INFO, result.getPromptMsg());

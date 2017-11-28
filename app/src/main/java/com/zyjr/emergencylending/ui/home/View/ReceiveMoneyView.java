@@ -1,6 +1,7 @@
 package com.zyjr.emergencylending.ui.home.View;
 
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
+import com.zyjr.emergencylending.entity.RemindBean;
 
 /**
  * 领取金额回调
@@ -14,6 +15,6 @@ public interface ReceiveMoneyView {
 
     void onError(String apiCode, String errorMsg);
 
-    void onSuccessConfirmReceive(String apiCode, String msg);
+    void onSuccessConfirmReceive(String apiCode, String msg, RemindBean remindBean);
 
 }

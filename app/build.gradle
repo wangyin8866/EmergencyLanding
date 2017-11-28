@@ -17,7 +17,7 @@ android {
         applicationId "com.zyjr.emergencylending"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 1
+        versionCode 50
         versionName "2.0.0"
         // dex突破65535的限制
         multiDexEnabled true

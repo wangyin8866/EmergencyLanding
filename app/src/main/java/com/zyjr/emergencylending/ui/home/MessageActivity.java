@@ -79,10 +79,10 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
 
     }
 
-    @OnClick({R.id.iv_back, R.id.tv_mark})
+    @OnClick({R.id.layout_back, R.id.tv_mark})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.layout_back:
                 finish();
                 break;
             case R.id.tv_mark:

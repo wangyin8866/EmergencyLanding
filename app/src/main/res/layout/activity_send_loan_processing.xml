@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="350dp"
+                android:layout_height="400dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="30dp">
@@ -56,10 +56,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_remind"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_warm_notice_title"
@@ -76,8 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="23dp"
                     android:layout_marginRight="23dp"
-                    android:layout_marginTop="4dp"
-                    android:text="1.本次借款成功后收取200元账户管理费与一期履约保证金"
+                    android:layout_marginTop="2.5dp"
                     android:textColor="@color/front_text_color_hint"
                     android:textSize="13sp" />
 
@@ -87,8 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="23dp"
                     android:layout_marginRight="23dp"
-                    android:layout_marginTop="4dp"
-                    android:text="2.还款日当日正常还款不出现逾期，保证金将自动抵扣最后 一期还款，逾期将概不退还"
+                    android:layout_marginTop="2.5dp"
                     android:textColor="@color/front_text_color_hint"
                     android:textSize="13sp" />
 
@@ -98,8 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="23dp"
                     android:layout_marginRight="23dp"
-                    android:layout_marginTop="4dp"
-                    android:text="3.保持良好信用，再次申请会有更多提额惊喜哦"
+                    android:layout_marginTop="2.5dp"
                     android:textColor="@color/front_text_color_hint"
                     android:textSize="13sp" />
 

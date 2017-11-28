@@ -14,6 +14,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
+import com.zyjr.emergencylending.entity.RemindBean;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.ui.home.presenter.ReceiveMoneyPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
@@ -194,7 +195,6 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
                     break;
             }
         }
-
     }
 
     private void loadingReceiveMoneyInfo() {
@@ -236,8 +236,14 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     }
 
     @Override
-    public void onSuccessConfirmReceive(String apiCode, String msg) {
+    public void onSuccessConfirmReceive(String apiCode, String msg, RemindBean remindInfo) {
         Intent intent = new Intent(this, SendLoanProcessingActivity.class);
+        if (null == remindInfo) {
+            intent.putExtra("isShow", "0");
+        } else {
+            intent.putExtra("isShow", "1");
+            intent.putExtra("remindInfo", remindInfo);
+        }
         startActivity(intent);
         finish();
     }

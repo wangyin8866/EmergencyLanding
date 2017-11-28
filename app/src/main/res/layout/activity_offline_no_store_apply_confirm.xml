@@ -47,7 +47,8 @@
                     android:layout_below="@+id/iv_no_store_support"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="30dp"
-                    android:text="未匹配到支持城市，我们为您以下产品" />
+                    android:textSize="14sp"
+                    android:text="未匹配到支持城市，我们为您推荐以下产品" />
 
             </RelativeLayout>
 

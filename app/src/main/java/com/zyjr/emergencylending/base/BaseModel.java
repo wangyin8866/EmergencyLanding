@@ -124,6 +124,7 @@ public class BaseModel {
             if (null != originalBody) {
                 content = originalBody.string();
             }
+            LogUtils.d("返回内容---->" + content);
             try {
                 JsonObject returnData = new JsonParser().parse(content).getAsJsonObject();
                 if (returnData != null) {
@@ -136,15 +137,14 @@ public class BaseModel {
                         bundle.putInt("index", 0);
                         intent.putExtras(bundle);
                         BaseApplication.context.startActivity(intent);
-                        return response.newBuilder().body(ResponseBody.create(mediaType, content)).build();
                     }
 
                 }
             } catch (Exception e) {
-                LogUtils.e("Exception",e.getMessage());
+                LogUtils.e("Exception", e.getMessage());
                 e.printStackTrace();
             }
-            return chain.proceed(request);
+            return response.newBuilder().body(ResponseBody.create(mediaType, content)).build();
         }
     }
 

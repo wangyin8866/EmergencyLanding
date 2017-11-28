@@ -4,6 +4,7 @@ import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseModel;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
+import com.zyjr.emergencylending.entity.RemindBean;
 import com.zyjr.emergencylending.service.home.loan.ReceiveMoneyService;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class ReceiveMoneyModel extends BaseModel {
         return receiveMoneyService.getReceiveMoneyInfo(params);
     }
 
-    public Observable<ApiResult<String>> confirmReceiveInfo(Map<String, String> params) {
+    public Observable<ApiResult<RemindBean>> confirmReceiveInfo(Map<String, String> params) {
         params.put("router", NetConstantValues.ROUTER_CONFIRM_RECEIVE_INFO);
         return receiveMoneyService.confirmReceiveInfo(params);
     }
