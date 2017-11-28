@@ -103,6 +103,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
     }
 
     private Handler handler = new Handler() {
+        @Override
         public void handleMessage(Message msg) {
             if (msg.what == 199) {
                 noticeAutoRoll.next();
@@ -173,6 +174,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
             showAutoRollStrings();
         } else {
             llNotice.setVisibility(View.GONE);
+            handler.removeCallbacksAndMessages(null);
         }
 
     }
@@ -197,7 +199,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
             auto_roll_data2.add(messageBean.getResult().getResultList().get(i).getNews_detail());
         }
         if (auto_roll_data2.size() == 0) {
-            auto_roll_data2.add("最新动态");
+            auto_roll_data2.add("暂无最新动态");
         }
         showAutoRollStrings2();
     }
