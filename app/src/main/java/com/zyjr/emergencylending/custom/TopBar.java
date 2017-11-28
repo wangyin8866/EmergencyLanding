@@ -128,9 +128,10 @@ public class TopBar extends RelativeLayout {
         setBackgroundDrawable(mBackgroundDrawable);
         setGravity(Gravity.CENTER);
 
-        leftParams = new LayoutParams(mDrawableLeft.getMinimumWidth(), ViewGroup.LayoutParams.WRAP_CONTENT);
+        leftParams = new LayoutParams(mDrawableLeft.getMinimumWidth()*2, ViewGroup.LayoutParams.WRAP_CONTENT);
         leftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
         addView(mLeftButton, leftParams);
+
         rightParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         rightParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
         addView(mRightButton, rightParams);
