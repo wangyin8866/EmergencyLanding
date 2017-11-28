@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dp"
-            android:text="急速借款"
+            android:text="极速借款"
             android:textColor="#474747"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="（网上签约，急速到账）"
+            android:text="（网上签约，极速到账）"
             android:textColor="@color/front_text_color_hint"
             android:textSize="13sp" />
 

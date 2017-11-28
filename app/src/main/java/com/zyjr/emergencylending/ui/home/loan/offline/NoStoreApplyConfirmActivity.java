@@ -12,8 +12,6 @@ import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BaseApplication;
-import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.PrecheckResultBean;
@@ -83,7 +81,7 @@ public class NoStoreApplyConfirmActivity extends BaseActivity<OfflineApplyPresen
                             public void callBack(int requestCode, boolean isPass) {
                                 LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
                                 if (isPass) {
-                                    operateConfirm("是否确认申请急速借款");
+                                    operateConfirm("是否确认申请极速借款");
                                 } else {
                                     ToastAlone.showLongToast(NoStoreApplyConfirmActivity.this, "通讯录权限被拒绝,请您到设置页面手动授权");
                                 }

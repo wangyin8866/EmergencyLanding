@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.ProIntroduceAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.SupportCityBean;
 import com.zyjr.emergencylending.ui.home.View.ProductInfoView;
@@ -153,7 +152,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         Intent intent = getIntent();
         flag = intent.getStringExtra("flag");
         if (flag.equals("online")) {
-            topBar.setTitle("急速借款");
+            topBar.setTitle("极速借款");
             online_type = "0";
             product_id = "0";
             minLoanPeriod = 14; // 14天

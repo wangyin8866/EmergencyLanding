@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.megvii.livenesslib.util.Constant;
 import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -17,13 +16,10 @@ import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.LoanOrderBean;
 import com.zyjr.emergencylending.ui.home.View.LoanOrderView;
-import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.LoanOrderPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
-
-import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -553,7 +549,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
 
     private void showLoanInfo() {
         if (Constants.ZERO.equals(loanOrderBean.getProduct_id())) {
-            tvProductType.setText("急速借款");
+            tvProductType.setText("极速借款");
         } else if (Constants.ONE.equals(loanOrderBean.getProduct_id())) {
             tvProductType.setText("传统借款");
         }
