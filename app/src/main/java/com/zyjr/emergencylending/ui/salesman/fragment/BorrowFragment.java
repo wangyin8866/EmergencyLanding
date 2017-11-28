@@ -166,12 +166,13 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
     public void getCommonData(NoticeBean baseBean) {
         auto_roll_data = new ArrayList<>();
         if (baseBean.getResult().getResultList().size() > 0) {
+            llNotice.setVisibility(View.VISIBLE);
             for (int i = 0; i < baseBean.getResult().getResultList().size(); i++) {
                 auto_roll_data.add(baseBean.getResult().getResultList().get(i).getTitle());
             }
 
         } else {
-            auto_roll_data.add("没有消息");
+            llNotice.setVisibility(View.GONE);
         }
         showAutoRollStrings();
     }
@@ -190,7 +191,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
     public void getMessage(MessageBean messageBean) {
         auto_roll_data2 = new ArrayList<>();
         for (int i = 0; i < messageBean.getResult().getResultList().size(); i++) {
-            auto_roll_data2.add(messageBean.getResult().getResultList().get(i).getNews_title());
+            auto_roll_data2.add(messageBean.getResult().getResultList().get(i).getNews_detail());
         }
         if (auto_roll_data2.size() == 0) {
             auto_roll_data2.add("没有最新动态");
