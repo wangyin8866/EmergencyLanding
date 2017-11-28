@@ -77,6 +77,7 @@ public class LogInterceptor implements Interceptor {
                 if ("API0007".equals(flag)) {
                     Looper.prepare();
                     WYUtils.upDateVersion(BaseActivity.getForegroundActivity(), NetConstantValues.VERSION_UPDATE);
+                    Looper.loop();
                 }
             }
         } catch (Exception e) {

@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
+import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
@@ -66,8 +67,13 @@ public class UpdateVersionService {
             super.handleMessage(msg);
             switch ((Integer) msg.obj) {
                 case DOWN:
-                    progressBar.setProgress(progress);
-                    tv_progress.setText(progress + "%");
+                    BaseActivity.getForegroundActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            progressBar.setProgress(progress);
+                            tv_progress.setText(progress + "%");
+                        }
+                    });
                     break;
                 case DOWN_FINISH:
                     Toast.makeText(context, "文件下载完成,正在安装更新", Toast.LENGTH_SHORT)
