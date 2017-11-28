@@ -152,7 +152,7 @@ public class LoanMainActivity extends BaseActivity<ProductInfoPresenter, Product
         Intent intent = getIntent();
         flag = intent.getStringExtra("flag");
         if (flag.equals("online")) {
-            topBar.setTitle("极速借款");
+            topBar.setTitle("急速借款");
             online_type = "0";
             product_id = "0";
             minLoanPeriod = 14; // 14天

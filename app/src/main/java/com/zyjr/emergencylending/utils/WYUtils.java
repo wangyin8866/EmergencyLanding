@@ -671,7 +671,40 @@ public class WYUtils {
         }
         return result;
     }
-
+    /**
+     * 我的借款金额类型
+     */
+    public static String getMyBorrowMoneyStatus(int step, int onlineType) {
+        String result = null;
+        switch (step) {
+            case 3:
+                if (onlineType==1) {
+                    //线下.申请金额
+                    result = "申请金额";
+                } else {
+                    //线上.审批金额
+                    result = "审批金额";
+                }
+                break;
+            case 4:
+                //审批金额
+                result = "审批金额";
+                break;
+            case 5:
+                //审批金额
+                result = "审批金额";
+                break;
+            case 6:
+                //审批金额
+                result = "审批金额";
+                break;
+            case 7:
+                //申请金额
+                result = "申请金额";
+                break;
+        }
+        return result;
+    }
     /**
      * 我的借款状态
      */
@@ -679,6 +712,7 @@ public class WYUtils {
         String result = null;
         switch (step) {
             case 3:
+
                 if (status == 10 || status == 0 || status == 2) {
                     result = "审核中";
                 } else if (status == 9) {
@@ -686,6 +720,7 @@ public class WYUtils {
                 }
                 break;
             case 4:
+
                 if (status == 2) {
                     result = "领取金额";
                 } else if (status == 9) {
@@ -693,6 +728,7 @@ public class WYUtils {
                 }
                 break;
             case 5:
+
                 if (status == 2 || status == 3) {
                     result = "放款中";
                 } else if (status == 7) {

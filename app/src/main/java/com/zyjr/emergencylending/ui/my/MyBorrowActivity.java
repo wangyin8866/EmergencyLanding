@@ -65,6 +65,8 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
     LinearLayout llRetry;
     @BindView(R.id.swipe_container)
     EasyRefreshLayout swipeContainer;
+    @BindView(R.id.borrow_money_type)
+    TextView borrowMoneyType;
 
     private List<MyBorrow.ResultBean.HisBorrowListBean> hisBorrowListBeans;
     private MyBorrow.ResultBean.CurrentBorrowBean currentBorrowBean;
@@ -113,6 +115,9 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
     public void getCommonData(MyBorrow baseBean) {
         currentBorrowBean = baseBean.getResult().getCurrent_borrow();
         hisBorrowListBeans = baseBean.getResult().getHis_borrow_list();
+
+
+
         if (currentBorrowBean == null && hisBorrowListBeans.size() == 0) {
             currentBorrow.setVisibility(View.GONE);
             historyBorrow.setVisibility(View.GONE);
@@ -132,6 +137,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
         }
 
         if (currentBorrowBean != null) {
+            borrowMoneyType.setText(WYUtils.getMyBorrowMoneyStatus(Integer.parseInt(currentBorrowBean.getStep_status()),Integer.parseInt(currentBorrowBean.getOnline_type())));
             borrowState.setText(WYUtils.getMyBorrowStatus(Integer.parseInt(currentBorrowBean.getStep_status()), Integer.parseInt(currentBorrowBean.getLoan_status())));
             borrowAmount.setText(currentBorrowBean.getLoan_amount());
             borrowDeadline.setText(currentBorrowBean.getLoan_period() + WYUtils.getPeriod(currentBorrowBean.getLoan_unit()));

@@ -549,7 +549,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
 
     private void showLoanInfo() {
         if (Constants.ZERO.equals(loanOrderBean.getProduct_id())) {
-            tvProductType.setText("极速借款");
+            tvProductType.setText("急速借款");
         } else if (Constants.ONE.equals(loanOrderBean.getProduct_id())) {
             tvProductType.setText("传统借款");
         }
