@@ -11,12 +11,16 @@ import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.ReceiveMoneyBean;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.ui.home.presenter.ReceiveMoneyPresenter;
+import com.zyjr.emergencylending.utils.Arithmetic;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -151,12 +155,17 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     }
 
     private void showReceiveMoneyInfo(ReceiveMoneyBean bean) {
-        tvLoanMoney.setText(bean.getLoan_amount()); // 借款金额
+        if (StringUtil.isNotEmpty(bean.getLoan_amount())) {
+            // 借款金额
+            tvLoanMoney.setText(Arithmetic.addComma(bean.getLoan_amount()));
+        } else {
+            tvLoanMoney.setText("---");
+        }
         // 区分 天/周
-        if (bean.getLoan_unit().equals("1")) {
+        if (Constants.ONE.equals(bean.getLoan_unit())) {
             tvLoanPeriod.setText(bean.getLoan_period() + "天"); // 借款周期 (天)
             tvPeriodAmount.setText(bean.getPeriod_amount() + "元/期");  // 期还款额  元/期
-        } else if (bean.getLoan_unit().equals("2")) {
+        } else if (Constants.TWO.equals(bean.getLoan_unit())) {
             tvLoanPeriod.setText(bean.getLoan_period() + "周"); // 借款周期 (周)
             tvPeriodAmount.setText(bean.getPeriod_amount() + "元/周");  // 期还款额 元/周
         }
@@ -232,6 +241,5 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         startActivity(intent);
         finish();
     }
-
 
 }

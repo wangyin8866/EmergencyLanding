@@ -76,12 +76,32 @@ public class EffectiveOrderBean {
 
         private String is_effective_order;
 
+        private String contract_no; // 合同编号
+
+        private String order_status; // 1:放款成功
+
         public String getIs_effective_order() {
             return is_effective_order;
         }
 
         public void setIs_effective_order(String is_effective_order) {
             this.is_effective_order = is_effective_order;
+        }
+
+        public String getContract_no() {
+            return contract_no;
+        }
+
+        public void setContract_no(String contract_no) {
+            this.contract_no = contract_no;
+        }
+
+        public String getOrder_status() {
+            return order_status;
+        }
+
+        public void setOrder_status(String order_status) {
+            this.order_status = order_status;
         }
     }
 }
