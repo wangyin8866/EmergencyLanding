@@ -1,9 +1,11 @@
 package com.zyjr.emergencylending.ui.salesman.activity;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -44,7 +46,9 @@ public class MyCardActivity extends BaseActivity {
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
     private ImmersionBar mImmersionBar;
-    private String sUrl = "http://www.baidu.com";
+    private UMWeb web1;
+    private UMWeb web2;
+    private String mUrl;
 
     @Override
     protected BasePresenter createPresenter() {
@@ -65,66 +69,8 @@ public class MyCardActivity extends BaseActivity {
         ButterKnife.bind(this);
         mImmersionBar = ImmersionBar.with(this);
         mImmersionBar.statusBarDarkFont(true).init();
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
-            @Override
-            public void OnLeftButtonClicked() {
-                finish();
-            }
 
-            @Override
-            public void OnRightButtonClicked() {
-                final CustomerDialog customerDialog = new CustomerDialog(mContext);
-                customerDialog.cardShareDialog(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        UMImage thumb = new UMImage(mContext, R.mipmap.ic_launcher);
-                        final UMWeb web = new UMWeb(sUrl);
-                        web.setTitle("邀您注册有惊喜");
-                        web.setThumb(thumb);
-                        web.setDescription("注册有惊喜，更多活动等你来体验，立即注册！");
-                        switch (view.getId()) {
-                            case R.id.qr_we_chat:
-                                customerDialog.dismiss();
-                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.WEIXIN)) {
-                                    new ShareAction(MyCardActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN)
-                                            .setCallback(umShareListener).share();
-                                } else {
-                                    ToastAlone.showShortToast(mContext, "微信未安装");
-                                }
-                                break;
-                            case R.id.circle_of_friends:
-                                customerDialog.dismiss();
-                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.WEIXIN)) {
-                                    new ShareAction(MyCardActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                                            .setCallback(umShareListener).share();
-                                } else {
-                                    ToastAlone.showShortToast(mContext, "微信未安装");
-                                }
-                                break;
-                            case R.id.qq:
-                                customerDialog.dismiss();
-                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.QQ)) {
-                                    new ShareAction(MyCardActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.QQ)
-                                            .setCallback(umShareListener).share();
-                                } else {
-                                    ToastAlone.showShortToast(mContext, "QQ未安装");
-                                }
-                                break;
-//                            case R.id.qq_zone:
-//                                customerDialog.dismiss();
-//                                break;
-//                            case R.id.weibo:
-//                                customerDialog.dismiss();
-//                                break;
-                            case R.id.share_close:
-                                customerDialog.dismiss();
-                                break;
-                        }
-                    }
-                }).show();
-            }
-        });
-        String url = getIntent().getStringExtra("url");
+        mUrl = getIntent().getStringExtra("url");
         WebSettings settings = mWebView.getSettings();
         /**
          * setAllowFileAccess 启用或禁止WebView访问文件数据 setBlockNetworkImage 是否显示网络图像
@@ -157,7 +103,7 @@ public class MyCardActivity extends BaseActivity {
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         //打开DOM储存
         settings.setDomStorageEnabled(true);
-        mWebView.loadUrl(url);
+        mWebView.loadUrl(mUrl);
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -169,6 +115,90 @@ public class MyCardActivity extends BaseActivity {
             }
         });
 
+        initListener();
+    }
+
+    private void initListener() {
+        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+            @Override
+            public void OnLeftButtonClicked() {
+                finish();
+            }
+
+            @Override
+            public void OnRightButtonClicked() {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+                    ActivityCompat.requestPermissions(MyCardActivity.this, mPermissionList, 123);
+                }
+
+                initShare();
+
+
+                final CustomerDialog customerDialog = new CustomerDialog(mContext);
+                customerDialog.cardShareDialog(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        switch (view.getId()) {
+                            case R.id.qr_we_chat:
+                                customerDialog.dismiss();
+                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.WEIXIN)) {
+                                    new ShareAction(MyCardActivity.this).withMedia(web1).setPlatform(SHARE_MEDIA.WEIXIN)
+                                            .setCallback(umShareListener).share();
+                                } else {
+                                    ToastAlone.showShortToast(mContext, "微信未安装");
+                                }
+                                break;
+                            case R.id.circle_of_friends:
+                                customerDialog.dismiss();
+                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.WEIXIN)) {
+                                    new ShareAction(MyCardActivity.this).withMedia(web1).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                            .setCallback(umShareListener).share();
+                                } else {
+                                    ToastAlone.showShortToast(mContext, "微信未安装");
+                                }
+                                break;
+                            case R.id.qq:
+                                customerDialog.dismiss();
+                                if (UMShareAPI.get(mContext).isInstall(MyCardActivity.this, SHARE_MEDIA.QQ)) {
+                                    new ShareAction(MyCardActivity.this).withMedia(web1).setPlatform(SHARE_MEDIA.QQ)
+                                            .setCallback(umShareListener).share();
+                                } else {
+                                    ToastAlone.showShortToast(mContext, "QQ未安装");
+                                }
+                                break;
+                            case R.id.qq_zone:
+                                customerDialog.dismiss();
+                                new ShareAction(MyCardActivity.this).withMedia(web1).setPlatform(SHARE_MEDIA.QZONE)
+                                        .setCallback(umShareListener).share();
+                                break;
+                            case R.id.weibo:
+                                customerDialog.dismiss();
+                                new ShareAction(MyCardActivity.this).withMedia(web2).setPlatform(SHARE_MEDIA.SINA)
+                                        .setCallback(umShareListener).share();
+//
+                                break;
+                            case R.id.share_close:
+                                customerDialog.dismiss();
+                                break;
+                        }
+                    }
+                }).show();
+            }
+        });
+    }
+
+    private void initShare() {
+        UMImage thumb1 = new UMImage(mContext, R.mipmap.logo);
+        web1 = new UMWeb(mUrl);
+        web1.setTitle("一个用钱满足你心愿的APP");
+        web1.setThumb(thumb1);
+        web1.setDescription("#心愿借款#一张身份证，30分钟放款，无需其他材料，最高30000元。#急借通，不看征信，不看负债#点击拿钱→→http://suo.im/27jgKm");
+        UMImage thumb2 = new UMImage(mContext, R.mipmap.logo);
+        web2 = new UMWeb(mUrl);
+        web2.setTitle("一个用钱满足你心愿的APP");
+        web2.setThumb(thumb2);
+        web2.setDescription("震惊 | 急借通提速啦，一张身份证，30分钟下款，最高30000元！");
     }
 
     @Override
@@ -212,7 +242,8 @@ public class MyCardActivity extends BaseActivity {
          */
         @Override
         public void onCancel(SHARE_MEDIA platform) {
-            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
+//            LogUtils.e("onCancel",platform.toString());
+//            Toast.makeText(mContext, "取消了", Toast.LENGTH_LONG).show();
 
         }
     };

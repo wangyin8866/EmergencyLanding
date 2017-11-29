@@ -1,21 +1,25 @@
 package com.zyjr.emergencylending.ui.home;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -88,6 +92,8 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
         }
     };
     private String sUrl = "http://www.baidu.com";
+    private String mUrl;
+    private UMWeb web;
 
     @Override
     protected QrPresenter createPresenter() {
@@ -120,11 +126,9 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
 
     @OnClick({R.id.qr_save, R.id.qr_we_chat, R.id.circle_of_friends})
     public void onViewClicked(View view) {
-        UMImage thumb = new UMImage(this, R.mipmap.ic_launcher);
-        final UMWeb web = new UMWeb(sUrl);
-        web.setTitle("邀您注册有惊喜");
-        web.setThumb(thumb);
-        web.setDescription("注册有惊喜，更多活动等你来体验，立即注册！");
+
+
+        initShare();
         switch (view.getId()) {
             case R.id.qr_save:
                 saveImageToGallery(mContext, ((BitmapDrawable) ivQr.getDrawable()).getBitmap());
@@ -146,6 +150,18 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
                 }
                 break;
         }
+    }
+
+    private void initShare() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            ActivityCompat.requestPermissions(QrCodeActivity.this, mPermissionList, 123);
+        }
+        UMImage thumb = new UMImage(mContext, R.mipmap.logo);
+        web = new UMWeb(mUrl);
+        web.setTitle("一个用钱满足你心愿的APP");
+        web.setThumb(thumb);
+        web.setDescription("震惊 | 急借通提速啦，一张身份证，30分钟下款，最高30000元！");
     }
 
     /**
@@ -242,7 +258,8 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
 
     @Override
     public void getCommonData(QrBean baseBean) {
-//        Glide.with(mContext).load(baseBean.getResult().getUrl()).into(ivQr);
+        mUrl = baseBean.getResult().getUrl();
+        Glide.with(mContext).load(mUrl).error(R.mipmap.erweim_img).into(ivQr);
         String code = baseBean.getResult().getRecommendcode();
         List<TextView> textViews = new ArrayList<>();
         textViews.add(tv1);

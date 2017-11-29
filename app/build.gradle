@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 def keyStore = file(properties.getProperty("keystroe_storeFile_jjt"))
+
 def releaseTime() {
     return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
 }
@@ -49,8 +50,14 @@ android {
 
     // 签名信息
     signingConfigs {
+
         debug {
+            storeFile file('debug.keystore')
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
         }
+
         release {
             storeFile file(properties.getProperty("keystroe_storeFile_jjt"))
             storePassword properties.getProperty("keystroe_storePassword_jjt")
@@ -64,9 +71,11 @@ android {
         debug {
             debuggable true
             buildConfigField("boolean", "LOG_DEBUG", "true")
-            minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+            proguardFiles 'proguard-rules.pro'
             if (keyStore.exists()) {
                 println "debug using release key"
                 signingConfig signingConfigs.release
@@ -78,9 +87,9 @@ android {
         // 线上版本
         release {
             buildConfigField("boolean", "LOG_DEBUG", "false")
-            minifyEnabled false
             zipAlignEnabled true
             shrinkResources false
+            minifyEnabled false
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             android.applicationVariants.all { variant ->
@@ -91,7 +100,11 @@ android {
         }
 
     }
-
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     productFlavors {
         W_JJTGW {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_JJTGW"]
@@ -160,7 +173,7 @@ android {
 
 }
 
-repositories{
+repositories {
     // 阿里云仓库
     maven {
         url "http://maven.aliyun.com/nexus/content/repositories/releases"
@@ -205,15 +218,7 @@ dependencies {
     // 人脸识别 校验用到
     compile 'com.loopj.android:android-async-http:1.4.9'
     //分享
-    compile files('libs/open_sdk_r5788_lite.jar')
-    compile files('libs/SocialSDK_QQ_Full.jar')
-    compile files('libs/SocialSDK_Sina_Full.jar')
-    compile files('libs/SocialSDK_WeiXin_Full.jar')
-    compile files('libs/umeng_social_api.jar')
-    compile files('libs/umeng_social_net.jar')
-    compile files('libs/umeng_social_tool.jar')
-    compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
-    compile files('libs/weiboSDKCore.jar')
+
     //个推
     compile 'com.getui:sdk:2.11.1.0'
     compile 'com.android.support:support-v4:26.1.0'
@@ -224,11 +229,8 @@ dependencies {
     compile project(':convenientbanner')
     compile 'com.android.support:multidex:1.0.2'
     implementation project(':easyRefreshLayout')
-    implementation files('libs/fm-sdk-3.1.1.jar')
-    implementation files('libs/baiqishi-risk-sdk-2.2.1.jar')
+
     // 热修复
     compile 'com.aliyun.ams:alicloud-android-hotfix:3.1.6'
-    //友盟统计
-    implementation files('libs/umeng-analytics-7.4.0.jar')
-    implementation files('libs/umeng-common-1.4.0.jar')
+
 }

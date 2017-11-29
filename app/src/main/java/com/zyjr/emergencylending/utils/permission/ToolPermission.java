@@ -1,6 +1,5 @@
 package com.zyjr.emergencylending.utils.permission;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,14 +13,9 @@ import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
-import com.sina.weibo.sdk.utils.LogUtil;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
-import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.util.List;
 
