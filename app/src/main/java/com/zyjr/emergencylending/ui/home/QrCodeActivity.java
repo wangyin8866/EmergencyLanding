@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,6 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
 import com.umeng.socialize.ShareAction;
 import com.umeng.socialize.UMShareAPI;
 import com.umeng.socialize.UMShareListener;
@@ -131,7 +133,16 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
         initShare();
         switch (view.getId()) {
             case R.id.qr_save:
-                saveImageToGallery(mContext, ((BitmapDrawable) ivQr.getDrawable()).getBitmap());
+                Glide.with(mContext)
+                        .load(mUrl)
+                        .asBitmap()
+                        .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                            @Override
+                            public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                                //得到bitmap
+                                saveImageToGallery(mContext, bitmap);
+                            }
+                        });
                 break;
             case R.id.qr_we_chat:
                 if (UMShareAPI.get(mContext).isInstall(this, SHARE_MEDIA.WEIXIN)) {
@@ -259,6 +270,8 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
     @Override
     public void getCommonData(QrBean baseBean) {
         mUrl = baseBean.getResult().getUrl();
+
+
         Glide.with(mContext).load(mUrl).error(R.mipmap.erweim_img).into(ivQr);
         String code = baseBean.getResult().getRecommendcode();
         List<TextView> textViews = new ArrayList<>();

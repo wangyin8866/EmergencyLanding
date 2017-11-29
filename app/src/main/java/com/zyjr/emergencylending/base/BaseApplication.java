@@ -65,6 +65,12 @@ public class BaseApplication extends Application {
         void handle(String msg);
     }
 
+    {
+        PlatformConfig.setWeixin("wx14758d54ffd39c18", "2f5a5462b73e1952ae9121b125e050cd");
+        PlatformConfig.setQQZone("1105705046", "mh4btC2fYzyHJsyo");
+        PlatformConfig.setSinaWeibo("634140413", "49cfa168cc7892724dda804a642b3ce0", "http://sns.whalecloud.ckeom");
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -139,11 +145,6 @@ public class BaseApplication extends Application {
         return mMainThreadHandler;
     }
 
-    {
-        PlatformConfig.setWeixin("wx967daebe835fbeac", "5bb696d9ccd75a38c8a0bfe0675559b3");
-        PlatformConfig.setQQZone("100424468", "c7394704798a158208a74ab60104f0ba");
-        PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad", "http://sns.whalecloud.com");
-    }
 
     @Override
     protected void attachBaseContext(Context base) {
