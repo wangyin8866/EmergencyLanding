@@ -228,4 +228,7 @@ dependencies {
     implementation files('libs/baiqishi-risk-sdk-2.2.1.jar')
     // 热修复
     compile 'com.aliyun.ams:alicloud-android-hotfix:3.1.6'
+    //友盟统计
+    implementation files('libs/umeng-analytics-7.4.0.jar')
+    implementation files('libs/umeng-common-1.4.0.jar')
 }

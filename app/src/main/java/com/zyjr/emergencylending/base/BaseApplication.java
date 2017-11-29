@@ -12,6 +12,8 @@ import com.igexin.sdk.PushManager;
 import com.taobao.sophix.PatchStatus;
 import com.taobao.sophix.SophixManager;
 import com.taobao.sophix.listener.PatchLoadStatusListener;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 import com.zyjr.emergencylending.config.Config;
@@ -58,6 +60,7 @@ public class BaseApplication extends Application {
 
     public static MsgDisplayListener msgDisplayListener = null;
     public static StringBuilder cacheMsg = new StringBuilder();
+
     public interface MsgDisplayListener {
         void handle(String msg);
     }
@@ -77,13 +80,32 @@ public class BaseApplication extends Application {
         LogUtils.isDebug = true;
         //友盟日志
         com.umeng.socialize.Config.DEBUG = true;
-        UMShareAPI.get(this);
+        initUMShare();
+        initUMStatistics();
+
+        initGT();
 
         isSalesman = SPUtils.getString(this, Config.KEY_USER_TYPE, Config.USER_COMMON);
 
+
+    }
+
+    private void initGT() {
         PushManager.getInstance().initialize(this.getApplicationContext(), DemoPushService.class);
         PushManager.getInstance().registerPushIntentService(this.getApplicationContext(), DemoIntentService.class);
+    }
 
+    private void initUMStatistics() {
+        UMConfigure.init(context, "570f63f7e0f55a21be000ce8", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.setLogEnabled(true);
+        // 然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
+        MobclickAgent.openActivityDurationTrack(false);
+        //设置dplus case
+        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_DUM_NORMAL);
+    }
+
+    private void initUMShare() {
+        UMShareAPI.get(this);
 
     }
 

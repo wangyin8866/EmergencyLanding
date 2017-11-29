@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
@@ -50,7 +49,7 @@ public class UpdateVersionService {
     private String fileSavePath;// 下载新apk的储存地点
     private String updateVersionXMLPath;// 检测更新的xml文件
     private String urlApk;// 下载APk的地址
-    private String filName = "happyBank";// apK名称
+    private String filName = "jjt";// apK名称
     private int progress;// 获取新apk的下载数据量,更新下载滚动条
     private boolean cancelUpdate = false;// 是否取消下载
     private Context context;
@@ -344,7 +343,7 @@ public class UpdateVersionService {
                         Message message = new Message();
                         message.obj = DOWN;
                         handler.sendMessage(message);
-                        if (numread <= 0) {
+                        if (numread == -1) {
                             // 下载完成
                             // 取消下载对话框显示
                             downLoadDialog.dismiss();

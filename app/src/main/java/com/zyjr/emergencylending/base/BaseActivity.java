@@ -11,16 +11,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.umeng.analytics.MobclickAgent;
+
 import java.util.List;
 
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
+
 /**
  * activity 基类
  */
-public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCompatActivity  {
+public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCompatActivity {
     private static final String BASE_ACTIVITY = "BaseActivity";
-    public String tag = getClass().getSimpleName();
+    public String simpleName = getClass().getSimpleName();
     private CompositeSubscription mCompositeSubscription;
     /**
      * 记录处于前台的Activityddd
@@ -73,14 +76,12 @@ public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCom
     }
 
 
-
-
-
     @Override
     protected void onResume() {
         super.onResume();
         mForegroundActivity = this;
-
+        MobclickAgent.onPageStart(simpleName);
+        MobclickAgent.onResume(mContext);
     }
 
 
@@ -89,6 +90,8 @@ public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCom
         super.onPause();
         isInBackground = false;
         mForegroundActivity = null;
+        MobclickAgent.onPageEnd(simpleName);
+        MobclickAgent.onPause(mContext);
     }
 
     @Override
@@ -144,8 +147,9 @@ public abstract class BaseActivity<T extends BasePresenter<V>, V> extends AppCom
 
         List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager
                 .getRunningAppProcesses();
-        if (appProcesses == null)
+        if (appProcesses == null) {
             return false;
+        }
 
         for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
             if (appProcess.processName.equals(packageName)
