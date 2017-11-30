@@ -10,9 +10,9 @@
         android:layout_height="54dp"
         android:layout_marginLeft="14dp"
         android:paddingTop="14dp"
-        android:textColor="@color/input_text_color"
+        android:textColor="#474747"
         android:textStyle="bold"
-        android:textSize="18sp" />
+        android:textSize="17sp" />
 
     <View
         style="@style/horizontal_line_style"

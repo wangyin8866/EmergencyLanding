@@ -29,6 +29,8 @@ import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.GlideCircleTransform;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.RepaymentLogin;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
@@ -87,6 +89,8 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     private Bitmap mBitmap;
     private String phone;
     private String idCard;
+    private String contractNo = ""; // 合同编号
+    private String repayUrl = ""; // 还款url
 
     @Override
     protected MyPresenter createPresenter() {
@@ -174,7 +178,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
                 break;
             case R.id.my_repayment:
                 //是否有还款
-                mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
+                mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
                 break;
             case R.id.help:
                 mPresenter.getH5Url(Config.H5_URL_HELP, "帮助说明");
@@ -224,14 +228,11 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     @Override
     public void getUserInfo(UserInfo userInfo) {
 
-
         resultBean = userInfo.getResult();
-
         //手机号
         phone = resultBean.getTel();
         //身份证
         idCard = resultBean.getIdcard();
-
 
         Glide.with(mContext).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
         if (!TextUtils.isEmpty(resultBean.getUser_name())) {
@@ -246,7 +247,6 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         }
     }
 
-
     @Override
     public void update(BaseBean baseBean) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -257,41 +257,46 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     }
 
     @Override
+    public void isEffectiveOrder(EffectiveOrderBean baseBean) {
+        if (Config.TRUE.equals(baseBean.getResult().getOrder_status())) {
+            contractNo = baseBean.getResult().getContract_no();
+            repayUrl = baseBean.getResult().getH5_url();
+            H5WebView.skipH5WebView(mContext, "还款", repayUrl + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis());
+        } else {
+            H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
+        }
+    }
+
+    @Deprecated
+    @Override
     public void getBorrowInfoByUserId(MyBorrow baseBean) {
+        // 变更后
         if (baseBean.getResult().getCurrent_borrow() != null) {
 
             if (Config.TRUE.equals(baseBean.getResult().getCurrent_borrow().getIsRepaymentFlag())) {
-                try {
-                    RepaymentLogin repaymentLogin = new RepaymentLogin();
-
-                    RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(idCard, phone, "android", "jjtapp",System.currentTimeMillis());
-                    String json = new Gson().toJson(recordBean);
-                    String des3 = HDes3.encode(json);
-                    repaymentLogin.setRecord(des3);
-
-
-                    LogUtils.e("repaymentLogin", des3);
-                    RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(repaymentLogin));
-
-                    //获取token
-                    mPresenter.repaymentLogin(body);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                //获取订单状态
+                mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
             } else {
                 H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
             }
         } else {
             H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
         }
+
     }
 
+    @Deprecated
     @Override
     public void getRepaymentLogin(RepaymentSuccess baseBean) {
         String token = baseBean.getToken();
-
         SPUtils.saveString(mContext, Config.KEY_REPAYMENT_TOKEN, token);
         // 调还款的接口
-        mPresenter.getH5Url(Config.H5_URL_REPAYMENT,"还款");
+        mPresenter.getH5Url(Config.H5_URL_REPAYMENT, "还款");
+    }
+
+    @Deprecated
+    @Override
+    public void loadRepayH5(H5Bean h5Bean) {
+        H5WebView.skipH5WebView(mContext, "还款", h5Bean.getResult().getH5_url() + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis());
     }
 }

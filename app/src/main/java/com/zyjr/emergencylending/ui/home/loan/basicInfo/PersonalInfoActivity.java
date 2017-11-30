@@ -322,11 +322,11 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
 
     private void defaultLoading() {
         // 已完成状态获取资料信息
-        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            getPersonInfo();
-        }
+//        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+//            getPersonInfo();
+//        }
+        getPersonInfo();
         if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
-//            WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);
         }
     }

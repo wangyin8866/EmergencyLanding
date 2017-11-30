@@ -23,8 +23,8 @@ public class MessagePresenter extends BasePresenter<MessageView> {
         super(context);
     }
 
-    public void getMessage(String router, String pageNum) {
-        invoke(MessageModel.getInstance().getMessage(router, pageNum), new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
+    public void getMessage(String router, String pageNum, String pageSize) {
+        invoke(MessageModel.getInstance().getMessage(router, pageNum, pageSize), new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
             @Override
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
@@ -41,8 +41,8 @@ public class MessagePresenter extends BasePresenter<MessageView> {
         }, mContext));
     }
 
-    public void getMessageMore(String router, String pageNum) {
-        invoke(MessageModel.getInstance().getMessage(router, pageNum), new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
+    public void getMessageMore(String router, String pageNum, String pageSize) {
+        invoke(MessageModel.getInstance().getMessage(router, pageNum, pageSize), new ProgressSubscriber<MessageBean>(new SubscriberOnNextListener<MessageBean>() {
             @Override
             public void onNext(MessageBean baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {

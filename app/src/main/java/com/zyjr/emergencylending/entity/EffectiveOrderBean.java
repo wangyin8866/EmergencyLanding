@@ -80,6 +80,8 @@ public class EffectiveOrderBean {
 
         private String order_status; // 1:放款成功
 
+        private String h5_url; // h5还款地址
+
         public String getIs_effective_order() {
             return is_effective_order;
         }
@@ -102,6 +104,14 @@ public class EffectiveOrderBean {
 
         public void setOrder_status(String order_status) {
             this.order_status = order_status;
+        }
+
+        public String getH5_url() {
+            return h5_url;
+        }
+
+        public void setH5_url(String h5_url) {
+            this.h5_url = h5_url;
         }
     }
 }

@@ -68,6 +68,7 @@ public class H5WebView extends BaseActivity {
 
             }
         });
-        WYUtils.loadHtml(url, webView, progressBar);
+//        WYUtils.loadHtml(url, webView, progressBar);
+        WYUtils.loadHtmlNew(url, webView, progressBar);
     }
 }

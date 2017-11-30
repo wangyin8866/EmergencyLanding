@@ -20,27 +20,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/top_bar"
+        android:layout_above="@+id/layout_bottom"
+        android:background="@color/white"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/line_color"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="500dp"
                 android:background="@color/white"
                 android:orientation="vertical"
                 android:paddingBottom="30dp">
 
                 <ImageView
                     android:id="@+id/iv_order_status_icon"
-                    android:layout_width="145dp"
-                    android:layout_height="102dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="65dp"
+                    android:layout_marginTop="57dp"
                     android:src="@mipmap/emptypage_examine" />
 
                 <TextView
@@ -56,7 +57,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="183dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="50dp">
+                    android:layout_marginTop="40dp">
 
                     <ImageView
                         android:id="@+id/iv_order_status"
@@ -67,8 +68,8 @@
                         android:id="@+id/tv_step_one"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="-4dp"
                         android:layout_marginLeft="9dp"
+                        android:layout_marginTop="-4dp"
                         android:layout_toRightOf="@+id/iv_order_status"
                         android:text="完善信息"
                         android:textColor="@color/input_text_color"
@@ -110,18 +111,28 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_notice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="16dp"
-                android:drawableLeft="@mipmap/icon_reminder"
-                android:drawablePadding="4dp"
-                android:text="防骗提示，我们在受理过程中不收取您任何费用！"
-                android:textColor="@color/front_text_color_hint"
-                android:textSize="13sp" />
+
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/layout_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/line_color">
+
+        <TextView
+            android:id="@+id/tv_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="30dp"
+            android:drawableLeft="@mipmap/icon_reminder"
+            android:drawablePadding="4dp"
+            android:gravity="center|left"
+            android:text="防骗提示，我们在受理过程中不收取您任何费用！"
+            android:textColor="@color/front_text_color_hint"
+            android:textSize="13sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

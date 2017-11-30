@@ -21,8 +21,13 @@ import com.zyjr.emergencylending.ui.home.View.MessageView;
 import com.zyjr.emergencylending.ui.home.presenter.MessagePresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +53,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     LinearLayout llEmpty;
 
     private int pageNum = 1;
+    private int pageSize = 15;
     private List<MessageBean.ResultBean.ResultListBean> messageBeanList;
 
     @Override
@@ -67,15 +73,11 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     @Override
     protected void onResume() {
         super.onResume();
-
-        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1", "" + pageSize);
     }
 
     private void init() {
-
-
         easylayout.addEasyEvent(this);
-
 
     }
 
@@ -109,30 +111,27 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
 
     @Override
     public void onDel(int pos) {
-
-
         mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, messageBeanList.get(pos).getNews_id(), "2", pos);
-
     }
 
     @Override
     public void onLoadMore() {
         easylayout.loadMoreComplete();
         pageNum += 1;
-        mPresenter.getMessageMore(NetConstantValues.USER_NEWS, pageNum + "");
+        mPresenter.getMessageMore(NetConstantValues.USER_NEWS, "" + pageNum, "" + pageSize);
 
     }
 
     @Override
     public void onRefreshing() {
         easylayout.refreshComplete();
-        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
+        pageNum = 1;
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "" + pageNum, "" + pageSize);
 
     }
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-
         mPresenter.updateUserNews(NetConstantValues.UPDATE_USER_NEWS, messageBeanList.get(position).getNews_id(), "1", position);
 
     }
@@ -165,7 +164,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     public void getMessageMore(final MessageBean messageBean) {
 
         if (messageBean.getResult().getResultList().size() == 0) {
-            pageNum = 1;
+            pageNum -= 1;
             AppToast.makeShortToast(mContext, "没有数据了");
         } else {
 
@@ -188,7 +187,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", messageBeanList.get(position));
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
                 break;
             case "2":
                 LogUtils.e(position + "wy");
@@ -200,8 +199,7 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
                 break;
             case "3":
                 myAdapter.getData().removeAll(messageBeanList);
-
-                mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
+                mPresenter.getMessage(NetConstantValues.USER_NEWS, "1", "" + pageSize);
                 break;
         }
     }
@@ -214,8 +212,6 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
      * @param n             要跳转的位置
      */
     private void moveToPosition(LinearLayoutManager manager, RecyclerView mRecyclerView, int n) {
-
-
         int firstItem = manager.findFirstVisibleItemPosition();
         int lastItem = manager.findLastVisibleItemPosition();
         if (n <= firstItem) {
@@ -228,4 +224,5 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
         }
 
     }
+
 }

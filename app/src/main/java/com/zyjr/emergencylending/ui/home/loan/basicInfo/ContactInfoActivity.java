@@ -366,7 +366,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
 
     private void init() {
-//        selectList = AppConfig.contactRelation(); // 初始化联系人关系选择
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -378,9 +377,6 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
 
             }
         });
-
-        // 添加联系人资料
-
     }
 
     private void initGetData() {

@@ -34,8 +34,8 @@
 
                 <ImageView
                     android:id="@+id/iv_no_store_support"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:scaleType="fitXY"
                     android:src="@mipmap/emptypage_city" />

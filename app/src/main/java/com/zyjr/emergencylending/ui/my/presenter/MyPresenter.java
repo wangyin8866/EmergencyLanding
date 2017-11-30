@@ -7,6 +7,8 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.entity.BaseBean;
+import com.zyjr.emergencylending.entity.EffectiveOrderBean;
+import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
@@ -91,6 +93,52 @@ public class MyPresenter extends BasePresenter<MyView> {
                     getView().getRepaymentLogin(repaymentSuccess);
                 } else {
                     ToastAlone.showShortToast(mContext, repaymentSuccess.getPromptMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+            }
+        }, mContext));
+    }
+
+    /**
+     * 查询是否有效订单
+     *
+     * @param router
+     */
+    public void isEffectiveOrder(String router) {
+        invoke(AccountModel.getInstance().isEffectiveOrder(router), new ProgressSubscriber<EffectiveOrderBean>(new SubscriberOnNextListener<EffectiveOrderBean>() {
+            @Override
+            public void onNext(EffectiveOrderBean baseBean) {
+                if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
+                    getView().isEffectiveOrder(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
+                }
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+            }
+        }, mContext));
+    }
+
+    /**
+     * 获取H5页面
+     *
+     * @param url_type
+     */
+    public void getRepaymentH5Url(String url_type) {
+        invoke(AccountModel.getInstance().getH5Url(url_type), new ProgressSubscriber<H5Bean>(new SubscriberOnNextListener<H5Bean>() {
+            @Override
+            public void onNext(H5Bean baseBean) {
+                if (baseBean.getFlag().equals(Config.CODE_SUCCESS)) {
+                    getView().loadRepayH5(baseBean);
+                } else {
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 

@@ -78,10 +78,11 @@
 
             <ImageView
                 android:id="@+id/iv_show_pwd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="48dp"
+                android:scaleType="centerInside"
                 android:layout_gravity="center"
-                android:layout_marginRight="24dp"
+                android:layout_marginRight="14dp"
                 android:src="@mipmap/eye_off" />
         </LinearLayout>
 

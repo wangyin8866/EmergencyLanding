@@ -36,10 +36,11 @@ public class MessageModel extends BaseModel {
      *
      * @return
      */
-    public Observable<MessageBean> getMessage(String router, String pageNum) {
+    public Observable<MessageBean> getMessage(String router, String pageNum,String pageSize) {
         Map<String, String> map = new HashMap<String, String>(2);
         map.put("router", router);
         map.put("pageNo", pageNum);
+        map.put("pageSize", pageSize);
         return api.getUserNews(map);
     }
 

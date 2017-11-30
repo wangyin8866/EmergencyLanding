@@ -10,6 +10,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
@@ -27,6 +28,7 @@ import com.zyjr.emergencylending.ui.repayment.presenter.RepaymentPresenter;
 import com.zyjr.emergencylending.utils.HDes3;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
+import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -49,13 +51,15 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     ProgressBar progressBar;
     Unbinder unbinder;
     @BindView(R.id.ll_main)
-    LinearLayout llMain;
+    RelativeLayout llMain;
     @BindView(R.id.btn_retry)
     Button btnRetry;
     @BindView(R.id.ll_retry)
     LinearLayout llRetry;
     private View view;
-    private String contractNo;
+    private String contractNo = ""; // 合同编号
+    private String repayUrl = ""; // 还款url
+
 
     @Nullable
     @Override
@@ -68,8 +72,7 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     }
 
     private void init() {
-        //是否有还款
-        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
+        mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
     }
 
     @Override
@@ -77,37 +80,36 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
         return new RepaymentPresenter(mContext);
     }
 
+    @Deprecated
     @Override
     public void getBorrowInfoByUserId(MyBorrow baseBean) {
         if (baseBean.getResult().getCurrent_borrow() != null) {
-
             if (Config.TRUE.equals(baseBean.getResult().getCurrent_borrow().getIsRepaymentFlag())) {
                 //获取订单状态
                 mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
             } else {
-                WYUtils.loadHtml(Config.NO_REPAY, webView, progressBar);
+                WYUtils.loadHtmlNew(Config.NO_REPAY, webView, progressBar);
             }
         } else {
-            WYUtils.loadHtml(Config.NO_REPAY, webView, progressBar);
+            WYUtils.loadHtmlNew(Config.NO_REPAY, webView, progressBar);
         }
     }
 
-
+    @Deprecated
     @Override
     public void loadH5(H5Bean h5Bean) {
-        WYUtils.loadHtml(h5Bean.getResult().getH5_url() + "?contractNo=" + contractNo + "&page=1", webView, progressBar);
+        WYUtils.loadHtmlNew(h5Bean.getResult().getH5_url() + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis(), webView, progressBar);
     }
 
     @Override
     public void isEffectiveOrder(EffectiveOrderBean baseBean) {
-
         if (Config.TRUE.equals(baseBean.getResult().getOrder_status())) {
-
             contractNo = baseBean.getResult().getContract_no();
-            // 调还款的接口
-            mPresenter.getRepaymentH5Url(Config.H5_URL_REPAYMENT);
+            repayUrl = baseBean.getResult().getH5_url();
+            // 加载还款html
+            WYUtils.loadHtmlNew(repayUrl + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis(), webView, progressBar);
         } else {
-            WYUtils.loadHtml(Config.NO_REPAY, webView, progressBar);
+            WYUtils.loadHtmlNew(Config.NO_REPAY, webView, progressBar);
         }
 
     }
@@ -125,26 +127,21 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
 
     @Override
     public void requestError() {
-        WYUtils.showRequestError(llMain, llRetry);
+        showRequestError(llMain, llRetry);
     }
 
     @Override
     public void requestSuccess() {
-        WYUtils.showRequestSuccess(llMain, llRetry);
-
+        showRequestSuccess(llMain, llRetry);
     }
 
     @OnClick(R.id.btn_retry)
     public void onViewClicked() {
-        //是否有还款
-        mPresenter.getData(NetConstantValues.MY_LOAN, "1", "1");
+        mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
     }
 
-    /**
-     * 没有用到
-     *
-     * @param baseBean
-     */
+
+    @Deprecated
     @Override
     public void getRepaymentLogin(RepaymentSuccess baseBean) {
         String token = baseBean.getToken();
@@ -154,30 +151,34 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
         mPresenter.getRepaymentH5Url(Config.H5_URL_REPAYMENT);
     }
 
-    /**
-     * 没有用到
-     *
-     * @param
-     */
+    @Deprecated
     @Override
     public void getUserInfo(UserInfo userInfo) {
         try {
             RepaymentLogin repaymentLogin = new RepaymentLogin();
-
             RepaymentLogin.RecordBean recordBean = new RepaymentLogin.RecordBean(userInfo.getResult().getIdcard(), userInfo.getResult().getTel(), "android", "jjtapp", System.currentTimeMillis());
             LogUtils.e("recordBean", recordBean.toString());
             String json = new Gson().toJson(recordBean);
             String des3 = HDes3.encode(json);
             repaymentLogin.setRecord(des3);
 
-
             LogUtils.e("repaymentLogin", des3);
             RequestBody body = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), new Gson().toJson(repaymentLogin));
-
             //获取token
             mPresenter.repaymentLogin(body);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    public void showRequestSuccess(RelativeLayout llMain, LinearLayout llRetry) {
+        llMain.setVisibility(View.VISIBLE);
+        llRetry.setVisibility(View.GONE);
+    }
+
+    public void showRequestError(RelativeLayout llMain, LinearLayout llRetry) {
+        llMain.setVisibility(View.VISIBLE);
+        llRetry.setVisibility(View.GONE);
+    }
+
 }

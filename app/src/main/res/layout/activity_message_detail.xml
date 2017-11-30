@@ -9,7 +9,7 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/top_height"
-        android:paddingLeft="20dp"
+        android:paddingLeft="16dp"
         app:drawableLeft="@mipmap/icon_return"
         app:drawableLeftVisibility="true"
         app:title="消息详情"

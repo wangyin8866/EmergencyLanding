@@ -7,6 +7,12 @@ package com.zyjr.emergencylending.config;
 
 public interface NetConstantValues {
     /**
+     * 生产服务器地址
+     */
+//    String HOST_URL = "http://103.47.137.136:8002/";
+//    String REPAYMENT_LOGIN_BASE = "http://103.47.137.136:8002/cffg_loan/";
+
+    /**
      * 测试服务器
      */
     String HOST_URL = "http://192.168.6.107:8086/";
@@ -22,10 +28,12 @@ public interface NetConstantValues {
      */
 //    String HOST_URL = "http://192.168.9.152:8086/";
 
+
     /**
-     * 我的还款登陆
+     * 我的还款登陆(测试)
      */
     String REPAYMENT_LOGIN_BASE = "http://192.168.6.107:8080/cffg_loan/";
+
     /**
      * 二级地址
      */

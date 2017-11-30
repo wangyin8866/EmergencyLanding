@@ -86,7 +86,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
     protected void init() {
 
         mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
-        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1", "15");
 
     }
 
@@ -213,6 +213,6 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
     public void onRefreshing() {
         easyRefreshLayout.refreshComplete();
         mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
-        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1");
+        mPresenter.getMessage(NetConstantValues.USER_NEWS, "1", "15");
     }
 }

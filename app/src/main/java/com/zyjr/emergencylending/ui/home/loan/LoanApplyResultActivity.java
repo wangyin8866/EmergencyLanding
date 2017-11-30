@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.ui.home.loan.offline.ApplyConfirmActivity;
 import com.zyjr.emergencylending.ui.home.loan.offline.NoStoreApplyConfirmActivity;
@@ -74,12 +75,12 @@ public class LoanApplyResultActivity extends BaseActivity {
         Intent intent = getIntent();
         String online_type = intent.getStringExtra("online_type");
         String product_id = intent.getStringExtra("product_id");
-        if (online_type.equals("0")) {
+        if (Constants.ZERO.equals(online_type)) {
             // 线上
             ivOrderStatus.setBackgroundResource(R.mipmap.audit_process);
             tvStepTwo.setText("认证信息");
             tvStatusDesc.setText("审核中");
-            // 出站管理
+            // 出栈管理
             ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
             ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
             ActivityCollector.getInstance().popActivity(ApplyConfirmActivity.class);
@@ -91,7 +92,7 @@ public class LoanApplyResultActivity extends BaseActivity {
             tvStepTwo.setText("受理中");
             tvStepThree.setText("审核中");
             tvStepThree.setTextColor(getResources().getColor(R.color.front_text_color_hint));
-            // 出站管理
+            // 出栈管理
             ActivityCollector.getInstance().popActivity(LoanMainActivity.class);
             ActivityCollector.getInstance().popActivity(WriteInfoMainActivity.class);
             ActivityCollector.getInstance().popActivity(ApplyConfirmActivity.class);

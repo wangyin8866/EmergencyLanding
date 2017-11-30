@@ -35,6 +35,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.ui.home.presenter.QrPresenter;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import java.io.File;
@@ -96,6 +97,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
     private String sUrl = "http://www.baidu.com";
     private String mUrl;
     private UMWeb web;
+    private boolean isSuccess = false; // 是否请求成功
 
     @Override
     protected QrPresenter createPresenter() {
@@ -133,31 +135,37 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
         initShare();
         switch (view.getId()) {
             case R.id.qr_save:
-                Glide.with(mContext)
-                        .load(mUrl)
-                        .asBitmap()
-                        .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
-                            @Override
-                            public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
-                                //得到bitmap
-                                saveImageToGallery(mContext, bitmap);
-                            }
-                        });
+                if (isSuccess && StringUtil.isNotEmpty(mUrl)) {
+                    Glide.with(mContext)
+                            .load(mUrl)
+                            .asBitmap()
+                            .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                                @Override
+                                public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                                    //得到bitmap
+                                    saveImageToGallery(mContext, bitmap);
+                                }
+                            });
+                }
                 break;
             case R.id.qr_we_chat:
-                if (UMShareAPI.get(mContext).isInstall(this, SHARE_MEDIA.WEIXIN)) {
-                    new ShareAction(QrCodeActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN)
-                            .setCallback(umShareListener).share();
-                } else {
-                    ToastAlone.showShortToast(mContext, "微信未安装");
+                if (isSuccess && StringUtil.isNotEmpty(mUrl)) {
+                    if (UMShareAPI.get(mContext).isInstall(this, SHARE_MEDIA.WEIXIN)) {
+                        new ShareAction(QrCodeActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN)
+                                .setCallback(umShareListener).share();
+                    } else {
+                        ToastAlone.showShortToast(mContext, "微信未安装");
+                    }
                 }
                 break;
             case R.id.circle_of_friends:
-                if (UMShareAPI.get(mContext).isInstall(this, SHARE_MEDIA.WEIXIN)) {
-                    new ShareAction(QrCodeActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
-                            .setCallback(umShareListener).share();
-                } else {
-                    ToastAlone.showShortToast(mContext, "微信未安装");
+                if (isSuccess && StringUtil.isNotEmpty(mUrl)) {
+                    if (UMShareAPI.get(mContext).isInstall(this, SHARE_MEDIA.WEIXIN)) {
+                        new ShareAction(QrCodeActivity.this).withMedia(web).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                                .setCallback(umShareListener).share();
+                    } else {
+                        ToastAlone.showShortToast(mContext, "微信未安装");
+                    }
                 }
                 break;
         }
@@ -270,7 +278,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
     @Override
     public void getCommonData(QrBean baseBean) {
         mUrl = baseBean.getResult().getUrl();
-
+        isSuccess = true;
 
         Glide.with(mContext).load(mUrl).error(R.mipmap.erweim_img).into(ivQr);
         String code = baseBean.getResult().getRecommendcode();

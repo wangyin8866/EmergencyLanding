@@ -29,12 +29,13 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
     }
 
     /**
-     * 查看是否有还款
+     * 查看是否有还款(废弃)
      *
      * @param router
      * @param pageNo
      * @param pageSize
      */
+    @Deprecated
     public void getData(String router, String pageNo, String pageSize) {
         invoke(AccountModel.getInstance().myBorrow(router, pageNo, pageSize), new ProgressSubscriber<MyBorrow>(new SubscriberOnNextListener<MyBorrow>() {
             @Override

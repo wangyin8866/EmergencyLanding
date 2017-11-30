@@ -389,9 +389,10 @@ public class WorkInfoActivity extends BaseActivity<WorkInfoPresenter, WorkInfoVi
 
     private void defaultLoading() {
         // 已完成状态获取资料信息
-        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            getWorkInfo();
-        }
+//        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+//            getWorkInfo();
+//        }
+        getWorkInfo();
         if (StringUtil.isNotEmpty(isEdit) && isEdit.equals("0")) { // 不可编辑
             WYUtils.coverPage(false, llCover);
             btnSubmit.setEnabled(false);

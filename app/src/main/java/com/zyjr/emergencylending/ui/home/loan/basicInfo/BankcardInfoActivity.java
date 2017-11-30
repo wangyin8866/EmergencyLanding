@@ -231,7 +231,7 @@ public class BankcardInfoActivity extends BaseActivity<BankcardInfoPresenter, Ba
     private void setBankIcon(BankcardInfo item) {
         if (item.getBank_name().contains("中国工商") || item.getBank_name().contains("工商")) {
             ivBankcardIcon.setImageResource(R.mipmap.banklogo_a);
-        } else if (item.getBank_name().contains("中国农业")) {
+        } else if (item.getBank_name().contains("中国农业") || item.getBank_name().contains("农业")) {
             ivBankcardIcon.setImageResource(R.mipmap.banklogo_b);
         } else if (item.getBank_name().contains("中国银行")) {
             ivBankcardIcon.setImageResource(R.mipmap.banklogo_c);

@@ -360,7 +360,7 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
             setTextView(tvOrderStatus2, "认证中", R.color.white);
             setTextView(tvOrderStatus3, "审核中", R.color.white);
             setTextView(tvOrderStatus4, "领取金额", R.color.white);
-            setTextView(tvOrderStatus5, "放款中", R.color.white);
+            setTextView(tvOrderStatus5, "放款中", R.color.order_uncompleted_color);
             setTextView(tvOrderStatus6, "还款中", R.color.order_uncompleted_color);
         } else if (Constants.FIVE.equals(stepStatus)) {
             // 放款中

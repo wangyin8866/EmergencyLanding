@@ -5,12 +5,12 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AppOpsManager;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -273,9 +273,11 @@ public class WYUtils {
 
     /**
      * webView加载
+     * 优化还款 h5不能显示问题
      */
     @SuppressLint("SetJavaScriptEnabled")
-    public static void loadHtmlWithDialog(final String url, final WebView mWebView, final Dialog dialog) {
+    public static void loadHtmlNew(final String url, final WebView mWebView, final ProgressBar mProgressBar) {
+
         LogUtils.e("webViewUrl", url);
         WebSettings settings = mWebView.getSettings();
         /**
@@ -287,8 +289,10 @@ public class WYUtils {
          * setSupportZoom 设置是否支持变焦
          * */
 
-        //webview在安卓5.0之前默认允许其加载混合网络协议内容
-        // 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+        /**
+         * 在安卓5.0之前默认允许其加载混合网络协议内容;
+         * 在安卓5.0之后，默认不允许加载http与https混合内容，需要设置webview允许其加载混合网络协议内容
+         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
 
@@ -307,38 +311,57 @@ public class WYUtils {
         settings.setLoadWithOverviewMode(true);
         settings.setUseWideViewPort(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //打开DOM储存
+        settings.setDomStorageEnabled(true);
         mWebView.loadUrl(url);
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress == 100) {
-                    dialog.dismiss();
-                } else {
-                    dialog.show();
-                }
-            }
-        });
         mWebView.setWebViewClient(new WebViewClient() {
+
             @Override
-            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                LogUtils.e("webViewUrl", url);
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
 
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                mProgressBar.setVisibility(View.GONE);
+                super.onPageFinished(view, url);
             }
 
             @Override
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                //注意：super句话一定要删除，或者注释掉，否则又走handler.cancel()默认的不支持https的了。
-                //super.onReceivedSslError(view, handler, error);
-                //handler.cancel(); // Android默认的处理方式
-                //handler.handleMessage(Message msg); // 进行其他处理
-
                 handler.proceed(); // 接受所有网站的证书
             }
         });
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+        // 如何webview支持回退事件则可以处理
+//        mWebView.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN) {
+//                    if (keyCode == KeyEvent.KEYCODE_BACK && mWebView.canGoBack()) { // 表示按返回键
+//                        mWebView.goBack(); // 后退
+//                        return true; // 已处理
+//                    }
+//                }
+//                return false;
+//            }
+//        });
     }
-
 
     /**
      * 拨打客服电话
@@ -535,6 +558,7 @@ public class WYUtils {
         }
         return false;
     }
+
     public static boolean clickDialogBack(int keyCode, KeyEvent event, final Context context) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 
@@ -542,6 +566,7 @@ public class WYUtils {
         }
         return false;
     }
+
     /***
      * 获取url 指定name的value;
      * @param url
@@ -623,7 +648,11 @@ public class WYUtils {
      * @return
      */
     public static String nameSecret(String string) {
-        return string.replace(string.substring(0, 1), "*");
+//        return string.replace(string.substring(0, 1), "*");
+        if (StringUtil.isEmpty(string)) {
+            return "";
+        }
+        return string.substring(0, 1) + "*";
     }
 
     /**
@@ -677,6 +706,7 @@ public class WYUtils {
         }
         return result;
     }
+
     /**
      * 我的借款金额类型
      */
@@ -684,7 +714,7 @@ public class WYUtils {
         String result = null;
         switch (step) {
             case 3:
-                if (onlineType==1) {
+                if (onlineType == 1) {
                     //线下.申请金额
                     result = "申请金额";
                 } else {
@@ -711,6 +741,7 @@ public class WYUtils {
         }
         return result;
     }
+
     /**
      * 我的借款状态
      */
@@ -782,12 +813,13 @@ public class WYUtils {
 
     /**
      * 获取同盾和白骑士设备指纹
+     *
      * @param context
      * @return
      */
     public static String getDeviceFingerprinting(Context context) {
 
-        return SPUtils.getWyString(context, Config.KEY_TONG_DUN )+","+SPUtils.getWyString(context, Config.KEY_BAI_QI_SHI );
+        return SPUtils.getWyString(context, Config.KEY_TONG_DUN) + "," + SPUtils.getWyString(context, Config.KEY_BAI_QI_SHI);
     }
 
     //获取一个随机数

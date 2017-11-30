@@ -55,7 +55,8 @@ public class ApplyActivity extends BaseActivity {
             }
         });
         String url = getIntent().getStringExtra("url");
-        WYUtils.loadHtml(url, webView, progressBar);
+//        WYUtils.loadHtml(url, webView, progressBar);
+        WYUtils.loadHtmlNew(url, webView, progressBar);
     }
 
 }
