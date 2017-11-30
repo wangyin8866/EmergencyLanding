@@ -16,97 +16,95 @@
         app:titleTextColor="@color/input_text_color"
         app:titleTextSize="16sp" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/top_bar"
-        android:background="@color/line_color"
-        android:scrollbars="none">
+        android:orientation="vertical">
+
+        <View
+            style="@style/horizontal_line_style"
+            android:layout_height="1dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:gravity="center"
             android:orientation="vertical">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/iv_order_status_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@mipmap/emptypage_success" />
+
+            <TextView
+                android:id="@+id/tv_loan_status_desc"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingBottom="30dp">
-
-                <ImageView
-                    android:id="@+id/iv_order_status_icon"
-                    android:layout_width="145dp"
-                    android:layout_height="122dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="65dp"
-                    android:src="@mipmap/emptypage_success" />
-
-                <TextView
-                    android:id="@+id/tv_loan_status_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:text="系统正在放款中"
-                    android:textColor="@color/input_text_color"
-                    android:textSize="16sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_remind"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_warm_notice_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="温馨提示"
-                    android:textColor="@color/auth_fail"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/tv_warm_notice_1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="23dp"
-                    android:layout_marginRight="23dp"
-                    android:layout_marginTop="2.5dp"
-                    android:textColor="@color/front_text_color_hint"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tv_warm_notice_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="23dp"
-                    android:layout_marginRight="23dp"
-                    android:layout_marginTop="2.5dp"
-                    android:textColor="@color/front_text_color_hint"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/tv_warm_notice_3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="23dp"
-                    android:layout_marginRight="23dp"
-                    android:layout_marginTop="2.5dp"
-                    android:textColor="@color/front_text_color_hint"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="系统正在放款中"
+                android:textColor="@color/input_text_color"
+                android:textSize="16sp" />
 
         </LinearLayout>
-    </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/layout_remind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/line_color"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_warm_notice_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:text="温馨提示"
+                android:textColor="@color/auth_fail"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_warm_notice_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginTop="2.5dp"
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_warm_notice_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginTop="2.5dp"
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_warm_notice_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginTop="2.5dp"
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="13sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
