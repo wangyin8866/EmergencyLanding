@@ -76,10 +76,10 @@ public class SendLoanProcessingActivity extends BaseActivity {
         if (Constants.ZERO.equals(isShow)) {
             layoutRemind.setVisibility(View.GONE);
         } else if (Constants.ONE.equals(isShow)) {
-            layoutRemind.setVisibility(View.VISIBLE);
             RemindBean remindInfo = (RemindBean) intent.getSerializableExtra("remindInfo");
             List<String> infoList = remindInfo.getInfoList();
             if (infoList != null && infoList.size() > 0) {
+                layoutRemind.setVisibility(View.VISIBLE);
                 for (int i = 0; i < infoList.size(); i++) {
                     switch (i) {
                         case 0:
@@ -100,16 +100,14 @@ public class SendLoanProcessingActivity extends BaseActivity {
     }
 
     private void test(){
-        String json = "{\n" +
+        String json = "\n" +
                 "    \"flag\":\"API0000\",\n" +
                 "    \"msg\":\"操作成功\",\n" +
                 "    \"errorMsg\":null,\n" +
                 "    \"promptMsg\":\"操作成功\",\n" +
                 "    \"result\":{\n" +
                 "        \"infoList\":[\n" +
-                "            \"保持良好信用，再次申请会有更多提额惊喜哦\",\n" +
-                "            \"本次借款成功后收取200元账户管理费与一期履约保证金\",\n" +
-                "            \"还款日当日正常还款不出现逾期，保证金将自动抵扣最后一期还款，逾期将概不退还\"\n" +
+                "\n" +
                 "        ]\n" +
                 "    },\n" +
                 "    \"ext\":null,\n" +

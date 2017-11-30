@@ -7,6 +7,7 @@ import com.xfqz.xjd.mylibrary.SubscriberOnNextListener;
 import com.zyjr.emergencylending.base.ApiResult;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.base.HttpSubscriber;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
@@ -57,9 +58,9 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
     }
 
     public void getZhimaScore(Map<String, String> params) {
-        invoke(AuthHelperModel.getInstance().getZhimaScore(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+        invoke(AuthHelperModel.getInstance().getZhimaScore(params), new HttpSubscriber<ApiResult<String>>() {
             @Override
-            public void onNext(ApiResult<String> result) {
+            public void onSuccess(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
                     LogUtils.d("获取芝麻信用分成功---->" + result.getMsg());
                     getView().onSuccessGetZhimaScore(Constants.GET_ZHIMA_AUTH_SCORE, result.getPromptMsg());
@@ -70,11 +71,30 @@ public class AuthHelperPresenter extends BasePresenter<AuthHelperView> {
             }
 
             @Override
-            public void onError(Throwable e) {
+            public void onRequestError(Throwable e) {
                 LogUtils.d("获取芝麻信用分异常--->" + e.getMessage());
                 getView().onError(Constants.GET_ZHIMA_AUTH_SCORE, Config.TIP_NET_ERROR);
             }
-        }, mContext));
+        });
+
+//                invoke(AuthHelperModel.getInstance().getZhimaScore(params), new ProgressSubscriber<ApiResult<String>>(new SubscriberOnNextListener<ApiResult<String>>() {
+//            @Override
+//            public void onNext(ApiResult<String> result) {
+//                if (Config.CODE_SUCCESS.equals(result.getFlag())) {
+//                    LogUtils.d("获取芝麻信用分成功---->" + result.getMsg());
+//                    getView().onSuccessGetZhimaScore(Constants.GET_ZHIMA_AUTH_SCORE, result.getPromptMsg());
+//                } else {
+//                    LogUtils.d("获取芝麻信用分失败---->" + result.getFlag() + "," + result.getMsg());
+//                    getView().onFail(Constants.GET_ZHIMA_AUTH_SCORE, result.getPromptMsg());
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                LogUtils.d("获取芝麻信用分异常--->" + e.getMessage());
+//                getView().onError(Constants.GET_ZHIMA_AUTH_SCORE, Config.TIP_NET_ERROR);
+//            }
+//        }, mContext));
     }
 
     public void submitMobileAuthInfo(Map<String, String> params) {

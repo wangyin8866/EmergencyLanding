@@ -121,6 +121,7 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
                     layoutRecommend.setVisibility(View.VISIBLE);
                 }
                 tvApplyResult.setText(borrowBean.getLoan_msg());
+                deleteLoanOrder();
             } else if (jumpFlag.equals("precheck")) {
                 String flag = intent.getStringExtra("flag");
                 String msg = intent.getStringExtra("msg");

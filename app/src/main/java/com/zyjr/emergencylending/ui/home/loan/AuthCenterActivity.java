@@ -295,6 +295,9 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
      * 如何调用Verify2.0方法
      */
     public void imageVerify(Map<String, byte[]> images, String delta, String name, String idCard) {
+        loadingDialog = CustomProgressDialog.createDialog(this);
+        loadingDialog.show();
+        tvFaceAuthStatus.setText("认证中");
         RequestParams requestParams = new RequestParams();
         requestParams.put("name", name);
         requestParams.put("idcard", idCard);
@@ -318,6 +321,7 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
             asyncHttpClient.post(url, requestParams, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody) {
+                    loadingDialog.dismiss();
                     String successStr = new String(responseBody);
                     JSONObject jsonObject;
                     try {
@@ -335,12 +339,15 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
                                 // TODO 识别通过后,做一些业务操作
                                 submitFaceAuth();
                             } else {
+                                tvFaceAuthStatus.setText("未认证");
                                 ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别未通过,请本人再次尝试");
                             }
                         } else {
+                            tvFaceAuthStatus.setText("未认证");
                             ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
                         }
                     } catch (Exception e1) {
+                        tvFaceAuthStatus.setText("未认证");
                         e1.printStackTrace();
                         LogUtils.d("人脸识别比对--e1:" + e1.getMessage().toString());
                         ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
@@ -349,10 +356,12 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
 
                 @Override
                 public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] responseBody, Throwable error) {
+                    loadingDialog.dismiss();
                     ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
                 }
             });
         } catch (Exception e) {
+            loadingDialog.dismiss();
             ToastAlone.showShortToast(AuthCenterActivity.this, "人脸识别失败,请重试");
             LogUtils.d("人脸识别比对人脸识别e----->" + e.getMessage());
             e.printStackTrace();
@@ -487,6 +496,9 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
 
     @Override
     public void onFail(String apiCode, String failMsg) {
+        if (apiCode.equals(Constants.SUBMIT_FACE_AUTH)) {
+            tvFaceAuthStatus.setText("未认证");
+        }
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showShortToast(this, failMsg);
@@ -494,6 +506,9 @@ public class AuthCenterActivity extends BaseActivity<AuthInfoPresenter, AuthInfo
 
     @Override
     public void onError(String apiCode, String errorMsg) {
+        if (apiCode.equals(Constants.SUBMIT_FACE_AUTH)) {
+            tvFaceAuthStatus.setText("未认证");
+        }
         loadingDialog.dismiss();
         pullToRefreshScrollView.onRefreshComplete();
         ToastAlone.showShortToast(this, errorMsg);

@@ -2,6 +2,7 @@ package com.zyjr.emergencylending.ui.home.loan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -195,9 +196,6 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                         Intent intent = new Intent(this, ReceiveMoneyActivity.class);
                         startActivity(intent);
                     }
-                } else if (Constants.ELEVEN.equals(orderStatus)) {
-                    // 领取超时(重新申请)
-                    deleteLoanOrder();
                 } else if (Constants.NINE.equals(orderStatus)) {
                     // 领取拒件(领取拒绝)
                     jumpToFailPage(loanOrderBean);
@@ -350,12 +348,6 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
                     orderDesc("请尽快领取金额，过期将失效！", "");
                     orderStatusIocn = R.mipmap.emptypage_getthemoney;
                 }
-            } else if (Constants.ELEVEN.equals(orderStatus)) {
-                btnOrderOperate.setVisibility(View.VISIBLE);
-                btnOrderOperate.setEnabled(true);
-                btnOrderOperate.setText("重新申请");
-                orderDesc("领取金额超时", "");
-                orderStatusIocn = R.mipmap.emptypage_fail;
             } else if (Constants.NINE.equals(orderStatus)) {
                 btnOrderOperate.setVisibility(View.VISIBLE);
                 btnOrderOperate.setEnabled(true);
@@ -513,7 +505,19 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
-                finish();
+                if (loanOrderBean == null) {
+                    finish();
+                } else {
+                    String orderStatus = loanOrderBean.getOrder_status();
+                    if (Constants.NINE.equals(orderStatus)) {
+                        LogUtils.d("该笔订单做废件处理(delete)");
+                        // 做废件处理
+                        deleteLoanOrder();
+                    } else {
+                        LogUtils.d("该笔订单不做废件处理");
+                        finish();
+                    }
+                }
             }
 
             @Override
@@ -571,18 +575,44 @@ public class LoanOrderStatusActivity extends BaseActivity<LoanOrderPresenter, Lo
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-        ToastAlone.showLongToast(this, failMsg);
+        if (Constants.DELETE_LOAN_ORDER_INFO.equals(apiCode)) {
+            finish();
+        } else {
+            ToastAlone.showLongToast(this, failMsg);
+        }
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        showError();
+        if (Constants.DELETE_LOAN_ORDER_INFO.equals(apiCode)) {
+            finish();
+        } else {
+            showError();
+        }
     }
 
     @Override
     public void onSuccessDeleteLoanOrder(String api, String result) {
         LogUtils.d("废件处理成功--" + result);
         finish();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (loanOrderBean != null) {
+                String orderStatus = loanOrderBean.getOrder_status();
+                if (Constants.NINE.equals(orderStatus)) {
+                    LogUtils.d("该笔订单做废件处理(delete)");
+                    // 做废件处理
+                    deleteLoanOrder();
+                    return true;
+                } else {
+                    LogUtils.d("该笔订单不做废件处理");
+                }
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 

@@ -21,6 +21,7 @@ import com.zyjr.emergencylending.entity.AuthInfoBean;
 import com.zyjr.emergencylending.entity.MobileBean;
 import com.zyjr.emergencylending.entity.PersonalInfoBean;
 import com.zyjr.emergencylending.entity.ZhimaAuthBean;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
 import com.zyjr.emergencylending.ui.home.View.AuthHelperView;
 import com.zyjr.emergencylending.ui.home.presenter.AuthHelperPresenter;
 import com.zyjr.emergencylending.utils.SPUtils;
@@ -72,7 +73,7 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
         judgeMobileCodeValide();
     }
 
-    @OnClick({R.id.cb_check, R.id.iv_service_password, R.id.btn_submit})
+    @OnClick({R.id.cb_check, R.id.iv_service_password, R.id.btn_submit, R.id.tv_agreement})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_service_password:
@@ -89,9 +90,14 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
                 }).show();
                 break;
 
+            case R.id.tv_agreement:
+                H5WebView.skipH5WebView(mContext, "手机运营商信息授权认证", "file:///android_asset/h5/phone_auth.html");
+                break;
+
             case R.id.btn_submit:
                 validate(flag);
                 break;
+
         }
     }
 

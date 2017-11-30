@@ -7,6 +7,7 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
@@ -19,9 +20,12 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.xfqz.xjd.mylibrary.CustomProgressDialog;
+import com.zyjr.emergencylending.MainActivity;
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
 import com.zyjr.emergencylending.entity.MobileBean;
@@ -60,6 +64,8 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
     WebView webView;
     private String userName = "";
     private String idCardNumber = "";
+    private CustomProgressDialog loadingDialog = null;
+    private String isClickLeft = "1"; // 是否可以点击;1可点击;0不可点击
 
     @Override
     protected AuthHelperPresenter createPresenter() {
@@ -89,9 +95,12 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
-                Intent intent = new Intent();
-                setResult(RESULT_OK, intent);
-                finish();
+                LogUtils.d("是否可以点击---" + isClickLeft);
+                if (Constants.ONE.equals(isClickLeft)) {
+                    Intent intent = new Intent();
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
             }
 
             @Override
@@ -119,8 +128,9 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         LogUtils.d("芝麻信用授权url:" + url);
         layoutContentView.setVisibility(View.GONE);
         webView.setVisibility(View.VISIBLE);
-        Dialog loadingDialog = CustomProgressDialog.createDialog(this);
+        loadingDialog = CustomProgressDialog.createDialog(this);
         loadingDialog.setCancelable(false);
+        loadingDialog.show();
         loadHtmlWithDialog(url, webView, loadingDialog);
     }
 
@@ -144,19 +154,22 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         settings.setUseWideViewPort(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         mWebView.loadUrl(baseUrl);
-        mWebView.setWebChromeClient(new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                if (newProgress == 100) {
-                    dialog.dismiss();
-                } else {
-                    dialog.show();
-                }
-            }
-        });
+//        mWebView.setWebChromeClient(new WebChromeClient() {
+//            @Override
+//            public void onProgressChanged(WebView view, int newProgress) {
+//                if (newProgress == 100) {
+//                    dialog.dismiss();
+//                    isClickLeft = "1";
+//                } else {
+//                    dialog.show();
+//                    isClickLeft = "0";
+//                }
+//            }
+//        });
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                isClickLeft = "0";
                 LogUtils.d("webViewUrl", url);
                 view.loadUrl(url);
                 if (url.contains("http://m.jijietong.com:8680/h5-static/moblie_web_new/compliance/openSuccess.html")) {
@@ -170,6 +183,8 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
                     } else {
                         view.loadUrl(baseUrl);
                     }
+                } else {
+                    dialog.show();
                 }
                 return true;
             }
@@ -178,10 +193,31 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 handler.proceed(); // 接受所有网站的证书
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if (!ZhimaAuthActivity.this.isFinishing() && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                if (url.contains("moblie_web_new/compliance/openSuccess.html")) {
+                    // 认证成功页面成功加载
+                    isClickLeft = "1";
+                } else if (url.contains("zmxy.com.cn/auth/index") || url.contains("zmxy.com.cn/auth/verify")) {
+                    // 同意授权页面(可点击返回)
+                    isClickLeft = "1";
+                } else {
+                    isClickLeft = "0";
+                }
+                LogUtils.d(url + "【onPageFinished ---- 加载完成】");
+            }
         });
     }
 
     private void getZhimaScore(String applyId, String state) {
+        loadingDialog = CustomProgressDialog.createDialog(this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setCanceledOnTouchOutside(false);
+        loadingDialog.show();
         Map<String, String> params = new HashMap<>();
         params.put("applyId", applyId);
         params.put("state", state);
@@ -206,6 +242,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
     @Override
     public void onSuccessGetZhimaScore(String apiCode, String msg) {
+        loadingDialog.dismiss();
         ToastAlone.showShortToast(this, msg);
         Intent intent = new Intent();
         setResult(RESULT_OK, intent);
@@ -219,12 +256,24 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
 
     @Override
     public void onFail(String apiCode, String failMsg) {
+        loadingDialog.dismiss();
         ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
+        loadingDialog.dismiss();
         ToastAlone.showShortToast(this, errorMsg);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (Constants.ZERO.equals(isClickLeft)) {
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
 }

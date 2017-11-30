@@ -31,7 +31,7 @@ public class HandleFailPresenter extends BasePresenter<HandleFailView> {
             @Override
             public void onNext(ApiResult<String> result) {
                 if (Config.CODE_SUCCESS.equals(result.getFlag())) {
-                    LogUtils.d("进件做废件处理成功---->" + result.getMsg());
+                    LogUtils.d("进件做废件处理成功---->" + result.getPromptMsg());
                     getView().onSuccessDeleteLoanOrder(Constants.DELETE_LOAN_ORDER_INFO, result.getPromptMsg());
                 } else {
                     LogUtils.d("进件做废件处理失败---->" + result.getFlag() + "," + result.getMsg());
