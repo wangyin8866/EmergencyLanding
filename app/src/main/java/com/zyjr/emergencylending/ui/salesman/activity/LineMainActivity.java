@@ -144,12 +144,9 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
 
             }, 100);
         }
-        /**
-         * 白骑士
-         */
-        //FMAgent.ENV_SANDBOX表示测试环境，FMAgent.ENV_PRODUCTION表示生产环境
+        //F MAgent.ENV_SANDBOX表示测试环境，FMAgent.ENV_PRODUCTION表示生产环境
         try {
-            FMAgent.init(LineMainActivity.this, FMAgent.ENV_SANDBOX);
+            FMAgent.init(LineMainActivity.this, FMAgent.ENV_PRODUCTION);
             String blackBox = FMAgent.onEvent(LineMainActivity.this);
             LogUtils.e("tokenkey", blackBox);
             SPUtils.saveWyString(LineMainActivity.this, Config.KEY_TONG_DUN, blackBox);

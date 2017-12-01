@@ -33,7 +33,6 @@ public class MyBorrowPresenter extends BasePresenter<MyBorrowView> {
                     ToastAlone.showShortToast(mContext, baseBean.getMsg());
                 }
             }
-
             @Override
             public void onError(Throwable e) {
                 getView().requestError();

@@ -143,12 +143,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             }, 100);
         }
-        /**
-         * 白骑士
-         */
+
         //FMAgent.ENV_SANDBOX表示测试环境，FMAgent.ENV_PRODUCTION表示生产环境
         try {
-            FMAgent.init(MainActivity.this, FMAgent.ENV_SANDBOX);
+            FMAgent.init(MainActivity.this, FMAgent.ENV_PRODUCTION);
             String blackBox = FMAgent.onEvent(MainActivity.this);
             LogUtils.e("tokenkey", blackBox);
             SPUtils.saveWyString(MainActivity.this, Config.KEY_TONG_DUN, blackBox);
