@@ -261,7 +261,7 @@ public class LineMainActivity extends BaseActivity implements View.OnClickListen
             //2、配置初始化参数
             BqsParams params = new BqsParams();
             params.setPartnerId("haoliwang");//商户编号
-            params.setTestingEnv(true);//false是生产环境 true是测试环境
+            params.setTestingEnv(false);//false是生产环境 true是测试环境
             params.setGatherGps(true);
             params.setGatherContact(true);
             params.setGatherCallRecord(true);
