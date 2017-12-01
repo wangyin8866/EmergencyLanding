@@ -17,12 +17,10 @@
         app:titleTextColor="#333333"
         app:titleTextSize="16sp" />
 
-    <com.ajguan.library.EasyRefreshLayout
-        android:id="@+id/swipe_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
         <LinearLayout
+            android:id="@+id/ll_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -229,7 +227,6 @@
 
 
         </LinearLayout>
-    </com.ajguan.library.EasyRefreshLayout>
 
     <include
         layout="@layout/layout_net_loading_error"

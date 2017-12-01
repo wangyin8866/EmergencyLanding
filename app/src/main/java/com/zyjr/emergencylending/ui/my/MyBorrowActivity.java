@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ajguan.library.EasyRefreshLayout;
-import com.ajguan.library.LoadModel;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BorrowLogAdapter;
@@ -63,15 +62,15 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
     Button btnRetry;
     @BindView(R.id.ll_retry)
     LinearLayout llRetry;
-    @BindView(R.id.swipe_container)
-    EasyRefreshLayout swipeContainer;
     @BindView(R.id.borrow_money_type)
     TextView borrowMoneyType;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
 
     private List<MyBorrow.ResultBean.HisBorrowListBean> hisBorrowListBeans;
     private MyBorrow.ResultBean.CurrentBorrowBean currentBorrowBean;
     private int pageNum = 1;
-    private int pageSize = 15;
+    private int pageSize = 5;
 
     @Override
     protected MyBorrowPresenter createPresenter() {
@@ -87,10 +86,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
     }
 
     private void init() {
-        swipeContainer.addEasyEvent(this);
-        //隐藏上拉加载
-        swipeContainer.setLoadMoreModel(LoadModel.NONE);
-
+        easylayout.addEasyEvent(this);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -116,8 +112,6 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
         currentBorrowBean = baseBean.getResult().getCurrent_borrow();
         hisBorrowListBeans = baseBean.getResult().getHis_borrow_list();
 
-
-
         if (currentBorrowBean == null && hisBorrowListBeans.size() == 0) {
             currentBorrow.setVisibility(View.GONE);
             historyBorrow.setVisibility(View.GONE);
@@ -137,7 +131,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
         }
 
         if (currentBorrowBean != null) {
-            borrowMoneyType.setText(WYUtils.getMyBorrowMoneyStatus(Integer.parseInt(currentBorrowBean.getStep_status()),Integer.parseInt(currentBorrowBean.getOnline_type())));
+            borrowMoneyType.setText(WYUtils.getMyBorrowMoneyStatus(Integer.parseInt(currentBorrowBean.getStep_status()), Integer.parseInt(currentBorrowBean.getOnline_type())));
             borrowState.setText(WYUtils.getMyBorrowStatus(Integer.parseInt(currentBorrowBean.getStep_status()), Integer.parseInt(currentBorrowBean.getLoan_status())));
             borrowAmount.setText(currentBorrowBean.getLoan_amount());
             borrowDeadline.setText(currentBorrowBean.getLoan_period() + WYUtils.getPeriod(currentBorrowBean.getLoan_unit()));
@@ -169,21 +163,6 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
 
 
             rvMain.setAdapter(adapter);
-
-
-            easylayout.addEasyEvent(new EasyRefreshLayout.EasyEvent() {
-                @Override
-                public void onLoadMore() {
-                    easylayout.loadMoreComplete();
-                    pageNum += 1;
-                    mPresenter.getMoreData(NetConstantValues.MY_LOAN, pageNum + "", pageSize + "");
-                }
-
-                @Override
-                public void onRefreshing() {
-                    easylayout.refreshComplete();
-                }
-            });
 
 
         }
@@ -224,14 +203,14 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
 
     @Override
     public void requestError() {
-        swipeContainer.setVisibility(View.GONE);
         llRetry.setVisibility(View.VISIBLE);
+        llMain.setVisibility(View.GONE);
     }
 
     @Override
     public void requestSuccess() {
-        swipeContainer.setVisibility(View.VISIBLE);
         llRetry.setVisibility(View.GONE);
+        llMain.setVisibility(View.VISIBLE);
     }
 
     @OnClick(R.id.btn_retry)
@@ -241,12 +220,14 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
 
     @Override
     public void onLoadMore() {
-        swipeContainer.refreshComplete();
+        easylayout.loadMoreComplete();
+        pageNum += 1;
+        mPresenter.getMoreData(NetConstantValues.MY_LOAN, pageNum + "", pageSize + "");
     }
 
     @Override
     public void onRefreshing() {
-        swipeContainer.refreshComplete();
+        easylayout.refreshComplete();
         mPresenter.getData(NetConstantValues.MY_LOAN, "1", pageSize + "");
     }
 
