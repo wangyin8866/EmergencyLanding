@@ -35,8 +35,8 @@ public class RepaymentModel extends BaseModel {
     /**
      * 我的借款登陆
      */
+    @Deprecated
     public Observable<RepaymentSuccess> repaymentLogin(RequestBody body) {
-
         return api.repaymentLogin(body);
     }
 }

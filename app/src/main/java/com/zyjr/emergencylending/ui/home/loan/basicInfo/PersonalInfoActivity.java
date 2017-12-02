@@ -678,7 +678,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                         break;
 
                     case R.id.tv_scan_again:
-
+                        dialogCustom.dismiss();
                         break;
                 }
             }

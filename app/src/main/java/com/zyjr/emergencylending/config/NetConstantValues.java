@@ -9,8 +9,10 @@ public interface NetConstantValues {
     /**
      * 生产服务器地址
      */
-    String HOST_URL = "http://103.47.137.136:8002/";
-    String REPAYMENT_LOGIN_BASE = "http://103.47.137.136:8003/cffg_loan/";
+    String HOST_URL = "http://mobile.chinazyjr.com:8002/";
+    String REPAYMENT_LOGIN_BASE = "http://mobile.chinazyjr.com:8002/cffg_loan/";
+
+
 
     /**
      * 测试服务器
@@ -288,5 +290,10 @@ public interface NetConstantValues {
      * 订单做废件处理
      */
     String ROUTER_DELETE_LOAN_ORDER = "userBorrowService.deleteUserBorrow";
+
+    /**
+     * 不需要还款 H5地址
+     */
+    String NO_REPAY = HOST_URL + "jjth5/noRepay.html";
 
 }

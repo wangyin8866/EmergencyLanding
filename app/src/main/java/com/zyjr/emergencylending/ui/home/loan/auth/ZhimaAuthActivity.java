@@ -66,6 +66,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
     private String idCardNumber = "";
     private CustomProgressDialog loadingDialog = null;
     private String isClickLeft = "1"; // 是否可以点击;1可点击;0不可点击
+    private int ERROR_CODE = 0; // 加载webview 错误码
 
     @Override
     protected AuthHelperPresenter createPresenter() {
@@ -154,18 +155,7 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
         settings.setUseWideViewPort(true);
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
         mWebView.loadUrl(baseUrl);
-//        mWebView.setWebChromeClient(new WebChromeClient() {
-//            @Override
-//            public void onProgressChanged(WebView view, int newProgress) {
-//                if (newProgress == 100) {
-//                    dialog.dismiss();
-//                    isClickLeft = "1";
-//                } else {
-//                    dialog.show();
-//                    isClickLeft = "0";
-//                }
-//            }
-//        });
+        mWebView.setWebChromeClient(new WebChromeClient());
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -207,8 +197,18 @@ public class ZhimaAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHel
                     isClickLeft = "1";
                 } else {
                     isClickLeft = "0";
+                    // 连接超时或请求超时情况
+                    if (ERROR_CODE >= -16 && ERROR_CODE <= -1) {
+                        isClickLeft = "1";
+                    }
                 }
                 LogUtils.d(url + "【onPageFinished ---- 加载完成】");
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                ERROR_CODE = errorCode;
+                super.onReceivedError(view, errorCode, description, failingUrl);
             }
         });
     }

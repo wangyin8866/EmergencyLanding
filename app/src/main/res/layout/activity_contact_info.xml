@@ -296,6 +296,16 @@
                 android:textColor="@color/front_text_color_hint"
                 android:textSize="13dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="37dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:text="若个人信息发生变更，联系人可能需要重新填写"
+                android:textColor="@color/front_text_color_hint"
+                android:textSize="13dp" />
+
         </LinearLayout>
     </ScrollView>
 

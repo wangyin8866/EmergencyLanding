@@ -72,7 +72,8 @@ public class RepaymentPresenter extends BasePresenter<RepaymentView> {
 
             @Override
             public void onError(Throwable e) {
-                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+                getView().requestError();
+//                ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
             }
         }, mContext));
     }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.zyjr.emergencylending.ui.home.presenter.HandleFailPresenter;
 import com.zyjr.emergencylending.ui.home.presenter.LoanOrderPresenter;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.third.GlideUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,10 +47,10 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
     TextView tvApplyResult;
     @BindView(R.id.tv_apply_result_desc)
     TextView tvApplyResultDesc;
-    @BindView(R.id.btn_apply_qunadai)
-    Button btnApplyQunadai;
+    @BindView(R.id.iv_qunadai)
+    ImageView ivQunadai;
     @BindView(R.id.layout_recommend)
-    RelativeLayout layoutRecommend;
+    LinearLayout layoutRecommend;
 
     private String stepStatus = "";
     private String orderStatus = "";
@@ -57,6 +59,7 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
     private LoanOrderBean loanOrderBean = null;
     private String title = ""; // title
     private String pushUrl = ""; // 外推url
+    private String outPushImageUrl = ""; // 图片url
 
     @Override
     protected HandleFailPresenter createPresenter() {
@@ -73,10 +76,10 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
         initGetData();
     }
 
-    @OnClick({R.id.btn_apply_qunadai})
+    @OnClick({R.id.iv_qunadai})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.btn_apply_qunadai:  // 去哪贷
+            case R.id.iv_qunadai:  // 去哪贷
                 H5WebView.skipH5WebView(this, title, pushUrl);
                 break;
         }
@@ -94,6 +97,7 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
 
             }
         });
+
     }
 
     private void initGetData() {
@@ -107,6 +111,10 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
                 title = loanOrderBean.getOut_push_title();
                 if (StringUtil.isNotEmpty(pushUrl)) {
                     layoutRecommend.setVisibility(View.VISIBLE);
+                    outPushImageUrl = loanOrderBean.getOut_push_image_url();
+                    if (StringUtil.isNotEmpty(outPushImageUrl)) {
+                        GlideUtils.displayImage(this, outPushImageUrl, ivQunadai);
+                    }
                 }
                 String failStatus = intent.getStringExtra("failStatus");
                 String failDesc = intent.getStringExtra("failDesc");
@@ -119,6 +127,10 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
                 title = borrowBean.getOut_push_title();
                 if (StringUtil.isNotEmpty(pushUrl)) {
                     layoutRecommend.setVisibility(View.VISIBLE);
+                    outPushImageUrl = borrowBean.getOut_push_image_url();
+                    if (StringUtil.isNotEmpty(outPushImageUrl)) {
+                        GlideUtils.displayImage(this, outPushImageUrl, ivQunadai);
+                    }
                 }
                 tvApplyResult.setText(borrowBean.getLoan_msg());
                 deleteLoanOrder();
@@ -138,12 +150,12 @@ public class HandleFailActivity extends BaseActivity<HandleFailPresenter, Handle
 
     @Override
     public void onFail(String apiCode, String failMsg) {
-        ToastAlone.showShortToast(this, failMsg);
+//        ToastAlone.showShortToast(this, failMsg);
     }
 
     @Override
     public void onError(String apiCode, String errorMsg) {
-        ToastAlone.showShortToast(this, errorMsg);
+//        ToastAlone.showShortToast(this, errorMsg);
     }
 
     @Override

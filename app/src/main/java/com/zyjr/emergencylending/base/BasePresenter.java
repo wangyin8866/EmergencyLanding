@@ -93,7 +93,7 @@ public class BasePresenter<T> {
                     button.setEnabled(false);
                     DateUtil.countDown(button, "重新发送");
                 } else {
-                    ToastAlone.showShortToast(mContext, baseBean.getMsg());
+                    ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
             }
 

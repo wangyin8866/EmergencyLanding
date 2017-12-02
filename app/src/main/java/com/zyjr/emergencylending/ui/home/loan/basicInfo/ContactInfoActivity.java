@@ -497,10 +497,11 @@ public class ContactInfoActivity extends BaseActivity<ContactInfoPresenter, Cont
     @Override
     public void onSuccessGetPersonInfo(String apiCode, PersonalInfoBean bean) {
         marriageCode = bean.getMarriage();
-        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
-            // 已完成资料时,先获取用户信息(获取婚姻状态),在获取联系人资料
-            getContactInfo();
-        }
+//        if (StringUtil.isNotEmpty(status) && status.equals("1")) {
+//            // 已完成资料时,先获取用户信息(获取婚姻状态),在获取联系人资料
+//            getContactInfo();
+//        }
+        getContactInfo();
     }
 
     private void showError() {

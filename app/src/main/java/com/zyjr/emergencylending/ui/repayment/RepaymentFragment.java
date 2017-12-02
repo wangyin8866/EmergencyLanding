@@ -88,10 +88,10 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
                 //获取订单状态
                 mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
             } else {
-                WYUtils.loadHtmlNew(Config.NO_REPAY, webView, progressBar);
+                WYUtils.loadHtmlNew(NetConstantValues.NO_REPAY, webView, progressBar);
             }
         } else {
-            WYUtils.loadHtmlNew(Config.NO_REPAY, webView, progressBar);
+            WYUtils.loadHtmlNew(NetConstantValues.NO_REPAY, webView, progressBar);
         }
     }
 
@@ -109,7 +109,7 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
             // 加载还款html
             WYUtils.loadHtmlNew(repayUrl + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis(), webView, progressBar);
         } else {
-            WYUtils.loadHtmlNew(Config.NO_REPAY, webView, progressBar);
+            WYUtils.loadHtmlNew(NetConstantValues.NO_REPAY, webView, progressBar);
         }
 
     }
@@ -177,8 +177,8 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     }
 
     public void showRequestError(RelativeLayout llMain, LinearLayout llRetry) {
-        llMain.setVisibility(View.VISIBLE);
-        llRetry.setVisibility(View.GONE);
+        llMain.setVisibility(View.GONE);
+        llRetry.setVisibility(View.VISIBLE);
     }
 
 }
