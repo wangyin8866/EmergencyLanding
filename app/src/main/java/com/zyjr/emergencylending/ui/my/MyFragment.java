@@ -263,7 +263,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
             repayUrl = baseBean.getResult().getH5_url();
             H5WebView.skipH5WebView(mContext, "还款", repayUrl + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis());
         } else {
-            H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
+            H5WebView.skipH5WebView(mContext, "还款", NetConstantValues.NO_REPAY);
         }
     }
 
@@ -277,10 +277,10 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
                 //获取订单状态
                 mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
             } else {
-                H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
+                H5WebView.skipH5WebView(mContext, "还款", NetConstantValues.NO_REPAY);
             }
         } else {
-            H5WebView.skipH5WebView(mContext, "还款", Config.NO_REPAY);
+            H5WebView.skipH5WebView(mContext, "还款", NetConstantValues.NO_REPAY);
         }
 
     }
