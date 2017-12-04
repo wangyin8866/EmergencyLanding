@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.ImageViewTarget;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.umeng.socialize.ShareAction;
@@ -35,6 +36,7 @@ import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.QrBean;
 import com.zyjr.emergencylending.ui.home.presenter.QrPresenter;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
@@ -130,8 +132,6 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
 
     @OnClick({R.id.qr_save, R.id.qr_we_chat, R.id.circle_of_friends})
     public void onViewClicked(View view) {
-
-
         initShare();
         switch (view.getId()) {
             case R.id.qr_save:
@@ -192,7 +192,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
     public void saveImageToGallery(Context context, Bitmap bmp) {
         // 首先保存图片
         if (flag) {
-            handler.sendEmptyMessage(2);
+            handler.sendEmptyMessageDelayed(2, 200);
             return;
         }
         File appDir = new File(Environment.getExternalStorageDirectory(), "jijietong");
@@ -206,7 +206,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
             flag = bmp.compress(Bitmap.CompressFormat.PNG, 80, fos);
             fos.flush();
             fos.close();
-            handler.sendEmptyMessage(1);
+            handler.sendEmptyMessageDelayed(1, 200);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -278,9 +278,20 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
     @Override
     public void getCommonData(QrBean baseBean) {
         mUrl = baseBean.getResult().getUrl();
-        isSuccess = true;
-
-        Glide.with(mContext).load(mUrl).error(R.mipmap.erweim_img).into(ivQr);
+        Glide.with(mContext)
+                .load(mUrl)
+                .asBitmap()
+                .placeholder(R.mipmap.qr_loading)
+                .error(R.mipmap.qr_loading)
+                .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                    @Override
+                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                        //得到bitmap
+                        LogUtils.d("二维码图片加载完成");
+                        isSuccess = true;
+                        ivQr.setImageBitmap(bitmap);
+                    }
+                });
         String code = baseBean.getResult().getRecommendcode();
         List<TextView> textViews = new ArrayList<>();
         textViews.add(tv1);
