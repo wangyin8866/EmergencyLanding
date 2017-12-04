@@ -34,6 +34,7 @@ import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
 import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
 import com.zyjr.emergencylending.utils.SPUtils;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import java.util.ArrayList;
@@ -236,7 +237,9 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on}).startTurning(2000).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
+                    if(StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())){
+                        H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
+                    }
                 }
             });
         } else {
@@ -245,14 +248,15 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 public Object createHolder() {
                     return new LocalImageHolderView();
                 }
-            }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on})
-//                    .setOnItemClickListener(new OnItemClickListener() {
-//                @Override
-//                public void onItemClick(int position) {
-//                    H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
-//                }
-//            })
-            ;
+            }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on}).setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position) {
+                    if(StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())){
+                        // url 为空时不能点击
+                        H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
+                    }
+                }
+            });
         }
 
 
