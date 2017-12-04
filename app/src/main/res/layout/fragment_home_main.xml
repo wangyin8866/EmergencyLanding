@@ -20,7 +20,7 @@
                 android:id="@+id/banner"
                 android:layout_width="0dp"
                 android:layout_height="220dp"
-                android:background="#FFA200"
+                android:background="@mipmap/banner_default"
                 app:canLoop="true"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"

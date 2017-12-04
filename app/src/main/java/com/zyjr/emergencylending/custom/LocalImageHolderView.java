@@ -25,6 +25,6 @@ public class LocalImageHolderView implements Holder<String> {
 
     @Override
     public void UpdateUI(Context context, int position, String data) {
-        Glide.with(context).load(data).placeholder(R.mipmap.jjt_banner).error(R.mipmap.jjt_banner).into(imageView);
+        Glide.with(context).load(data).placeholder(R.mipmap.banner_default).error(R.mipmap.banner_default).into(imageView);
     }
 }

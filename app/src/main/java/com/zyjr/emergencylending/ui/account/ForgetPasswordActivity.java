@@ -10,8 +10,10 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding.view.RxView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
@@ -50,6 +52,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
     Button btnSure;
     private String phone, inviteCode, pwd, pwdAgain, sms;
     private Subscription subscription;
+    private String type = "";  // 修改密码类型 1：找回密码 2：修改密码
 
     @Override
     protected ForgetPresenter createPresenter() {
@@ -66,7 +69,7 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
 
     private void init() {
         String title = getIntent().getStringExtra("title");
-        final String type = getIntent().getStringExtra("type");
+        type = getIntent().getStringExtra("type");
 
         if ("修改密码".equals(title)) {
             etMobileNumber.setText(SPUtils.getString(mContext, Config.KEY_PHONE, ""));
@@ -137,10 +140,14 @@ public class ForgetPasswordActivity extends BaseActivity<ForgetPresenter, BaseVi
     @Override
     public void getCommonData(BaseBean baseBean) {
         if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
-            ToastAlone.showShortToast(mContext, "找回密码成功");
+            ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
+            if (Constants.TWO.equals(type)) {
+                // 进行修改密码操作时已经保存了一些数据,做变更操作时,需要清理
+                SPUtils.clear(BaseApplication.getContext());
+            }
             startActivity(new Intent(mContext, LoginActivity.class));
         } else {
-            ToastAlone.showShortToast(mContext, baseBean.getMsg());
+            ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
         }
     }
 
