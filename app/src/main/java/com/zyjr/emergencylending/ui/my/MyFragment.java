@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -59,9 +60,9 @@ import butterknife.Unbinder;
  */
 
 public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyView, TakePhoto.TakeResultListener, InvokeListener {
-    @BindView(R.id.iv_QR_code)
+    @BindView(R.id.QR_code)
     ImageView QRCode;
-    @BindView(R.id.iv_message_center)
+    @BindView(R.id.message_center)
     ImageView messageCenter;
     @BindView(R.id.user_pic)
     ImageView userPic;
@@ -78,6 +79,10 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     Unbinder unbinder;
     @BindView(R.id.user_name_phone)
     TextView userNamePhone;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
+    @BindView(R.id.ll_retry)
+    LinearLayout llRetry;
     private TakePhoto takePhoto;
     private InvokeParam invokeParam;
     private UserInfo.ResultBean resultBean;
@@ -155,13 +160,13 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         unbinder.unbind();
     }
 
-    @OnClick({R.id.layout_QR_code, R.id.layout_message_center, R.id.user_pic, R.id.user_info, R.id.my_borrow, R.id.my_repayment, R.id.help, R.id.setting})
+    @OnClick({R.id.QR_code, R.id.message_center, R.id.user_pic, R.id.user_info, R.id.my_borrow, R.id.my_repayment, R.id.help, R.id.setting, R.id.btn_retry})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.layout_QR_code:
+            case R.id.QR_code:
                 startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 break;
-            case R.id.layout_message_center:
+            case R.id.message_center:
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.user_pic:
@@ -182,6 +187,9 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
                 break;
             case R.id.setting:
                 startActivity(new Intent(mContext, SettingActivity.class));
+                break;
+            case R.id.btn_retry:
+                mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
                 break;
         }
     }
@@ -295,5 +303,22 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
     @Override
     public void loadRepayH5(H5Bean h5Bean) {
         H5WebView.skipH5WebView(mContext, "还款", h5Bean.getResult().getH5_url() + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis());
+    }
+
+    @Override
+    public void getCommonData(Object o) {
+
+    }
+
+    @Override
+    public void requestError() {
+        llMain.setVisibility(View.GONE);
+        llRetry.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void requestSuccess() {
+        llMain.setVisibility(View.VISIBLE);
+        llRetry.setVisibility(View.GONE);
     }
 }

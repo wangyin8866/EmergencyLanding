@@ -70,7 +70,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
     private List<MyBorrow.ResultBean.HisBorrowListBean> hisBorrowListBeans;
     private MyBorrow.ResultBean.CurrentBorrowBean currentBorrowBean;
     private int pageNum = 1;
-    private int pageSize = 5;
+    private int pageSize = 10;
 
     @Override
     protected MyBorrowPresenter createPresenter() {

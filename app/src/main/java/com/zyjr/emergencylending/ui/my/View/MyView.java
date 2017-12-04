@@ -1,5 +1,6 @@
 package com.zyjr.emergencylending.ui.my.View;
 
+import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
@@ -13,7 +14,7 @@ import com.zyjr.emergencylending.entity.UserInfo;
  * @date 2017/8/9
  */
 
-public interface MyView {
+public interface MyView extends BaseView{
 
     void getUserInfo(UserInfo userInfo);
 

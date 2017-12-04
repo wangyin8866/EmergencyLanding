@@ -6,187 +6,180 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="240dp"
-        android:background="@mipmap/my_top_bg"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center_vertical">
-
-            <LinearLayout
-                android:id="@+id/layout_QR_code"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:gravity="left">
-
-                <ImageView
-                    android:id="@+id/iv_QR_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="36dp"
-                    android:src="@mipmap/icon_qrcode" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_message_center"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:gravity="right">
-
-                <ImageView
-                    android:id="@+id/iv_message_center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginTop="36dp"
-                    android:src="@mipmap/icon_message" />
-
-            </LinearLayout>
-        </RelativeLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@mipmap/head_portrait_bg">
-
-            <ImageView
-                android:id="@+id/user_pic"
-                android:layout_width="76dp"
-                android:layout_height="76dp"
-                android:layout_gravity="center"
-                android:src="@mipmap/head_portrait" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/user_name_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="*** ***********"
-            android:textColor="#FFFFFF"
-            android:textSize="15sp" />
-    </LinearLayout>
-
-    <LinearLayout
+        android:id="@+id/ll_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/user_info"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:drawableLeft="@mipmap/my_icon_data"
-            android:drawablePadding="20dp"
-            android:drawableRight="@mipmap/arrow_right"
-            android:gravity="center_vertical"
-            android:text="个人资料"
-            android:textColor="#333333"
-            android:textSize="14sp" />
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:background="#F5F5F5" />
+            android:layout_height="240dp"
+            android:background="@mipmap/my_top_bg"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/my_borrow"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:drawableLeft="@mipmap/my_icon_loan"
-            android:drawablePadding="18dp"
-            android:drawableRight="@mipmap/arrow_right"
-            android:gravity="center_vertical"
-            android:text="我的借款"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="36dp"
+                android:gravity="center_vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:background="#F5F5F5" />
+                <ImageView
+                    android:id="@+id/QR_code"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="15dp"
+                    android:src="@mipmap/icon_qrcode" />
 
-        <TextView
-            android:id="@+id/my_repayment"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:drawableLeft="@mipmap/my_icon_repayment"
-            android:drawablePadding="20dp"
-            android:drawableRight="@mipmap/arrow_right"
-            android:gravity="center_vertical"
-            android:text="我要还款"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/message_center"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@mipmap/icon_message" />
+            </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:background="#F5F5F5" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@mipmap/head_portrait_bg">
 
-        <TextView
-            android:id="@+id/help"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:drawableLeft="@mipmap/icon_explain"
-            android:drawablePadding="22dp"
-            android:drawableRight="@mipmap/arrow_right"
-            android:gravity="center_vertical"
-            android:text="帮助说明"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+                <ImageView
+                    android:id="@+id/user_pic"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/head_portrait" />
+            </FrameLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:background="#F5F5F5" />
+            <TextView
+                android:id="@+id/user_name_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="*** ***********"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/setting"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:drawableLeft="@mipmap/my_icon_set"
-            android:drawablePadding="21dp"
-            android:drawableRight="@mipmap/arrow_right"
-            android:gravity="center_vertical"
-            android:text="设置"
-            android:textColor="#333333"
-            android:textSize="14sp" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp"
-            android:background="#F5F5F5" />
+            <TextView
+                android:id="@+id/user_info"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:drawableLeft="@mipmap/my_icon_data"
+                android:drawablePadding="20dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center_vertical"
+                android:text="个人资料"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/my_borrow"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:drawableLeft="@mipmap/my_icon_loan"
+                android:drawablePadding="18dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center_vertical"
+                android:text="我的借款"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/my_repayment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:drawableLeft="@mipmap/my_icon_repayment"
+                android:drawablePadding="20dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center_vertical"
+                android:text="我要还款"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/help"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:drawableLeft="@mipmap/icon_explain"
+                android:drawablePadding="22dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center_vertical"
+                android:text="帮助说明"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:background="#F5F5F5" />
+
+            <TextView
+                android:id="@+id/setting"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:drawableLeft="@mipmap/my_icon_set"
+                android:drawablePadding="21dp"
+                android:drawableRight="@mipmap/arrow_right"
+                android:gravity="center_vertical"
+                android:text="设置"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp"
+                android:background="#F5F5F5" />
+        </LinearLayout>
     </LinearLayout>
 
+    <include
+        layout="@layout/layout_net_loading_error"
+        android:visibility="gone" />
 </LinearLayout>

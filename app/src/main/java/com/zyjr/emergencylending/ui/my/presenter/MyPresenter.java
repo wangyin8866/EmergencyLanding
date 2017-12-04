@@ -55,6 +55,7 @@ public class MyPresenter extends BasePresenter<MyView> {
             public void onNext(UserInfo baseBean) {
                 if (Config.CODE_SUCCESS.equals(baseBean.getFlag())) {
                         getView().getUserInfo(baseBean);
+                        getView().requestSuccess();
                 } else {
                     ToastAlone.showShortToast(mContext, baseBean.getPromptMsg());
                 }
@@ -63,6 +64,7 @@ public class MyPresenter extends BasePresenter<MyView> {
             @Override
             public void onError(Throwable e) {
                 ToastAlone.showShortToast(mContext, Config.TIP_NET_ERROR);
+                getView().requestError();
             }
         }, mContext));
     }
