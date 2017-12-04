@@ -13,7 +13,7 @@ import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.model.RepaymentModel;
 import com.zyjr.emergencylending.model.account.AccountModel;
-import com.zyjr.emergencylending.ui.repayment.View.RepaymentView;
+import com.zyjr.emergencylending.ui.repayment.view.RepaymentView;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
 import okhttp3.RequestBody;

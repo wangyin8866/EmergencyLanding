@@ -1,4 +1,4 @@
-package com.zyjr.emergencylending.ui.repayment.View;
+package com.zyjr.emergencylending.ui.repayment.view;
 
 import com.zyjr.emergencylending.base.BaseView;
 import com.zyjr.emergencylending.entity.EffectiveOrderBean;

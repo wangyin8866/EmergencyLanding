@@ -23,12 +23,11 @@ import com.zyjr.emergencylending.entity.MyBorrow;
 import com.zyjr.emergencylending.entity.RepaymentLogin;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
-import com.zyjr.emergencylending.ui.repayment.View.RepaymentView;
+import com.zyjr.emergencylending.ui.repayment.view.RepaymentView;
 import com.zyjr.emergencylending.ui.repayment.presenter.RepaymentPresenter;
 import com.zyjr.emergencylending.utils.HDes3;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
-import com.zyjr.emergencylending.utils.ToastAlone;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
