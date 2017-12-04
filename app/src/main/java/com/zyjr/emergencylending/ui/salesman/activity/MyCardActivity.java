@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
@@ -23,9 +27,11 @@ import com.umeng.socialize.media.UMWeb;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
-import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ToastAlone;
+
+import java.lang.reflect.Field;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +45,14 @@ import butterknife.ButterKnife;
 public class MyCardActivity extends BaseActivity {
 
 
-    @BindView(R.id.top_bar)
-    TopBar topBar;
+    @BindView(R.id.tool_bar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_center_title)
+    TextView tvTitle;
+    @BindView(R.id.layout_left_icon)
+    LinearLayout layoutLeftIcon;
+    @BindView(R.id.layout_right_icon)
+    LinearLayout layoutRightIcon;
     @BindView(R.id.web_view)
     WebView mWebView;
     @BindView(R.id.progress_bar)
@@ -62,13 +74,16 @@ public class MyCardActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_card);
         ButterKnife.bind(this);
+        tvTitle.setText("名片");
+        tvTitle.setTextColor(getResources().getColor(R.color.white));
         mImmersionBar = ImmersionBar.with(this);
-        mImmersionBar.statusBarDarkFont(true).init();
+        ImmersionBar.with(this).titleBar(toolbar, false).transparentStatusBar().statusBarDarkFont(true, 0.2f).init();
 
         mUrl = getIntent().getStringExtra("url");
         WebSettings settings = mWebView.getSettings();
@@ -115,18 +130,42 @@ public class MyCardActivity extends BaseActivity {
             }
         });
 
+        mWebView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                LogUtils.d("webview 垂直滑动距离:" + scrollY);
+                LogUtils.d("toolbar 控件高度:" + getToolbarHeight());
+                if (scrollY >= getToolbarHeight()) {
+                    ImmersionBar.with(MyCardActivity.this)
+                            .addViewSupportTransformColor(toolbar, R.color.auth_success)
+                            .barAlpha(1.0f)
+                            .init();
+                } else {
+                    float alpha = (float) scrollY / getToolbarHeight();
+                    LogUtils.d("透明度:" + alpha + "f");
+                    ImmersionBar.with(MyCardActivity.this)
+                            .addViewSupportTransformColor(toolbar, R.color.auth_success)
+                            .barAlpha(alpha)
+                            .init();
+                }
+            }
+        });
         initListener();
     }
 
     private void initListener() {
-        topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
+
+        layoutLeftIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void OnLeftButtonClicked() {
+            public void onClick(View v) {
                 finish();
             }
+        });
 
+
+        layoutRightIcon.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void OnRightButtonClicked() {
+            public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= 23) {
                     String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
                     ActivityCompat.requestPermissions(MyCardActivity.this, mPermissionList, 123);
@@ -176,7 +215,7 @@ public class MyCardActivity extends BaseActivity {
                                 customerDialog.dismiss();
                                 new ShareAction(MyCardActivity.this).withMedia(web2).setPlatform(SHARE_MEDIA.SINA)
                                         .setCallback(umShareListener).share();
-//
+
                                 break;
                             case R.id.share_close:
                                 customerDialog.dismiss();
@@ -186,6 +225,7 @@ public class MyCardActivity extends BaseActivity {
                 }).show();
             }
         });
+
     }
 
     private void initShare() {
@@ -199,6 +239,7 @@ public class MyCardActivity extends BaseActivity {
         web2.setTitle("一个用钱满足你心愿的APP");
         web2.setThumb(thumb2);
         web2.setDescription("震惊 | 急借通提速啦，一张身份证，30分钟下款，最高30000元！");
+
     }
 
     @Override
@@ -253,5 +294,22 @@ public class MyCardActivity extends BaseActivity {
         super.onDestroy();
         mImmersionBar.destroy();
         UMShareAPI.get(this).release();
+        try {
+            if (mWebView != null) {
+                mWebView.removeAllViews();
+                mWebView.destroy();
+                mWebView = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
+    private int getToolbarHeight() {
+        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        toolbar.measure(w, h);
+        return toolbar.getMeasuredHeight();
+    }
+
 }

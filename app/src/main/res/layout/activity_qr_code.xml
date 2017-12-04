@@ -162,7 +162,7 @@
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
-                android:src="@mipmap/erweim_img" />
+                android:src="@mipmap/qr_loading" />
         </FrameLayout>
 
         <TextView
