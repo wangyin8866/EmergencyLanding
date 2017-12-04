@@ -180,4 +180,23 @@ public class BaseModel {
                 .subscribe(subscriber);
         lifeSubscription.bindSubscription(subscription);
     }
+
+    static <T> void invokeMerge(LifeSubscription lifeSubscription, Subscriber<T> subscriber, Observable... observables) {
+        Observable observable = null;
+        switch (observables.length) {
+            case 2:
+                observable = Observable.merge(observables[0], observables[1]);
+                break;
+            case 3:
+                observable = Observable.merge(observables[0], observables[1], observables[2]);
+                break;
+            case 4:
+                observable = Observable.merge(observables[0], observables[1], observables[2], observables[3]);
+                break;
+        }
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+        lifeSubscription.bindSubscription(subscription);
+    }
 }

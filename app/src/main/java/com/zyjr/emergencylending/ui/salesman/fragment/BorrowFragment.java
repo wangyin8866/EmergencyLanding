@@ -211,6 +211,7 @@ public class BorrowFragment extends BaseFragment<BorrowPresenter, MessageView> i
 
     @Override
     public void onRefreshing() {
+
         easyRefreshLayout.refreshComplete();
         mPresenter.getNoticeList(NetConstantValues.NOTICE_LIST, "3");
         mPresenter.getMessage(NetConstantValues.USER_NEWS, "1", "15");

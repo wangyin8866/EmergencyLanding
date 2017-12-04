@@ -245,12 +245,14 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 public Object createHolder() {
                     return new LocalImageHolderView();
                 }
-            }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on}).setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
-                }
-            });
+            }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on})
+//                    .setOnItemClickListener(new OnItemClickListener() {
+//                @Override
+//                public void onItemClick(int position) {
+//                    H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
+//                }
+//            })
+            ;
         }
 
 

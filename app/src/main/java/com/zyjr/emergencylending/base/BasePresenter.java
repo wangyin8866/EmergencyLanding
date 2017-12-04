@@ -44,6 +44,10 @@ public class BasePresenter<T> {
         BaseModel.invoke(lifeSubscription, observable, subscriber);
     }
 
+    protected<T>  void invokeMerge(Subscriber<T> subscriber, Observable... observables) {
+        BaseModel.invokeMerge(lifeSubscription, subscriber, observables);
+    }
+
     public BasePresenter() {
         super();
     }
@@ -126,8 +130,8 @@ public class BasePresenter<T> {
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
                     } else if (url_type.equals(Config.H5_URL_MYCARD)) {
                         MyCardActivity.skipH5WebView(mContext, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
-                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") );
-                    }else {
+                                + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, ""));
+                    } else {
                         H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, ""));
                     }

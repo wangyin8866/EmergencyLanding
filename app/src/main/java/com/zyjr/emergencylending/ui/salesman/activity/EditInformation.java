@@ -107,7 +107,7 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
         userPosition.setText(resultBean.getPosition());
         userPhone.setText(resultBean.getPhone());
 
-        Glide.with(this).load(resultBean.getHead_url()).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        Glide.with(this).load(resultBean.getHead_url()).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
             public void OnLeftButtonClicked() {
@@ -166,7 +166,7 @@ public class EditInformation extends BaseActivity<EditInformationPresenter, Base
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
 
-        Glide.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        Glide.with(this).load(bytes).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 
     @Override

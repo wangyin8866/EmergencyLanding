@@ -170,23 +170,31 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
             case 1:
                 type1.setBackgroundResource(R.drawable.tv_type_shape_gradient_mine_select);
                 type1.setTextColor(Color.parseColor("#FFA200"));
+                mPresenter.fetch(NetConstantValues.MY_PERFORMANCE, type + "",
+                        NetConstantValues.RANKING_LIST,
+                        NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + ""
+                );
                 break;
             case 2:
                 type2.setBackgroundResource(R.drawable.tv_type_shape_gradient_mine_select);
                 type2.setTextColor(Color.parseColor("#FFA200"));
+                mPresenter.fetch(NetConstantValues.MY_PERFORMANCE, type + "",
+                        NetConstantValues.RANKING_LIST
+                );
                 break;
             case 3:
                 type3.setBackgroundResource(R.drawable.tv_type_shape_gradient_mine_select);
                 type3.setTextColor(Color.parseColor("#FFA200"));
+                mPresenter.fetch(NetConstantValues.MY_PERFORMANCE, type + "",
+                        NetConstantValues.RANKING_LIST
+                );
                 break;
         }
-        mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
-        mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + "");
-        mPresenter.rankList(NetConstantValues.RANKING_LIST);
     }
 
     @Override
     public void onRefresh() {
+        pageNum = 1;
         mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", "1", pageSize + "");
     }
 
@@ -235,7 +243,6 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
             //定位
             xlv.setSelection(clerkRecordListBeans.size() - baseBean.getResult().getClerkRecordList().size());
         } else {
-            pageNum = 1;
             AppToast.makeShortToast(mContext, "没有数据了");
             xlv.setPullLoadEnable(false);
         }

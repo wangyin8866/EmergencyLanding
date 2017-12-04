@@ -21,13 +21,8 @@ import com.zyjr.emergencylending.ui.home.View.MessageView;
 import com.zyjr.emergencylending.ui.home.presenter.MessagePresenter;
 import com.zyjr.emergencylending.utils.AppToast;
 import com.zyjr.emergencylending.utils.LogUtils;
-import com.zyjr.emergencylending.utils.ToastAlone;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -164,7 +159,6 @@ public class MessageActivity extends BaseActivity<MessagePresenter, MessageView>
     public void getMessageMore(final MessageBean messageBean) {
 
         if (messageBean.getResult().getResultList().size() == 0) {
-            pageNum -= 1;
             AppToast.makeShortToast(mContext, "没有数据了");
         } else {
 

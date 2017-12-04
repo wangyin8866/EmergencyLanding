@@ -18,6 +18,7 @@ public class RankBean {
      * lockerFlag : false
      */
     private String promptMsg;
+
     public String getPromptMsg() {
         return promptMsg;
     }
@@ -25,6 +26,7 @@ public class RankBean {
     public void setPromptMsg(String promptMsg) {
         this.promptMsg = promptMsg;
     }
+
     private String flag;
     private String msg;
     private Object ext;
@@ -139,7 +141,7 @@ public class RankBean {
 
                 private String custom_id;
                 private String custom_name;
-                private int rank_num;
+                private String rank_num;
                 private String phone;
                 private String head_url;
                 private double lend_total_amount;
@@ -162,11 +164,11 @@ public class RankBean {
                     this.custom_name = custom_name;
                 }
 
-                public int getRank_num() {
+                public String getRank_num() {
                     return rank_num;
                 }
 
-                public void setRank_num(int rank_num) {
+                public void setRank_num(String rank_num) {
                     this.rank_num = rank_num;
                 }
 
@@ -225,7 +227,7 @@ public class RankBean {
 
                 private String custom_id;
                 private String custom_name;
-                private int rank_num;
+                private String rank_num;
                 private String phone;
                 private String head_url;
                 private double lend_total_amount;
@@ -248,11 +250,11 @@ public class RankBean {
                     this.custom_name = custom_name;
                 }
 
-                public int getRank_num() {
+                public String getRank_num() {
                     return rank_num;
                 }
 
-                public void setRank_num(int rank_num) {
+                public void setRank_num(String rank_num) {
                     this.rank_num = rank_num;
                 }
 
@@ -433,7 +435,7 @@ public class RankBean {
 
                 private String custom_id;
                 private String custom_name;
-                private int rank_num;
+                private String rank_num;
                 private String phone;
                 private String head_url;
                 private int lend_total_amount;
@@ -456,11 +458,11 @@ public class RankBean {
                     this.custom_name = custom_name;
                 }
 
-                public int getRank_num() {
+                public String getRank_num() {
                     return rank_num;
                 }
 
-                public void setRank_num(int rank_num) {
+                public void setRank_num(String rank_num) {
                     this.rank_num = rank_num;
                 }
 
@@ -519,7 +521,7 @@ public class RankBean {
 
                 private String custom_id;
                 private String custom_name;
-                private int rank_num;
+                private String rank_num;
                 private String phone;
                 private String head_url;
                 private int lend_total_amount;
@@ -542,11 +544,11 @@ public class RankBean {
                     this.custom_name = custom_name;
                 }
 
-                public int getRank_num() {
+                public String getRank_num() {
                     return rank_num;
                 }
 
-                public void setRank_num(int rank_num) {
+                public void setRank_num(String rank_num) {
                     this.rank_num = rank_num;
                 }
 

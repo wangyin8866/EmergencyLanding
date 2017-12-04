@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.google.gson.Gson;
 import com.jph.takephoto.app.TakePhoto;
 import com.jph.takephoto.app.TakePhotoImpl;
 import com.jph.takephoto.model.InvokeParam;
@@ -32,7 +31,6 @@ import com.zyjr.emergencylending.entity.BaseBean;
 import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.H5Bean;
 import com.zyjr.emergencylending.entity.MyBorrow;
-import com.zyjr.emergencylending.entity.RepaymentLogin;
 import com.zyjr.emergencylending.entity.RepaymentSuccess;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
@@ -40,7 +38,6 @@ import com.zyjr.emergencylending.ui.home.MessageActivity;
 import com.zyjr.emergencylending.ui.home.QrCodeActivity;
 import com.zyjr.emergencylending.ui.my.View.MyView;
 import com.zyjr.emergencylending.ui.my.presenter.MyPresenter;
-import com.zyjr.emergencylending.utils.HDes3;
 import com.zyjr.emergencylending.utils.ImageUtils;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.PhotoUtils;
@@ -54,8 +51,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 
 
 /**
@@ -253,7 +248,7 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         mBitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
         byte[] bytes = baos.toByteArray();
 
-        Glide.with(this).load(bytes).placeholder(R.mipmap.billboard_head).error(R.mipmap.billboard_head).transform(new GlideCircleTransform(mContext)).into(userPic);
+        Glide.with(this).load(bytes).placeholder(R.mipmap.head_portrait).error(R.mipmap.head_portrait).transform(new GlideCircleTransform(mContext)).into(userPic);
     }
 
     @Override

@@ -196,7 +196,6 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
             //定位
             moveToPosition(new LinearLayoutManager(this), rvMain, hisBorrowListBeans.size() - myBorrow.getResult().getHis_borrow_list().size());
         } else {
-            pageNum = 1;
             AppToast.makeShortToast(mContext, "没有数据了");
         }
     }
@@ -227,6 +226,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
 
     @Override
     public void onRefreshing() {
+        pageNum = 1;
         easylayout.refreshComplete();
         mPresenter.getData(NetConstantValues.MY_LOAN, "1", pageSize + "");
     }
