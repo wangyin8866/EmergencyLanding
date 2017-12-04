@@ -42,6 +42,7 @@ import android.widget.TextView;
 
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.ActivityCollector;
+import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.config.Config;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
 
@@ -314,30 +315,31 @@ public class WYUtils {
         //打开DOM储存
         settings.setDomStorageEnabled(true);
         mWebView.loadUrl(url);
-        mWebView.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                mProgressBar.setVisibility(View.GONE);
-                super.onPageFinished(view, url);
-            }
-
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.proceed(); // 接受所有网站的证书
-            }
-        });
+//        mWebView.setWebViewClient(new WebViewClient() {
+//
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                //处理http和https开头的url
+//                view.loadUrl(url);
+//                return true;
+//            }
+//
+//            @Override
+//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+//                super.onPageStarted(view, url, favicon);
+//            }
+//
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                mProgressBar.setVisibility(View.GONE);
+//                super.onPageFinished(view, url);
+//            }
+//
+//            @Override
+//            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                handler.proceed(); // 接受所有网站的证书
+//            }
+//        });
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {

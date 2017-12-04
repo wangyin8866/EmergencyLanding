@@ -99,12 +99,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         if (Constants.update) {
             WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE, false);
         }
-        //banner
-        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
-        //是否有消息
-        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
-            mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
-        }
+        mPresenter.multiRequst(NetConstantValues.HOME_AD, SPUtils.getBoolean(mContext, Config.KEY_LOGIN), NetConstantValues.GET_BASIC_INFO);
     }
 
     protected void init() {
@@ -113,7 +108,6 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             auto_roll_data.clear();
         }
         auto_roll_data = new ArrayList<>();
-
 
         for (int i = 0; i < surname.length; i++) {
 
@@ -128,11 +122,10 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             } else {
                 String inviteFamilyName = surname[WYUtils.getOneRandom(surname.length)];
                 String inviteSex = sex[WYUtils.getOneRandom(sex.length)];
-                auto_roll_data.add(CarouselFamilyName + CarouselSex + "  成功邀请  " + inviteFamilyName + inviteSex);
+                auto_roll_data.add(CarouselFamilyName + CarouselSex + "  成功邀请  " + inviteFamilyName + inviteSex + "  马上邀请 >  ");
             }
 
         }
-
 
         showAutoRollStrings();
 
@@ -237,7 +230,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on}).startTurning(2000).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    if(StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())){
+                    if (StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())) {
                         H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
                     }
                 }
@@ -251,7 +244,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
             }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on}).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(int position) {
-                    if(StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())){
+                    if (StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())) {
                         // url 为空时不能点击
                         H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
                     }
@@ -303,12 +296,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void onRefreshing() {
         easyRefreshLayout.refreshComplete();
-        //banner
-        mPresenter.getHomeAds(NetConstantValues.HOME_AD);
 
-        //是否有消息
-        if (SPUtils.getBoolean(mContext, Config.KEY_LOGIN)) {
-            mPresenter.getBasicInfo(NetConstantValues.GET_BASIC_INFO);
-        }
+        mPresenter.multiRequst(NetConstantValues.HOME_AD, SPUtils.getBoolean(mContext, Config.KEY_LOGIN), NetConstantValues.GET_BASIC_INFO);
     }
 }

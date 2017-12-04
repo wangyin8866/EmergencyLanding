@@ -59,9 +59,9 @@ import butterknife.Unbinder;
  */
 
 public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyView, TakePhoto.TakeResultListener, InvokeListener {
-    @BindView(R.id.QR_code)
+    @BindView(R.id.iv_QR_code)
     ImageView QRCode;
-    @BindView(R.id.message_center)
+    @BindView(R.id.iv_message_center)
     ImageView messageCenter;
     @BindView(R.id.user_pic)
     ImageView userPic;
@@ -155,13 +155,13 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         unbinder.unbind();
     }
 
-    @OnClick({R.id.QR_code, R.id.message_center, R.id.user_pic, R.id.user_info, R.id.my_borrow, R.id.my_repayment, R.id.help, R.id.setting})
+    @OnClick({R.id.layout_QR_code, R.id.layout_message_center, R.id.user_pic, R.id.user_info, R.id.my_borrow, R.id.my_repayment, R.id.help, R.id.setting})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.QR_code:
+            case R.id.layout_QR_code:
                 startActivity(new Intent(getActivity(), QrCodeActivity.class));
                 break;
-            case R.id.message_center:
+            case R.id.layout_message_center:
                 startActivity(new Intent(getActivity(), MessageActivity.class));
                 break;
             case R.id.user_pic:

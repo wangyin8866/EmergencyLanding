@@ -400,7 +400,7 @@ public class WriteInfoMainActivity extends BaseActivity<WriteInfoPresenter, Writ
             // 业务员帮录件获取门店信息(未匹配到支持城市)
             Intent intent = new Intent(this, ClerkApplyResultActivity.class);
             intent.putExtra("flag", flag);
-            intent.putExtra("msg", failMsg);
+            intent.putExtra("msg", "未匹配到支持城市，请核查资料");
             startActivity(intent);
         } else if (Constants.SUBMIT_LOAN_INFORMATION.equals(apiCode) && "0".equals(product_id)) {
             // 线上借款预检失败

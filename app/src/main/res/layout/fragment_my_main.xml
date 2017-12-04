@@ -15,23 +15,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:layout_marginTop="36dp"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/QR_code"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginLeft="15dp"
-                android:src="@mipmap/icon_qrcode" />
+            <LinearLayout
+                android:id="@+id/layout_QR_code"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="left">
 
-            <ImageView
-                android:id="@+id/message_center"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                <ImageView
+                    android:id="@+id/iv_QR_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="36dp"
+                    android:src="@mipmap/icon_qrcode" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_message_center"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:src="@mipmap/icon_message" />
+                android:gravity="right">
+
+                <ImageView
+                    android:id="@+id/iv_message_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="36dp"
+                    android:src="@mipmap/icon_message" />
+
+            </LinearLayout>
         </RelativeLayout>
 
         <FrameLayout
