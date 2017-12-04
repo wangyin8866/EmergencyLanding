@@ -1,12 +1,12 @@
 package com.zyjr.emergencylending.utils;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.jph.takephoto.app.TakePhoto;
@@ -15,9 +15,10 @@ import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TakePhotoOptions;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
-import com.zyjr.emergencylending.ui.my.MyFragment;
 
 import java.io.File;
+
+import static android.support.v4.app.ActivityCompat.requestPermissions;
 
 /**
  * Created by wangyin on 2017/10/23.
@@ -39,7 +40,7 @@ public class PhotoUtils {
                         break;
                     case R.id.tv_picture:
                         dialog.dismiss();
-                        PhotoUtils.toPhone(mContext, new MyFragment(), takePhoto);
+                        PhotoUtils.toPhone(mContext, takePhoto);
                         break;
                     case R.id.tv_album:
                         dialog.dismiss();
@@ -53,7 +54,7 @@ public class PhotoUtils {
     /**
      * 拍照
      */
-    public static void toPhone(Context mContext, Fragment fragment, TakePhoto takePhoto) {
+    public static void toPhone(Context mContext, TakePhoto takePhoto) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             int hasCamera = mContext.checkSelfPermission(Manifest.permission.CAMERA);
             int hasWsd = mContext.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -63,7 +64,7 @@ public class PhotoUtils {
                 takePhoto.onEnableCompress(compressConfig, true);
                 takePhoto.onPickFromCaptureWithCrop(handlerFile(), getCropOptions());
             } else {
-                fragment.requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
+                requestPermissions((Activity) mContext, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
             }
         } else {
             takePhoto.setTakePhotoOptions(new TakePhotoOptions.Builder().setWithOwnGallery(true).create());

@@ -115,6 +115,8 @@ public class MyFragment extends BaseFragment<MyPresenter, MyView> implements MyV
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.TPermissionType type = PermissionManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
         PermissionManager.handlePermissionsResult(getActivity(), type, invokeParam, this);
+
+
     }
 
     /**
