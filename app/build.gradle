@@ -100,11 +100,7 @@ android {
         }
 
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
+
     productFlavors {
         W_JJTGW {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_JJTGW"]
