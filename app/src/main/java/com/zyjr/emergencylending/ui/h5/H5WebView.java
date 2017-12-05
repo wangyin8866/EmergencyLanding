@@ -10,6 +10,7 @@ import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.TopBar;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -43,6 +44,15 @@ public class H5WebView extends BaseActivity {
         context.startActivity(intent);
     }
 
+    // 包含拨打电话
+    public static void skipH5WebViewIncludeCall(Context context, String title, String url) {
+        Intent intent = new Intent(context, H5WebView.class);
+        intent.putExtra("title", title);
+        intent.putExtra("url", url);
+        intent.putExtra("isInclude", "1");
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,10 +62,10 @@ public class H5WebView extends BaseActivity {
     }
 
 
-
     private void init() {
         String title = getIntent().getStringExtra("title");
         String url = getIntent().getStringExtra("url");
+        String isInclude = getIntent().getStringExtra("isInclude");
         topBar.setTitle(title);
         topBar.setOnItemClickListener(new TopBar.OnItemClickListener() {
             @Override
@@ -68,7 +78,11 @@ public class H5WebView extends BaseActivity {
 
             }
         });
-//        WYUtils.loadHtml(url, webView, progressBar);
-        WYUtils.loadHtmlNew(url, webView, progressBar);
+        if (StringUtil.isNotEmpty(isInclude)) {
+            WYUtils.loadHtmlIncludeCall(url, webView, progressBar);
+        } else {
+            WYUtils.loadHtmlNew(url, webView, progressBar);
+        }
+
     }
 }

@@ -278,7 +278,6 @@ public class WYUtils {
      */
     @SuppressLint("SetJavaScriptEnabled")
     public static void loadHtmlNew(final String url, final WebView mWebView, final ProgressBar mProgressBar) {
-
         LogUtils.e("webViewUrl", url);
         WebSettings settings = mWebView.getSettings();
         /**
@@ -296,7 +295,6 @@ public class WYUtils {
          */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-
         }
         mWebView.setDrawingCacheEnabled(true);
         settings.setJavaScriptEnabled(true);
@@ -315,31 +313,31 @@ public class WYUtils {
         //打开DOM储存
         settings.setDomStorageEnabled(true);
         mWebView.loadUrl(url);
-//        mWebView.setWebViewClient(new WebViewClient() {
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                //处理http和https开头的url
-//                view.loadUrl(url);
-//                return true;
-//            }
-//
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                super.onPageStarted(view, url, favicon);
-//            }
-//
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                mProgressBar.setVisibility(View.GONE);
-//                super.onPageFinished(view, url);
-//            }
-//
-//            @Override
-//            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-//                handler.proceed(); // 接受所有网站的证书
-//            }
-//        });
+        mWebView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                //处理http和https开头的url
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                mProgressBar.setVisibility(View.GONE);
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed(); // 接受所有网站的证书
+            }
+        });
         mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
@@ -364,6 +362,48 @@ public class WYUtils {
 //            }
 //        });
     }
+
+
+    /**
+     * webView加载(包含打电话)
+     */
+    @SuppressLint("SetJavaScriptEnabled")
+    public static void loadHtmlIncludeCall(final String url, final WebView mWebView, final ProgressBar mProgressBar) {
+        LogUtils.e("loadHtmlIncludeCall---webViewUrl", url);
+        WebSettings settings = mWebView.getSettings();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mWebView.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        mWebView.setDrawingCacheEnabled(true);
+        settings.setJavaScriptEnabled(true);
+        // 取消滚动条
+        mWebView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        // 触摸焦点起作用
+        mWebView.requestFocus();
+        settings.setSavePassword(false);// 不弹窗浏览器是否保存密码
+        settings.setDefaultTextEncodingName("utf-8");
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        // 自动适应屏幕尺寸
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
+        settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NARROW_COLUMNS);
+        //打开DOM储存
+        settings.setDomStorageEnabled(true);
+        mWebView.loadUrl(url);
+        mWebView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress == 100) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+
 
     /**
      * 拨打客服电话

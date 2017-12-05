@@ -70,7 +70,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
     private List<MyBorrow.ResultBean.HisBorrowListBean> hisBorrowListBeans;
     private MyBorrow.ResultBean.CurrentBorrowBean currentBorrowBean;
     private int pageNum = 1;
-    private int pageSize = 10;
+    private int pageSize = 20;
 
     @Override
     protected MyBorrowPresenter createPresenter() {
@@ -196,6 +196,7 @@ public class MyBorrowActivity extends BaseActivity<MyBorrowPresenter, MyBorrowVi
             //定位
             moveToPosition(new LinearLayoutManager(this), rvMain, hisBorrowListBeans.size() - myBorrow.getResult().getHis_borrow_list().size());
         } else {
+            pageNum -= 1;
             AppToast.makeShortToast(mContext, "没有数据了");
         }
     }

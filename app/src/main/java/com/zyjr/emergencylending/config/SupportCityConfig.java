@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Created by szx on 16/7/26.
  */
+@Deprecated
 public class SupportCityConfig {
     private static SupportCityConfig instance;
 

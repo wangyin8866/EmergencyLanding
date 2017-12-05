@@ -34,9 +34,9 @@
     <application
         android:name=".base.BaseApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <!--登录-->
@@ -207,7 +207,7 @@
         <!--友盟-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="570f63f7e0f55a21be000ce8" />
+            android:value="58107c9c717c190463000384" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="${UMENG_CHANNEL_VALUE}" />

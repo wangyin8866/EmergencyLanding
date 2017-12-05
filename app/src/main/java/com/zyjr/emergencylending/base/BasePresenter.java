@@ -44,7 +44,7 @@ public class BasePresenter<T> {
         BaseModel.invoke(lifeSubscription, observable, subscriber);
     }
 
-    protected<T>  void invokeMerge(Subscriber<T> subscriber, Observable... observables) {
+    protected <T> void invokeMerge(Subscriber<T> subscriber, Observable... observables) {
         BaseModel.invokeMerge(lifeSubscription, subscriber, observables);
     }
 
@@ -86,9 +86,7 @@ public class BasePresenter<T> {
     /**
      * 发送短信验证码
      */
-    public void sendSMS(final Button button, String router, String phone
-    ) {
-
+    public void sendSMS(final Button button, String router, String phone) {
         invoke(AccountModel.getInstance().sendSMS(router, phone), new ProgressSubscriber<BaseBean>(new SubscriberOnNextListener<BaseBean>() {
             @Override
             public void onNext(BaseBean baseBean) {
@@ -111,8 +109,7 @@ public class BasePresenter<T> {
     /**
      * h5
      */
-    public void getH5Url(final String url_type, final String title
-    ) {
+    public void getH5Url(final String url_type, final String title) {
         invoke(AccountModel.getInstance().getH5Url(url_type), new ProgressSubscriber<H5Bean>(new SubscriberOnNextListener<H5Bean>() {
             @Override
             public void onNext(H5Bean baseBean) {
@@ -129,8 +126,12 @@ public class BasePresenter<T> {
                         H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
                     } else if (url_type.equals(Config.H5_URL_MYCARD)) {
+                        // 我的名片(业务员)
                         MyCardActivity.skipH5WebView(mContext, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, ""));
+                    } else if (url_type.equals(Config.H5_URL_ABOUTUS)) {
+                        // 关于我们
+                        H5WebView.skipH5WebViewIncludeCall(mContext, title, baseBean.getResult().getH5_url());
                     } else {
                         H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, ""));

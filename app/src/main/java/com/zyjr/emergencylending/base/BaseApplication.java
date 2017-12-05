@@ -80,8 +80,6 @@ public class BaseApplication extends Application {
         mMainThreadHandler = new Handler();
         mMainLooper = getMainLooper();
         mInstance = this;
-        //获取版本号
-//        SupportCityConfig.getInstance().initCitys(); // 加载城市数据
         //是否打印日志
         LogUtils.isDebug = true;
         //友盟日志
@@ -102,7 +100,7 @@ public class BaseApplication extends Application {
     }
 
     private void initUMStatistics() {
-        UMConfigure.init(context, "570f63f7e0f55a21be000ce8", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+        UMConfigure.init(context, "58107c9c717c190463000384", "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
         UMConfigure.setLogEnabled(true);
         // 然后在每个页面中重新集成页面统计的代码(包括调用了 onResume 和 onPause 的Activity)。
         MobclickAgent.openActivityDurationTrack(false);
