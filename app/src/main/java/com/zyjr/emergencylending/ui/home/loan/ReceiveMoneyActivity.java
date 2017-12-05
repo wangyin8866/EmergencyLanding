@@ -1,7 +1,12 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,9 +23,14 @@ import com.zyjr.emergencylending.entity.RemindBean;
 import com.zyjr.emergencylending.ui.home.View.ReceiveMoneyView;
 import com.zyjr.emergencylending.ui.home.presenter.ReceiveMoneyPresenter;
 import com.zyjr.emergencylending.utils.Arithmetic;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +75,9 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
     private ReceiveMoneyBean.Contract xinyongContract = null;
     private ReceiveMoneyBean.Contract zhanghuContract = null;
     private ReceiveMoneyBean.Contract huankuanContract = null;
+    private String frontFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.RESOURCE + "money.ttf";
+    private String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.RESOURCE;
+    private Typeface typeface;
 
     @Override
     protected ReceiveMoneyPresenter createPresenter() {
@@ -153,6 +166,14 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
 
             }
         });
+
+        // 下载字体
+        typeface = openFront(this);
+        try {
+            tvLoanMoney.setTypeface(typeface);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void showReceiveMoneyInfo(ReceiveMoneyBean bean) {
@@ -246,6 +267,52 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         }
         startActivity(intent);
         finish();
+    }
+
+
+    public Typeface openFront(Context context) {
+        LogUtils.d("字体文件-filePath:" + frontFilePath);
+        File jhPath = new File(frontFilePath);
+        //查看数据库文件是否存在
+        if (jhPath.exists()) {
+            LogUtils.d("存在字体文件------打开");
+            //存在则直接返回打开的数据库
+            return Typeface.createFromAsset(getAssets(), "money.ttf");
+        } else {
+            //不存在先创建文件夹
+            LogUtils.d("不存在字体文件------创建");
+            File path = new File(rootPath);
+            LogUtils.d("rootPath=" + path);
+            if (path.mkdir()) {
+                LogUtils.d("创建成功");
+            } else {
+                LogUtils.d("创建失败");
+            }
+            try {
+                //得到资源
+                AssetManager am = context.getAssets();
+                //得到数据库的输入流
+                InputStream is = am.open("money.ttf");
+                LogUtils.d("输入流---->" + is + "");
+                //用输出流写到SDcard上面
+                FileOutputStream fos = new FileOutputStream(jhPath);
+                LogUtils.d("输出流---->" + "fos=" + fos);
+                LogUtils.d("dbPath---->" + jhPath);
+                //创建byte数组  用于1KB写一次
+                byte[] buffer = new byte[1024];
+                int count = 0;
+                while ((count = is.read(buffer)) > 0) {
+                    fos.write(buffer, 0, count);
+                }
+                fos.flush();
+                fos.close();
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+            return Typeface.createFromAsset(getAssets(), "money.ttf");
+        }
     }
 
 }

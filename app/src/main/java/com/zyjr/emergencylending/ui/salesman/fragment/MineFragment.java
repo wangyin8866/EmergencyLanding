@@ -109,7 +109,7 @@ public class MineFragment extends BaseFragment<MinePresenter, MineView> implemen
         unbinder.unbind();
     }
 
-    @OnClick({R.id.user_pic, R.id.message_center, R.id.my_repayment, R.id.help, R.id.setting, R.id.income, R.id.edit_information})
+    @OnClick({R.id.user_pic, R.id.message_center, R.id.my_repayment, R.id.help, R.id.setting, R.id.income, R.id.layout_edit_information})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.user_pic:
@@ -129,7 +129,7 @@ public class MineFragment extends BaseFragment<MinePresenter, MineView> implemen
             case R.id.income:
                 mPresenter.getH5Url(Config.H5_URL_MYINCOME, "我的收入");
                 break;
-            case R.id.edit_information:
+            case R.id.layout_edit_information:
                 Intent intent = new Intent(mContext, EditInformation.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("information", resultBean);

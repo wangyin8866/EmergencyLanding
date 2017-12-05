@@ -165,7 +165,7 @@ public class Constants {
     public static final String HEAD_PIC = ROOT_PATH + "/headicon/"; // 头像照片
     public static final String ID_CARD_HOLD_PIC = ROOT_PATH + "/idcardhold/"; // 证件照
     public static final String ID_CARD_SCAN_PIC = ROOT_PATH + "/idcardscan/"; // 扫描证件照
-    public static final String BANK_DB = ROOT_PATH + "/db/"; // 银行卡db
+    public static final String RESOURCE = ROOT_PATH + "/resource/"; // 资源文件 银行卡db、字体
     public static final String QR = ROOT_PATH + "/qr/"; // 二维码
 
 }

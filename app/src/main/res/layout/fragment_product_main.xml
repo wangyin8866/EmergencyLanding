@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:gravity="center"
-        android:textColor="#333333"
-        android:layout_marginTop="20dp"
-        android:textSize="16sp"
-        android:text="还款" />
 
-    <include layout="@layout/bg_line_1" />
     <RelativeLayout
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
@@ -38,4 +28,6 @@
     <include
         layout="@layout/layout_net_loading_error"
         android:visibility="gone" />
-</LinearLayout>
+
+    <include layout="@layout/base_tool_bar" />
+</FrameLayout>

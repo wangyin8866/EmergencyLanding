@@ -3,6 +3,7 @@ package com.zyjr.emergencylending.ui.repayment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.gyf.barlibrary.ImmersionBar;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseFragment;
 import com.zyjr.emergencylending.config.Config;
@@ -59,6 +62,17 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     private String contractNo = ""; // 合同编号
     private String repayUrl = ""; // 还款url
 
+    @BindView(R.id.tool_bar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_center_title)
+    TextView tvTitle;
+    @BindView(R.id.tool_bar_left_layout)
+    LinearLayout toolBarLeftLayout;
+    @BindView(R.id.tool_bar_right_layout)
+    LinearLayout toolBarRightLayout;
+    @BindView(R.id.tool_bar_view_divider)
+    View toolBarViewDivider;
+    private ImmersionBar mImmersionBar;
 
     @Nullable
     @Override
@@ -66,11 +80,17 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
         view = inflater.inflate(R.layout.fragment_product_main, container, false);
 
         unbinder = ButterKnife.bind(this, view);
+        mImmersionBar = ImmersionBar.with(this);
+        ImmersionBar.with(this).titleBar(toolbar, false).transparentStatusBar().statusBarDarkFont(true, 0.2f).init();
         init();
         return view;
     }
 
     private void init() {
+        tvTitle.setText("还款");
+
+        toolBarLeftLayout.setVisibility(View.GONE);
+        toolBarRightLayout.setVisibility(View.GONE);
         mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
     }
 
@@ -106,8 +126,11 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
             contractNo = baseBean.getResult().getContract_no();
             repayUrl = baseBean.getResult().getH5_url();
             // 加载还款html
+            tvTitle.setTextColor(getResources().getColor(R.color.white));
             WYUtils.loadHtmlNew(repayUrl + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis(), webView, progressBar);
         } else {
+            tvTitle.setTextColor(getResources().getColor(R.color.input_text_color));
+            toolBarViewDivider.setVisibility(View.VISIBLE);
             WYUtils.loadHtmlNew(NetConstantValues.NO_REPAY, webView, progressBar);
         }
 

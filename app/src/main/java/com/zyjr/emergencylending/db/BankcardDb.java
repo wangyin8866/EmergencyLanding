@@ -24,8 +24,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class BankcardDb {
 
-    private String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.BANK_DB + "bankcard.db";
-    private String pathStr = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.BANK_DB;
+    private String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.RESOURCE + "bankcard.db";
+    private String pathStr = Environment.getExternalStorageDirectory().getAbsolutePath() + Constants.RESOURCE;
 
     private AtomicInteger mOpenCounter = new AtomicInteger();
     private static BankcardDb instance;

@@ -15,6 +15,7 @@ import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
+import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.entity.AuthInfoBean;
@@ -47,7 +48,7 @@ public class MobileAuthActivity extends BaseActivity<AuthHelperPresenter, AuthHe
     @BindView(R.id.tv_mobile_number)
     TextView tvMobileNumber;
     @BindView(R.id.et_service_password)
-    TextView etServicePassword;  // 运营商服务密码
+    ClearEditText etServicePassword;  // 运营商服务密码
     @BindView(R.id.ll_mobile_validate_code)
     LinearLayout llMobileValidateCode; // 手机验证码
     @BindView(R.id.et_mobile_validate_code)
