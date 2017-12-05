@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.zyjr.emergencylending.R;
-import com.zyjr.emergencylending.entity.BankBean;
 import com.zyjr.emergencylending.entity.SupportBank;
 
 import java.util.List;

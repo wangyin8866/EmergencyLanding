@@ -1,7 +1,6 @@
 package com.zyjr.emergencylending.ui.home.loan;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,11 +16,9 @@ import android.widget.TextView;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BankFrontshowAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
-import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.db.BankcardDb;
-import com.zyjr.emergencylending.entity.BankBean;
 import com.zyjr.emergencylending.entity.BankDbBean;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
@@ -32,7 +29,6 @@ import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

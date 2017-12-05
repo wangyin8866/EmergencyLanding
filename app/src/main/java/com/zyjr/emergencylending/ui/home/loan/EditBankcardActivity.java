@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.adapter.BankFrontshowAdapter;
 import com.zyjr.emergencylending.base.BaseActivity;
@@ -21,20 +20,16 @@ import com.zyjr.emergencylending.custom.ClearEditText;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 import com.zyjr.emergencylending.db.BankcardDb;
-import com.zyjr.emergencylending.entity.BankBean;
 import com.zyjr.emergencylending.entity.BankDbBean;
 import com.zyjr.emergencylending.entity.BankcardInfo;
 import com.zyjr.emergencylending.entity.SupportBank;
 import com.zyjr.emergencylending.ui.home.View.BankcardInfoView;
-import com.zyjr.emergencylending.ui.home.loan.basicInfo.BankcardInfoActivity;
 import com.zyjr.emergencylending.ui.home.presenter.BankcardInfoPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.ReflectionUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

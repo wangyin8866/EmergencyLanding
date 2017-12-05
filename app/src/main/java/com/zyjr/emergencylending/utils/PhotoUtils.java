@@ -14,6 +14,7 @@ import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TakePhotoOptions;
 import com.zyjr.emergencylending.R;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.custom.dialog.CustomerDialog;
 
 import java.io.File;
@@ -75,7 +76,7 @@ public class PhotoUtils {
     }
 
     private static Uri handlerFile() {
-        File file = new File(Environment.getExternalStorageDirectory(), "/temp/" + System.currentTimeMillis() + ".jpg");
+        File file = new File(Environment.getExternalStorageDirectory(), Constants.HEAD_PIC +  + System.currentTimeMillis() + ".jpg");
         if (!file.getParentFile().exists()) file.getParentFile().mkdirs();
         return Uri.fromFile(file);
     }

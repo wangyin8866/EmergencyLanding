@@ -32,6 +32,7 @@ import com.umeng.socialize.media.UMWeb;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseView;
+import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.QrBean;
@@ -195,7 +196,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
             handler.sendEmptyMessageDelayed(2, 200);
             return;
         }
-        File appDir = new File(Environment.getExternalStorageDirectory(), "jijietong");
+        File appDir = new File(Environment.getExternalStorageDirectory(), Constants.QR);
         if (!appDir.exists()) {
             appDir.mkdir();
         }

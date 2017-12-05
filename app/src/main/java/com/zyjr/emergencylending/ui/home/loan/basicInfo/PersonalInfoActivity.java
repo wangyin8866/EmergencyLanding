@@ -169,9 +169,9 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             if (data.getIntExtra("side", 0) == 0) {
                 map.put("portraitImg", data.getByteArrayExtra("portraitImg"));
             }
-            LogUtils.d("身份证扫描信息:" + new Gson().toJson(map));
+//            LogUtils.d("身份证扫描信息:" + new Gson().toJson(map));
             Bitmap bitmap = IdcardUtils.getInstance().gitBitmap(map);
-            idcardFile = new File(Environment.getExternalStorageDirectory().getPath() + "/myIdCard/");
+            idcardFile = new File(Environment.getExternalStorageDirectory().getPath() + Constants.ID_CARD_SCAN_PIC);
             if (!idcardFile.exists() && !idcardFile.isDirectory()) {
                 idcardFile.mkdirs();
             }
@@ -577,9 +577,11 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 "请允许权限进行拍照",
                 requestCode)) {
-            holdCardFile = new File(Environment.getExternalStorageDirectory(), "/JJTNEW/temp/" + System.currentTimeMillis() + ".jpg");
+            holdCardFile = new File(Environment.getExternalStorageDirectory(), Constants.ID_CARD_HOLD_PIC + System.currentTimeMillis() + ".jpg");
             holdIdcardPath = holdCardFile.getAbsolutePath();
-            if (!holdCardFile.getParentFile().exists()) holdCardFile.getParentFile().mkdirs();
+            if (!holdCardFile.getParentFile().exists()) {
+                holdCardFile.getParentFile().mkdirs();
+            }
             Uri imageUri = Uri.fromFile(holdCardFile);
             takePhoto.setTakePhotoOptions(new TakePhotoOptions.Builder().setWithOwnGallery(true).create());
             CompressConfig compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
@@ -825,7 +827,7 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
     @Override
     public void onError(String returnCode, String errorMsg) {
         ToastAlone.showShortToast(this, errorMsg);
-        if(Constants.GET_PERSONAL_INFO.equals(returnCode)){
+        if (Constants.GET_PERSONAL_INFO.equals(returnCode)) {
             showError();
         }
     }

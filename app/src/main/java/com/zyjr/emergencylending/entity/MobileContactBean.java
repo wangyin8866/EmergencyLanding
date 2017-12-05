@@ -38,7 +38,7 @@ public class MobileContactBean implements Serializable{
 
     @Override
     public String toString() {
-        return "ContactsBean{" +
+        return "MobileContactBean{" +
                 "contact_name='" + contact_name + '\'' +
                 ", contact_phone='" + contact_phone + '\'' +
                 '}';
