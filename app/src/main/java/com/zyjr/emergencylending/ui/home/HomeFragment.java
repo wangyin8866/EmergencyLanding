@@ -28,6 +28,7 @@ import com.zyjr.emergencylending.entity.EffectiveOrderBean;
 import com.zyjr.emergencylending.entity.UserInfo;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.ui.h5.ImmersionH5WebView;
 import com.zyjr.emergencylending.ui.home.View.HomeView;
 import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
@@ -221,7 +222,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
         for (int i = 0; i < banner.getResult().getAd_list().size(); i++) {
             images.add(banner.getResult().getAd_list().get(i).getAd_pic());
         }
-        if (images.size() > 1) {
+        if (images.size() >= 1) {
             this.banner.setPages(new CBViewHolderCreator() {
                 @Override
                 public Object createHolder() {
@@ -231,7 +232,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 @Override
                 public void onItemClick(int position) {
                     if (StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())) {
-                        H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
+                        ImmersionH5WebView.jump(mContext, "", banner.getResult().getAd_list().get(position).getAd_url(), "");
                     }
                 }
             });
@@ -241,15 +242,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
                 public Object createHolder() {
                     return new LocalImageHolderView();
                 }
-            }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on}).setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    if (StringUtil.isNotEmpty(banner.getResult().getAd_list().get(position).getAd_url())) {
-                        // url 为空时不能点击
-                        H5WebView.skipH5WebView(mContext, banner.getResult().getAd_list().get(position).getTitle(), banner.getResult().getAd_list().get(position).getAd_url());
-                    }
-                }
-            });
+            }, images).setPageIndicator(new int[]{R.mipmap.carouselspot_off, R.mipmap.carouselspot_on});
         }
 
 

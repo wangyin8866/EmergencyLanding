@@ -82,6 +82,7 @@ public class MyCardActivity extends BaseActivity {
         ButterKnife.bind(this);
         tvTitle.setText("名片");
         tvTitle.setTextColor(getResources().getColor(R.color.white));
+        layoutRightIcon.setVisibility(View.VISIBLE);
         mImmersionBar = ImmersionBar.with(this);
         ImmersionBar.with(this).titleBar(toolbar, false).transparentStatusBar().statusBarDarkFont(true, 0.2f).init();
 
@@ -133,8 +134,8 @@ public class MyCardActivity extends BaseActivity {
         mWebView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                LogUtils.d("webview 垂直滑动距离:" + scrollY);
-                LogUtils.d("toolbar 控件高度:" + getToolbarHeight());
+//                LogUtils.d("webview 垂直滑动距离:" + scrollY);
+//                LogUtils.d("toolbar 控件高度:" + getToolbarHeight());
                 if (scrollY >= getToolbarHeight()) {
                     ImmersionBar.with(MyCardActivity.this)
                             .addViewSupportTransformColor(toolbar, R.color.auth_success)
@@ -142,7 +143,7 @@ public class MyCardActivity extends BaseActivity {
                             .init();
                 } else {
                     float alpha = (float) scrollY / getToolbarHeight();
-                    LogUtils.d("透明度:" + alpha + "f");
+//                    LogUtils.d("透明度:" + alpha + "f");
                     ImmersionBar.with(MyCardActivity.this)
                             .addViewSupportTransformColor(toolbar, R.color.auth_success)
                             .barAlpha(alpha)
@@ -264,7 +265,7 @@ public class MyCardActivity extends BaseActivity {
          */
         @Override
         public void onResult(SHARE_MEDIA platform) {
-            Toast.makeText(mContext, "成功了", Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "分享成功", Toast.LENGTH_LONG).show();
         }
 
         /**
@@ -274,7 +275,7 @@ public class MyCardActivity extends BaseActivity {
          */
         @Override
         public void onError(SHARE_MEDIA platform, Throwable t) {
-            Toast.makeText(mContext, "失败" + t.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(mContext, "分享失败" + t.getMessage(), Toast.LENGTH_LONG).show();
         }
 
         /**
