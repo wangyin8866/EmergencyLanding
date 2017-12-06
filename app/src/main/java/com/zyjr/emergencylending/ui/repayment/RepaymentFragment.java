@@ -78,8 +78,8 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_product_main, container, false);
-
         unbinder = ButterKnife.bind(this, view);
+        tvTitle.setVisibility(View.GONE);
         mImmersionBar = ImmersionBar.with(this);
         ImmersionBar.with(this).titleBar(toolbar, false).transparentStatusBar().statusBarDarkFont(true, 0.2f).init();
         init();
@@ -87,8 +87,6 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
     }
 
     private void init() {
-        tvTitle.setText("还款");
-
         toolBarLeftLayout.setVisibility(View.GONE);
         toolBarRightLayout.setVisibility(View.GONE);
         mPresenter.isEffectiveOrder(NetConstantValues.ROUTER_GET_CURRENT_EFFECTIVE_LOAN_ORDER);
@@ -126,9 +124,13 @@ public class RepaymentFragment extends BaseFragment<RepaymentPresenter, Repaymen
             contractNo = baseBean.getResult().getContract_no();
             repayUrl = baseBean.getResult().getH5_url();
             // 加载还款html
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText("还款");
             tvTitle.setTextColor(getResources().getColor(R.color.white));
             WYUtils.loadHtmlNew(repayUrl + "?contractNo=" + contractNo + "&page=1&time=" + System.currentTimeMillis(), webView, progressBar);
         } else {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText("还款");
             tvTitle.setTextColor(getResources().getColor(R.color.input_text_color));
             toolBarViewDivider.setVisibility(View.VISIBLE);
             WYUtils.loadHtmlNew(NetConstantValues.NO_REPAY, webView, progressBar);
