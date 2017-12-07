@@ -53,8 +53,9 @@
 
                 <ImageView
                     android:id="@+id/notice_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:scaleType="centerInside"
                     android:layout_marginEnd="15dp"
                     android:layout_marginRight="15dp"
                     android:src="@mipmap/close_notice" />
