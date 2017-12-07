@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
+import com.zyjr.emergencylending.ui.h5.H5WebView;
+import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.WYUtils;
 
 import butterknife.BindView;
@@ -43,6 +45,14 @@ public class ApplyActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    // 包含拨打电话
+    public static void skipH5WebViewIncludeCall(Context context, String url) {
+        Intent intent = new Intent(context, ApplyActivity.class);
+        intent.putExtra("url", url);
+        intent.putExtra("isInclude", "1");
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +65,12 @@ public class ApplyActivity extends BaseActivity {
             }
         });
         String url = getIntent().getStringExtra("url");
-//        WYUtils.loadHtml(url, webView, progressBar);
-        WYUtils.loadHtmlNew(url, webView, progressBar);
+        String isInclude = getIntent().getStringExtra("isInclude");
+        if (StringUtil.isNotEmpty(isInclude)) {
+            WYUtils.loadHtmlIncludeCall(url, webView, progressBar);
+        } else {
+            WYUtils.loadHtmlNew(url, webView, progressBar);
+        }
     }
 
 }

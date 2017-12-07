@@ -36,10 +36,12 @@ import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.TopBar;
 import com.zyjr.emergencylending.entity.QrBean;
+import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.QrPresenter;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.ToastAlone;
+import com.zyjr.emergencylending.utils.permission.ToolPermission;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -136,18 +138,31 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
         initShare();
         switch (view.getId()) {
             case R.id.qr_save:
-                if (isSuccess && StringUtil.isNotEmpty(mUrl)) {
-                    Glide.with(mContext)
-                            .load(mUrl)
-                            .asBitmap()
-                            .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
-                                @Override
-                                public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
-                                    //得到bitmap
-                                    saveImageToGallery(mContext, bitmap);
+                ToolPermission.checkPermission(this, new ToolPermission.PermissionCallBack() {
+                            @Override
+                            public void callBack(int requestCode, boolean isPass) {
+                                LogUtils.d("权限检测结果---" + requestCode + "," + isPass);
+                                if (isPass) {
+                                    if (isSuccess && StringUtil.isNotEmpty(mUrl)) {
+                                        Glide.with(mContext)
+                                                .load(mUrl)
+                                                .asBitmap()
+                                                .into(new SimpleTarget<Bitmap>(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL) {
+                                                    @Override
+                                                    public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                                                        //得到bitmap
+                                                        saveImageToGallery(mContext, bitmap);
+                                                    }
+                                                });
+                                    }
+                                } else {
+                                    ToastAlone.showShortToast(QrCodeActivity.this, "手机存储权限被拒绝,请您到设置页面手动授权");
                                 }
-                            });
-                }
+                            }
+                        },
+                        2000,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE);
+
                 break;
             case R.id.qr_we_chat:
                 if (isSuccess && StringUtil.isNotEmpty(mUrl)) {

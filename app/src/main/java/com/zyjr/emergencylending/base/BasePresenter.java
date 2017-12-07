@@ -117,13 +117,13 @@ public class BasePresenter<T> {
                     if (url_type.equals(Config.H5_URL_REPAYMENT)) {
                         H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_REPAYMENT_TOKEN, "") + "&page=1");
                     } else if (url_type.equals(Config.H5_URL_MYRESULTS_CUSTOMER)) {
-                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                        H5WebView.skipH5WebViewIncludeCall(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
                     } else if (url_type.equals(Config.H5_URL_MYRESULTS_APPLY)) {
-                        ApplyActivity.skipH5WebView(mContext, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                        ApplyActivity.skipH5WebViewIncludeCall(mContext, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
                     } else if (url_type.equals(Config.H5_URL_MYRESULTS_SUCCESS)) {
-                        H5WebView.skipH5WebView(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
+                        H5WebView.skipH5WebViewIncludeCall(mContext, title, baseBean.getResult().getH5_url() + "?login_token=" + SPUtils.getString(mContext, Config.KEY_TOKEN, "")
                                 + "&juid=" + SPUtils.getString(mContext, Config.KEY_JUID, "") + "&type=" + SPUtils.getInt(mContext, Config.KEY_TYPE, 1));
                     } else if (url_type.equals(Config.H5_URL_MYCARD)) {
                         // 我的名片(业务员)
