@@ -134,7 +134,7 @@ public class UpdateVersionService {
                         break;
                 }
             }
-        }, display).show();
+        }, display, flag).show();
     }
 
     /**

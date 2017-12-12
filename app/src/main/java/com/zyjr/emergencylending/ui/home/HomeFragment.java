@@ -34,6 +34,7 @@ import com.zyjr.emergencylending.ui.home.loan.LoanMainActivity;
 import com.zyjr.emergencylending.ui.home.loan.LoanOrderStatusActivity;
 import com.zyjr.emergencylending.ui.home.loan.WriteInfoMainActivity;
 import com.zyjr.emergencylending.ui.home.presenter.HomePresenter;
+import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
 import com.zyjr.emergencylending.utils.StringUtil;
 import com.zyjr.emergencylending.utils.WYUtils;
@@ -95,11 +96,7 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void onResume() {
         super.onResume();
-
-        //版本更新
-        if (Constants.update) {
-            WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE, false);
-        }
+        LogUtils.d("HomeFragment","onResume");
         mPresenter.multiRequst(NetConstantValues.HOME_AD, SPUtils.getBoolean(mContext, Config.KEY_LOGIN), NetConstantValues.GET_BASIC_INFO);
     }
 
@@ -289,7 +286,6 @@ public class HomeFragment extends BaseFragment<HomePresenter, HomeView> implemen
     @Override
     public void onRefreshing() {
         easyRefreshLayout.refreshComplete();
-
         mPresenter.multiRequst(NetConstantValues.HOME_AD, SPUtils.getBoolean(mContext, Config.KEY_LOGIN), NetConstantValues.GET_BASIC_INFO);
     }
 }

@@ -53,7 +53,7 @@ public class BaseModel {
         //手动创建一个OkHttpClient并设置超时时间
         httpClientBuilder = new OkHttpClient.Builder();
         if (WYUtils.isApkInDebug(BaseApplication.getContext())) {
-            httpClientBuilder.retryOnConnectionFailure(true).addInterceptor(new AddHeaderInterceptor()).addInterceptor(new LogInterceptor());
+            httpClientBuilder.addInterceptor(new AddHeaderInterceptor()).addInterceptor(new LogInterceptor());
         } else {
             httpClientBuilder.addInterceptor(new AddHeaderInterceptor()).addInterceptor(new ResponseInterceptor());
         }

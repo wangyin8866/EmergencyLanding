@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://F:\User\wangyin\android\workspace\EmergencyLanding_jjt\EmergencyLanding.iml" filepath="F:\User\wangyin\android\workspace\EmergencyLanding_jjt\EmergencyLanding.iml" />
-      <module fileurl="file://$PROJECT_DIR$/EmergencyLanding_jjt.iml" filepath="$PROJECT_DIR$/EmergencyLanding_jjt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EmergencyLanding.iml" filepath="$PROJECT_DIR$/EmergencyLanding.iml" />
       <module fileurl="file://$PROJECT_DIR$/IDCardLib/IDCardLib.iml" filepath="$PROJECT_DIR$/IDCardLib/IDCardLib.iml" />
-      <module fileurl="file://F:\User\wangyin\android\workspace\EmergencyLanding_jjt\NewEmergencyLanding.iml" filepath="F:\User\wangyin\android\workspace\EmergencyLanding_jjt\NewEmergencyLanding.iml" />
       <module fileurl="file://$PROJECT_DIR$/PullToRefreshLib/PullToRefreshLib.iml" filepath="$PROJECT_DIR$/PullToRefreshLib/PullToRefreshLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/convenientbanner/convenientbanner.iml" filepath="$PROJECT_DIR$/convenientbanner/convenientbanner.iml" />

@@ -303,7 +303,7 @@ public class CustomerDialog extends Dialog {
      *
      * @param onClickListener
      */
-    public CustomerDialog versionUpdate(View.OnClickListener onClickListener, String str) {
+    public CustomerDialog versionUpdate(View.OnClickListener onClickListener, String str, final String updateFlag) {
         TextView left, right, content;
         setContentView(R.layout.dialog_version_update);
         left = findViewById(R.id.cancel);
@@ -316,15 +316,16 @@ public class CustomerDialog extends Dialog {
         instance.setOnKeyListener(new OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-                    dismiss();
-                    ActivityCollector.finishAll();
-                    System.exit(0);
+                if ("0001".equals(updateFlag)) {
+                    if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+                        dismiss();
+                        ActivityCollector.finishAll();
+                        System.exit(0);
+                    }
                 }
                 return false;
             }
         });
-//        content.setText(str);
         content.setText(str.replace("\\n", "\n"));
         return instance;
     }
