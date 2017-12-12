@@ -99,205 +99,34 @@ public class RankBean {
         }
 
         public static class RankMapBean {
-            private List<?> nowMonth;
-            private List<Before2MonthBean> before2Month;
-            private List<Before1MonthBean> before1Month;
+            private List<MonthResultBean> nowMonth;
+            private List<MonthResultBean> before2Month;
+            private List<MonthResultBean> before1Month;
 
-            public List<?> getNowMonth() {
+            public List<MonthResultBean> getNowMonth() {
                 return nowMonth;
             }
 
-            public void setNowMonth(List<?> nowMonth) {
+            public void setNowMonth(List<MonthResultBean> nowMonth) {
                 this.nowMonth = nowMonth;
             }
 
-            public List<Before2MonthBean> getBefore2Month() {
+            public List<MonthResultBean> getBefore2Month() {
                 return before2Month;
             }
 
-            public void setBefore2Month(List<Before2MonthBean> before2Month) {
+            public void setBefore2Month(List<MonthResultBean> before2Month) {
                 this.before2Month = before2Month;
             }
 
-            public List<Before1MonthBean> getBefore1Month() {
+            public List<MonthResultBean> getBefore1Month() {
                 return before1Month;
             }
 
-            public void setBefore1Month(List<Before1MonthBean> before1Month) {
+            public void setBefore1Month(List<MonthResultBean> before1Month) {
                 this.before1Month = before1Month;
             }
 
-            public static class Before2MonthBean {
-                /**
-                 * custom_id : 9
-                 * custom_name : 姓名9推荐人1
-                 * rank_num : 1
-                 * phone : 152****0389
-                 * head_url : F:\360Downloads\9
-                 * lend_total_amount : 31.0
-                 * mon : 9
-                 * name : 姓名9推荐人1
-                 */
-
-                private String custom_id;
-                private String custom_name;
-                private String rank_num;
-                private String phone;
-                private String head_url;
-                private double lend_total_amount;
-                private String mon;
-                private String name;
-
-                public String getCustom_id() {
-                    return custom_id;
-                }
-
-                public void setCustom_id(String custom_id) {
-                    this.custom_id = custom_id;
-                }
-
-                public String getCustom_name() {
-                    return custom_name;
-                }
-
-                public void setCustom_name(String custom_name) {
-                    this.custom_name = custom_name;
-                }
-
-                public String getRank_num() {
-                    return rank_num;
-                }
-
-                public void setRank_num(String rank_num) {
-                    this.rank_num = rank_num;
-                }
-
-                public String getPhone() {
-                    return phone;
-                }
-
-                public void setPhone(String phone) {
-                    this.phone = phone;
-                }
-
-                public String getHead_url() {
-                    return head_url;
-                }
-
-                public void setHead_url(String head_url) {
-                    this.head_url = head_url;
-                }
-
-                public double getLend_total_amount() {
-                    return lend_total_amount;
-                }
-
-                public void setLend_total_amount(double lend_total_amount) {
-                    this.lend_total_amount = lend_total_amount;
-                }
-
-                public String getMon() {
-                    return mon;
-                }
-
-                public void setMon(String mon) {
-                    this.mon = mon;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-            }
-
-            public static class Before1MonthBean {
-                /**
-                 * custom_id : 9
-                 * custom_name : 姓名9推荐人1
-                 * rank_num : 1
-                 * phone : 152****0389
-                 * head_url : F:\360Downloads\9
-                 * lend_total_amount : 41.0
-                 * mon : 10
-                 * name : 姓名9推荐人1
-                 */
-
-                private String custom_id;
-                private String custom_name;
-                private String rank_num;
-                private String phone;
-                private String head_url;
-                private double lend_total_amount;
-                private String mon;
-                private String name;
-
-                public String getCustom_id() {
-                    return custom_id;
-                }
-
-                public void setCustom_id(String custom_id) {
-                    this.custom_id = custom_id;
-                }
-
-                public String getCustom_name() {
-                    return custom_name;
-                }
-
-                public void setCustom_name(String custom_name) {
-                    this.custom_name = custom_name;
-                }
-
-                public String getRank_num() {
-                    return rank_num;
-                }
-
-                public void setRank_num(String rank_num) {
-                    this.rank_num = rank_num;
-                }
-
-                public String getPhone() {
-                    return phone;
-                }
-
-                public void setPhone(String phone) {
-                    this.phone = phone;
-                }
-
-                public String getHead_url() {
-                    return head_url;
-                }
-
-                public void setHead_url(String head_url) {
-                    this.head_url = head_url;
-                }
-
-                public double getLend_total_amount() {
-                    return lend_total_amount;
-                }
-
-                public void setLend_total_amount(double lend_total_amount) {
-                    this.lend_total_amount = lend_total_amount;
-                }
-
-                public String getMon() {
-                    return mon;
-                }
-
-                public void setMon(String mon) {
-                    this.mon = mon;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
-            }
         }
 
         public static class SelfMapBean {
@@ -307,291 +136,120 @@ public class RankBean {
              * before1Month : {"custom_id":"9af78d0c73304808b6e8acbb8b6f0878","custom_name":"丁晓宇","rank_num":5,"phone":"130****1105","head_url":"M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg","lend_total_amount":0,"mon":"10","name":"丁晓宇"}
              */
 
-            private NowMonthBean nowMonth;
-            private Before2MonthBeanX before2Month;
-            private Before1MonthBeanX before1Month;
+            private MonthResultBean nowMonth;
+            private MonthResultBean before2Month;
+            private MonthResultBean before1Month;
 
-            public NowMonthBean getNowMonth() {
+            public MonthResultBean getNowMonth() {
                 return nowMonth;
             }
 
-            public void setNowMonth(NowMonthBean nowMonth) {
+            public void setNowMonth(MonthResultBean nowMonth) {
                 this.nowMonth = nowMonth;
             }
 
-            public Before2MonthBeanX getBefore2Month() {
+            public MonthResultBean getBefore2Month() {
                 return before2Month;
             }
 
-            public void setBefore2Month(Before2MonthBeanX before2Month) {
+            public void setBefore2Month(MonthResultBean before2Month) {
                 this.before2Month = before2Month;
             }
 
-            public Before1MonthBeanX getBefore1Month() {
+            public MonthResultBean getBefore1Month() {
                 return before1Month;
             }
 
-            public void setBefore1Month(Before1MonthBeanX before1Month) {
+            public void setBefore1Month(MonthResultBean before1Month) {
                 this.before1Month = before1Month;
             }
 
-            public static class NowMonthBean {
-                /**
-                 * custom_id : 9af78d0c73304808b6e8acbb8b6f0878
-                 * custom_name : 丁晓宇
-                 * rank_num : 1
-                 * phone : 130****1105
-                 * head_url : M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg
-                 * lend_total_amount : 0
-                 * mon : 11
-                 * name : 丁晓宇
-                 */
+        }
 
-                private String custom_id;
-                private String custom_name;
-                private String rank_num;
-                private String phone;
-                private String head_url;
-                private String lend_total_amount;
-                private String mon;
-                private String name;
+        public static class MonthResultBean {
+            /**
+             * custom_id : 9af78d0c73304808b6e8acbb8b6f0878
+             * custom_name : 丁晓宇
+             * rank_num : 1
+             * phone : 130****1105
+             * head_url : M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg
+             * lend_total_amount : 0
+             * mon : 11
+             * name : 丁晓宇
+             */
+            private String custom_id;
+            private String custom_name;
+            private String rank_num;
+            private String phone;
+            private String head_url;
+            private String lend_total_amount;
+            private String mon;
+            private String name;
 
-                public String getCustom_id() {
-                    return custom_id;
-                }
-
-                public void setCustom_id(String custom_id) {
-                    this.custom_id = custom_id;
-                }
-
-                public String getCustom_name() {
-                    return custom_name;
-                }
-
-                public void setCustom_name(String custom_name) {
-                    this.custom_name = custom_name;
-                }
-
-                public String getRank_num() {
-                    return rank_num;
-                }
-
-                public void setRank_num(String rank_num) {
-                    this.rank_num = rank_num;
-                }
-
-                public String getPhone() {
-                    return phone;
-                }
-
-                public void setPhone(String phone) {
-                    this.phone = phone;
-                }
-
-                public String getHead_url() {
-                    return head_url;
-                }
-
-                public void setHead_url(String head_url) {
-                    this.head_url = head_url;
-                }
-
-                public String getLend_total_amount() {
-                    return lend_total_amount;
-                }
-
-                public void setLend_total_amount(String lend_total_amount) {
-                    this.lend_total_amount = lend_total_amount;
-                }
-
-                public String getMon() {
-                    return mon;
-                }
-
-                public void setMon(String mon) {
-                    this.mon = mon;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
+            public String getCustom_id() {
+                return custom_id;
             }
 
-            public static class Before2MonthBeanX {
-                /**
-                 * custom_id : 9af78d0c73304808b6e8acbb8b6f0878
-                 * custom_name : 丁晓宇
-                 * rank_num : 4
-                 * phone : 130****1105
-                 * head_url : M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg
-                 * lend_total_amount : 0
-                 * mon : 9
-                 * name : 丁晓宇
-                 */
-
-                private String custom_id;
-                private String custom_name;
-                private String rank_num;
-                private String phone;
-                private String head_url;
-                private int lend_total_amount;
-                private String mon;
-                private String name;
-
-                public String getCustom_id() {
-                    return custom_id;
-                }
-
-                public void setCustom_id(String custom_id) {
-                    this.custom_id = custom_id;
-                }
-
-                public String getCustom_name() {
-                    return custom_name;
-                }
-
-                public void setCustom_name(String custom_name) {
-                    this.custom_name = custom_name;
-                }
-
-                public String getRank_num() {
-                    return rank_num;
-                }
-
-                public void setRank_num(String rank_num) {
-                    this.rank_num = rank_num;
-                }
-
-                public String getPhone() {
-                    return phone;
-                }
-
-                public void setPhone(String phone) {
-                    this.phone = phone;
-                }
-
-                public String getHead_url() {
-                    return head_url;
-                }
-
-                public void setHead_url(String head_url) {
-                    this.head_url = head_url;
-                }
-
-                public int getLend_total_amount() {
-                    return lend_total_amount;
-                }
-
-                public void setLend_total_amount(int lend_total_amount) {
-                    this.lend_total_amount = lend_total_amount;
-                }
-
-                public String getMon() {
-                    return mon;
-                }
-
-                public void setMon(String mon) {
-                    this.mon = mon;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
+            public void setCustom_id(String custom_id) {
+                this.custom_id = custom_id;
             }
 
-            public static class Before1MonthBeanX {
-                /**
-                 * custom_id : 9af78d0c73304808b6e8acbb8b6f0878
-                 * custom_name : 丁晓宇
-                 * rank_num : 5
-                 * phone : 130****1105
-                 * head_url : M00/09/A7/wKgFGln4SRuEc11kAAAAAEvdijI770.jpg
-                 * lend_total_amount : 0
-                 * mon : 10
-                 * name : 丁晓宇
-                 */
+            public String getCustom_name() {
+                return custom_name;
+            }
 
-                private String custom_id;
-                private String custom_name;
-                private String rank_num;
-                private String phone;
-                private String head_url;
-                private int lend_total_amount;
-                private String mon;
-                private String name;
+            public void setCustom_name(String custom_name) {
+                this.custom_name = custom_name;
+            }
 
-                public String getCustom_id() {
-                    return custom_id;
-                }
+            public String getRank_num() {
+                return rank_num;
+            }
 
-                public void setCustom_id(String custom_id) {
-                    this.custom_id = custom_id;
-                }
+            public void setRank_num(String rank_num) {
+                this.rank_num = rank_num;
+            }
 
-                public String getCustom_name() {
-                    return custom_name;
-                }
+            public String getPhone() {
+                return phone;
+            }
 
-                public void setCustom_name(String custom_name) {
-                    this.custom_name = custom_name;
-                }
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
 
-                public String getRank_num() {
-                    return rank_num;
-                }
+            public String getHead_url() {
+                return head_url;
+            }
 
-                public void setRank_num(String rank_num) {
-                    this.rank_num = rank_num;
-                }
+            public void setHead_url(String head_url) {
+                this.head_url = head_url;
+            }
 
-                public String getPhone() {
-                    return phone;
-                }
+            public String getLend_total_amount() {
+                return lend_total_amount;
+            }
 
-                public void setPhone(String phone) {
-                    this.phone = phone;
-                }
+            public void setLend_total_amount(String lend_total_amount) {
+                this.lend_total_amount = lend_total_amount;
+            }
 
-                public String getHead_url() {
-                    return head_url;
-                }
+            public String getMon() {
+                return mon;
+            }
 
-                public void setHead_url(String head_url) {
-                    this.head_url = head_url;
-                }
+            public void setMon(String mon) {
+                this.mon = mon;
+            }
 
-                public int getLend_total_amount() {
-                    return lend_total_amount;
-                }
+            public String getName() {
+                return name;
+            }
 
-                public void setLend_total_amount(int lend_total_amount) {
-                    this.lend_total_amount = lend_total_amount;
-                }
-
-                public String getMon() {
-                    return mon;
-                }
-
-                public void setMon(String mon) {
-                    this.mon = mon;
-                }
-
-                public String getName() {
-                    return name;
-                }
-
-                public void setName(String name) {
-                    this.name = name;
-                }
+            public void setName(String name) {
+                this.name = name;
             }
         }
+
     }
 }

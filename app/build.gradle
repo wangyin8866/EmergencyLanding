@@ -106,65 +106,65 @@ android {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_JJTGW"]
         }
 
-//        W_360 {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_360"]
-//        }
-//
-//        W_TXYYB {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_TXYYB"]
-//        }
-//
-//        W_91 {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_91"]
-//        }
-//
-//        W_OPPO {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_OPPO"]
-//        }
-//
-//        W_AZSC {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_AZSC"]
-//        }
-//
-//        W_HWYYSC {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_HWYYSC"]
-//        }
-//
-//        W_XMYYSD {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_XMYYSD"]
-//        }
-//
-//        W_BDSJZS {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_BDSJZS"]
-//        }
-//
-//        W_FLYME {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_FLYME"]
-//        }
-//
-//        W_ALFFPT {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_ALFFPT"]
-//        }
-//
-//        W_VIVO {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_VIVO"]
-//        }
-//
-//        W_AZ2SC {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_AZ2SC"]
-//        }
-//
-//        W_SGSJZS {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_SGSJZS"]
-//        }
-//
-//        W_MMY {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_MMY"]
-//        }
-//
-//        W_CZYYSC {
-//            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_CZYYSC"]
-//        }
+        W_360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_360"]
+        }
+
+        W_TXYYB {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_TXYYB"]
+        }
+
+        W_91 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_91"]
+        }
+
+        W_OPPO {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_OPPO"]
+        }
+
+        W_AZSC {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_AZSC"]
+        }
+
+        W_HWYYSC {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_HWYYSC"]
+        }
+
+        W_XMYYSD {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_XMYYSD"]
+        }
+
+        W_BDSJZS {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_BDSJZS"]
+        }
+
+        W_FLYME {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_FLYME"]
+        }
+
+        W_ALFFPT {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_ALFFPT"]
+        }
+
+        W_VIVO {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_VIVO"]
+        }
+
+        W_AZ2SC {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_AZ2SC"]
+        }
+
+        W_SGSJZS {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_SGSJZS"]
+        }
+
+        W_MMY {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_MMY"]
+        }
+
+        W_CZYYSC {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "W_CZYYSC"]
+        }
     }
 
 }

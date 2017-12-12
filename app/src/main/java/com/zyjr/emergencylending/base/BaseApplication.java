@@ -81,7 +81,7 @@ public class BaseApplication extends Application {
         mMainLooper = getMainLooper();
         mInstance = this;
         //是否打印日志
-        LogUtils.isDebug = true;
+        LogUtils.isDebug = false;
         //友盟日志
         com.umeng.socialize.Config.DEBUG = true;
         initUMShare();
@@ -157,7 +157,7 @@ public class BaseApplication extends Application {
             appVersion = this.getPackageManager().getPackageInfo(this.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            appVersion = "1.0.0";
+            appVersion = "2.0.0";
         }
         SophixManager.getInstance().setContext(this).setAppVersion(appVersion).setAesKey(null)
                 .setEnableDebug(true)

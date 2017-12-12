@@ -146,9 +146,13 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
                 selectTv(3);
                 break;
             case R.id.btn_retry:
-                mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
-                mPresenter.rankList(NetConstantValues.RANKING_LIST);
-                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + "");
+//                mPresenter.myPerformance(NetConstantValues.MY_PERFORMANCE, type + "");
+//                mPresenter.rankList(NetConstantValues.RANKING_LIST);
+//                mPresenter.waitApply(NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + "");
+                mPresenter.fetch(NetConstantValues.MY_PERFORMANCE, type + "",
+                        NetConstantValues.RANKING_LIST,
+                        NetConstantValues.WAIT_APPLY, type + "", "1", pageNum + "", pageSize + ""
+                );
                 break;
         }
     }
@@ -214,8 +218,8 @@ public class CustomerFragment extends BaseFragment<CustomerPresenter, CustomerVi
 
     @Override
     public void rankList(RankBean rankBean) {
-        RankBean.ResultBean.SelfMapBean.NowMonthBean nowMonthBean = rankBean.getResult().getSelfMap().getNowMonth();
-        nowMonth.setText(nowMonthBean.getMon() + "月");
+        RankBean.ResultBean.MonthResultBean nowMonthBean = rankBean.getResult().getSelfMap().getNowMonth();
+        this.nowMonth.setText(nowMonthBean.getMon() + "月");
         ranList.setText(nowMonthBean.getRank_num());
         amount.setText(nowMonthBean.getLend_total_amount());
     }
