@@ -159,8 +159,8 @@
 
             <ImageView
                 android:id="@+id/iv_qr"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:src="@mipmap/qr_loading" />
         </FrameLayout>

@@ -10,7 +10,7 @@ public interface NetConstantValues {
      * 生产服务器地址
      */
     String HOST_URL = "http://mobile.chinazyjr.com:8002/";
-    String REPAYMENT_LOGIN_BASE = "http://mobile.chinazyjr.com:8002/cffg_loan/";
+    String REPAYMENT_LOGIN_BASE = "http://mobile.chinazyjr.com:8004/";
 
 
 
@@ -294,6 +294,6 @@ public interface NetConstantValues {
     /**
      * 不需要还款 H5地址
      */
-    String NO_REPAY = HOST_URL + "jjth5/noRepay.html";
+    String NO_REPAY = REPAYMENT_LOGIN_BASE + "jjth5/noRepay.html";
 
 }
