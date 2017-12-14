@@ -55,9 +55,8 @@ public class BankcardDb {
         } else {
             //不存在先创建文件夹
             LogUtils.d("不存在数据库------创建");
-            File path = new File(pathStr);
-            LogUtils.d("pathStr=" + path);
-            if (path.mkdir()) {
+            if (!jhPath.getParentFile().exists()) {
+                jhPath.getParentFile().mkdirs();
                 LogUtils.d("创建成功");
             } else {
                 LogUtils.d("创建失败");

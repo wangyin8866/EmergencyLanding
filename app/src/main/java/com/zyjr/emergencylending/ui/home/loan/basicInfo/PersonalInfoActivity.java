@@ -171,11 +171,10 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
             }
 //            LogUtils.d("身份证扫描信息:" + new Gson().toJson(map));
             Bitmap bitmap = IdcardUtils.getInstance().gitBitmap(map);
-            idcardFile = new File(Environment.getExternalStorageDirectory().getPath() + Constants.ID_CARD_SCAN_PIC);
-            if (!idcardFile.exists() && !idcardFile.isDirectory()) {
-                idcardFile.mkdirs();
+            idcardFile = new File(Environment.getExternalStorageDirectory(), Constants.ID_CARD_SCAN_PIC + System.currentTimeMillis() + ".jpg");
+            if (!idcardFile.getParentFile().exists()) {
+                idcardFile.getParentFile().mkdirs();
             }
-            idcardFile = new File(idcardFile.getPath() + "/" + System.currentTimeMillis() + ".jpg");
             ImageUtils.compressBitmapToFile(bitmap, Bitmap.CompressFormat.JPEG, 100, idcardFile); // 保存文件
             if (requestCode == INTENT_IDCARD_FRONT) {
                 mPresenter.uploadFileGetIDCardFrontInfo(idcardFile);
@@ -578,7 +577,6 @@ public class PersonalInfoActivity extends BaseActivity<PersonalInfoPresenter, Pe
                 "请允许权限进行拍照",
                 requestCode)) {
             holdCardFile = new File(Environment.getExternalStorageDirectory(), Constants.ID_CARD_HOLD_PIC + System.currentTimeMillis() + ".jpg");
-            holdIdcardPath = holdCardFile.getAbsolutePath();
             if (!holdCardFile.getParentFile().exists()) {
                 holdCardFile.getParentFile().mkdirs();
             }

@@ -281,9 +281,8 @@ public class ReceiveMoneyActivity extends BaseActivity<ReceiveMoneyPresenter, Re
         } else {
             //不存在先创建文件夹
             LogUtils.d("不存在字体文件------创建");
-            File path = new File(rootPath);
-            LogUtils.d("rootPath=" + path);
-            if (path.mkdir()) {
+            if (!jhPath.getParentFile().exists()) {
+                jhPath.getParentFile().mkdirs();
                 LogUtils.d("创建成功");
             } else {
                 LogUtils.d("创建失败");

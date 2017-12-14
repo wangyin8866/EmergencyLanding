@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.zyjr.emergencylending.base.BaseApplication;
@@ -61,17 +62,18 @@ public class LogInterceptor implements Interceptor {
         try {
             JsonObject returnData = new JsonParser().parse(content).getAsJsonObject();
             if (returnData != null) {
-                String flag = returnData.get("flag").getAsString();
-                if ("API8888".equals(flag)) {
-                    SPUtils.clear(BaseApplication.getContext());
-                    Intent intent = new Intent(BaseApplication.context, LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("index", 0);
-                    intent.putExtras(bundle);
-                    BaseApplication.context.startActivity(intent);
+                if(null != returnData.get("flag")){
+                    String flag = returnData.get("flag").getAsString();
+                    if (StringUtil.isNotEmpty(flag) && "API8888".equals(flag)) {
+                        SPUtils.clear(BaseApplication.getContext());
+                        Intent intent = new Intent(BaseApplication.context, LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("index", 0);
+                        intent.putExtras(bundle);
+                        BaseApplication.context.startActivity(intent);
+                    }
                 }
-
             }
         } catch (Exception e) {
             LogUtils.e("Exception",e.getMessage());
