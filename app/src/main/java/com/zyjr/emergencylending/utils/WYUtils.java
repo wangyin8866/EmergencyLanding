@@ -648,13 +648,13 @@ public class WYUtils {
      * 处理注册协议
      */
     public static void processProtocol(final Context mContext, TextView textView) {
-        String temp = "我已阅读并同意急借通《用户使用及安全隐私协议》《用户信息授权服务协议》";
+        String temp = "我已阅读并同意急借通《用户注册及安全隐私协议》《用户信息授权服务协议》";
         //设置需要监听的字符串位置
         SpannableString spannableString = new SpannableString(temp);
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
-                H5WebView.skipH5WebView(mContext, "用户使用及安全隐私协议", "file:///android_asset/h5/register.html");
+                H5WebView.skipH5WebView(mContext, "用户注册及安全隐私协议", "file:///android_asset/h5/register.html");
             }
 
             @Override

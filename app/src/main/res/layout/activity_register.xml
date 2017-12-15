@@ -79,7 +79,7 @@
                         android:id="@+id/et_password"
                         style="@style/et_input_style"
                         android:layout_weight="1"
-                        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
                         android:drawableLeft="@mipmap/icon_lock"
                         android:hint="@string/login_password_hint"
                         android:paddingRight="20dp"
@@ -157,7 +157,7 @@
                         style="@style/register_cbx"
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:checked="false" />
+                        android:checked="true" />
 
                     <TextView
                         android:id="@+id/tv_agreed"
@@ -166,7 +166,7 @@
                         android:layout_toRightOf="@+id/cb_check"
                         android:gravity="center"
                         android:lineSpacingExtra="4dp"
-                        android:text="我已阅读并同意急借通《用户使用及安全隐私协议》《用户信息授权服务协议》"
+                        android:text="我已阅读并同意急借通《用户注册及安全隐私协议》《用户信息授权服务协议》"
                         android:textColor="@color/front_text_color_hint"
                         android:textSize="12sp" />
 
