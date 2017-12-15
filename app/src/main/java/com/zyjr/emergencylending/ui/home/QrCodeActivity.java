@@ -161,7 +161,7 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
                             }
                         },
                         2000,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE);
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
 
                 break;
             case R.id.qr_we_chat:
@@ -211,14 +211,13 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
             handler.sendEmptyMessageDelayed(2, 200);
             return;
         }
-        File appDir = new File(Environment.getExternalStorageDirectory(), Constants.QR);
-        if (!appDir.exists()) {
-            appDir.mkdir();
-        }
         String fileName = System.currentTimeMillis() + ".png";
-        File file = new File(appDir, fileName);
+        File qrFile = new File(Environment.getExternalStorageDirectory(), Constants.QR + fileName);
+        if (!qrFile.getParentFile().exists()) {
+            qrFile.getParentFile().mkdirs();
+        }
         try {
-            FileOutputStream fos = new FileOutputStream(file);
+            FileOutputStream fos = new FileOutputStream(qrFile);
             flag = bmp.compress(Bitmap.CompressFormat.PNG, 80, fos);
             fos.flush();
             fos.close();
@@ -230,13 +229,12 @@ public class QrCodeActivity extends BaseActivity<QrPresenter, BaseView<QrBean>> 
         }
         // 其次把文件插入到系统图库
         try {
-            MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    file.getAbsolutePath(), fileName, null);
+            MediaStore.Images.Media.insertImage(context.getContentResolver(), qrFile.getAbsolutePath(), fileName, null);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         // 最后通知图库更新
-        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + file.getPath())));
+        context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + qrFile.getPath())));
     }
 
     @Override
