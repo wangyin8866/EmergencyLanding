@@ -1,12 +1,6 @@
 apply plugin: 'com.android.application'
 
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-def keyStore = file(properties.getProperty("keystroe_storeFile_jjt"))
 
-def releaseTime() {
-    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
-}
 
 android {
     compileSdkVersion 26
@@ -19,7 +13,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 26
         versionCode 50
-        versionName "2.0.0"
+        versionName "2.0.1"
         // dex突破65535的限制
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -32,7 +26,7 @@ android {
         ]
         //个推配置
         ndk {
-            abiFilters "armeabi", "armeabi-v7a", "x86_64"
+            abiFilters "armeabi", "armeabi-v7a", "x86_64","x86"
         }
 
     }
@@ -43,63 +37,10 @@ android {
         incremental true
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_7
-        targetCompatibility JavaVersion.VERSION_1_7
-    }
 
-    // 签名信息
-    signingConfigs {
 
-        debug {
-            storeFile file('debug.keystore')
-            storePassword "android"
-            keyAlias "androiddebugkey"
-            keyPassword "android"
-        }
 
-        release {
-            storeFile file(properties.getProperty("keystroe_storeFile_jjt"))
-            storePassword properties.getProperty("keystroe_storePassword_jjt")
-            keyAlias properties.getProperty("keystroe_keyAlias_jjt")
-            keyPassword properties.getProperty("keystroe_keyPassword_jjt")
-        }
-    }
 
-    buildTypes {
-        // debug 调试
-        debug {
-            debuggable true
-            buildConfigField("boolean", "LOG_DEBUG", "true")
-            zipAlignEnabled false
-            shrinkResources false
-            minifyEnabled false
-            signingConfig signingConfigs.debug
-            proguardFiles 'proguard-rules.pro'
-            if (keyStore.exists()) {
-                println "debug using release key"
-                signingConfig signingConfigs.release
-            } else {
-                println "debug using default key"
-            }
-        }
-
-        // 线上版本
-        release {
-            buildConfigField("boolean", "LOG_DEBUG", "false")
-            zipAlignEnabled true
-            shrinkResources false
-            minifyEnabled false
-            signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            android.applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "JijietongNew_v${variant.productFlavors[0].name}_v${variant.versionName}.apk"
-                }
-            }
-        }
-
-    }
 
     productFlavors {
         W_JJTGW {
@@ -186,6 +127,7 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     compile 'com.jakewharton:butterknife:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     compile 'com.android.support:design:26.0.0-alpha1'
     //    compile 'com.bigkoo:convenientbanner:2.0.5'
     compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
@@ -196,7 +138,6 @@ dependencies {
     compile 'tech.michaelx.authcode:authcode:1.0.0'
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     compile 'com.github.liuguangqiang.swipeback:library:1.0.2@aar'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //沉浸式
     compile 'com.gyf.barlibrary:barlibrary:2.2.7'
     //下拉刷新

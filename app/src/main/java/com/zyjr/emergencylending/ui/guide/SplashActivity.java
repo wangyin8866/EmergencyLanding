@@ -2,26 +2,20 @@ package com.zyjr.emergencylending.ui.guide;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 
 import com.bqs.risk.df.android.BqsDF;
 import com.bqs.risk.df.android.BqsParams;
 import com.zyjr.emergencylending.MainActivity;
-import com.zyjr.emergencylending.R;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BaseApplication;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.config.Constants;
 import com.zyjr.emergencylending.ui.salesman.activity.LineMainActivity;
 import com.zyjr.emergencylending.utils.LogUtils;
 import com.zyjr.emergencylending.utils.SPUtils;
-import com.zyjr.emergencylending.utils.permission.PermissionUtils;
 import com.zyjr.emergencylending.utils.permission.ToolPermission;
 
 import cn.tongdun.android.shell.FMAgent;
@@ -45,7 +39,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_main);
+//        setContentView(R.layout.activity_splash_main);
 
 //        if (!NetworkUtils.isNetAvailable(SplashActivity.this)) {
 //            Toast.makeText(SplashActivity.this, "亲,您的网络没有打开,无法进行操作,请连接网络之后再操作！", Toast.LENGTH_LONG).show();

@@ -296,11 +296,8 @@
             android:screenOrientation="portrait" />
 
         <!--个推自定义service-->
-        <service
-            android:name=".service.DemoPushService"
-            android:exported="true"
-            android:label="PushService"
-            android:process=":pushservice" />
+        <service android:name=".service.InitializeService" />
+        <service android:name=".service.DemoPushService" />
         <service android:name=".service.DemoIntentService" />
 
         <!-- 线下件确认 -->

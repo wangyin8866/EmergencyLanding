@@ -17,7 +17,6 @@ import com.zyjr.emergencylending.base.ActivityCollector;
 import com.zyjr.emergencylending.base.BaseActivity;
 import com.zyjr.emergencylending.base.BasePresenter;
 import com.zyjr.emergencylending.config.Config;
-import com.zyjr.emergencylending.config.NetConstantValues;
 import com.zyjr.emergencylending.custom.NoScrollViewPager;
 import com.zyjr.emergencylending.ui.account.LoginActivity;
 import com.zyjr.emergencylending.ui.home.HomeFragment;
@@ -110,7 +109,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
 
         //版本更新
-        WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE, false);
+//        WYUtils.upDateVersion(mContext, NetConstantValues.VERSION_UPDATE, false);
 
     }
 
